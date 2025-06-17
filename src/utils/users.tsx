@@ -16,7 +16,8 @@ export const usersQueryOptions = () =>
       axios
         .get<Array<User>>(DEPLOY_URL + '/api/users')
         .then((r) => r.data)
-        .catch(() => {
+        .catch((e) => {
+          console.error(e)
           throw new Error('Failed to fetch users')
         }),
   })
