@@ -14,14 +14,14 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
         <nav className="flex gap-2 items-center">
           {links.map(({ label, ...props }, index) => (
             <Button
-              size="xs"
+              size="sm"
               variant="link"
               data-first={index === 0}
-              className="transition-none data-[first=true]:-ml-2.5"
+              className="transition-none data-[first=true]:-ml-3"
               key={`${label}-${index}`}
               asChild
             >
-              <Link activeProps={{ className: 'font-semibold' }} {...props}>
+              <Link activeProps={{ className: 'underline' }} {...props}>
                 {label}
               </Link>
             </Button>

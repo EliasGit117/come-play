@@ -1,8 +1,8 @@
 /// <reference types="vite/client" />
 import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from '@tanstack/react-router';
 import type { QueryClient } from '@tanstack/react-query';
-import { DefaultCatchBoundary } from '@/components/DefaultCatchBoundary';
-import { NotFound } from '@/components/NotFound';
+import { DefaultCatchBoundary } from '@/components/default-catch-boundary';
+import { NotFound } from '@/components/not-found';
 import appCss from '@/styles/app.css?url';
 import { seo } from '@/utils/seo';
 import AppHeader from '@/components/layout/app-header';
