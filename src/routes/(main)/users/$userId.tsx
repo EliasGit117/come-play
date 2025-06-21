@@ -4,7 +4,7 @@ import type { ErrorComponentProps } from '@tanstack/react-router'
 import { NotFound } from '@/components/not-found'
 import { userQueryOptions } from '@/utils/users'
 
-export const Route = createFileRoute('/users/$userId')({
+export const Route = createFileRoute('/(main)/users/$userId')({
   loader: async ({ context, params: { userId } }) => {
     await context.queryClient.ensureQueryData(userQueryOptions(userId))
   },

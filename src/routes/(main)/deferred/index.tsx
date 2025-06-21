@@ -15,7 +15,7 @@ const deferredQueryOptions = () =>
     },
   })
 
-export const Route = createFileRoute('/deferred/')({
+export const Route = createFileRoute('/(main)/deferred/')({
   loader: ({ context }) => {
     // Kick off loading as early as possible!
     context.queryClient.prefetchQuery(deferredQueryOptions())

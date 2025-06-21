@@ -5,14 +5,19 @@ import { DefaultCatchBoundary } from '@/components/default-catch-boundary';
 import { NotFound } from '@/components/not-found';
 import appCss from '@/styles/app.css?url';
 import { seo } from '@/utils/seo';
-import AppHeader from '@/components/layout/app-header';
-import { ThemeProvider } from '@/components/theme';
+import { Providers } from '@/providers';
+import { authQueries } from '@/features/auth/queries';
 
 interface IRootRouteProps {
   queryClient: QueryClient;
 }
 
 export const Route = createRootRouteWithContext<IRootRouteProps>()({
+  beforeLoad: async ({ context }) => {
+
+    const userSession = await context.queryClient.fetchQuery(authQueries.getUser());
+    return { userSession };
+  },
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
@@ -53,21 +58,18 @@ function RootComponent() {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html>
+    <html suppressHydrationWarning>
     <head>
       <HeadContent/>
     </head>
 
     <body>
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <AppHeader/>
-
+    <Providers>
       {children}
-
-      {/*<TanStackRouterDevtools position="bottom-right" />*/}
-      {/*<ReactQueryDevtools buttonPosition="bottom-left" />*/}
-      <Scripts/>
-    </ThemeProvider>
+    </Providers>
+    {/*<TanStackRouterDevtools position="bottom-right" />*/}
+    {/*<ReactQueryDevtools buttonPosition="bottom-left" />*/}
+    <Scripts/>
     </body>
     </html>
   );

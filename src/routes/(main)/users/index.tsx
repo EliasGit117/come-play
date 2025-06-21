@@ -4,7 +4,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 
 
-export const Route = createFileRoute('/users/')({
+export const Route = createFileRoute('/(main)/users/')({
   component: UsersIndexPage,
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(usersQueryOptions());

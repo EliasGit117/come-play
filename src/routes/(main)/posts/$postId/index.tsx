@@ -4,7 +4,7 @@ import { postQueryOptions } from '@/utils/posts'
 import type { ErrorComponentProps } from '@tanstack/react-router'
 import { NotFound } from '@/components/not-found'
 
-export const Route = createFileRoute('/posts/$postId/')({
+export const Route = createFileRoute('/(main)/posts/$postId/')({
   loader: async ({ params: { postId }, context }) => {
     const data = await context.queryClient.ensureQueryData(
       postQueryOptions(postId),

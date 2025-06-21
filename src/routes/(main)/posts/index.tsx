@@ -3,7 +3,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { postsQueryOptions } from '@/utils/posts';
 import { Button } from '@/components/ui/button';
 
-export const Route = createFileRoute('/posts/')({
+export const Route = createFileRoute('/(main)/posts/')({
   component: PostsIndexComponent,
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(postsQueryOptions());
