@@ -8,384 +8,70 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createServerRootRoute } from '@tanstack/react-start/server'
-
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AdminRouteRouteImport } from './routes/admin/route'
-import { Route as mainRouteRouteImport } from './routes/(main)/route'
-import { Route as AdminIndexRouteImport } from './routes/admin/index'
-import { Route as mainIndexRouteImport } from './routes/(main)/index'
-import { Route as mainUsersIndexRouteImport } from './routes/(main)/users/index'
-import { Route as mainPostsIndexRouteImport } from './routes/(main)/posts/index'
-import { Route as mainDeferredIndexRouteImport } from './routes/(main)/deferred/index'
-import { Route as mainUsersUserIdRouteImport } from './routes/(main)/users/$userId'
-import { Route as mainAuthSignUpRouteImport } from './routes/(main)/auth/sign-up'
-import { Route as mainAuthSignInRouteImport } from './routes/(main)/auth/sign-in'
-import { Route as mainAuthSettingsRouteImport } from './routes/(main)/auth/settings'
-import { Route as mainPostsPostIdIndexRouteImport } from './routes/(main)/posts/$postId/index'
-import { ServerRoute as ApiUsersIndexServerRouteImport } from './routes/api/users/index'
-import { ServerRoute as ApiUsersIdServerRouteImport } from './routes/api/users/$id'
-import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
+import { Route as NewsRouteImport } from './routes/news'
+import { Route as IndexRouteImport } from './routes/index'
 
-const rootServerRouteImport = createServerRootRoute()
-
-const AdminRouteRoute = AdminRouteRouteImport.update({
-  id: '/admin',
-  path: '/admin',
+const NewsRoute = NewsRouteImport.update({
+  id: '/news',
+  path: '/news',
   getParentRoute: () => rootRouteImport,
 } as any)
-const mainRouteRoute = mainRouteRouteImport.update({
-  id: '/(main)',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
-const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const mainIndexRoute = mainIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => mainRouteRoute,
-} as any)
-const mainUsersIndexRoute = mainUsersIndexRouteImport.update({
-  id: '/users/',
-  path: '/users/',
-  getParentRoute: () => mainRouteRoute,
-} as any)
-const mainPostsIndexRoute = mainPostsIndexRouteImport.update({
-  id: '/posts/',
-  path: '/posts/',
-  getParentRoute: () => mainRouteRoute,
-} as any)
-const mainDeferredIndexRoute = mainDeferredIndexRouteImport.update({
-  id: '/deferred/',
-  path: '/deferred/',
-  getParentRoute: () => mainRouteRoute,
-} as any)
-const mainUsersUserIdRoute = mainUsersUserIdRouteImport.update({
-  id: '/users/$userId',
-  path: '/users/$userId',
-  getParentRoute: () => mainRouteRoute,
-} as any)
-const mainAuthSignUpRoute = mainAuthSignUpRouteImport.update({
-  id: '/auth/sign-up',
-  path: '/auth/sign-up',
-  getParentRoute: () => mainRouteRoute,
-} as any)
-const mainAuthSignInRoute = mainAuthSignInRouteImport.update({
-  id: '/auth/sign-in',
-  path: '/auth/sign-in',
-  getParentRoute: () => mainRouteRoute,
-} as any)
-const mainAuthSettingsRoute = mainAuthSettingsRouteImport.update({
-  id: '/auth/settings',
-  path: '/auth/settings',
-  getParentRoute: () => mainRouteRoute,
-} as any)
-const mainPostsPostIdIndexRoute = mainPostsPostIdIndexRouteImport.update({
-  id: '/posts/$postId/',
-  path: '/posts/$postId/',
-  getParentRoute: () => mainRouteRoute,
-} as any)
-const ApiUsersIndexServerRoute = ApiUsersIndexServerRouteImport.update({
-  id: '/api/users/',
-  path: '/api/users/',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
-const ApiUsersIdServerRoute = ApiUsersIdServerRouteImport.update({
-  id: '/api/users/$id',
-  path: '/api/users/$id',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
-const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
-  getParentRoute: () => rootServerRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof mainIndexRoute
-  '/admin': typeof AdminRouteRouteWithChildren
-  '/admin/': typeof AdminIndexRoute
-  '/auth/settings': typeof mainAuthSettingsRoute
-  '/auth/sign-in': typeof mainAuthSignInRoute
-  '/auth/sign-up': typeof mainAuthSignUpRoute
-  '/users/$userId': typeof mainUsersUserIdRoute
-  '/deferred': typeof mainDeferredIndexRoute
-  '/posts': typeof mainPostsIndexRoute
-  '/users': typeof mainUsersIndexRoute
-  '/posts/$postId': typeof mainPostsPostIdIndexRoute
+  '/': typeof IndexRoute
+  '/news': typeof NewsRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof mainIndexRoute
-  '/admin': typeof AdminIndexRoute
-  '/auth/settings': typeof mainAuthSettingsRoute
-  '/auth/sign-in': typeof mainAuthSignInRoute
-  '/auth/sign-up': typeof mainAuthSignUpRoute
-  '/users/$userId': typeof mainUsersUserIdRoute
-  '/deferred': typeof mainDeferredIndexRoute
-  '/posts': typeof mainPostsIndexRoute
-  '/users': typeof mainUsersIndexRoute
-  '/posts/$postId': typeof mainPostsPostIdIndexRoute
+  '/': typeof IndexRoute
+  '/news': typeof NewsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/(main)': typeof mainRouteRouteWithChildren
-  '/admin': typeof AdminRouteRouteWithChildren
-  '/(main)/': typeof mainIndexRoute
-  '/admin/': typeof AdminIndexRoute
-  '/(main)/auth/settings': typeof mainAuthSettingsRoute
-  '/(main)/auth/sign-in': typeof mainAuthSignInRoute
-  '/(main)/auth/sign-up': typeof mainAuthSignUpRoute
-  '/(main)/users/$userId': typeof mainUsersUserIdRoute
-  '/(main)/deferred/': typeof mainDeferredIndexRoute
-  '/(main)/posts/': typeof mainPostsIndexRoute
-  '/(main)/users/': typeof mainUsersIndexRoute
-  '/(main)/posts/$postId/': typeof mainPostsPostIdIndexRoute
+  '/': typeof IndexRoute
+  '/news': typeof NewsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/admin'
-    | '/admin/'
-    | '/auth/settings'
-    | '/auth/sign-in'
-    | '/auth/sign-up'
-    | '/users/$userId'
-    | '/deferred'
-    | '/posts'
-    | '/users'
-    | '/posts/$postId'
+  fullPaths: '/' | '/news'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/admin'
-    | '/auth/settings'
-    | '/auth/sign-in'
-    | '/auth/sign-up'
-    | '/users/$userId'
-    | '/deferred'
-    | '/posts'
-    | '/users'
-    | '/posts/$postId'
-  id:
-    | '__root__'
-    | '/(main)'
-    | '/admin'
-    | '/(main)/'
-    | '/admin/'
-    | '/(main)/auth/settings'
-    | '/(main)/auth/sign-in'
-    | '/(main)/auth/sign-up'
-    | '/(main)/users/$userId'
-    | '/(main)/deferred/'
-    | '/(main)/posts/'
-    | '/(main)/users/'
-    | '/(main)/posts/$postId/'
+  to: '/' | '/news'
+  id: '__root__' | '/' | '/news'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  mainRouteRoute: typeof mainRouteRouteWithChildren
-  AdminRouteRoute: typeof AdminRouteRouteWithChildren
-}
-export interface FileServerRoutesByFullPath {
-  '/api/auth/$': typeof ApiAuthSplatServerRoute
-  '/api/users/$id': typeof ApiUsersIdServerRoute
-  '/api/users': typeof ApiUsersIndexServerRoute
-}
-export interface FileServerRoutesByTo {
-  '/api/auth/$': typeof ApiAuthSplatServerRoute
-  '/api/users/$id': typeof ApiUsersIdServerRoute
-  '/api/users': typeof ApiUsersIndexServerRoute
-}
-export interface FileServerRoutesById {
-  __root__: typeof rootServerRouteImport
-  '/api/auth/$': typeof ApiAuthSplatServerRoute
-  '/api/users/$id': typeof ApiUsersIdServerRoute
-  '/api/users/': typeof ApiUsersIndexServerRoute
-}
-export interface FileServerRouteTypes {
-  fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/auth/$' | '/api/users/$id' | '/api/users'
-  fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/auth/$' | '/api/users/$id' | '/api/users'
-  id: '__root__' | '/api/auth/$' | '/api/users/$id' | '/api/users/'
-  fileServerRoutesById: FileServerRoutesById
-}
-export interface RootServerRouteChildren {
-  ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute
-  ApiUsersIdServerRoute: typeof ApiUsersIdServerRoute
-  ApiUsersIndexServerRoute: typeof ApiUsersIndexServerRoute
+  IndexRoute: typeof IndexRoute
+  NewsRoute: typeof NewsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteRouteImport
+    '/news': {
+      id: '/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(main)': {
-      id: '/(main)'
+    '/': {
+      id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof mainRouteRouteImport
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/admin/': {
-      id: '/admin/'
-      path: '/'
-      fullPath: '/admin/'
-      preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/(main)/': {
-      id: '/(main)/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof mainIndexRouteImport
-      parentRoute: typeof mainRouteRoute
-    }
-    '/(main)/users/': {
-      id: '/(main)/users/'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof mainUsersIndexRouteImport
-      parentRoute: typeof mainRouteRoute
-    }
-    '/(main)/posts/': {
-      id: '/(main)/posts/'
-      path: '/posts'
-      fullPath: '/posts'
-      preLoaderRoute: typeof mainPostsIndexRouteImport
-      parentRoute: typeof mainRouteRoute
-    }
-    '/(main)/deferred/': {
-      id: '/(main)/deferred/'
-      path: '/deferred'
-      fullPath: '/deferred'
-      preLoaderRoute: typeof mainDeferredIndexRouteImport
-      parentRoute: typeof mainRouteRoute
-    }
-    '/(main)/users/$userId': {
-      id: '/(main)/users/$userId'
-      path: '/users/$userId'
-      fullPath: '/users/$userId'
-      preLoaderRoute: typeof mainUsersUserIdRouteImport
-      parentRoute: typeof mainRouteRoute
-    }
-    '/(main)/auth/sign-up': {
-      id: '/(main)/auth/sign-up'
-      path: '/auth/sign-up'
-      fullPath: '/auth/sign-up'
-      preLoaderRoute: typeof mainAuthSignUpRouteImport
-      parentRoute: typeof mainRouteRoute
-    }
-    '/(main)/auth/sign-in': {
-      id: '/(main)/auth/sign-in'
-      path: '/auth/sign-in'
-      fullPath: '/auth/sign-in'
-      preLoaderRoute: typeof mainAuthSignInRouteImport
-      parentRoute: typeof mainRouteRoute
-    }
-    '/(main)/auth/settings': {
-      id: '/(main)/auth/settings'
-      path: '/auth/settings'
-      fullPath: '/auth/settings'
-      preLoaderRoute: typeof mainAuthSettingsRouteImport
-      parentRoute: typeof mainRouteRoute
-    }
-    '/(main)/posts/$postId/': {
-      id: '/(main)/posts/$postId/'
-      path: '/posts/$postId'
-      fullPath: '/posts/$postId'
-      preLoaderRoute: typeof mainPostsPostIdIndexRouteImport
-      parentRoute: typeof mainRouteRoute
     }
   }
 }
-declare module '@tanstack/react-start/server' {
-  interface ServerFileRoutesByPath {
-    '/api/users/': {
-      id: '/api/users/'
-      path: '/api/users'
-      fullPath: '/api/users'
-      preLoaderRoute: typeof ApiUsersIndexServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/api/users/$id': {
-      id: '/api/users/$id'
-      path: '/api/users/$id'
-      fullPath: '/api/users/$id'
-      preLoaderRoute: typeof ApiUsersIdServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-  }
-}
-
-interface mainRouteRouteChildren {
-  mainIndexRoute: typeof mainIndexRoute
-  mainAuthSettingsRoute: typeof mainAuthSettingsRoute
-  mainAuthSignInRoute: typeof mainAuthSignInRoute
-  mainAuthSignUpRoute: typeof mainAuthSignUpRoute
-  mainUsersUserIdRoute: typeof mainUsersUserIdRoute
-  mainDeferredIndexRoute: typeof mainDeferredIndexRoute
-  mainPostsIndexRoute: typeof mainPostsIndexRoute
-  mainUsersIndexRoute: typeof mainUsersIndexRoute
-  mainPostsPostIdIndexRoute: typeof mainPostsPostIdIndexRoute
-}
-
-const mainRouteRouteChildren: mainRouteRouteChildren = {
-  mainIndexRoute: mainIndexRoute,
-  mainAuthSettingsRoute: mainAuthSettingsRoute,
-  mainAuthSignInRoute: mainAuthSignInRoute,
-  mainAuthSignUpRoute: mainAuthSignUpRoute,
-  mainUsersUserIdRoute: mainUsersUserIdRoute,
-  mainDeferredIndexRoute: mainDeferredIndexRoute,
-  mainPostsIndexRoute: mainPostsIndexRoute,
-  mainUsersIndexRoute: mainUsersIndexRoute,
-  mainPostsPostIdIndexRoute: mainPostsPostIdIndexRoute,
-}
-
-const mainRouteRouteWithChildren = mainRouteRoute._addFileChildren(
-  mainRouteRouteChildren,
-)
-
-interface AdminRouteRouteChildren {
-  AdminIndexRoute: typeof AdminIndexRoute
-}
-
-const AdminRouteRouteChildren: AdminRouteRouteChildren = {
-  AdminIndexRoute: AdminIndexRoute,
-}
-
-const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
-  AdminRouteRouteChildren,
-)
 
 const rootRouteChildren: RootRouteChildren = {
-  mainRouteRoute: mainRouteRouteWithChildren,
-  AdminRouteRoute: AdminRouteRouteWithChildren,
+  IndexRoute: IndexRoute,
+  NewsRoute: NewsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-const rootServerRouteChildren: RootServerRouteChildren = {
-  ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
-  ApiUsersIdServerRoute: ApiUsersIdServerRoute,
-  ApiUsersIndexServerRoute: ApiUsersIndexServerRoute,
-}
-export const serverRouteTree = rootServerRouteImport
-  ._addFileChildren(rootServerRouteChildren)
-  ._addFileTypes<FileServerRouteTypes>()

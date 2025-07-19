@@ -6,18 +6,13 @@ import { NotFound } from '@/components/not-found';
 import appCss from '@/styles/app.css?url';
 import { seo } from '@/utils/seo';
 import { Providers } from '@/providers';
-import { authQueries } from '@/features/auth/queries';
+import { AppHeader } from '@/components/layout';
 
 interface IRootRouteProps {
   queryClient: QueryClient;
 }
 
 export const Route = createRootRouteWithContext<IRootRouteProps>()({
-  beforeLoad: async ({ context }) => {
-
-    const userSession = await context.queryClient.fetchQuery(authQueries.getUser());
-    return { userSession };
-  },
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
@@ -65,6 +60,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 
     <body>
     <Providers>
+      <AppHeader/>
       {children}
     </Providers>
     {/*<TanStackRouterDevtools position="bottom-right" />*/}

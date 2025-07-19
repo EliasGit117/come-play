@@ -13,7 +13,8 @@ export function createRouter() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        refetchOnWindowFocus: false
+        staleTime: 60_000,
+        refetchOnWindowFocus: false,
       }
     }
   });
@@ -24,7 +25,8 @@ export function createRouter() {
       context: { queryClient },
       defaultPreload: 'intent',
       defaultErrorComponent: DefaultCatchBoundary,
-      defaultNotFoundComponent: () => <NotFound/>
+      defaultNotFoundComponent: () => <NotFound/>,
+      scrollRestoration: true
     }),
     queryClient
   );
@@ -33,5 +35,11 @@ export function createRouter() {
 declare module '@tanstack/react-router' {
   interface Register {
     router: ReturnType<typeof createRouter>;
+  }
+
+  interface StaticDataRouteOption {
+    headerOptions?: {
+      type?: 'fixed' | 'sticky';
+    }
   }
 }
