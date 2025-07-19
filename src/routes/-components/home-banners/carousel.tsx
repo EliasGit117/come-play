@@ -8,7 +8,7 @@ import banner1 from 'public/images/home/banner-1.webp';
 import banner2 from 'public/images/home/banner-2.webp';
 import banner3 from 'public/images/home/banner-3.webp';
 import banner4 from 'public/images/home/banner-4.webp';
-import { useEffect, useState } from 'react';
+import { ComponentProps, FC, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Autoplay from 'embla-carousel-autoplay';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
@@ -24,11 +24,10 @@ const banners: { imgSrc: string; }[] = [
 ];
 
 
-interface IProps {
 
-}
+interface IProps extends ComponentProps<typeof Carousel> {}
 
-export const HomeBannersCarousel = () => {
+export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
@@ -44,7 +43,8 @@ export const HomeBannersCarousel = () => {
 
   return (
     <Carousel
-      className="w-full"
+      {...props}
+      className={cn('w-full', className)}
       setApi={setApi}
       opts={{ loop: true }}
       plugins={[Autoplay({ delay: 5000 })]}
