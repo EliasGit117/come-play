@@ -2,7 +2,7 @@ import {
   Carousel,
   CarouselApi,
   CarouselContent,
-  CarouselItem, CarouselPrevious
+  CarouselItem,
 } from '@/components/ui/carousel';
 import banner1 from 'public/images/home/banner-1.webp';
 import banner2 from 'public/images/home/banner-2.webp';
@@ -11,7 +11,7 @@ import banner4 from 'public/images/home/banner-4.webp';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Autoplay from 'embla-carousel-autoplay';
-import { ArrowLeft, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
 

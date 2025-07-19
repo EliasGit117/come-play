@@ -58,7 +58,7 @@ interface IDropdownMenuProps extends ComponentProps<typeof NavigationMenuItem> {
 }
 
 const DropdownMenu: FC<IDropdownMenuProps> = ({ title, items, triggerClassName, ...props}) => (
-  <NavigationMenuItem>
+  <NavigationMenuItem {...props}>
     <NavigationMenuTrigger className={triggerClassName}>{title}</NavigationMenuTrigger>
     <NavigationMenuContent>
       <ul

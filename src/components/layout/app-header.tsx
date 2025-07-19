@@ -1,5 +1,5 @@
 import { ComponentProps, FC, useEffect, useState } from 'react';
-import { Link, LinkOptions, useMatches } from '@tanstack/react-router';
+import { Link, useMatches } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { CalculatorIcon, LanguagesIcon, MenuIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
