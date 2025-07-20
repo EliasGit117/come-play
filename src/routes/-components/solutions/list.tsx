@@ -1,6 +1,10 @@
 import { ComponentProps, FC } from 'react';
 import { cn } from '@/lib/utils';
 import { Link, LinkOptions } from '@tanstack/react-router';
+import conferenceRoomImg from 'public/images/home/solutions/conference-room.jpg';
+import stadiumImg from 'public/images/home/solutions/stadium.jpg';
+import advertisingImg from 'public/images/home/solutions/advertising.png';
+
 
 interface IProps extends ComponentProps<'section'> {
 }
@@ -62,19 +66,19 @@ interface IImageLinkProps {
 const imageLinks: IImageLinkProps[] = [
   {
     title: 'Conference Room',
-    img: 'public/images/home/solutions/conference-room.jpg',
+    img: conferenceRoomImg,
     className: 'md:row-span-2 max-h-32 md:max-h-none',
     linkOptions: { to: '/' }
   },
   {
     title: 'Races Stadium',
-    img: 'public/images/home/solutions/stadium.jpg',
+    img: stadiumImg,
     className: 'max-h-32 md:max-h-none',
     linkOptions: { to: '/' }
   },
   {
     title: 'Advertising',
-    img: 'public/images/home/solutions/advertising.png',
+    img: advertisingImg,
     className: 'md:col-start-2 max-h-32 md:max-h-none',
     linkOptions: { to: '/' }
   }

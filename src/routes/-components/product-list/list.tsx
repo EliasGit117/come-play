@@ -1,6 +1,13 @@
 import { ComponentProps, FC } from 'react';
 import { cn } from '@/lib/utils';
 import { Link } from '@tanstack/react-router';
+import firstProductImg from 'public/images/home/products/product-1.webp';
+import secondProductImg from 'public/images/home/products/product-2.webp';
+import thirdProductImg from 'public/images/home/products/product-3.webp';
+import fourthProductImg from 'public/images/home/products/product-4.webp';
+import fifthProductImg from 'public/images/home/products/product-5.webp';
+import sixthProductImg from 'public/images/home/products/product-6.webp';
+
 
 interface IProps extends ComponentProps<'section'> {
 
@@ -30,12 +37,12 @@ const ProductList: FC<IProps> = ({ className, ...props }) => {
 };
 
 const products = [
-  { title: 'Indoor LED Display', image: 'public/images/home/products/product-1.webp' },
-  { title: 'Outdoor LED Display', image: 'public/images/home/products/product-2.webp' },
-  { title: 'Rental LED Display', image: 'public/images/home/products/product-3.webp' },
-  { title: 'Transparent LED Screen', image: 'public/images/home/products/product-4.webp' },
-  { title: 'Soft LED Screen', image: 'public/images/home/products/product-5.webp' },
-  { title: 'Floor LED Screen', image: 'public/images/home/products/product-6.webp' }
+  { title: 'Indoor LED Display', image: firstProductImg },
+  { title: 'Outdoor LED Display', image: secondProductImg },
+  { title: 'Rental LED Display', image: thirdProductImg },
+  { title: 'Transparent LED Screen', image: fourthProductImg },
+  { title: 'Soft LED Screen', image: fifthProductImg },
+  { title: 'Floor LED Screen', image: sixthProductImg }
 ];
 
 export default ProductList;

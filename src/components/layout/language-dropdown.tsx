@@ -1,4 +1,4 @@
-import { ComponentProps, FC, useState } from 'react';
+import { ComponentProps, FC,  useState } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,9 +33,7 @@ const LanguageDropdown: FC<IProps> = ({ buttonVariant, buttonSize }) => {
       <DropdownMenuTrigger asChild>
         <Button variant={buttonVariant} size={buttonSize} className="">
           {lang === 'ro' ? (
-            <>
             <img src="/public/icons/flags/ro.svg" alt="ro-flag" className="h-3.5"/>
-            </>
           ) : (
             <img src="/public/icons/flags/ru.svg" alt="ro-flag" className="h-3.5 border border-black/25"/>
           )}

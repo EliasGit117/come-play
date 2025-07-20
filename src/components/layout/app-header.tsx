@@ -6,6 +6,9 @@ import { cn } from '@/lib/utils';
 import HeaderNavMenu from '@/components/layout/nav-menu';
 import LanguageDropdown from '@/components/layout/language-dropdown';
 import { useAppSidebar } from '@/components/layout/app-sidebar-provider';
+import LightLogo from 'public/icons/logo-white.svg?react';
+import DarkLogo from 'public/icons/logo.svg?react';
+
 
 interface IAppHeader extends ComponentProps<'header'> {
 }
@@ -46,13 +49,13 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
       {...props}
     >
       <div className="container mx-auto px-4 flex gap-2 items-center">
-        <Button variant="lightGhost" size="dense" className="p-2 -ml-2" asChild>
+        <Button variant="lightGhost" size="dense" className="-ml-1" asChild>
           <Link to="/">
-            <img
-              alt="logo"
-              src={isAtTop ? 'public/icons/logo-white.svg' : 'public/icons/logo.svg'}
-              className="h-6 xl:h-10"
-            />
+            {isAtTop ? (
+              <LightLogo className="size-8 xl:size-10"/>
+            ) : (
+              <DarkLogo className="size-8 xl:size-10"/>
+            )}
           </Link>
         </Button>
 
@@ -62,7 +65,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
         />
 
         <div className="flex gap-2 items-center ml-auto">
-          <LanguageDropdown buttonSize='icon' buttonVariant='ghost'/>
+          <LanguageDropdown buttonSize="icon" buttonVariant="ghost"/>
 
           <Button variant="ghost" size="icon">
             <CalculatorIcon/>

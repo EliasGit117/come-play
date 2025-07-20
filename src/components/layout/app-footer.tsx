@@ -4,6 +4,7 @@ import YoutubeLogo from '/public/icons/socials/youtube.svg?react';
 import FacebookLogo from '/public/icons/socials/facebook.svg?react';
 import LinkedInLogo from '/public/icons/socials/linkedin.svg?react';
 import TwitterLogo from '/public/icons/socials/twitter.svg?react';
+import LightLogo from '/public/icons/logo-white.svg?react';
 import { Button } from '@/components/ui/button';
 
 
@@ -34,7 +35,7 @@ const AppFooter: FC<IProps> = ({ className, ...props }) => {
         </div>
 
         <div className="flex flex-col gap-4 items-center md:items-end order-first md:order-last">
-          <img src="public/icons/logo-white.svg" alt="light-logo" className="h-8"/>
+          <LightLogo className="size-12"/>
 
           <div className="flex gap-2 items-center">
             <Button variant='ghost' size='smIcon' className='!bg-muted/15 !text-white rounded-full'>
