@@ -108,10 +108,6 @@ export const headerLinks: TLinkItem[] = [
     ]
   },
   {
-    type: MenuItemType.Single,
-    item: { label: 'OEM/ODM', linkOpt: { to: '/' } }
-  },
-  {
     type: MenuItemType.Group,
     title: 'About',
     items: [

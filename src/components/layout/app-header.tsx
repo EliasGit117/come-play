@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { CalculatorIcon, LanguagesIcon, MenuIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import HeaderNavMenu from '@/components/layout/nav-menu';
+import LanguageDropdown from '@/components/layout/language-dropdown';
+import { useAppSidebar } from '@/components/layout/app-sidebar-provider';
 
 interface IAppHeader extends ComponentProps<'header'> {
 }
@@ -12,6 +14,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
   const matches = useMatches();
   const headerOptions = matches.find((match) => match.staticData.headerOptions)?.staticData.headerOptions;
   const { type } = headerOptions ?? { type: 'sticky' };
+  const setOpenSidebar = useAppSidebar(s => s.setOpen);
 
   const [isAtTop, setIsAtTop] = useState(type !== 'sticky');
 
@@ -59,15 +62,13 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
         />
 
         <div className="flex gap-2 items-center ml-auto">
-          <Button variant="ghost" size="icon">
-            <LanguagesIcon/>
-          </Button>
+          <LanguageDropdown buttonSize='icon' buttonVariant='ghost'/>
 
           <Button variant="ghost" size="icon">
             <CalculatorIcon/>
           </Button>
 
-          <Button variant="ghost" size="icon" className="xl:hidden">
+          <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setOpenSidebar(true)}>
             <MenuIcon/>
           </Button>
         </div>

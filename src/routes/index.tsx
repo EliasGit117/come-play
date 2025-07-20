@@ -1,5 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { HomeBanners } from '@/routes/-components/home-banners';
+import { ProductList } from '@/routes/-components/product-list';
+import { SolutionList } from '@/routes/-components/solutions';
+import { WriteAMessageForm } from '@/routes/-components/write-a-message';
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
@@ -12,9 +15,13 @@ export const Route = createFileRoute('/')({
 
 function RouteComponent() {
   return (
-    <main>
+    <main className='pb-16 space-y-16'>
       <HomeBanners/>
-      <div className='h-[2000px]'/>
+      <ProductList className='container mx-auto px-4'/>
+      <SolutionList className='container mx-auto px-4'/>
+      <section className='container mx-auto px-4'>
+        <WriteAMessageForm/>
+      </section>
     </main>
   )
 }

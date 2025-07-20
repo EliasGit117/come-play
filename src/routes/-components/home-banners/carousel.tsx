@@ -4,10 +4,10 @@ import {
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel';
-import banner1 from 'public/images/home/banner-1.webp';
-import banner2 from 'public/images/home/banner-2.webp';
-import banner3 from 'public/images/home/banner-3.webp';
-import banner4 from 'public/images/home/banner-4.webp';
+import banner1 from '/public/images/home/banners/banner-1.webp';
+import banner2 from '/public/images/home/banners/banner-2.webp';
+import banner3 from '/public/images/home/banners/banner-3.webp';
+import banner4 from '/public/images/home/banners/banner-4.webp';
 import { ComponentProps, FC, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Autoplay from 'embla-carousel-autoplay';
@@ -47,9 +47,14 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
       className={cn('w-full', className)}
       setApi={setApi}
       opts={{ loop: true }}
-      plugins={[Autoplay({ delay: 5000 })]}
+      plugins={[Autoplay({ delay: 23000 })]}
     >
       <CarouselContent>
+        <CarouselItem>
+          <video autoPlay muted loop className='brightness-50 min-h-96 object-cover w-full max-h-svh'>
+            <source src="/videos/home/banners/video-banner.mp4" type="video/mp4"/>
+          </video>
+        </CarouselItem>
         {banners.map((banner, index) => (
           <CarouselItem key={index}>
             <img src={banner.imgSrc} alt={`banner-${index}`} className="min-h-96 object-cover w-full max-h-svh" key={index}/>

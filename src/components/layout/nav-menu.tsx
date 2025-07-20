@@ -35,11 +35,14 @@ const HeaderNavMenu: FC<IProps> = ({ transparent, ...props }) => {
               key={idx}
               title={menu.title}
               items={menu.items}
-              triggerClassName={triggerClassName}
+              triggerClassName={cn(triggerClassName, 'uppercase')}
             />
           ) : (
             <NavigationMenuItem key={idx}>
-              <NavigationMenuLink asChild className={cn(navigationMenuTriggerStyle(), triggerClassName)}>
+              <NavigationMenuLink
+                className={cn(navigationMenuTriggerStyle(), triggerClassName, 'uppercase')}
+                asChild
+              >
                 <Link {...menu.item.linkOpt}>{menu.item.label}</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>

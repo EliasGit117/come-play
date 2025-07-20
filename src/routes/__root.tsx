@@ -1,4 +1,6 @@
 /// <reference types="vite/client" />
+/// <reference types="vite-plugin-svgr/client" />
+
 import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from '@tanstack/react-router';
 import type { QueryClient } from '@tanstack/react-query';
 import { DefaultCatchBoundary } from '@/components/default-catch-boundary';
@@ -6,7 +8,7 @@ import { NotFound } from '@/components/not-found';
 import appCss from '@/styles/app.css?url';
 import { seo } from '@/utils/seo';
 import { Providers } from '@/providers';
-import { AppHeader } from '@/components/layout';
+import { AppFooter, AppHeader, AppSidebar } from '@/components/layout';
 
 interface IRootRouteProps {
   queryClient: QueryClient;
@@ -61,7 +63,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <body>
     <Providers>
       <AppHeader/>
+      <AppSidebar/>
       {children}
+      <AppFooter className='mt-auto'/>
     </Providers>
     {/*<TanStackRouterDevtools position="bottom-right" />*/}
     {/*<ReactQueryDevtools buttonPosition="bottom-left" />*/}
