@@ -9,6 +9,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button, buttonVariants } from '@/components/ui/button';
 import type { VariantProps } from 'class-variance-authority';
+import RoFlag from '/public/icons/flags/ro.svg?react'
+import RuFlag from '/public/icons/flags/ru.svg?react'
+
 
 interface IProps {
   buttonVariant?: VariantProps<typeof buttonVariants>['variant'];
@@ -32,11 +35,7 @@ const LanguageDropdown: FC<IProps> = ({ buttonVariant, buttonSize }) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant={buttonVariant} size={buttonSize} className="">
-          {lang === 'ro' ? (
-            <img src="/public/icons/flags/ro.svg" alt="ro-flag" className="h-3.5"/>
-          ) : (
-            <img src="/public/icons/flags/ru.svg" alt="ro-flag" className="h-3.5 border border-black/25"/>
-          )}
+          {lang === 'ro' ? <RoFlag className="size-5"/> : <RuFlag className='size-5'/>}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

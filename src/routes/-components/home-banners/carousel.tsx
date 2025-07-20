@@ -4,6 +4,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel';
+import videoBanner from '/public/videos/home/banners/video-banner.mp4';
 import banner1 from '/public/images/home/banners/banner-1.webp';
 import banner2 from '/public/images/home/banners/banner-2.webp';
 import banner3 from '/public/images/home/banners/banner-3.webp';
@@ -51,8 +52,15 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
     >
       <CarouselContent>
         <CarouselItem>
-          <video autoPlay muted loop className='brightness-50 min-h-96 object-cover w-full max-h-svh'>
-            <source src="/videos/home/banners/video-banner.mp4" type="video/mp4"/>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            webkit-playsinline="true"
+            className='brightness-50 min-h-96 object-cover w-full max-h-svh'
+          >
+            <source src={videoBanner} type="video/mp4"/>
           </video>
         </CarouselItem>
         {banners.map((banner, index) => (
