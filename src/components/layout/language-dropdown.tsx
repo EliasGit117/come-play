@@ -10,7 +10,7 @@ import {
 import { Button, buttonVariants } from '@/components/ui/button';
 import type { VariantProps } from 'class-variance-authority';
 
-interface IProps extends ComponentProps<'article'> {
+interface IProps {
   buttonVariant?: VariantProps<typeof buttonVariants>['variant'];
   buttonSize?: VariantProps<typeof buttonVariants>['size'];
 }
@@ -18,7 +18,7 @@ interface IProps extends ComponentProps<'article'> {
 const langs = [{ value: 'ro', title: 'Romana', flag: '🇷🇴' }, { value: 'ru', title: 'Русский', flag: '🇷🇺' }] as const;
 type TLangValue = typeof langs[number]['value'];
 
-const LanguageDropdown: FC<IProps> = ({ buttonVariant, buttonSize, ...props }) => {
+const LanguageDropdown: FC<IProps> = ({ buttonVariant, buttonSize }) => {
   const [lang, setLang] = useState<TLangValue>('ro');
 
   const handleChange = (value: string) => {
