@@ -1,7 +1,7 @@
 import { ComponentProps, FC, useEffect, useState } from 'react';
 import { Link, useMatches } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
-import { CalculatorIcon, LanguagesIcon, MenuIcon } from 'lucide-react';
+import { CalculatorIcon, MenuIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import HeaderNavMenu from '@/components/layout/nav-menu';
 import LanguageDropdown from '@/components/layout/language-dropdown';
