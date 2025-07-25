@@ -1,14 +1,14 @@
 import { ReactNode } from 'react';
 import { Toaster } from '@/components/ui/sonner';
-import { AppSidebarProdivder } from '@/components/layout';
+import { AppSidebarProvider } from '@/components/layout';
 
 
 export function Providers({ children }: { children: ReactNode }) {
 
   return (
-    <AppSidebarProdivder>
+    <AppSidebarProvider>
       {children}
       <Toaster />
-    </AppSidebarProdivder>
+    </AppSidebarProvider>
   );
 }

@@ -60,7 +60,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <HeadContent/>
     </head>
 
-    <body>
+    <body className='flex flex-col min-h-svh'>
     <Providers>
       <AppHeader/>
       <AppSidebar/>

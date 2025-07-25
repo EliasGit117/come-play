@@ -67,8 +67,10 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
         <div className="flex gap-2 items-center ml-auto">
           <LanguageDropdown buttonSize="icon" buttonVariant="ghost"/>
 
-          <Button variant="ghost" size="icon">
-            <CalculatorIcon/>
+          <Button variant="ghost" size="icon" asChild>
+            <Link to="/calculator">
+              <CalculatorIcon/>
+            </Link>
           </Button>
 
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setOpenSidebar(true)}>

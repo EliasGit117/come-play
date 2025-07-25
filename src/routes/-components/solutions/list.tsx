@@ -39,7 +39,7 @@ const SolutionList: FC<IProps> = ({ className, ...props }) => {
             )}
           >
             {/* Hidden red bar that slides in on hover */}
-            <div className="absolute left-0 top-0 h-full w-0 bg-red-600 transition-all duration-400 group-hover:w-full z-0"></div>
+            <div className="absolute left-0 top-0 h-full w-0 bg-primary transition-all duration-400 group-hover:w-full z-0"></div>
 
             {/* Text content */}
             <h3 className="font-bold uppercase mb-2 text-lg relative z-10 transition-colors duration-300 group-hover:text-white">

@@ -65,7 +65,7 @@ const DropdownMenu: FC<IDropdownMenuProps> = ({ title, items, triggerClassName, 
     <NavigationMenuTrigger className={triggerClassName}>{title}</NavigationMenuTrigger>
     <NavigationMenuContent>
       <ul
-        className={cn('grid gap-2 w-[300px]', items.length > 4 && 'grid-cols-2 w-[500px]')}
+        className={cn('grid gap-2 w-[300px]', items.length > 4 && 'grid-cols-2 w-[400px]')}
       >
         {items.map((item, idx) => (
           <li key={idx}>

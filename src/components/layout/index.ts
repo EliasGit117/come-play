@@ -1,11 +1,11 @@
 import AppHeader from './app-header';
 import AppFooter from './app-footer';
-import { AppSidebarProdivder } from './app-sidebar-provider';
+import { AppSidebarProvider } from './app-sidebar-provider';
 import AppSidebar from './app-sidebar';
 
 export {
   AppHeader,
   AppFooter,
-  AppSidebarProdivder,
+  AppSidebarProvider,
   AppSidebar
 };

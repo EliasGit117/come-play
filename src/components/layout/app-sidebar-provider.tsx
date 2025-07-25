@@ -11,7 +11,7 @@ const AppSidebarContext =
   createContext<StoreApi<IAppSidebarStore> | null>(null);
 
 
-export const AppSidebarProdivder = ({ children }: { children: React.ReactNode }) => {
+export const AppSidebarProvider = ({ children }: { children: React.ReactNode }) => {
   const [store] = useState(() =>
     createStore<IAppSidebarStore>((set) => ({
       isOpen: false,
