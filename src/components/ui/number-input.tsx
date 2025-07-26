@@ -25,7 +25,7 @@ export interface NumberInputProps
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
   (
     {
-      stepper,
+      stepper = 1,
       thousandSeparator,
       placeholder,
       defaultValue,
@@ -46,39 +46,20 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     );
 
     const handleIncrement = useCallback(() => {
-      setValue((prev) =>
-        prev === undefined ? stepper ?? 1 : Math.min(prev + (stepper ?? 1), max)
-      );
-    }, [stepper, max]);
+      setValue((prev) => {
+        const newVal = prev === undefined ? stepper : Math.min(prev + stepper, max);
+        onValueChange?.(newVal);
+        return newVal;
+      });
+    }, [stepper, max, onValueChange]);
 
     const handleDecrement = useCallback(() => {
-      setValue((prev) =>
-        prev === undefined
-          ? -(stepper ?? 1)
-          : Math.max(prev - (stepper ?? 1), min)
-      );
-    }, [stepper, min]);
-
-    useEffect(() => {
-      const handleKeyDown = (e: KeyboardEvent) => {
-        if (
-          document.activeElement ===
-          (ref as React.RefObject<HTMLInputElement>).current
-        ) {
-          if (e.key === 'ArrowUp') {
-            handleIncrement();
-          } else if (e.key === 'ArrowDown') {
-            handleDecrement();
-          }
-        }
-      };
-
-      window.addEventListener('keydown', handleKeyDown);
-
-      return () => {
-        window.removeEventListener('keydown', handleKeyDown);
-      };
-    }, [handleIncrement, handleDecrement, ref]);
+      setValue((prev) => {
+        const newVal = prev === undefined ? -stepper : Math.max(prev - stepper, min);
+        onValueChange?.(newVal);
+        return newVal;
+      });
+    }, [stepper, min, onValueChange]);
 
     useEffect(() => {
       if (controlledValue !== undefined) {
@@ -90,24 +71,19 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       value: string;
       floatValue: number | undefined;
     }) => {
-      const newValue =
-        values.floatValue === undefined ? undefined : values.floatValue;
+      const newValue = values.floatValue ?? undefined;
       setValue(newValue);
-      if (onValueChange) {
-        onValueChange(newValue);
-      }
+      onValueChange?.(newValue);
     };
 
     const handleBlur = () => {
       if (value !== undefined) {
-        if (value < min) {
-          setValue(min);
-          (ref as React.RefObject<HTMLInputElement>).current!.value =
-            String(min);
-        } else if (value > max) {
-          setValue(max);
-          (ref as React.RefObject<HTMLInputElement>).current!.value =
-            String(max);
+        let adjusted = value;
+        if (value < min) adjusted = min;
+        if (value > max) adjusted = max;
+        if (adjusted !== value) {
+          setValue(adjusted);
+          onValueChange?.(adjusted);
         }
       }
     };
@@ -158,3 +134,5 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     );
   }
 );
+
+NumberInput.displayName = 'NumberInput';

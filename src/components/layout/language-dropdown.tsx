@@ -18,7 +18,7 @@ interface IProps {
   buttonSize?: VariantProps<typeof buttonVariants>['size'];
 }
 
-const langs = [{ value: 'ro', title: 'Romana', flag: '🇷🇴' }, { value: 'ru', title: 'Русский', flag: '🇷🇺' }] as const;
+const langs = [{ value: 'ro', title: 'Romana' }, { value: 'ru', title: 'Русский' }] as const;
 type TLangValue = typeof langs[number]['value'];
 
 const LanguageDropdown: FC<IProps> = ({ buttonVariant, buttonSize }) => {
@@ -43,7 +43,7 @@ const LanguageDropdown: FC<IProps> = ({ buttonVariant, buttonSize }) => {
         <DropdownMenuSeparator/>
         <DropdownMenuRadioGroup value={lang} onValueChange={handleChange}>
           {langs.map(l =>
-            <DropdownMenuRadioItem value={l.value}>
+            <DropdownMenuRadioItem value={l.value} key={l.value}>
               {l.title}
             </DropdownMenuRadioItem>
           )}

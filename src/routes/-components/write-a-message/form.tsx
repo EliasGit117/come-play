@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentProps, FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { cn } from '@/lib/utils';
 
 const contactSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -18,7 +19,10 @@ const contactSchema = z.object({
 
 type TContactForm = z.infer<typeof contactSchema>;
 
-const WriteAMessageForm: React.FC = () => {
+interface IProps extends ComponentProps<'form'> {
+}
+
+const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
   const form = useForm<TContactForm>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -42,7 +46,7 @@ const WriteAMessageForm: React.FC = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="grid md:grid-cols-2 gap-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className={cn('grid md:grid-cols-2 gap-4', className)} {...props}>
         <FormField
           control={form.control}
           name="name"
@@ -103,10 +107,10 @@ const WriteAMessageForm: React.FC = () => {
           control={form.control}
           name="phone"
           render={({ field }) => (
-            <FormItem className='col-span-full'>
+            <FormItem className="col-span-full">
               <FormLabel>Phone</FormLabel>
               <FormControl>
-                <Textarea className='min-h-44' {...field} />
+                <Textarea className="min-h-44" {...field} />
               </FormControl>
               <FormMessage/>
             </FormItem>
@@ -114,7 +118,7 @@ const WriteAMessageForm: React.FC = () => {
         />
 
         <div className="flex col-span-full">
-          <Button type="submit" className='w-full md:w-fit md:ml-auto'>
+          <Button type="submit" className="w-full md:w-fit md:ml-auto">
             Submit
           </Button>
         </div>

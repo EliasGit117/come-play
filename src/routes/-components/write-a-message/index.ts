@@ -1,5 +1,5 @@
-import WriteAMessageForm from './form';
+import WriteAMessageSection from './section';
 
 export {
-  WriteAMessageForm
+  WriteAMessageSection
 };

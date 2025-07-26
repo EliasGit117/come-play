@@ -1,6 +1,13 @@
 import { FC } from 'react';
 import { usePanelSettingsProvider } from '@/routes/calculator/-providers/panel-settings-provider';
-import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle
+} from '@/components/ui/sheet';
 import { Label } from '@/components/ui/label';
 import { panelTypes, products } from '@/routes/calculator/-consts/products';
 import RangeSlider from '@/components/ui/range-slider';
@@ -117,7 +124,7 @@ const PanelModelsSelector: FC = () => {
 
   return (
     <div className="space-y-2 mt-8">
-      <Label>Sight Distance(m)</Label>
+      <Label>Recommended Model(mm)</Label>
       <div className="flex flex-wrap gap-2">
         {productModels.map(m => {
           const selected = !!panelModels.find(p => p.key === m.key);
@@ -158,8 +165,7 @@ const DimensionsInput: FC = () => {
       <div className="space-y-2">
         <Label>Tiles horizontal</Label>
         <NumberInput
-          minLength={1}
-          maxLength={100}
+          maxLength={3}
           value={tilesXCount}
           onValueChange={v => setTilesXCount(v ?? 1)}
         />
@@ -168,8 +174,7 @@ const DimensionsInput: FC = () => {
       <div className="space-y-2">
         <Label>Tiles vertical</Label>
         <NumberInput
-          minLength={1}
-          maxLength={100}
+          maxLength={3}
           value={tilesYCount}
           onValueChange={v => setTilesYCount(v ?? 1)}
         />
@@ -186,13 +191,15 @@ const PanelSettingsSheet: FC = () => {
 
   return (
     <Sheet open={open} onOpenChange={setIsOpen}>
-      <SheetContent>
+      <SheetContent className="flex flex-col">
         <SheetHeader>
-          <SheetTitle>Panel Settings</SheetTitle>
-          <SheetDescription>Configure your panel type and dimensions</SheetDescription>
+          <SheetTitle className='sr-only md:not-sr-only'>Panel Settings</SheetTitle>
+          <SheetDescription className='sr-only md:not-sr-only'>
+            Configure your panel type and dimensions
+          </SheetDescription>
         </SheetHeader>
 
-        <div className="px-4 space-y-4">
+        <div className="px-4 space-y-4 overflow-auto">
           <p className="text-xl font-semibold">1. Select a product</p>
           <PanelTypeSelector />
           <ProductSelector />
@@ -201,7 +208,9 @@ const PanelSettingsSheet: FC = () => {
           <DimensionsInput />
         </div>
 
-        <SheetFooter />
+        <SheetFooter className='pt-0'>
+          <Button type="submit">Generate results</Button>
+        </SheetFooter>
       </SheetContent>
     </Sheet>
   );
