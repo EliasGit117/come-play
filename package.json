@@ -3,9 +3,12 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
+  "engines": {
+    "node": ">=22.x"
+  },
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build && tsc --noEmit",
+    "build": "prisma generate && vite build",
     "start": "vite start"
   },
   "dependencies": {
@@ -28,10 +31,11 @@
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.516.0",
+    "prisma-extension-pagination": "^0.7.5",
     "radix-ui": "^1.4.2",
-    "react": "^19.0.0",
+    "react": "^19.1.1",
     "react-day-picker": "^9.7.0",
-    "react-dom": "^19.0.0",
+    "react-dom": "^19.1.1",
     "react-hook-form": "^7.58.0",
     "react-number-format": "^5.4.4",
     "react-resizable-panels": "^3.0.3",

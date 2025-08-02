@@ -110,7 +110,7 @@ function RouteComponent() {
 
 
           <div className="flex flex-col gap-2">
-            <Label>Vertical count</Label>
+            <Label>Horizontal count</Label>
             <div className="flex justify-center">
               <Button
                 size="smIcon"
