@@ -8,24 +8,45 @@ import videoBanner from '/public/videos/home/banners/video-banner.mp4';
 import banner1 from '/public/images/home/banners/banner-1.webp';
 import banner2 from '/public/images/home/banners/banner-2.webp';
 import banner3 from '/public/images/home/banners/banner-3.webp';
-import banner4 from '/public/images/home/banners/banner-4.webp';
 import videoPreview from '/public/images/home/banners/video-placeholder.webp';
 import { ComponentProps, FC, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Autoplay from 'embla-carousel-autoplay';
-import { ChevronLeftIcon, ChevronRightIcon, LoaderCircle } from 'lucide-react';
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
-import { UnLazyImage } from '@unlazy/react';
-import VideoWithPlaceholder from '@/video-placeholder';
 import VideoPlaceholder from '@/video-placeholder';
+import { Link, LinkOptions } from '@tanstack/react-router';
 
+interface IBannerData {
+  heading: string;
+  subheading?: string;
+  link?: LinkOptions;
+}
 
-const banners: { imgSrc: string; }[] = [
-  { imgSrc: banner1 },
-  { imgSrc: banner2 },
-  { imgSrc: banner3 },
-  { imgSrc: banner4 }
+interface IBanner {
+  imgSrc: string;
+  data?: IBannerData;
+}
+
+const banners: IBanner[] = [
+  {
+    imgSrc: banner1,
+    data: {
+      heading: 'Outdoor LED Display',
+      subheading: 'K series outdoor LED screen',
+      link: { to: '/' }
+    }
+  },
+  { imgSrc: banner2, },
+  {
+    imgSrc: banner3,
+    data: {
+      heading: 'Rental Outdoor LED Video\nWall E/F Series',
+      subheading: 'Quickly present exquisite display for your show anywhere',
+      link: { to: '/' }
+    }
+  }
 ];
 
 
@@ -55,7 +76,7 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
       plugins={[Autoplay({ delay: 23000 })]}
     >
       <CarouselContent>
-        <CarouselItem>
+        <CarouselItem className="relative">
           <VideoPlaceholder
             placeholder={
               <img
@@ -76,11 +97,22 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
               <source src={videoBanner} type="video/mp4"/>
             </video>
           </VideoPlaceholder>
+
+          <BannerOverlay data={{
+            heading: 'itc LED Display Solution',
+            link: { to: '/' }
+          }} />
         </CarouselItem>
+
         {banners.map((banner, index) => (
-          <CarouselItem key={index}>
-            <img src={banner.imgSrc} alt={`banner-${index}`} className="min-h-96 object-cover w-full max-h-svh"
-                 key={index}/>
+          <CarouselItem key={index} className="relative">
+            <img
+              src={banner.imgSrc}
+              alt={`banner-${index}`}
+              className="min-h-96 object-cover w-full max-h-svh brightness-75"
+              key={index}
+            />
+            {banner.data && <BannerOverlay data={banner.data} />}
           </CarouselItem>
         ))}
       </CarouselContent>
@@ -124,6 +156,39 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
         </div>
       )}
     </Carousel>
+  );
+};
+
+interface BannerOverlayProps {
+  data: IBannerData;
+  className?: string;
+}
+
+const BannerOverlay: React.FC<BannerOverlayProps> = ({ data, className }) => {
+  return (
+    <div className={cn("absolute z-20 left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-full", className)}>
+      <div className="container mx-auto p-4 space-y-3 sm:space-y-4 lg:space-y-5 xl:space-y-6 text-white whitespace-pre-line">
+        <p className="text-xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl font-semibold leading-tight">
+          {data.heading}
+        </p>
+        {data.subheading && (
+          <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
+            {data.subheading}
+          </p>
+        )}
+        {data.link && (
+          <Button
+            variant="secondary"
+            className="text-xs sm:text-sm md:text-base lg:h-10 xl:h-12"
+            asChild
+          >
+            <Link {...data.link}>
+              Show detail
+            </Link>
+          </Button>
+        )}
+      </div>
+    </div>
   );
 };
 
