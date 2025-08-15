@@ -9,86 +9,266 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as NewsRouteImport } from './routes/news'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as CalculatorIndexRouteImport } from './routes/calculator/index'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
+import { Route as PublicRouteRouteImport } from './routes/_public/route'
+import { Route as PublicIndexRouteImport } from './routes/_public/index'
+import { Route as PublicUploadRouteImport } from './routes/_public/upload'
+import { Route as AdminNewsRouteRouteImport } from './routes/admin/news/route'
+import { Route as AdminNewsIndexRouteImport } from './routes/admin/news/index'
+import { Route as PublicNewsIndexRouteImport } from './routes/_public/news/index'
+import { Route as PublicCalculatorIndexRouteImport } from './routes/_public/calculator/index'
+import { Route as AdminNewsCreateRouteImport } from './routes/admin/news/create'
+import { Route as PublicNewsLinkRouteImport } from './routes/_public/news/$link'
 
-const NewsRoute = NewsRouteImport.update({
-  id: '/news',
-  path: '/news',
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const PublicRouteRoute = PublicRouteRouteImport.update({
+  id: '/_public',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => PublicRouteRoute,
 } as any)
-const CalculatorIndexRoute = CalculatorIndexRouteImport.update({
+const PublicUploadRoute = PublicUploadRouteImport.update({
+  id: '/upload',
+  path: '/upload',
+  getParentRoute: () => PublicRouteRoute,
+} as any)
+const AdminNewsRouteRoute = AdminNewsRouteRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminNewsIndexRoute = AdminNewsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminNewsRouteRoute,
+} as any)
+const PublicNewsIndexRoute = PublicNewsIndexRouteImport.update({
+  id: '/news/',
+  path: '/news/',
+  getParentRoute: () => PublicRouteRoute,
+} as any)
+const PublicCalculatorIndexRoute = PublicCalculatorIndexRouteImport.update({
   id: '/calculator/',
   path: '/calculator/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => PublicRouteRoute,
+} as any)
+const AdminNewsCreateRoute = AdminNewsCreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => AdminNewsRouteRoute,
+} as any)
+const PublicNewsLinkRoute = PublicNewsLinkRouteImport.update({
+  id: '/news/$link',
+  path: '/news/$link',
+  getParentRoute: () => PublicRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/news': typeof NewsRoute
-  '/calculator': typeof CalculatorIndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
+  '/admin/news': typeof AdminNewsRouteRouteWithChildren
+  '/upload': typeof PublicUploadRoute
+  '/': typeof PublicIndexRoute
+  '/news/$link': typeof PublicNewsLinkRoute
+  '/admin/news/create': typeof AdminNewsCreateRoute
+  '/calculator': typeof PublicCalculatorIndexRoute
+  '/news': typeof PublicNewsIndexRoute
+  '/admin/news/': typeof AdminNewsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/news': typeof NewsRoute
-  '/calculator': typeof CalculatorIndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
+  '/upload': typeof PublicUploadRoute
+  '/': typeof PublicIndexRoute
+  '/news/$link': typeof PublicNewsLinkRoute
+  '/admin/news/create': typeof AdminNewsCreateRoute
+  '/calculator': typeof PublicCalculatorIndexRoute
+  '/news': typeof PublicNewsIndexRoute
+  '/admin/news': typeof AdminNewsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/news': typeof NewsRoute
-  '/calculator/': typeof CalculatorIndexRoute
+  '/_public': typeof PublicRouteRouteWithChildren
+  '/admin': typeof AdminRouteRouteWithChildren
+  '/admin/news': typeof AdminNewsRouteRouteWithChildren
+  '/_public/upload': typeof PublicUploadRoute
+  '/_public/': typeof PublicIndexRoute
+  '/_public/news/$link': typeof PublicNewsLinkRoute
+  '/admin/news/create': typeof AdminNewsCreateRoute
+  '/_public/calculator/': typeof PublicCalculatorIndexRoute
+  '/_public/news/': typeof PublicNewsIndexRoute
+  '/admin/news/': typeof AdminNewsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/news' | '/calculator'
+  fullPaths:
+    | '/admin'
+    | '/admin/news'
+    | '/upload'
+    | '/'
+    | '/news/$link'
+    | '/admin/news/create'
+    | '/calculator'
+    | '/news'
+    | '/admin/news/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/news' | '/calculator'
-  id: '__root__' | '/' | '/news' | '/calculator/'
+  to:
+    | '/admin'
+    | '/upload'
+    | '/'
+    | '/news/$link'
+    | '/admin/news/create'
+    | '/calculator'
+    | '/news'
+    | '/admin/news'
+  id:
+    | '__root__'
+    | '/_public'
+    | '/admin'
+    | '/admin/news'
+    | '/_public/upload'
+    | '/_public/'
+    | '/_public/news/$link'
+    | '/admin/news/create'
+    | '/_public/calculator/'
+    | '/_public/news/'
+    | '/admin/news/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  NewsRoute: typeof NewsRoute
-  CalculatorIndexRoute: typeof CalculatorIndexRoute
+  PublicRouteRoute: typeof PublicRouteRouteWithChildren
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/news': {
-      id: '/news'
-      path: '/news'
-      fullPath: '/news'
-      preLoaderRoute: typeof NewsRouteImport
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/_public': {
+      id: '/_public'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PublicRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_public/': {
+      id: '/_public/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof PublicIndexRouteImport
+      parentRoute: typeof PublicRouteRoute
     }
-    '/calculator/': {
-      id: '/calculator/'
+    '/_public/upload': {
+      id: '/_public/upload'
+      path: '/upload'
+      fullPath: '/upload'
+      preLoaderRoute: typeof PublicUploadRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
+    '/admin/news': {
+      id: '/admin/news'
+      path: '/news'
+      fullPath: '/admin/news'
+      preLoaderRoute: typeof AdminNewsRouteRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/news/': {
+      id: '/admin/news/'
+      path: '/'
+      fullPath: '/admin/news/'
+      preLoaderRoute: typeof AdminNewsIndexRouteImport
+      parentRoute: typeof AdminNewsRouteRoute
+    }
+    '/_public/news/': {
+      id: '/_public/news/'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof PublicNewsIndexRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
+    '/_public/calculator/': {
+      id: '/_public/calculator/'
       path: '/calculator'
       fullPath: '/calculator'
-      preLoaderRoute: typeof CalculatorIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof PublicCalculatorIndexRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
+    '/admin/news/create': {
+      id: '/admin/news/create'
+      path: '/create'
+      fullPath: '/admin/news/create'
+      preLoaderRoute: typeof AdminNewsCreateRouteImport
+      parentRoute: typeof AdminNewsRouteRoute
+    }
+    '/_public/news/$link': {
+      id: '/_public/news/$link'
+      path: '/news/$link'
+      fullPath: '/news/$link'
+      preLoaderRoute: typeof PublicNewsLinkRouteImport
+      parentRoute: typeof PublicRouteRoute
     }
   }
 }
 
+interface PublicRouteRouteChildren {
+  PublicUploadRoute: typeof PublicUploadRoute
+  PublicIndexRoute: typeof PublicIndexRoute
+  PublicNewsLinkRoute: typeof PublicNewsLinkRoute
+  PublicCalculatorIndexRoute: typeof PublicCalculatorIndexRoute
+  PublicNewsIndexRoute: typeof PublicNewsIndexRoute
+}
+
+const PublicRouteRouteChildren: PublicRouteRouteChildren = {
+  PublicUploadRoute: PublicUploadRoute,
+  PublicIndexRoute: PublicIndexRoute,
+  PublicNewsLinkRoute: PublicNewsLinkRoute,
+  PublicCalculatorIndexRoute: PublicCalculatorIndexRoute,
+  PublicNewsIndexRoute: PublicNewsIndexRoute,
+}
+
+const PublicRouteRouteWithChildren = PublicRouteRoute._addFileChildren(
+  PublicRouteRouteChildren,
+)
+
+interface AdminNewsRouteRouteChildren {
+  AdminNewsCreateRoute: typeof AdminNewsCreateRoute
+  AdminNewsIndexRoute: typeof AdminNewsIndexRoute
+}
+
+const AdminNewsRouteRouteChildren: AdminNewsRouteRouteChildren = {
+  AdminNewsCreateRoute: AdminNewsCreateRoute,
+  AdminNewsIndexRoute: AdminNewsIndexRoute,
+}
+
+const AdminNewsRouteRouteWithChildren = AdminNewsRouteRoute._addFileChildren(
+  AdminNewsRouteRouteChildren,
+)
+
+interface AdminRouteRouteChildren {
+  AdminNewsRouteRoute: typeof AdminNewsRouteRouteWithChildren
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminNewsRouteRoute: AdminNewsRouteRouteWithChildren,
+}
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  NewsRoute: NewsRoute,
-  CalculatorIndexRoute: CalculatorIndexRoute,
+  PublicRouteRoute: PublicRouteRouteWithChildren,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

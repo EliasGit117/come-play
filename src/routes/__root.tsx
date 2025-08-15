@@ -62,10 +62,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 
     <body className='flex flex-col min-h-svh'>
     <Providers>
-      <AppHeader/>
-      <AppSidebar/>
       {children}
-      <AppFooter className='mt-auto'/>
     </Providers>
     {/*<TanStackRouterDevtools position="bottom-right" />*/}
     {/*<ReactQueryDevtools buttonPosition="bottom-left" />*/}

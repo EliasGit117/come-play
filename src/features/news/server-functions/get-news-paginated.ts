@@ -1,24 +1,36 @@
 import { createServerFn } from '@tanstack/react-start';
 import prisma from '@/lib/prisma';
-import z from 'zod';
 import { paginatedSchema } from '@/features/common/pagination/pagination-validation';
-import { PaginationResultDto } from '@/features/common/pagination/pagination-result-dto';
+import { PaginationResultWithCountDto } from '@/features/common/pagination/pagination-result-dto';
+import z from 'zod';
+import { queryOptions } from '@tanstack/react-query';
+import { NewsBriefDto } from '@/features/news/dtos/news-brief-dto';
+
 
 export const getNewsPaginatedSchema = paginatedSchema.extend({});
-
+export type TGetNewsPaginatedParams = z.infer<typeof getNewsPaginatedSchema>;
 
 export const getNewsPaginated = createServerFn({ method: 'GET' })
-  .validator(paginatedSchema)
-  .handler(async (data) => {
-    const res = await prisma.news
+  .validator(getNewsPaginatedSchema)
+  .handler(async ({ data: { page, limit } }) => {
+    const [items, meta] = await prisma.news
       .paginate()
       .withPages({
         includePageCount: true,
-        limit: 10,
-        page: 1,
+        limit: limit,
+        page: page,
       });
 
-    const a = res[1];
-
-    return PaginationResultDto.fromPrismaPaginationRes(res);
+    const dtos = items.map(news => NewsBriefDto.fromEntity(news));
+    return PaginationResultWithCountDto.fromPrismaPaginationRes(dtos, meta);
   });
+
+
+export function getNewsPaginatedQueryOptions(params: TGetNewsPaginatedParams) {
+  return queryOptions({
+    queryKey: ['news', params],
+    queryFn: () => getNewsPaginated({ data: params }),
+    staleTime: 30_000,
+    gcTime: 30_000
+  })
+}

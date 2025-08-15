@@ -61,7 +61,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
 
         <HeaderNavMenu
           transparent={isAtTop}
-          className="hidden lg:flex gap-2 xl:gap-8 items-center absolute left-1/2 -translate-x-1/2"
+          className="hidden xl:flex gap-2 xl:gap-8 items-center absolute left-1/2 -translate-x-1/2"
         />
 
         <div className="flex gap-2 items-center ml-auto">
@@ -73,7 +73,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
             </Link>
           </Button>
 
-          <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setOpenSidebar(true)}>
+          <Button variant="ghost" size="icon" className="xl:hidden" onClick={() => setOpenSidebar(true)}>
             <MenuIcon/>
           </Button>
         </div>
