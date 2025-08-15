@@ -167,7 +167,7 @@ interface BannerOverlayProps {
 const BannerOverlay: React.FC<BannerOverlayProps> = ({ data, className }) => {
   return (
     <div className={cn("absolute z-20 left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-full", className)}>
-      <div className="container mx-auto p-4 space-y-3 sm:space-y-4 lg:space-y-5 xl:space-y-6 text-white whitespace-pre-line">
+      <div className="container mx-auto py-4 px-8 space-y-3 sm:space-y-4 lg:space-y-5 xl:space-y-6 text-white whitespace-pre-line">
         <p className="text-xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl font-semibold leading-tight">
           {data.heading}
         </p>
