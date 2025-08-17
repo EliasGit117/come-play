@@ -2,7 +2,7 @@ import z from 'zod';
 import { createServerFn } from '@tanstack/react-start';
 import prisma from '@/lib/prisma';
 import { queryOptions } from '@tanstack/react-query';
-import { NewsDto } from '@/features/news/dtos/news-dto';
+import { NewsDtoFactory } from '@/features/news/dtos/news-dto';
 
 // Schema
 export const getNewsByIdSchema = z.object({
@@ -22,7 +22,7 @@ export const getNewsById = createServerFn({ method: 'GET' })
       throw new Error('News not found');
     }
 
-    return NewsDto.fromEntity(news);
+    return NewsDtoFactory.fromEntity(news);
   });
 
 // React Query options

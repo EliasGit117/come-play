@@ -1,24 +1,23 @@
 import { News } from '@prisma/client';
 
-export class NewsBriefDto {
+export interface INewsBriefDto {
   id: number;
   title: string;
   link: string;
-  createdAt: string;
+  createdAt: string; // ISO string for safe serialization
+}
 
-  constructor(params: NewsBriefDto) {
-    this.id = params.id;
-    this.title = params.title;
-    this.link = params.link;
-    this.createdAt = params.createdAt;
-  }
-
-  static fromEntity(news: News): NewsBriefDto {
-    return new NewsBriefDto({
+export class NewsBriefDtoFactory {
+  static fromEntity(news: News): INewsBriefDto {
+    return {
       id: news.id,
       title: news.titleRo,
       link: news.link,
       createdAt: news.createdAt.toISOString(),
-    });
+    };
+  }
+
+  static fromEntities(newsArray: News[]): INewsBriefDto[] {
+    return newsArray.map(news => this.fromEntity(news));
   }
 }

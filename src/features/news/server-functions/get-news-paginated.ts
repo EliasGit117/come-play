@@ -4,7 +4,7 @@ import { paginatedSchema } from '@/features/common/pagination/pagination-validat
 import { PaginationResultWithCountDto } from '@/features/common/pagination/pagination-result-dto';
 import z from 'zod';
 import { queryOptions } from '@tanstack/react-query';
-import { NewsBriefDto } from '@/features/news/dtos/news-brief-dto';
+import { NewsBriefDtoFactory } from '@/features/news/dtos/news-brief-dto';
 import { Prisma } from '@prisma/client';
 
 
@@ -56,9 +56,7 @@ export const getNewsPaginated = createServerFn({ method: 'GET' })
         page: page ?? 1,
       });
 
-
-    const dtos = items.map(news => NewsBriefDto.fromEntity(news));
-    return PaginationResultWithCountDto.fromPrismaPaginationRes(dtos, meta);
+    return PaginationResultWithCountDto.fromPrismaPaginationRes(NewsBriefDtoFactory.fromEntities(items), meta);
   });
 
 

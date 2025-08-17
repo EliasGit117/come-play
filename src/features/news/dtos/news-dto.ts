@@ -1,27 +1,27 @@
 import { News } from '@prisma/client';
 
-export class NewsDto {
+export interface INewsDto {
   id: number;
   title: string;
   link: string;
   content: string | null;
   createdAt: string;
+}
 
-  constructor(params: NewsDto) {
-    this.id = params.id;
-    this.title = params.title;
-    this.link = params.link;
-    this.createdAt = params.createdAt;
-    this.content = params.content;
+export class NewsDtoFactory {
+
+  static fromEntity(entity: News): INewsDto {
+    return {
+      id: entity.id,
+      title: entity.titleRo,
+      link: entity.link,
+      createdAt: entity.createdAt.toISOString(),
+      content: entity.contentRo,
+    };
   }
 
-  static fromEntity(news: News): NewsDto {
-    return new NewsDto({
-      id: news.id,
-      title: news.titleRo,
-      link: news.link,
-      createdAt: news.createdAt.toISOString(),
-      content: news.contentRo,
-    });
+
+  static fromEntities(entities: News[]): INewsDto[] {
+    return entities.map(entity => this.fromEntity(entity));
   }
 }
