@@ -8,7 +8,7 @@ export function Providers({ children }: { children: ReactNode }) {
   return (
     <AppSidebarProvider>
       {children}
-      <Toaster />
+      <Toaster richColors/>
     </AppSidebarProvider>
   );
 }

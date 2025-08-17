@@ -17,8 +17,8 @@ import { Route as AdminNewsRouteRouteImport } from './routes/admin/news/route'
 import { Route as AdminNewsIndexRouteImport } from './routes/admin/news/index'
 import { Route as PublicNewsIndexRouteImport } from './routes/_public/news/index'
 import { Route as PublicCalculatorIndexRouteImport } from './routes/_public/calculator/index'
-import { Route as AdminNewsCreateRouteImport } from './routes/admin/news/create'
 import { Route as PublicNewsLinkRouteImport } from './routes/_public/news/$link'
+import { Route as AdminNewsIdEditRouteImport } from './routes/admin/news/$id/edit'
 
 const AdminRouteRoute = AdminRouteRouteImport.update({
   id: '/admin',
@@ -59,15 +59,15 @@ const PublicCalculatorIndexRoute = PublicCalculatorIndexRouteImport.update({
   path: '/calculator/',
   getParentRoute: () => PublicRouteRoute,
 } as any)
-const AdminNewsCreateRoute = AdminNewsCreateRouteImport.update({
-  id: '/create',
-  path: '/create',
-  getParentRoute: () => AdminNewsRouteRoute,
-} as any)
 const PublicNewsLinkRoute = PublicNewsLinkRouteImport.update({
   id: '/news/$link',
   path: '/news/$link',
   getParentRoute: () => PublicRouteRoute,
+} as any)
+const AdminNewsIdEditRoute = AdminNewsIdEditRouteImport.update({
+  id: '/$id/edit',
+  path: '/$id/edit',
+  getParentRoute: () => AdminNewsRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -76,20 +76,20 @@ export interface FileRoutesByFullPath {
   '/upload': typeof PublicUploadRoute
   '/': typeof PublicIndexRoute
   '/news/$link': typeof PublicNewsLinkRoute
-  '/admin/news/create': typeof AdminNewsCreateRoute
   '/calculator': typeof PublicCalculatorIndexRoute
   '/news': typeof PublicNewsIndexRoute
   '/admin/news/': typeof AdminNewsIndexRoute
+  '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
 }
 export interface FileRoutesByTo {
   '/admin': typeof AdminRouteRouteWithChildren
   '/upload': typeof PublicUploadRoute
   '/': typeof PublicIndexRoute
   '/news/$link': typeof PublicNewsLinkRoute
-  '/admin/news/create': typeof AdminNewsCreateRoute
   '/calculator': typeof PublicCalculatorIndexRoute
   '/news': typeof PublicNewsIndexRoute
   '/admin/news': typeof AdminNewsIndexRoute
+  '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -99,10 +99,10 @@ export interface FileRoutesById {
   '/_public/upload': typeof PublicUploadRoute
   '/_public/': typeof PublicIndexRoute
   '/_public/news/$link': typeof PublicNewsLinkRoute
-  '/admin/news/create': typeof AdminNewsCreateRoute
   '/_public/calculator/': typeof PublicCalculatorIndexRoute
   '/_public/news/': typeof PublicNewsIndexRoute
   '/admin/news/': typeof AdminNewsIndexRoute
+  '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -112,20 +112,20 @@ export interface FileRouteTypes {
     | '/upload'
     | '/'
     | '/news/$link'
-    | '/admin/news/create'
     | '/calculator'
     | '/news'
     | '/admin/news/'
+    | '/admin/news/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/admin'
     | '/upload'
     | '/'
     | '/news/$link'
-    | '/admin/news/create'
     | '/calculator'
     | '/news'
     | '/admin/news'
+    | '/admin/news/$id/edit'
   id:
     | '__root__'
     | '/_public'
@@ -134,10 +134,10 @@ export interface FileRouteTypes {
     | '/_public/upload'
     | '/_public/'
     | '/_public/news/$link'
-    | '/admin/news/create'
     | '/_public/calculator/'
     | '/_public/news/'
     | '/admin/news/'
+    | '/admin/news/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -203,19 +203,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicCalculatorIndexRouteImport
       parentRoute: typeof PublicRouteRoute
     }
-    '/admin/news/create': {
-      id: '/admin/news/create'
-      path: '/create'
-      fullPath: '/admin/news/create'
-      preLoaderRoute: typeof AdminNewsCreateRouteImport
-      parentRoute: typeof AdminNewsRouteRoute
-    }
     '/_public/news/$link': {
       id: '/_public/news/$link'
       path: '/news/$link'
       fullPath: '/news/$link'
       preLoaderRoute: typeof PublicNewsLinkRouteImport
       parentRoute: typeof PublicRouteRoute
+    }
+    '/admin/news/$id/edit': {
+      id: '/admin/news/$id/edit'
+      path: '/$id/edit'
+      fullPath: '/admin/news/$id/edit'
+      preLoaderRoute: typeof AdminNewsIdEditRouteImport
+      parentRoute: typeof AdminNewsRouteRoute
     }
   }
 }
@@ -241,13 +241,13 @@ const PublicRouteRouteWithChildren = PublicRouteRoute._addFileChildren(
 )
 
 interface AdminNewsRouteRouteChildren {
-  AdminNewsCreateRoute: typeof AdminNewsCreateRoute
   AdminNewsIndexRoute: typeof AdminNewsIndexRoute
+  AdminNewsIdEditRoute: typeof AdminNewsIdEditRoute
 }
 
 const AdminNewsRouteRouteChildren: AdminNewsRouteRouteChildren = {
-  AdminNewsCreateRoute: AdminNewsCreateRoute,
   AdminNewsIndexRoute: AdminNewsIndexRoute,
+  AdminNewsIdEditRoute: AdminNewsIdEditRoute,
 }
 
 const AdminNewsRouteRouteWithChildren = AdminNewsRouteRoute._addFileChildren(

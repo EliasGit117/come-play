@@ -64,7 +64,7 @@ export const getNewsPaginated = createServerFn({ method: 'GET' })
 
 export function getNewsPaginatedQueryOptions(params: TGetNewsPaginatedParams) {
   return queryOptions({
-    queryKey: ['news', params],
+    queryKey: ['news', 'paginated', params],
     queryFn: () => getNewsPaginated({ data: params }),
     staleTime: 30_000,
     gcTime: 30_000

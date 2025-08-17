@@ -1,6 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, TrashIcon } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,13 +13,18 @@ import { DataTableColumnHeader } from '@/components/data-table';
 import { SearchInputType } from '@/components/data-table/types/filtration';
 import { NewsBriefDto } from '@/features/news/dtos/news-brief-dto';
 import { format } from 'date-fns';
+import { Link } from '@tanstack/react-router';
+import { useConfirm } from '@/components/ui/confirm-dialog';
+import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
+import { useDeleteNewsMutation } from '@/features/news/server-functions/delete-news-by-id';
 
 export const newsDataTableColumns: ColumnDef<NewsBriefDto>[] = [
   {
     accessorKey: 'id',
     header: 'Id',
     meta: {
-      label: 'Id range',
+      label: 'Id',
       search: {
         key: 'idRange',
         type: SearchInputType.NumberRange,
@@ -75,7 +80,36 @@ export const newsDataTableColumns: ColumnDef<NewsBriefDto>[] = [
   {
     id: 'actions',
     enableHiding: false,
-    cell: () => {
+    cell: ({ row }) => {
+      const confirm = useConfirm();
+      const { isPending, mutateAsync } = useDeleteNewsMutation();
+
+      const remove = async () => {
+        const confirmed = await confirm({
+          title: 'Delete Item',
+          description: 'Are you sure? This action cannot be undone.',
+          icon: <TrashIcon className="size-4 text-destructive"/>,
+          confirmText: 'Delete',
+          cancelText: 'Cancel',
+          confirmButton: {
+            className: cn(
+              'bg-destructive text-white shadow-xs hover:bg-destructive/90',
+              'focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60'
+            )
+          },
+          alertDialogTitle: {
+            className: 'flex items-center gap-2'
+          }
+        });
+
+        if (!confirmed) return;
+
+        toast.promise(() => mutateAsync(row.original.id), {
+          loading: 'Deleting...',
+          success: () => 'Deleted successfully!',
+          error: (err: any) => err?.message || 'Failed to delete'
+        });
+      };
 
       return (
         <div className="flex">
@@ -88,10 +122,12 @@ export const newsDataTableColumns: ColumnDef<NewsBriefDto>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem>
-                Edit
+              <DropdownMenuItem asChild>
+                <Link to="/admin/news/$id/edit" params={{ id: `${row.original.id}` }}>
+                  Edit
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="!text-destructive">
+              <DropdownMenuItem className="!text-destructive" onClick={() => remove()} disabled={isPending}>
                 Delete
               </DropdownMenuItem>
             </DropdownMenuContent>

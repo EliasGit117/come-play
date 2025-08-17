@@ -1,4 +1,6 @@
-"use no memo";
+import { ConfirmDialogProvider } from '@/components/ui/confirm-dialog';
+
+'use no memo';
 
 import { DataTable, DataTablePagination, DataTableProvider, DataTableToolbar } from '@/components/data-table';
 import { NewsBriefDto } from '@/features/news/dtos/news-brief-dto';
@@ -13,13 +15,15 @@ interface IProps extends Omit<ComponentProps<typeof DataTableProvider<NewsBriefD
 const NewsTable: FC<IProps> = ({ className, ...tableProviderProps }) => {
 
   return (
-    <div className={cn('flex flex-col gap-4', className)}>
-      <DataTableProvider {...tableProviderProps}>
-        <DataTableToolbar/>
-        <DataTable/>
-        <DataTablePagination/>
-      </DataTableProvider>
-    </div>
+    <ConfirmDialogProvider>
+      <div className={cn('flex flex-col gap-4', className)}>
+        <DataTableProvider {...tableProviderProps}>
+          <DataTableToolbar/>
+          <DataTable/>
+          <DataTablePagination/>
+        </DataTableProvider>
+      </div>
+    </ConfirmDialogProvider>
   );
 };
 
