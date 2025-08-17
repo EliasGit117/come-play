@@ -1,11 +1,11 @@
 import { createServerFn } from '@tanstack/react-start';
 import prisma from '@/lib/prisma';
 import { paginatedSchema } from '@/features/common/pagination/pagination-validation';
-import { PaginationResultWithCountDto } from '@/features/common/pagination/pagination-result-dto';
 import z from 'zod';
 import { queryOptions } from '@tanstack/react-query';
 import { NewsBriefDtoFactory } from '@/features/news/dtos/news-brief-dto';
 import { Prisma } from '@prisma/client';
+import { PaginationResultDtoFactory } from '@/features/common/pagination/pagination-result-dto';
 
 
 export const getNewsPaginatedSchema = paginatedSchema.extend({
@@ -56,7 +56,7 @@ export const getNewsPaginated = createServerFn({ method: 'GET' })
         page: page ?? 1,
       });
 
-    return PaginationResultWithCountDto.fromPrismaPaginationRes(NewsBriefDtoFactory.fromEntities(items), meta);
+    return PaginationResultDtoFactory.getWithCount(NewsBriefDtoFactory.fromEntities(items), meta);
   });
 
 
