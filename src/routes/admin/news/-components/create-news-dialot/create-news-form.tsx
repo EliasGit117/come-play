@@ -4,16 +4,15 @@ import { useFormContext } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 import z from 'zod';
 import { Input } from '@/components/ui/input';
-import { RichEditor } from '@/components/editor';
+import { createNewsSchema } from '@/features/news/server-functions/create-news';
+import { Checkbox } from '@/components/ui/checkbox';
 
 
-export const newsFormSchema = z.object({
-  link: z.string().regex(/^[a-zA-Z0-9-]+$/).min(3).max(1000),
-  title: z.string().min(3).max(256),
-  content: z.string().min(3).max(10240),
+export const createNewsFormSchema = createNewsSchema.extend({
+  editAfterCreation: z.boolean()
 });
 
-export type TNewsFormSchema = z.infer<typeof newsFormSchema>;
+export type TCreateNewsFormSchema = z.infer<typeof createNewsFormSchema>;
 
 export interface IPostProps {
   disabled?: boolean;
@@ -21,10 +20,10 @@ export interface IPostProps {
 }
 
 export const NewsForm: FC<IPostProps> = ({ className, disabled }) => {
-  const form = useFormContext<TNewsFormSchema>();
+  const form = useFormContext<TCreateNewsFormSchema>();
 
   return (
-    <fieldset disabled={disabled} className={cn('grid md:grid-cols-2 gap-4', className)}>
+    <fieldset disabled={disabled} className={cn('grid gap-4', className)}>
       <FormField
         control={form.control}
         name="link"
@@ -43,14 +42,14 @@ export const NewsForm: FC<IPostProps> = ({ className, disabled }) => {
 
       <FormField
         control={form.control}
-        name="title"
+        name="titleRo"
         render={({ field }) => (
           <FormItem>
             <FormLabel>
-              Title
+              Title RO
             </FormLabel>
             <FormControl>
-              <Input placeholder="Some title" {...field}/>
+              <Input placeholder="Some romanian title" {...field}/>
             </FormControl>
             <FormMessage/>
           </FormItem>
@@ -59,16 +58,34 @@ export const NewsForm: FC<IPostProps> = ({ className, disabled }) => {
 
       <FormField
         control={form.control}
-        name="content"
+        name="titleRu"
         render={({ field }) => (
-          <FormItem className='col-span-full'>
+          <FormItem>
             <FormLabel>
-              Content
+              Title RU
             </FormLabel>
             <FormControl>
-              <RichEditor value={field.value} onChange={field.onChange} editorClassName='min-h-44 mx-auto px-4'/>
+              <Input placeholder="Some russian title" {...field}/>
             </FormControl>
             <FormMessage/>
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="editAfterCreation"
+        render={({ field }) => (
+          <FormItem className="flex flex-row items-center gap-2">
+            <FormControl >
+              <Checkbox
+                checked={field.value}
+                onCheckedChange={field.onChange}
+              />
+            </FormControl>
+            <FormLabel className="text-sm font-normal">
+              Open edit news after creation
+            </FormLabel>
           </FormItem>
         )}
       />

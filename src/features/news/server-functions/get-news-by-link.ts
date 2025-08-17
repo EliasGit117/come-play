@@ -1,7 +1,6 @@
 import z from 'zod';
 import { createServerFn } from '@tanstack/react-start';
 import prisma from '@/lib/prisma';
-import { NewsBriefDto } from '@/features/news/dtos/news-brief-dto';
 import { queryOptions } from '@tanstack/react-query';
 import { NewsDto } from '@/features/news/dtos/news-dto';
 

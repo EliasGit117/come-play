@@ -1,23 +1,18 @@
-"use no memo";
-
-import { Button } from '@/components/ui/button';
+'use no memo';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
-import { RotateCcwIcon } from 'lucide-react';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { PlusIcon, RotateCcwIcon } from 'lucide-react';
 import { zodValidator } from '@tanstack/zod-adapter';
-import {
-  DataTable,
-  DataTablePagination,
-  DataTableProvider,
-  DataTableToolbar,
-  useDataTable
-} from '@/components/data-table';
+import { useDataTable } from '@/components/data-table';
 import {
   getNewsPaginatedQueryOptions,
   getNewsPaginatedSchema
 } from '@/features/news/server-functions/get-news-paginated';
-import { newsDataTableColumns } from '@/routes/admin/news/-components/news-data-table-columns';
+import NewsTable from '@/routes/admin/news/-components/news-table/table';
+import { newsDataTableColumns } from '@/routes/admin/news/-components/news-table/columns';
+import { useState } from 'react';
+import { CreateNewsDialog } from '@/routes/admin/news/-components/create-news-dialot/dialog';
+import ButtonWithTooltip from '@/components/ui/button-with-tooltip';
 
 
 export const Route = createFileRoute('/admin/news/')({
@@ -36,6 +31,8 @@ export const Route = createFileRoute('/admin/news/')({
 
 function Component() {
   const search = Route.useSearch();
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
+
   const { data, isPending, refetch } = useQuery({
     ...getNewsPaginatedQueryOptions(search),
     placeholderData: keepPreviousData
@@ -50,6 +47,10 @@ function Component() {
     columns: newsDataTableColumns
   });
 
+  const refetchSync = () => refetch();
+  const openCreateDialog = () => setCreateDialogOpen(true);
+
+
   return (
     <main className="container mx-auto p-4 space-y-4 flex flex-col flex-1">
       <p className="text-sm text-muted-foreground">
@@ -58,43 +59,34 @@ function Component() {
 
       <article className="space-y-2">
         <div className="flex items-center gap-2">
-          <h2 className="text-2xl">
-            Title
-          </h2>
+          <h2 className="text-2xl">Title</h2>
 
           <div className="flex-1"/>
 
-          <Tooltip delayDuration={500}>
-            <TooltipTrigger asChild>
-              <Button variant="ghost" size="smIcon" onClick={() => refetch()} disabled={isPending}>
-                <RotateCcwIcon/>
-              </Button>
-            </TooltipTrigger>
+          <ButtonWithTooltip
+            variant="ghost"
+            size="smIcon"
+            tooltip="Create"
+            disabled={isPending}
+            onClick={openCreateDialog}
+          >
+            <PlusIcon/>
+          </ButtonWithTooltip>
 
-            <TooltipContent><p>Refresh</p></TooltipContent>
-          </Tooltip>
-
-          <Tooltip delayDuration={500}>
-            <TooltipTrigger asChild>
-              <Button variant="ghost" size="smIcon" asChild>
-                {/*<Link to="/admin/posts/create">*/}
-                {/*  <PlusIcon/>*/}
-                {/*</Link>*/}
-              </Button>
-            </TooltipTrigger>
-
-            <TooltipContent>
-              <p>Create</p>
-            </TooltipContent>
-          </Tooltip>
+          <ButtonWithTooltip
+            variant="ghost"
+            size="smIcon"
+            tooltip="Refresh"
+            onClick={refetchSync} disabled={isPending}
+          >
+            <RotateCcwIcon/>
+          </ButtonWithTooltip>
         </div>
       </article>
 
-      <DataTableProvider table={table}>
-        <DataTableToolbar/>
-        <DataTable/>
-        <DataTablePagination/>
-      </DataTableProvider>
+      <NewsTable table={table}/>
+
+      <CreateNewsDialog open={createDialogOpen} setOpen={setCreateDialogOpen} afterSuccess={refetchSync}/>
     </main>
   );
 }

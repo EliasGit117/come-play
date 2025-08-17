@@ -3,13 +3,22 @@
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { ColumnDef, ColumnFiltersState, Updater } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
-import { useDebouncedCallback } from 'use-debounce';
 
-type TTableSearchResult = [ColumnFiltersState, (updater: Updater<ColumnFiltersState>) => void];
+type TTableSearchResult = [
+  ColumnFiltersState,
+  (updater: Updater<ColumnFiltersState>) => void
+];
 
 interface IUseTableSearchOptions {
-  history?: 'push' | 'replace';
-  debounceMs?: number;
+  history?: "push" | "replace";
+}
+
+function getColumnId<TData>(col: ColumnDef<TData, any>): string {
+  if (col.id) return col.id;
+  if ("accessorKey" in col && col.accessorKey) {
+    return String(col.accessorKey);
+  }
+  throw new Error("Column must have either id or accessorKey");
 }
 
 export function useTableSearch<TData>(
@@ -19,61 +28,69 @@ export function useTableSearch<TData>(
   const navigate = useNavigate();
   const search: Record<string, unknown> = useSearch({ strict: false });
 
-  const { history = 'replace', debounceMs = 300 } = options ?? {};
+  const { history = "replace" } = options ?? {};
 
-  const searchableColumnKeys = useMemo(
-    () =>
-      new Set(
-        columns
-          .filter(col => !!col.meta?.search?.key)
-          .map(col => col.meta!.search!.key)
-      ),
-    [columns]
-  );
+  // Build lookup maps
+  const { searchKeyToColumnId, columnIdToSearchKey } = useMemo(() => {
+    const searchKeyToColumnId = new Map<string, string>();
+    const columnIdToSearchKey = new Map<string, string>();
 
+    for (const col of columns) {
+      const searchKey = col.meta?.search?.key;
+      if (searchKey) {
+        const colId = getColumnId(col);
+        searchKeyToColumnId.set(searchKey, colId);
+        columnIdToSearchKey.set(colId, searchKey);
+      }
+    }
+
+    return { searchKeyToColumnId, columnIdToSearchKey };
+  }, [columns]);
+
+  //  Convert router search → columnFilters
   const columnFilters: ColumnFiltersState = useMemo(
     () =>
       Object.entries(search)
-        .filter(([key]) => searchableColumnKeys.has(key))
+        .filter(([key]) => searchKeyToColumnId.has(key))
         .map(([key, value]) => ({
-          id: key,
-          value
+          id: searchKeyToColumnId.get(key)!,
+          value,
         })),
-    [search, searchableColumnKeys]
+    [search, searchKeyToColumnId]
   );
 
-  const debouncedNavigate = useDebouncedCallback(
-    (newSearch: Record<string, unknown>) => {
-      void navigate({
-        to: '.',
-        search: () => ({ ...newSearch, page: 1 }),
-        replace: history === 'replace'
-      });
-    },
-    debounceMs
-  );
-
+  // Convert columnFilters → router search (without debounce)
   const setColumnFilters = useCallback(
     (updater: Updater<ColumnFiltersState>) => {
-      const prevFilters: ColumnFiltersState = Object.entries(search).map(
-        ([key, value]) => ({
-          id: key,
-          value
-        })
-      );
+      const newFilters =
+        typeof updater === "function" ? updater(columnFilters) : updater;
 
-      const newFilters = typeof updater === 'function' ? updater(prevFilters) : updater;
       const newSearch: Record<string, unknown> = {};
 
+      // Collect all active search keys
+      const activeSearchKeys = new Set<string>();
       for (const filter of newFilters) {
-        newSearch[filter.id] = filter.value;
+        const searchKey = columnIdToSearchKey.get(filter.id);
+        if (searchKey) {
+          newSearch[searchKey] = filter.value;
+          activeSearchKeys.add(searchKey);
+        }
       }
 
-      searchableColumnKeys.forEach(key => (newSearch[key] ??= undefined));
+      // Ensure all searchable keys exist in search (set to undefined if cleared)
+      for (const searchKey of columnIdToSearchKey.values()) {
+        if (!activeSearchKeys.has(searchKey)) {
+          newSearch[searchKey] = undefined;
+        }
+      }
 
-      debouncedNavigate(newSearch);
+      void navigate({
+        to: ".",
+        search: () => ({ ...search, ...newSearch, page: 1 }),
+        replace: history === "replace",
+      });
     },
-    [search, searchableColumnKeys, debouncedNavigate]
+    [columnFilters, search, columnIdToSearchKey, navigate, history]
   );
 
   return [columnFilters, setColumnFilters];

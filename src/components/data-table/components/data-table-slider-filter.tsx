@@ -1,5 +1,4 @@
 "use no memo";
-
 import { PlusCircle, XCircle } from 'lucide-react';
 import type { Column } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
@@ -13,8 +12,10 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { Slider } from '@/components/ui/slider';
 import { cn } from '@/lib/utils';
-import React, { useEffect, useId, useState } from 'react';
+import React, { useCallback, useEffect, useId, useMemo, useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 import { SearchInputType } from '@/components/data-table/types/filtration';
+import { DEFAULT_DEBOUNCE } from '@/components/data-table/types/consts';
 
 interface IRange {
   min: number;
@@ -36,86 +37,108 @@ interface DataTableSliderFilterProps<TData> {
   column: Column<TData, unknown>;
 }
 
-export function DataTableSliderFilter<TData>({
-                                               column,
-                                             }: DataTableSliderFilterProps<TData>) {
+export function DataTableSliderFilter<TData>(props: DataTableSliderFilterProps<TData>) {
+  const { column } = props;
   const meta = column.columnDef.meta;
   const id = useId();
 
-  if (meta?.search?.type !== SearchInputType.NumberRange) return null;
+  if (meta?.search?.type !== SearchInputType.NumberRange)
+    return null;
 
   const title = meta.label ?? column.id;
 
-  const columnFilterValue = getIsValidRange(column.getFilterValue())
-    ? (column.getFilterValue() as RangeValue)
-    : undefined;
+  const columnFilterValue =
+    getIsValidRange(column.getFilterValue()) ? (column.getFilterValue() as RangeValue) : undefined;
 
   const defaultRange = meta.search.range;
   const unit = meta.search?.unit;
 
-  // Calculate min, max, step
-  let min = 0;
-  let max = 100;
-  if (defaultRange && getIsValidRange(defaultRange)) {
-    [min, max] = defaultRange;
-  } else {
-    const values = column.getFacetedMinMaxValues();
-    if (values && Array.isArray(values) && values.length === 2) {
-      const [facetMinValue, facetMaxValue] = values;
-      if (typeof facetMinValue === 'number' && typeof facetMaxValue === 'number') {
-        min = facetMinValue;
-        max = facetMaxValue;
+  const { min, max, step } = useMemo<IRange & { step: number }>(() => {
+    let minValue = 0;
+    let maxValue = 100;
+
+    if (defaultRange && getIsValidRange(defaultRange)) {
+      [minValue, maxValue] = defaultRange;
+    } else {
+      const values = column.getFacetedMinMaxValues();
+      if (values && Array.isArray(values) && values.length === 2) {
+        const [facetMinValue, facetMaxValue] = values;
+        if (typeof facetMinValue === 'number' && typeof facetMaxValue === 'number') {
+          minValue = facetMinValue;
+          maxValue = facetMaxValue;
+        }
       }
     }
-  }
-  const rangeSize = max - min;
-  const step =
-    rangeSize <= 20
-      ? 1
-      : rangeSize <= 100
-        ? Math.ceil(rangeSize / 20)
-        : Math.ceil(rangeSize / 50);
 
-  const [localRange, setLocalRange] = useState<RangeValue>(
-    columnFilterValue ?? [min, max]
-  );
+    const rangeSize = maxValue - minValue;
+    const step =
+      rangeSize <= 20
+        ? 1
+        : rangeSize <= 100
+          ? Math.ceil(rangeSize / 20)
+          : Math.ceil(rangeSize / 50);
+
+    return { min: minValue, max: maxValue, step };
+  }, [column, defaultRange]);
+
+  const [localRange, setLocalRange] = useState<RangeValue>(() => columnFilterValue ?? [min, max]);
 
   useEffect(() => {
+    if (debouncedSetFilter.isPending())
+      return;
+
     setLocalRange(columnFilterValue ?? [min, max]);
   }, [columnFilterValue, min, max]);
 
-  function onFromInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const numValue = Number(event.target.value);
-    if (!Number.isNaN(numValue) && numValue >= min && numValue <= localRange[1]) {
-      const newRange: RangeValue = [numValue, localRange[1]];
-      setLocalRange(newRange);
-      column.setFilterValue(newRange);
-    }
-  }
+  const debouncedSetFilter = useDebouncedCallback((value: RangeValue) => {
+    column.setFilterValue(value);
+  }, DEFAULT_DEBOUNCE);
 
-  function onToInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const numValue = Number(event.target.value);
-    if (!Number.isNaN(numValue) && numValue <= max && numValue >= localRange[0]) {
-      const newRange: RangeValue = [localRange[0], numValue];
-      setLocalRange(newRange);
-      column.setFilterValue(newRange);
-    }
-  }
+  const onFromInputChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const numValue = Number(event.target.value);
+      if (!Number.isNaN(numValue) && numValue >= min && numValue <= localRange[1]) {
+        const newRange: RangeValue = [numValue, localRange[1]];
+        setLocalRange(newRange);
+        debouncedSetFilter(newRange);
+      }
+    },
+    [debouncedSetFilter, min, localRange]
+  );
 
-  function onSliderValueChange(value: RangeValue) {
-    if (Array.isArray(value) && value.length === 2) {
-      setLocalRange(value);
-      column.setFilterValue(value);
-    }
-  }
+  const onToInputChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const numValue = Number(event.target.value);
+      if (!Number.isNaN(numValue) && numValue <= max && numValue >= localRange[0]) {
+        const newRange: RangeValue = [localRange[0], numValue];
+        setLocalRange(newRange);
+        debouncedSetFilter(newRange);
+      }
+    },
+    [debouncedSetFilter, max, localRange]
+  );
 
-  function onReset(event: React.MouseEvent) {
-    if (event.target instanceof HTMLDivElement) {
-      event.stopPropagation();
-    }
-    setLocalRange([min, max]);
-    column.setFilterValue(undefined);
-  }
+  const onSliderValueChange = useCallback(
+    (value: RangeValue) => {
+      if (Array.isArray(value) && value.length === 2) {
+        setLocalRange(value);
+        debouncedSetFilter(value);
+      }
+    },
+    [debouncedSetFilter]
+  );
+
+  const onReset = useCallback(
+    (event: React.MouseEvent) => {
+      if (event.target instanceof HTMLDivElement) {
+        event.stopPropagation();
+      }
+      debouncedSetFilter.cancel();
+      setLocalRange([min, max]);
+      column.setFilterValue(undefined);
+    },
+    [column, debouncedSetFilter, min, max]
+  );
 
   return (
     <Popover>
@@ -129,10 +152,10 @@ export function DataTableSliderFilter<TData>({
               className="rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               onClick={onReset}
             >
-              <XCircle />
+              <XCircle/>
             </div>
           ) : (
-            <PlusCircle />
+            <PlusCircle/>
           )}
           <span>{title}</span>
           {columnFilterValue ? (
@@ -141,7 +164,8 @@ export function DataTableSliderFilter<TData>({
                 orientation="vertical"
                 className="mx-0.5 data-[orientation=vertical]:h-4"
               />
-              {columnFilterValue[0]} - {columnFilterValue[1]}
+              {columnFilterValue[0]} -{' '}
+              {columnFilterValue[1]}
               {unit ? ` ${unit}` : ''}
             </>
           ) : null}
@@ -173,7 +197,9 @@ export function DataTableSliderFilter<TData>({
                 className={cn('h-8 w-24', unit && 'pr-8')}
               />
               {unit && (
-                <span className="absolute top-0 right-0 bottom-0 flex items-center rounded-r-md bg-accent px-2 text-muted-foreground text-sm">
+                <span
+                  className="absolute top-0 right-0 bottom-0 flex items-center rounded-r-md bg-accent px-2 text-muted-foreground text-sm"
+                >
                   {unit}
                 </span>
               )}
@@ -197,7 +223,9 @@ export function DataTableSliderFilter<TData>({
                 className={cn('h-8 w-24', unit && 'pr-8')}
               />
               {unit && (
-                <span className="absolute top-0 right-0 bottom-0 flex items-center rounded-r-md bg-accent px-2 text-muted-foreground text-sm">
+                <span
+                  className="absolute top-0 right-0 bottom-0 flex items-center rounded-r-md bg-accent px-2 text-muted-foreground text-sm"
+                >
                   {unit}
                 </span>
               )}

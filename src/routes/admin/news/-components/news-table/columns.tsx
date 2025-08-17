@@ -19,8 +19,12 @@ export const newsDataTableColumns: ColumnDef<NewsBriefDto>[] = [
     accessorKey: 'id',
     header: 'Id',
     meta: {
-      label: 'Id',
-      search: { key: 'id', type: SearchInputType.NumberRange, placeholder: 'Search by id', range: [1, 1000]  }
+      label: 'Id range',
+      search: {
+        key: 'idRange',
+        type: SearchInputType.NumberRange,
+        range: [1, 1000]
+      }
     },
     filterFn: 'equals'
   },

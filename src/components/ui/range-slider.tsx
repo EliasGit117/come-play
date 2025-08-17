@@ -56,10 +56,7 @@ const RangeSlider = React.forwardRef<
 
     for (let i = min; i <= max; i += actualTickStep) {
       const position = ((i - min) / (max - min)) * 100;
-      ticks.push({
-        value: i,
-        position: position
-      });
+      ticks.push({ value: i, position: position });
     }
 
     return ticks;
@@ -99,7 +96,6 @@ const RangeSlider = React.forwardRef<
         </SliderPrimitive.Thumb>
       </SliderPrimitive.Root>
 
-      {/* Засечки */}
       {showTicks && (
         <div className="relative mt-2 h-6 mx-2">
           {ticks.map((tick) => (
@@ -108,9 +104,7 @@ const RangeSlider = React.forwardRef<
               className="absolute flex flex-col items-center"
               style={{ left: `${tick.position}%`, transform: 'translateX(-50%)' }}
             >
-              {/* Засечка */}
               <div className="w-px h-1.5 bg-muted-foreground/30"/>
-              {/* Число */}
               <span className="text-xs text-muted-foreground mt-1 select-none">
                 {tick.value}
               </span>

@@ -2,14 +2,14 @@
 
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { SortingState, Updater } from '@tanstack/react-table';
-import { ASC_KEY, DESC_KEY, ORDER_KEY, SORT_KEY } from '../types/consts';
+import { ASC_KEY, DESC_KEY, DIRECTION_KEY, ORDER_BY_KEY } from '../types/consts';
 import { z } from 'zod';
 import { useCallback } from 'react';
 
 const sortingOptions = z.enum([ASC_KEY, DESC_KEY]);
 const sortSchema = z.object({
-  [SORT_KEY]: z.string(),
-  [ORDER_KEY]: sortingOptions
+  [ORDER_BY_KEY]: z.string(),
+  [DIRECTION_KEY]: sortingOptions
 });
 
 interface IUseTableSortProps {
@@ -31,8 +31,8 @@ export function useTableSort(props: IUseTableSortProps): [SortingState, (updater
       search: (prev: Record<string, unknown>) => ({
         ...prev,
         page: id && order ? 1 : undefined,
-        [SORT_KEY]: id || undefined,
-        [ORDER_KEY]: order || undefined
+        [ORDER_BY_KEY]: id || undefined,
+        [DIRECTION_KEY]: order || undefined
       }),
       replace: history === 'replace'
     });
@@ -63,5 +63,5 @@ export function useTableSort(props: IUseTableSortProps): [SortingState, (updater
 
 function getSortingState(value: unknown): SortingState {
   const res = sortSchema.safeParse(value);
-  return res.success ? [{ id: res.data[SORT_KEY], desc: res.data[ORDER_KEY] === DESC_KEY }] : [];
+  return res.success ? [{ id: res.data[ORDER_BY_KEY], desc: res.data[DIRECTION_KEY] === DESC_KEY }] : [];
 }
