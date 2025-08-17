@@ -4,7 +4,7 @@ export class NewsBriefDto {
   id: number;
   title: string;
   link: string;
-  createdAt: Date;
+  createdAt: string;
 
   constructor(params: NewsBriefDto) {
     this.id = params.id;
@@ -18,7 +18,7 @@ export class NewsBriefDto {
       id: news.id,
       title: news.titleRo,
       link: news.link,
-      createdAt: news.createdAt
+      createdAt: news.createdAt.toISOString(),
     });
   }
 }

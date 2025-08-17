@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "prisma generate && vite build",
-    "start": "vite start"
+    "start": "node .output/server/index.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
