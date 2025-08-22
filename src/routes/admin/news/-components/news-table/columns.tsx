@@ -11,15 +11,16 @@ import {
 import * as React from 'react';
 import { DataTableColumnHeader } from '@/components/data-table';
 import { SearchInputType } from '@/components/data-table/types/filtration';
-import { NewsBriefDto } from '@/features/news/dtos/news-brief-dto';
 import { format } from 'date-fns';
 import { Link } from '@tanstack/react-router';
 import { useConfirm } from '@/components/ui/confirm-dialog';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { useDeleteNewsMutation } from '@/features/news/server-functions/delete-news-by-id';
+import { INewsBriefDto } from '@/features/news/dtos/news-brief-dto';
+import { NewsStatus } from '@prisma/client';
 
-export const newsDataTableColumns: ColumnDef<NewsBriefDto>[] = [
+export const newsDataTableColumns: ColumnDef<INewsBriefDto>[] = [
   {
     accessorKey: 'id',
     header: 'Id',
@@ -48,29 +49,51 @@ export const newsDataTableColumns: ColumnDef<NewsBriefDto>[] = [
     cell: ({ row }) => <div className="lowercase">{row.getValue('title')}</div>
   },
   {
-    accessorKey: 'link',
+    accessorKey: 'slug',
     meta: {
-      label: 'Link',
+      label: 'Slug',
       search: {
-        key: 'link',
+        key: 'slug',
         type: SearchInputType.Text,
         placeholder: 'Search by link'
       }
     },
     header: ({ column }) =>
-      <DataTableColumnHeader column={column} title="Link"/>,
+      <DataTableColumnHeader column={column} title="Slug"/>,
     cell: ({ row }) => (
       <div className="capitalize">
-        {row.getValue('link')}
+        {row.getValue('slug')}
       </div>
     )
 
   },
   {
+    accessorKey: 'status',
+    meta: {
+      label: 'Status',
+      search: {
+        key: 'status',
+        type: SearchInputType.MultiSelect,
+        options: [
+          { value: NewsStatus.hidden, label: 'Hidden' },
+          { value: NewsStatus.published, label: 'Published' },
+        ]
+      }
+    },
+    filterFn: 'equals',
+    header: ({ column }) =>
+      <DataTableColumnHeader column={column} title="Slug"/>,
+    cell: ({ row }) => (
+      <div className="capitalize">
+        {row.getValue('status')}
+      </div>
+    )
+  },
+  {
     accessorKey: 'createdAt',
     meta: {
       label: 'Created At',
-      search: { key: 'createdAt', type: SearchInputType.DateRange }
+      search: { key: 'createdAt', type: SearchInputType.DateRange },
     },
     header: ({ column }) =>
       <DataTableColumnHeader column={column} title="Created At"/>,

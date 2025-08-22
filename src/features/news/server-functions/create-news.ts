@@ -6,7 +6,7 @@ import { INewsDto, NewsDtoFactory } from '@/features/news/dtos/news-dto';
 
 
 export const createNewsSchema = z.object({
-  link: z.string().regex(/^[a-zA-Z0-9-]+$/).min(3).max(1000),
+  slug: z.string().regex(/^[a-zA-Z0-9-]+$/).min(3).max(1000),
   titleRo: z.string().min(3).max(256),
   titleRu: z.string().min(3).max(256)
 });
@@ -16,16 +16,16 @@ export type TCreatNewsSchema = z.infer<typeof createNewsSchema>;
 export const createNews = createServerFn({ method: 'POST' })
   .validator(createNewsSchema)
   .handler(async ({ data }) => {
-    const withSameLink = await prisma.news.findFirst({ where: { link: data.link } });
+    const withSameSlug = await prisma.news.findFirst({ where: { slug: data.slug } });
 
-    if (!!withSameLink)
-      throw new Error('There is already a news with such a link')
+    if (!!withSameSlug)
+      throw new Error('There is already a news with such a slug')
 
     const news = await prisma.news.create({
       data: {
         ...data,
         contentRo: null,
-        contentRu: null
+        contentRu: null,
       }
     });
 

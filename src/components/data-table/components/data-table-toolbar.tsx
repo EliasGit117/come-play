@@ -1,5 +1,6 @@
-"use no memo";
-
+'use no memo';
+import { DataTableDateRangeFilter } from '@/components/data-table/components/data-table-date-range-filter';
+import { DataTableFacetedFilter } from '@/components/data-table/components/data-table-faceted-filter';
 import * as React from 'react';
 import { XIcon } from 'lucide-react';
 import type { Column } from '@tanstack/react-table';
@@ -9,8 +10,6 @@ import { DataTableTextFilter } from '@/components/data-table/components/data-tab
 import { DataTableViewOptions, useDataTableContext } from '@/components/data-table';
 import { SearchInputType } from '@/components/data-table/types/filtration';
 import { DataTableSliderFilter } from '@/components/data-table/components/data-table-slider-filter';
-
-
 
 interface IDataTableToolbarProps<TData> extends React.ComponentProps<'div'> {}
 
@@ -77,13 +76,28 @@ function DataTableToolbarFilter<TData>(props: DataTableToolbarFilterProps<TData>
 
     switch (columnMeta.search.type) {
       case SearchInputType.Text:
-        return <DataTableTextFilter column={column}/>;
+        return <DataTableTextFilter column={column} key={column.id}/>;
 
       case SearchInputType.Number:
-        return <DataTableTextFilter type='number' column={column}/>;
+        return <DataTableTextFilter type='number' column={column} key={column.id}/>;
 
       case SearchInputType.NumberRange:
-        return <DataTableSliderFilter column={column}/>;
+        return <DataTableSliderFilter column={column} key={column.id}/>;
+
+      case SearchInputType.Select:
+      case SearchInputType.MultiSelect:
+        return (
+          <DataTableFacetedFilter
+            column={column}
+            title={columnMeta.label ?? column.id}
+            options={columnMeta.search.options ?? []}
+            multiple={columnMeta.search.type === SearchInputType.MultiSelect}
+            key={column.id}
+          />
+        );
+
+      case SearchInputType.DateRange:
+        return <DataTableDateRangeFilter column={column} key={column.id}/>
 
       default:
         return null;

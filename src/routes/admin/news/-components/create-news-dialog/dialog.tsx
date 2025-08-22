@@ -30,7 +30,7 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, aft
   const form = useForm<TCreateNewsFormSchema>({
     resolver: zodResolver(createNewsFormSchema),
     defaultValues: {
-      link: "",
+      slug: "",
       titleRo: "",
       titleRu: "",
       editAfterCreation: true

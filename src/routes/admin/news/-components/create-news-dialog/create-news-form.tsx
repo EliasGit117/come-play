@@ -26,14 +26,14 @@ export const NewsForm: FC<IPostProps> = ({ className, disabled }) => {
     <fieldset disabled={disabled} className={cn('grid gap-4', className)}>
       <FormField
         control={form.control}
-        name="link"
+        name="slug"
         render={({ field }) => (
           <FormItem>
             <FormLabel>
-              Link
+              Slug
             </FormLabel>
             <FormControl>
-              <Input placeholder="example-link-for-post" {...field}/>
+              <Input placeholder="example-for-the-post" {...field}/>
             </FormControl>
             <FormMessage/>
           </FormItem>

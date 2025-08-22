@@ -17,7 +17,7 @@ import { Route as AdminNewsRouteRouteImport } from './routes/admin/news/route'
 import { Route as AdminNewsIndexRouteImport } from './routes/admin/news/index'
 import { Route as PublicNewsIndexRouteImport } from './routes/_public/news/index'
 import { Route as PublicCalculatorIndexRouteImport } from './routes/_public/calculator/index'
-import { Route as PublicNewsLinkRouteImport } from './routes/_public/news/$link'
+import { Route as PublicNewsSlugRouteImport } from './routes/_public/news/$slug'
 import { Route as AdminNewsIdEditRouteImport } from './routes/admin/news/$id/edit'
 
 const AdminRouteRoute = AdminRouteRouteImport.update({
@@ -59,9 +59,9 @@ const PublicCalculatorIndexRoute = PublicCalculatorIndexRouteImport.update({
   path: '/calculator/',
   getParentRoute: () => PublicRouteRoute,
 } as any)
-const PublicNewsLinkRoute = PublicNewsLinkRouteImport.update({
-  id: '/news/$link',
-  path: '/news/$link',
+const PublicNewsSlugRoute = PublicNewsSlugRouteImport.update({
+  id: '/news/$slug',
+  path: '/news/$slug',
   getParentRoute: () => PublicRouteRoute,
 } as any)
 const AdminNewsIdEditRoute = AdminNewsIdEditRouteImport.update({
@@ -75,7 +75,7 @@ export interface FileRoutesByFullPath {
   '/admin/news': typeof AdminNewsRouteRouteWithChildren
   '/upload': typeof PublicUploadRoute
   '/': typeof PublicIndexRoute
-  '/news/$link': typeof PublicNewsLinkRoute
+  '/news/$slug': typeof PublicNewsSlugRoute
   '/calculator': typeof PublicCalculatorIndexRoute
   '/news': typeof PublicNewsIndexRoute
   '/admin/news/': typeof AdminNewsIndexRoute
@@ -85,7 +85,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRouteRouteWithChildren
   '/upload': typeof PublicUploadRoute
   '/': typeof PublicIndexRoute
-  '/news/$link': typeof PublicNewsLinkRoute
+  '/news/$slug': typeof PublicNewsSlugRoute
   '/calculator': typeof PublicCalculatorIndexRoute
   '/news': typeof PublicNewsIndexRoute
   '/admin/news': typeof AdminNewsIndexRoute
@@ -98,7 +98,7 @@ export interface FileRoutesById {
   '/admin/news': typeof AdminNewsRouteRouteWithChildren
   '/_public/upload': typeof PublicUploadRoute
   '/_public/': typeof PublicIndexRoute
-  '/_public/news/$link': typeof PublicNewsLinkRoute
+  '/_public/news/$slug': typeof PublicNewsSlugRoute
   '/_public/calculator/': typeof PublicCalculatorIndexRoute
   '/_public/news/': typeof PublicNewsIndexRoute
   '/admin/news/': typeof AdminNewsIndexRoute
@@ -111,7 +111,7 @@ export interface FileRouteTypes {
     | '/admin/news'
     | '/upload'
     | '/'
-    | '/news/$link'
+    | '/news/$slug'
     | '/calculator'
     | '/news'
     | '/admin/news/'
@@ -121,7 +121,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/upload'
     | '/'
-    | '/news/$link'
+    | '/news/$slug'
     | '/calculator'
     | '/news'
     | '/admin/news'
@@ -133,7 +133,7 @@ export interface FileRouteTypes {
     | '/admin/news'
     | '/_public/upload'
     | '/_public/'
-    | '/_public/news/$link'
+    | '/_public/news/$slug'
     | '/_public/calculator/'
     | '/_public/news/'
     | '/admin/news/'
@@ -203,11 +203,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicCalculatorIndexRouteImport
       parentRoute: typeof PublicRouteRoute
     }
-    '/_public/news/$link': {
-      id: '/_public/news/$link'
-      path: '/news/$link'
-      fullPath: '/news/$link'
-      preLoaderRoute: typeof PublicNewsLinkRouteImport
+    '/_public/news/$slug': {
+      id: '/_public/news/$slug'
+      path: '/news/$slug'
+      fullPath: '/news/$slug'
+      preLoaderRoute: typeof PublicNewsSlugRouteImport
       parentRoute: typeof PublicRouteRoute
     }
     '/admin/news/$id/edit': {
@@ -223,7 +223,7 @@ declare module '@tanstack/react-router' {
 interface PublicRouteRouteChildren {
   PublicUploadRoute: typeof PublicUploadRoute
   PublicIndexRoute: typeof PublicIndexRoute
-  PublicNewsLinkRoute: typeof PublicNewsLinkRoute
+  PublicNewsSlugRoute: typeof PublicNewsSlugRoute
   PublicCalculatorIndexRoute: typeof PublicCalculatorIndexRoute
   PublicNewsIndexRoute: typeof PublicNewsIndexRoute
 }
@@ -231,7 +231,7 @@ interface PublicRouteRouteChildren {
 const PublicRouteRouteChildren: PublicRouteRouteChildren = {
   PublicUploadRoute: PublicUploadRoute,
   PublicIndexRoute: PublicIndexRoute,
-  PublicNewsLinkRoute: PublicNewsLinkRoute,
+  PublicNewsSlugRoute: PublicNewsSlugRoute,
   PublicCalculatorIndexRoute: PublicCalculatorIndexRoute,
   PublicNewsIndexRoute: PublicNewsIndexRoute,
 }

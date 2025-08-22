@@ -1,9 +1,10 @@
-import { News } from '@prisma/client';
+import { News, NewsStatus } from '@prisma/client';
 
 export interface INewsBriefDto {
   id: number;
   title: string;
-  link: string;
+  slug: string;
+  status: NewsStatus;
   createdAt: string; // ISO string for safe serialization
 }
 
@@ -12,7 +13,8 @@ export class NewsBriefDtoFactory {
     return {
       id: news.id,
       title: news.titleRo,
-      link: news.link,
+      slug: news.slug,
+      status: news.status,
       createdAt: news.createdAt.toISOString(),
     };
   }

@@ -11,7 +11,7 @@ import {
 import NewsTable from '@/routes/admin/news/-components/news-table/table';
 import { newsDataTableColumns } from '@/routes/admin/news/-components/news-table/columns';
 import { useState } from 'react';
-import { CreateNewsDialog } from '@/routes/admin/news/-components/create-news-dialot/dialog';
+import { CreateNewsDialog } from '@/routes/admin/news/-components/create-news-dialog/dialog';
 import ButtonWithTooltip from '@/components/ui/button-with-tooltip';
 
 

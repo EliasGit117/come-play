@@ -1,20 +1,20 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { getNewsByLinkQueryOptions } from '@/features/news/server-functions/get-news-by-link';
+import { getNewsBySlugQueryOptions } from '@/features/news/server-functions/get-news-by-slug';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 
-export const Route = createFileRoute('/_public/news/$link')({
+export const Route = createFileRoute('/_public/news/$slug')({
   component: RouteComponent,
-  loader: async ({ context: { queryClient }, params: { link } }) => {
-    const res = await queryClient.prefetchQuery(getNewsByLinkQueryOptions(link))
+  loader: async ({ context: { queryClient }, params: { slug } }) => {
+    const res = await queryClient.prefetchQuery(getNewsBySlugQueryOptions(slug))
     return { news: res }
   }
 })
 
 function RouteComponent() {
-  const { link } = Route.useParams();
-  const { isPending, data } = useQuery({
-    ...getNewsByLinkQueryOptions(link),
+  const { slug } = Route.useParams();
+  const { data } = useQuery({
+    ...getNewsBySlugQueryOptions(slug),
     placeholderData: keepPreviousData,
   });
 

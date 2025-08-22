@@ -7,17 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum NewsStatus {
+  published
+  hidden
+}
+
 model News {
   id        Int     @id @default(autoincrement())
   titleRo   String  @map("title_ro")
   titleRu   String  @map("title_ru")
-  link      String  @unique
+  slug      String  @unique
   contentRo String? @map("content_ro")
   contentRu String? @map("content_ru")
+
+  status NewsStatus @default(hidden)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
-  @@index(fields: [titleRo, titleRu, link])
+  @@index(fields: [titleRo, titleRu, slug, status])
   @@map("news")
 }

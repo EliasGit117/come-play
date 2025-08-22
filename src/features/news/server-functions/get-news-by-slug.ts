@@ -4,16 +4,16 @@ import prisma from '@/lib/prisma';
 import { queryOptions } from '@tanstack/react-query';
 import { NewsDtoFactory } from '@/features/news/dtos/news-dto';
 
-export const getNewsByLinkSchema = z.object({
-  link: z.string()
+export const getNewsBySlugSchema = z.object({
+  slug: z.string()
 });
-export type TGetNewsByLinkParams = z.infer<typeof getNewsByLinkSchema>;
+export type TGetNewsBySlugParams = z.infer<typeof getNewsBySlugSchema>;
 
-export const getNewsByLink = createServerFn({ method: 'GET' })
-  .validator(getNewsByLinkSchema)
-  .handler(async ({ data: { link } }) => {
+export const getNewsBySlug = createServerFn({ method: 'GET' })
+  .validator(getNewsBySlugSchema)
+  .handler(async ({ data: { slug } }) => {
     const news = await prisma.news.findUnique({
-      where: { link },
+      where: { slug: slug },
     });
 
     if (!news) {
@@ -24,10 +24,10 @@ export const getNewsByLink = createServerFn({ method: 'GET' })
   });
 
 // React Query options
-export function getNewsByLinkQueryOptions(link: string) {
+export function getNewsBySlugQueryOptions(slug: string) {
   return queryOptions({
-    queryKey: ['news', link],
-    queryFn: () => getNewsByLink({ data: { link: link } }),
+    queryKey: ['news', slug],
+    queryFn: () => getNewsBySlug({ data: { slug: slug } }),
     staleTime: 10_000
   });
 }

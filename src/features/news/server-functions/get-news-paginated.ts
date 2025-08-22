@@ -4,15 +4,16 @@ import { paginatedSchema } from '@/features/common/pagination/pagination-validat
 import z from 'zod';
 import { queryOptions } from '@tanstack/react-query';
 import { NewsBriefDtoFactory } from '@/features/news/dtos/news-brief-dto';
-import { Prisma } from '@prisma/client';
+import { NewsStatus, Prisma } from '@prisma/client';
 import { PaginationResultDtoFactory } from '@/features/common/pagination/pagination-result-dto';
 
 
 export const getNewsPaginatedSchema = paginatedSchema.extend({
-  orderBy: z.enum(['createdAt', 'title', 'link']).optional().catch(undefined),
+  orderBy: z.enum(['createdAt', 'title', 'slug']).optional().catch(undefined),
   idRange: z.tuple([z.number().nullable(), z.number().nullable()]).optional().catch(undefined),
   title: z.string().optional().catch(undefined),
-  link: z.string().optional().catch(undefined),
+  slug: z.string().optional().catch(undefined),
+  status: z.array(z.nativeEnum(NewsStatus)).optional().catch(undefined),
 });
 
 export type TGetNewsPaginatedParams = z.infer<typeof getNewsPaginatedSchema>;
@@ -20,7 +21,7 @@ export type TGetNewsPaginatedParams = z.infer<typeof getNewsPaginatedSchema>;
 export const getNewsPaginated = createServerFn({ method: 'GET' })
   .validator(getNewsPaginatedSchema)
   .handler(async ({ data }) => {
-    const { page, limit, orderBy = 'id', direction = 'desc', title, link, idRange } = data;
+    const { page, limit, orderBy = 'id', direction = 'desc', title, slug, idRange, status } = data;
 
     const where: Prisma.NewsWhereInput = {};
 
@@ -41,9 +42,11 @@ export const getNewsPaginated = createServerFn({ method: 'GET' })
         { titleRu: { contains: title, mode: 'insensitive' } },
       ]
 
-    if (!!link)
-      where.link = { contains: link, mode: 'insensitive' };
+    if (!!slug)
+      where.slug = { contains: slug, mode: 'insensitive' };
 
+    if (!!status)
+      where.status = { in: status }
 
     const [items, meta] = await prisma.news
       .paginate({

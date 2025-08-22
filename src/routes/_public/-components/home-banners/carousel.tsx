@@ -183,7 +183,7 @@ const BannerOverlay: React.FC<BannerOverlayProps> = ({ data, className }) => {
             asChild
           >
             <Link {...data.link}>
-              Show detail
+              Show details
             </Link>
           </Button>
         )}
