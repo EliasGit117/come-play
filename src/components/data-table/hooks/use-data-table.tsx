@@ -1,17 +1,18 @@
-"use no memo";
-
+'use no memo';
+'use client';
+import { useMemo, useState } from 'react';
 import {
   PaginationState,
   TableOptions,
   VisibilityState
 } from '@tanstack/react-table';
-import { useState } from 'react';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useTableSort } from '@/components/data-table/hooks/use-table-sort';
 import { useTableSearch } from '@/components/data-table/hooks/use-table-search';
 
-
-interface IUseDataTableProps<TData> extends Omit<TableOptions<TData>,
+interface IUseDataTableProps<TData>
+  extends Omit<
+    TableOptions<TData>,
     | 'state'
     | 'getCoreRowModel'
     | 'manualFiltering'
@@ -19,8 +20,8 @@ interface IUseDataTableProps<TData> extends Omit<TableOptions<TData>,
     | 'manualSorting'
     | 'rowCount'
     | 'pageCount'
-    | 'data'> {
-
+    | 'data'
+  > {
   data?: TData[];
   page?: number;
   limit?: number;
@@ -31,7 +32,7 @@ interface IUseDataTableProps<TData> extends Omit<TableOptions<TData>,
 
 export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
   const {
-    data: data = [],
+    data = [],
     columns,
     initialState,
     page = 1,
@@ -42,22 +43,35 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
     ...tableProps
   } = props;
 
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(initialState?.columnVisibility ?? {});
-  const paginationState: PaginationState = { pageIndex: page - 1, pageSize: limit };
-  const [sortingState, setSortingState] = useTableSort({ history: history });
-  const [filters, setFilters] = useTableSearch(columns, { history: history });
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
+    initialState?.columnVisibility ?? {}
+  );
+
+  // memoize pagination state so reference is stable between renders
+  const paginationState = useMemo<PaginationState>(() => {
+    return { pageIndex: page - 1, pageSize: limit };
+  }, [page, limit]);
+
+  const [sortingState, setSortingState] = useTableSort({ history });
+  const [filters, setFilters] = useTableSearch(columns, { history });
+
+  // memo defaultColumn (stable ref)
+  const defaultColumn = useMemo(
+    () => ({
+      filterFn: 'equals' as const,
+    }),
+    []
+  );
 
   const table = useReactTable({
     ...tableProps,
     columns,
-    data: data,
+    data,
     rowCount: total,
-    initialState: initialState,
+    initialState,
     pageCount: totalPages,
 
-    defaultColumn: {
-      filterFn: 'equals',
-    },
+    defaultColumn,
 
     manualSorting: true,
     manualFiltering: true,
@@ -70,11 +84,11 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
     onColumnFiltersChange: setFilters,
 
     state: {
-      columnVisibility: columnVisibility,
+      columnVisibility,
       sorting: sortingState,
       pagination: paginationState,
-      columnFilters: filters
-    }
+      columnFilters: filters,
+    },
   });
 
   return { table };

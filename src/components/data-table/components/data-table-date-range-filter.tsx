@@ -11,135 +11,103 @@ import { Calendar } from '@/components/ui/calendar';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Separator } from '@/components/ui/separator';
 
-export function formatDate(
-  date: Date | string | number | undefined,
-  opts: Intl.DateTimeFormatOptions = {}
-) {
-  if (!date) return '';
-
-  try {
-    return new Intl.DateTimeFormat('en-US', {
-      month: opts.month ?? 'long',
-      day: opts.day ?? 'numeric',
-      year: opts.year ?? 'numeric',
-      ...opts
-    }).format(new Date(date));
-  } catch {
-    return '';
-  }
-}
 
 interface IDataTableDateRangeFilterProps<TData, TValue> {
   column: Column<TData, TValue>;
 }
 
-function filterArrayToDateRange(filterValue: unknown): DateRange | undefined {
-  if (!Array.isArray(filterValue)) return undefined;
-  const [from, to] = filterValue;
-  const has = from || to;
-  return has ? { from: (from as Date) ?? undefined, to: (to as Date) ?? undefined } : undefined;
-}
-
-function dateRangeToFilterArray(range: DateRange | undefined): (Date | null)[] | undefined {
-  if (!range) return undefined;
-  const from = range.from ?? null;
-  const to = range.to ?? null;
-  return [from, to !== from ? to : null];
-}
-
-export function DataTableDateRangeFilter<TData, TValue>({
-                                                          column
-                                                        }: IDataTableDateRangeFilterProps<TData, TValue>) {
+export function DataTableDateRangeFilter<TData, TValue>(props: IDataTableDateRangeFilterProps<TData, TValue>) {
+  const { column } = props;
   const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
-
-  const meta = column.columnDef.meta as any;
+  const meta = column.columnDef.meta;
   const title = meta?.search?.placeholder ?? meta?.label ?? column.id;
+  const filterValue = column.getFilterValue();
+  const [value, setValue] = useState<DateRange | undefined>(() => {
+    if (Array.isArray(filterValue)) {
+      const [from, to] = filterValue;
+      return from || to ? { from: from ?? undefined, to: to ?? undefined } : undefined;
+    }
 
-  const initialValue = useMemo(() => filterArrayToDateRange(column.getFilterValue()), [
-    column
-  ]);
-  const [value, setValue] = useState<DateRange | undefined>(() => initialValue);
+    return undefined;
+  });
 
-  const debouncedSetFilter = useDebouncedCallback(
-    (newRange: DateRange | undefined) => {
-      const arr = dateRangeToFilterArray(newRange);
-      column.setFilterValue(arr ?? undefined);
-    },
-    DEFAULT_DEBOUNCE
-  );
+  const debouncedSetFilter = useDebouncedCallback((newValue: DateRange | undefined) => {
+    const from = newValue?.from ?? null;
+    const to = newValue?.to ?? null;
+
+    column.setFilterValue([from, to != from ? to : null]);
+  }, DEFAULT_DEBOUNCE);
 
   useEffect(() => {
-    if (debouncedSetFilter.isPending()) return;
-    const next = filterArrayToDateRange(column.getFilterValue());
-    setValue(next);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [column, debouncedSetFilter]);
+    if (debouncedSetFilter.isPending())
+      return;
 
-  const handleChange = useCallback(
-    (next: DateRange | undefined) => {
-      setValue(next);
-      debouncedSetFilter(next);
-    },
-    [debouncedSetFilter]
-  );
+    if (Array.isArray(filterValue)) {
+      const [from, to] = filterValue;
+      setValue(from || to ? { from: from ?? undefined, to: to ?? undefined } : undefined);
+    } else {
+      setValue(undefined);
+    }
+  }, [filterValue, debouncedSetFilter]);
 
-  const reset = useCallback(() => {
+  const handleChange = (newValue: DateRange | undefined) => {
+    setValue(newValue);
+    debouncedSetFilter(newValue);
+  };
+
+  const reset = () => {
     setValue(undefined);
     debouncedSetFilter(undefined);
     setIsOpen(false);
-  }, [debouncedSetFilter]);
+  };
 
-  const formatDateRange = useCallback((range: DateRange | undefined) => {
-    if (!range) return '';
-    const { from, to } = range;
-    if (!from && !to) return '';
-    if (from && to) return `${formatDate(from)} - ${formatDate(to)}`;
-    return formatDate(from ?? to);
+
+  const formatDateRange = useCallback((range: DateRange) => {
+    if (!range.from && !range.to) return '';
+    if (range.from && range.to) {
+      return `${formatDate(range.from)} - ${formatDate(range.to)}`;
+    }
+    return formatDate(range.from ?? range.to);
   }, []);
 
-  const hasSelectedDates = Boolean(value?.from || value?.to);
-  const dateText = hasSelectedDates ? formatDateRange(value) : 'Select date range';
+  const label = useMemo(() => {
 
-  // keyboard handler for the non-button clear control
-  const onClearKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        reset();
-      }
-    },
-    [reset]
-  );
+    const hasSelectedDates = value?.from || value?.to;
+    const dateText = hasSelectedDates ? formatDateRange(value) : 'Select date range';
+
+    return (
+      <span className="flex items-center gap-2">
+        <span>{title}</span>
+        {hasSelectedDates && (
+          <>
+            <Separator orientation="vertical" className="mx-0.5 data-[orientation=vertical]:h-4"/>
+            <span>{dateText}</span>
+          </>
+        )}
+      </span>
+    );
+  }, [value]);
+
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="border-dashed">
-          {hasSelectedDates ? (
-            <span
+          {!!value ? (
+            <div
               role="button"
               aria-label={`Clear ${title} filter`}
               tabIndex={0}
               onClick={reset}
-              onKeyDown={onClearKeyDown}
               className="rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             >
-              <XCircle />
-            </span>
+              <XCircle/>
+            </div>
           ) : (
-            <CalendarIcon />
+            <CalendarIcon/>
           )}
-
-          <span className="flex items-center gap-2">
-            <span>{title}</span>
-            {hasSelectedDates && (
-              <>
-                <Separator orientation="vertical" className="mx-0.5 data-[orientation=vertical]:h-4" />
-                <span>{dateText}</span>
-              </>
-            )}
-          </span>
+          {label}
         </Button>
       </PopoverTrigger>
 
@@ -165,4 +133,22 @@ export function DataTableDateRangeFilter<TData, TValue>({
       </PopoverContent>
     </Popover>
   );
+}
+
+export function formatDate(
+  date: Date | string | number | undefined,
+  opts: Intl.DateTimeFormatOptions = {}
+) {
+  if (!date) return '';
+
+  try {
+    return new Intl.DateTimeFormat('en-US', {
+      month: opts.month ?? 'long',
+      day: opts.day ?? 'numeric',
+      year: opts.year ?? 'numeric',
+      ...opts
+    }).format(new Date(date));
+  } catch (_err) {
+    return '';
+  }
 }
