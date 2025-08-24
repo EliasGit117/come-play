@@ -17,9 +17,9 @@ const NewsTable: FC<IProps> = ({ table, className, ...props }) => {
   return (
     <ConfirmDialogProvider>
       <div className={cn('flex flex-col gap-4', className)} {...props}>
-          <DataTableToolbar table={table}/>
-          <DataTable table={table}/>
-          <DataTablePagination table={table}/>
+        <DataTableToolbar table={table}/>
+        <DataTable table={table}/>
+        <DataTablePagination table={table}/>
       </div>
     </ConfirmDialogProvider>
   );

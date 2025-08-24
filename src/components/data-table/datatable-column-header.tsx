@@ -30,8 +30,6 @@ export function DataTableColumnHeader<TData, TValue>(props: DataTableColumnHeade
   const { column, title, className } = props;
   const sorted = column.getIsSorted();
 
-  console.log(sorted)
-
   if (!column.getCanSort())
     return <div className={cn(className)}>{title}</div>;
 

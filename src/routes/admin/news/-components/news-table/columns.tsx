@@ -1,3 +1,5 @@
+"use client";
+"use no memo";
 import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import { MoreHorizontal, TrashIcon } from 'lucide-react';
@@ -18,12 +20,13 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { useDeleteNewsMutation } from '@/features/news/server-functions/delete-news-by-id';
 import { INewsBriefDto } from '@/features/news/dtos/news-brief-dto';
-import { type NewsStatus } from '@prisma/client';
+import { NewsStatus } from '@prisma/client';
 
 export const newsDataTableColumns: ColumnDef<INewsBriefDto>[] = [
   {
     accessorKey: 'id',
-    header: 'Id',
+    header: ({ column }) =>
+      <DataTableColumnHeader column={column} title="Id"/>,
     meta: {
       label: 'Id',
       search: {
@@ -32,7 +35,7 @@ export const newsDataTableColumns: ColumnDef<INewsBriefDto>[] = [
         range: [1, 10_000]
       }
     },
-    filterFn: 'equals'
+    filterFn: 'equals',
   },
   {
     accessorKey: 'title',
@@ -76,14 +79,14 @@ export const newsDataTableColumns: ColumnDef<INewsBriefDto>[] = [
         key: 'status',
         type: SearchInputType.MultiSelect,
         options: [
-          { value: 'hidden' satisfies NewsStatus, label: 'Hidden' },
-          { value: 'published' satisfies NewsStatus, label: 'Published' },
+          { value: NewsStatus.hidden, label: 'Hidden' },
+          { value: NewsStatus.published, label: 'Published' },
         ]
       }
     },
     filterFn: 'equals',
     header: ({ column }) =>
-      <DataTableColumnHeader column={column} title="Slug"/>,
+      <DataTableColumnHeader column={column} title="Status"/>,
     cell: ({ row }) => (
       <div className="capitalize">
         {row.getValue('status')}

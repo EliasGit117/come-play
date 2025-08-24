@@ -9,7 +9,7 @@ import { PaginationResultDtoFactory } from '@/features/common/pagination/paginat
 
 
 export const getNewsPaginatedSchema = paginatedSchema.extend({
-  orderBy: z.enum(['createdAt', 'title', 'slug']).optional().catch(undefined),
+  orderBy: z.enum(['id', 'createdAt', 'title', 'slug', 'status']).optional().catch(undefined),
   idRange: z.tuple([z.number().nullable(), z.number().nullable()]).optional().catch(undefined),
   title: z.string().optional().catch(undefined),
   slug: z.string().optional().catch(undefined),

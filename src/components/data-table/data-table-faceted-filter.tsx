@@ -48,10 +48,10 @@ export function DataTableFacetedFilter<TData, TValue>(props: DataTableFacetedFil
     if (!multiple)
       setOpen(false);
 
-    column.setFilterValue(newSelected);
+    column.setFilterValue(newSelected.length > 0 ? newSelected : undefined);
   }, [multiple, filterValue, column]);
 
-  const onReset = useCallback(() => column.setFilterValue([]), [column]);
+  const onReset = useCallback(() => column.setFilterValue(undefined), [column]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

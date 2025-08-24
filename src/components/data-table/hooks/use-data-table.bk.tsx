@@ -1,10 +1,11 @@
-'use no memo';
 'use client';
+'use no memo';
+import { useTableSort } from './use-table-sort';
 import { useDebouncedCallback } from 'use-debounce';
 import { useCallback, useState } from 'react';
 import {
   ColumnFiltersState,
-  getCoreRowModel, SortingState,
+  getCoreRowModel,
   TableOptions,
   useReactTable,
   VisibilityState
@@ -43,7 +44,7 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
   } = props;
 
   // Local (controlled) table state - updates synchronously
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useTableSort();
   const [filtering, setFiltering] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
     initialState?.columnVisibility ?? {}
