@@ -18,7 +18,7 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { useDeleteNewsMutation } from '@/features/news/server-functions/delete-news-by-id';
 import { INewsBriefDto } from '@/features/news/dtos/news-brief-dto';
-import { NewsStatus } from '@prisma/client';
+import { type NewsStatus } from '@prisma/client';
 
 export const newsDataTableColumns: ColumnDef<INewsBriefDto>[] = [
   {
@@ -76,8 +76,8 @@ export const newsDataTableColumns: ColumnDef<INewsBriefDto>[] = [
         key: 'status',
         type: SearchInputType.MultiSelect,
         options: [
-          { value: NewsStatus.hidden, label: 'Hidden' },
-          { value: NewsStatus.published, label: 'Published' },
+          { value: 'hidden' satisfies NewsStatus, label: 'Hidden' },
+          { value: 'published' satisfies NewsStatus, label: 'Published' },
         ]
       }
     },

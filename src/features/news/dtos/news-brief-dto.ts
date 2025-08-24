@@ -1,4 +1,4 @@
-import { News, NewsStatus } from '@prisma/client';
+import { News, type NewsStatus } from '@prisma/client';
 
 export interface INewsBriefDto {
   id: number;
