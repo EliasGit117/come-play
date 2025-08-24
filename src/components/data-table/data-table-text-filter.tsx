@@ -1,5 +1,5 @@
 'use client';
-"use no memo";
+'use no memo';
 import { useDebouncedCallback } from 'use-debounce';
 import type { Column } from '@tanstack/react-table';
 import { Input } from '@/components/ui/input';
@@ -9,31 +9,32 @@ import { Button } from '@/components/ui/button';
 import { XIcon } from 'lucide-react';
 import { DEFAULT_DEBOUNCE } from '@/components/data-table/types/consts';
 
-
-interface DataTableTextFilterProps<TData, TValue> extends ComponentProps<typeof Input> {
+interface DataTableTextFilterProps<TData, TValue>
+  extends ComponentProps<typeof Input> {
   column: Column<TData, TValue>;
   type?: 'number' | 'text';
 }
 
 export function DataTableTextFilter<TData, TValue>(props: DataTableTextFilterProps<TData, TValue>) {
   const { column, className, type = 'text', ...restOfProps } = props;
+
   const filterValue = column.getFilterValue() as string | undefined;
+
   const meta = column.columnDef.meta;
   const title = meta?.label ?? column.id;
 
   const [value, setValue] = useState(filterValue ?? '');
 
-  useEffect(() => {
-    if (value === filterValue || debouncedSetFilter.isPending())
-      return;
-
-    setValue(filterValue ?? '');
-  }, [filterValue]);
-
-  // For slow cpu devices
   const debouncedSetFilter = useDebouncedCallback((val: string) => {
     column.setFilterValue(val || undefined);
   }, DEFAULT_DEBOUNCE);
+
+  useEffect(() => {
+    if (filterValue === value || debouncedSetFilter.isPending())
+      return;
+
+    setValue(filterValue ?? '');
+  }, [filterValue, debouncedSetFilter]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -44,18 +45,16 @@ export function DataTableTextFilter<TData, TValue>(props: DataTableTextFilterPro
     debouncedSetFilter(val);
   };
 
-
   const reset = () => {
     setValue('');
     column.setFilterValue(undefined);
-  }
+  };
 
   return (
     <div className="relative">
       <Input
         {...restOfProps}
-        type={type === 'number'? 'number' : 'text'}
-        itemType={type === 'number'? 'number' : 'text'}
+        type={type}
         placeholder={meta?.search?.placeholder ?? title}
         value={value}
         onChange={handleChange}
@@ -77,7 +76,7 @@ export function DataTableTextFilter<TData, TValue>(props: DataTableTextFilterPro
             onClick={reset}
             disabled={restOfProps.disabled}
           >
-            {value && <XIcon className="size-3.5"/>}
+            <XIcon className="size-3.5"/>
             <span className="sr-only">Clear</span>
           </Button>
         </div>
