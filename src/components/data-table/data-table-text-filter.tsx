@@ -1,9 +1,10 @@
+'use client';
 "use no memo";
+import { useDebouncedCallback } from 'use-debounce';
 import type { Column } from '@tanstack/react-table';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { ChangeEvent, ComponentProps, useEffect, useState } from 'react';
-import { useDebouncedCallback } from 'use-debounce';
 import { Button } from '@/components/ui/button';
 import { XIcon } from 'lucide-react';
 import { DEFAULT_DEBOUNCE } from '@/components/data-table/types/consts';
@@ -16,32 +17,26 @@ interface DataTableTextFilterProps<TData, TValue> extends ComponentProps<typeof 
 
 export function DataTableTextFilter<TData, TValue>(props: DataTableTextFilterProps<TData, TValue>) {
   const { column, className, type = 'text', ...restOfProps } = props;
-  const [value, setValue] = useState((column.getFilterValue() as string) ?? '');
+  const filterValue = column.getFilterValue() as string | undefined;
   const meta = column.columnDef.meta;
   const title = meta?.label ?? column.id;
-  const filterValue = column.getFilterValue();
 
-  const debouncedSetFilter = useDebouncedCallback((val: string) => {
-    if (type === 'number') {
-      const parsed = val.trim() === '' ? undefined : Number(val);
-      column.setFilterValue(parsed);
-      return;
-    }
-
-    column.setFilterValue(val);
-  }, DEFAULT_DEBOUNCE);
+  const [value, setValue] = useState(filterValue ?? '');
 
   useEffect(() => {
-    if (debouncedSetFilter.isPending())
+    if (value === filterValue || debouncedSetFilter.isPending())
       return;
 
-    setValue((column.getFilterValue() as string) ?? '');
+    setValue(filterValue ?? '');
   }, [filterValue]);
+
+  // For slow cpu devices
+  const debouncedSetFilter = useDebouncedCallback((val: string) => {
+    column.setFilterValue(val || undefined);
+  }, DEFAULT_DEBOUNCE);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
-
-
     if (type === 'number' && !/^\d*\.?\d*$/.test(val))
       return;
 
@@ -49,12 +44,11 @@ export function DataTableTextFilter<TData, TValue>(props: DataTableTextFilterPro
     debouncedSetFilter(val);
   };
 
+
   const reset = () => {
     setValue('');
     column.setFilterValue(undefined);
-    debouncedSetFilter.cancel();
   }
-
 
   return (
     <div className="relative">

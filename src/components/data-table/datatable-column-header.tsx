@@ -1,5 +1,5 @@
-"use no memo";
-
+'use no memo';
+'use client';
 import { Column } from '@tanstack/react-table';
 import {
   ArrowDown, ArrowDownIcon,
@@ -7,9 +7,8 @@ import {
   ArrowUpIcon,
   ChevronsUpDown,
   EraserIcon,
-  EyeOffIcon,
+  EyeOffIcon
 } from 'lucide-react';
-
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
@@ -30,6 +29,8 @@ interface DataTableColumnHeaderProps<TData, TValue>
 export function DataTableColumnHeader<TData, TValue>(props: DataTableColumnHeaderProps<TData, TValue>) {
   const { column, title, className } = props;
   const sorted = column.getIsSorted();
+
+  console.log(sorted)
 
   if (!column.getCanSort())
     return <div className={cn(className)}>{title}</div>;

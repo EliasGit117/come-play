@@ -1,27 +1,25 @@
-import { ConfirmDialogProvider } from '@/components/ui/confirm-dialog';
-
 'use no memo';
-
-import { DataTable, DataTablePagination, DataTableProvider, DataTableToolbar } from '@/components/data-table';
-import { NewsBriefDto } from '@/features/news/dtos/news-brief-dto';
+import { Table } from '@tanstack/react-table';
+import { INewsBriefDto } from '@/features/news/dtos/news-brief-dto';
+import { ConfirmDialogProvider } from '@/components/ui/confirm-dialog';
+import { DataTable, DataTablePagination, DataTableToolbar } from '@/components/data-table';
 import { ComponentProps, FC } from 'react';
 import { cn } from '@/lib/utils';
 
 
-interface IProps extends Omit<ComponentProps<typeof DataTableProvider<NewsBriefDto>>, 'children'> {
+interface IProps extends Omit<ComponentProps<'div'>, 'children'> {
   className?: string;
+  table: Table<INewsBriefDto>;
 }
 
-const NewsTable: FC<IProps> = ({ className, ...tableProviderProps }) => {
+const NewsTable: FC<IProps> = ({ table, className, ...props }) => {
 
   return (
     <ConfirmDialogProvider>
-      <div className={cn('flex flex-col gap-4', className)}>
-        <DataTableProvider {...tableProviderProps}>
-          <DataTableToolbar/>
-          <DataTable/>
-          <DataTablePagination/>
-        </DataTableProvider>
+      <div className={cn('flex flex-col gap-4', className)} {...props}>
+          <DataTableToolbar table={table}/>
+          <DataTable table={table}/>
+          <DataTablePagination table={table}/>
       </div>
     </ConfirmDialogProvider>
   );

@@ -18,8 +18,9 @@ export enum SearchInputType {
   MultiSelect = 'multi-select',
 }
 
+export type TOptionValue = string | number | boolean;
 export interface ISelectOption {
-  value: string | number | boolean;
+  value: TOptionValue;
   label: string;
   icon?: FC<SVGProps<SVGSVGElement>>;
 }

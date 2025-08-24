@@ -1,12 +1,12 @@
 import { ComponentProps, FC } from 'react';
 import { cn } from '@/lib/utils';
 import { Link } from '@tanstack/react-router';
-import firstProductImg from '/public/images/home/products/product-1.webp';
-import secondProductImg from '/public/images/home/products/product-2.webp';
-import thirdProductImg from '/public/images/home/products/product-3.webp';
-import fourthProductImg from '/public/images/home/products/product-4.webp';
-import fifthProductImg from '/public/images/home/products/product-5.webp';
-import sixthProductImg from '/public/images/home/products/product-6.webp';
+import firstProductImg from '/images/home/products/product-1.webp';
+import secondProductImg from '/images/home/products/product-2.webp';
+import thirdProductImg from '/images/home/products/product-3.webp';
+import fourthProductImg from '/images/home/products/product-4.webp';
+import fifthProductImg from '/images/home/products/product-5.webp';
+import sixthProductImg from '/images/home/products/product-6.webp';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
 
 

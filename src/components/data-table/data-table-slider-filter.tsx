@@ -1,4 +1,5 @@
-"use no memo";
+'use client';
+'use no memo';
 import { PlusCircle, XCircle } from 'lucide-react';
 import type { Column } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
@@ -71,12 +72,7 @@ export function DataTableSliderFilter<TData>(props: DataTableSliderFilterProps<T
     }
 
     const rangeSize = maxValue - minValue;
-    const step =
-      rangeSize <= 20
-        ? 1
-        : rangeSize <= 100
-          ? Math.ceil(rangeSize / 20)
-          : Math.ceil(rangeSize / 50);
+    const step = rangeSize <= 20 ? 1 : rangeSize <= 100 ? Math.ceil(rangeSize / 20) : Math.ceil(rangeSize / 50);
 
     return { min: minValue, max: maxValue, step };
   }, [column, defaultRange]);

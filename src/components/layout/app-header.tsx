@@ -6,8 +6,8 @@ import { cn } from '@/lib/utils';
 import HeaderNavMenu from '@/components/layout/nav-menu';
 import LanguageDropdown from '@/components/layout/language-dropdown';
 import { useAppSidebar } from '@/components/layout/app-sidebar-provider';
-import LightLogo from 'public/icons/logo-white.svg?react';
-import DarkLogo from 'public/icons/logo.svg?react';
+import LightLogo from '@/assets/icons/logo-white.svg?react';
+import DarkLogo from '@/assets/icons/logo.svg?react';
 
 
 interface IAppHeader extends ComponentProps<'header'> {

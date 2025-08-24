@@ -1,31 +1,28 @@
+'use client';
 'use no memo';
-import { DataTableDateRangeFilter } from '@/components/data-table/components/data-table-date-range-filter';
-import { DataTableFacetedFilter } from '@/components/data-table/components/data-table-faceted-filter';
-import * as React from 'react';
+import { DataTableSliderFilter } from './data-table-slider-filter';
+import { DataTableFacetedFilter } from './data-table-faceted-filter';
+import { DataTableSort } from './data-table-sort';
+import { ComponentProps, useCallback, useMemo } from 'react';
 import { XIcon } from 'lucide-react';
-import type { Column } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { DataTableTextFilter } from '@/components/data-table/components/data-table-text-filter';
-import { DataTableViewOptions, useDataTableContext } from '@/components/data-table';
+import { DataTableViewOptions } from './data-table-view-options';
+import { type Column, Table as TanstackTable } from '@tanstack/react-table';
 import { SearchInputType } from '@/components/data-table/types/filtration';
-import { DataTableSliderFilter } from '@/components/data-table/components/data-table-slider-filter';
+import { DataTableTextFilter } from './data-table-text-filter';
+import * as React from 'react';
 
-interface IDataTableToolbarProps<TData> extends React.ComponentProps<'div'> {}
+
+interface IDataTableToolbarProps<TData> extends ComponentProps<'div'> {
+  table: TanstackTable<TData>;
+}
 
 export function DataTableToolbar<TData>(props: IDataTableToolbarProps<TData>) {
-  const { table } = useDataTableContext<TData>();
-  const { children, className, ...restOfProps } = props;
+  const { table, children, className, ...restOfProps } = props;
   const isFiltered = table.getState().columnFilters.length > 0;
-
-  const columns = React.useMemo(
-    () => table.getAllColumns().filter((column) => column.getCanFilter()),
-    [table]
-  );
-
-  const onReset = React.useCallback(() => {
-    table.resetColumnFilters();
-  }, [table]);
+  const columns = useMemo(() => table.getAllColumns().filter((column) => column.getCanFilter()), [table]);
+  const onReset = useCallback(() => table.resetColumnFilters(), [table]);
 
   return (
     <div
@@ -56,7 +53,8 @@ export function DataTableToolbar<TData>(props: IDataTableToolbarProps<TData>) {
       </div>
       <div className="flex items-center gap-2">
         {children}
-        <DataTableViewOptions/>
+        <DataTableSort table={table}/>
+        <DataTableViewOptions table={table}/>
       </div>
     </div>
   );
@@ -70,16 +68,16 @@ function DataTableToolbarFilter<TData>(props: DataTableToolbarFilterProps<TData>
   const { column } = props;
   const columnMeta = column.columnDef.meta;
 
-  const onFilterRender = React.useCallback(() => {
+  const onFilterRender = useCallback(() => {
     if (!columnMeta?.search)
       return null;
 
     switch (columnMeta.search.type) {
       case SearchInputType.Text:
-        return <DataTableTextFilter column={column} key={column.id}/>;
+        return <DataTableTextFilter column={column} key={column.id}  />;
 
       case SearchInputType.Number:
-        return <DataTableTextFilter type='number' column={column} key={column.id}/>;
+        return <DataTableTextFilter column={column} key={column.id} type='number'/>;
 
       case SearchInputType.NumberRange:
         return <DataTableSliderFilter column={column} key={column.id}/>;
@@ -96,8 +94,6 @@ function DataTableToolbarFilter<TData>(props: DataTableToolbarFilterProps<TData>
           />
         );
 
-      case SearchInputType.DateRange:
-        return <DataTableDateRangeFilter column={column} key={column.id}/>
 
       default:
         return null;
@@ -106,4 +102,3 @@ function DataTableToolbarFilter<TData>(props: DataTableToolbarFilterProps<TData>
 
   return onFilterRender();
 }
-

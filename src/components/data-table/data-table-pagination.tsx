@@ -1,5 +1,5 @@
+"use client";
 "use no memo";
-
 import type { VariantProps } from 'class-variance-authority';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -22,19 +22,20 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { ChevronsUpDownIcon } from 'lucide-react';
-import { useDataTableContext } from '@/components/data-table';
+import { Table as TanstackTable } from '@tanstack/react-table';
 
 
 interface IDataTablePaginationProps<TData> extends ComponentProps<'div'> {
   pageSizeOptions?: Array<number>;
   resetScroll?: boolean;
   buttonsSize?: VariantProps<typeof buttonVariants>['size'];
+  table: TanstackTable<TData>;
 }
 
 
 export function DataTablePagination<TData>(props: IDataTablePaginationProps<TData>) {
-  const { table } = useDataTableContext<TData>();
   const {
+    table,
     resetScroll,
     className,
     buttonsSize = 'smIcon',

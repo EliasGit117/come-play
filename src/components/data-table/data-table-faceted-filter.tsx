@@ -1,10 +1,8 @@
 'use client';
 'use no memo';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { Column } from '@tanstack/react-table';
 import { Check, PlusCircle, XCircle } from 'lucide-react';
-import * as React from 'react';
-
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -23,88 +21,43 @@ import {
 } from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
-import { ISelectOption } from '@/components/data-table/types/filtration';
-import { useDebouncedCallback } from 'use-debounce';
-import { DEFAULT_DEBOUNCE } from '@/components/data-table/types/consts';
+import { ISelectOption, TOptionValue } from '@/components/data-table/types/filtration';
 
 interface DataTableFacetedFilterProps<TData, TValue> {
-  column?: Column<TData, TValue>;
+  column: Column<TData, TValue>;
   title?: string;
   options: ISelectOption[];
   multiple?: boolean;
 }
 
 export function DataTableFacetedFilter<TData, TValue>(props: DataTableFacetedFilterProps<TData, TValue>) {
-  const {
-    column,
-    title,
-    options,
-    multiple
-  } = props;
+  const { column, options, multiple } = props;
+
+  const filterValue = (column.getFilterValue() as TOptionValue[]) ?? [];
+  const meta = column.columnDef.meta;
+  const title = meta?.label ?? column.id;
+
   const [open, setOpen] = useState(false);
-  const [selectedValues, setSelectedValues] = useState<(string | number | boolean)[]>(column?.getFilterValue() ?? []);
+  const selectedSet = useMemo(() => new Set(filterValue), [filterValue]);
 
-  const filterValue = column?.getFilterValue();
+  const onItemSelect = useCallback((option: ISelectOption, isSelected: boolean) => {
+    const newSelected = multiple ?
+      (isSelected ? filterValue.filter((v) => v !== option.value) : [...filterValue, option.value]) :
+      (isSelected ? [] : [option.value]);
 
-  const debouncedSetFilter = useDebouncedCallback(
-    (val: (string | number | boolean)[] | undefined) => {
-      column?.setFilterValue(val as unknown as TValue);
-    },
-    DEFAULT_DEBOUNCE
-  );
+    if (!multiple)
+      setOpen(false);
 
-  useEffect(() => {
-    if (debouncedSetFilter.isPending())
-      return;
+    column.setFilterValue(newSelected);
+  }, [multiple, filterValue, column]);
 
-    if (filterValue === undefined) {
-      setSelectedValues([]);
-      return;
-    }
-
-    if (Array.isArray(filterValue)) {
-      setSelectedValues(filterValue as (string | number | boolean)[]);
-      return;
-    }
-
-    setSelectedValues([filterValue as string | number | boolean]);
-  }, [filterValue, debouncedSetFilter]);
-
-  const onItemSelect = useCallback(
-    (option: ISelectOption, isSelected: boolean) => {
-      let newSelected: (string | number | boolean)[];
-
-      if (multiple) {
-        if (isSelected) {
-          newSelected = selectedValues.filter((v) => v !== option.value);
-        } else {
-          newSelected = [...selectedValues, option.value];
-        }
-      } else {
-        newSelected = isSelected ? [] : [option.value];
-        setOpen(false);
-      }
-
-      // update local + debounce table
-      setSelectedValues(newSelected);
-      debouncedSetFilter(newSelected.length ? newSelected : undefined);
-    },
-    [multiple, selectedValues, debouncedSetFilter]
-  );
-
-  const onReset = useCallback((event?: React.MouseEvent) => {
-    event?.stopPropagation();
-    setSelectedValues([]);
-    debouncedSetFilter(undefined);
-  }, [debouncedSetFilter]);
-
-  const selectedSet = new Set(selectedValues);
+  const onReset = useCallback(() => column.setFilterValue([]), [column]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="border-dashed">
-          {selectedValues.length > 0 ? (
+          {filterValue.length > 0 ? (
             <div
               role="button"
               aria-label={`Clear ${title} filter`}
@@ -118,7 +71,7 @@ export function DataTableFacetedFilter<TData, TValue>(props: DataTableFacetedFil
             <PlusCircle/>
           )}
           {title}
-          {selectedValues.length > 0 && (
+          {filterValue.length > 0 && (
             <>
               <Separator
                 orientation="vertical"
@@ -128,15 +81,15 @@ export function DataTableFacetedFilter<TData, TValue>(props: DataTableFacetedFil
                 variant="secondary"
                 className="rounded-sm px-1 font-normal lg:hidden"
               >
-                {selectedValues.length}
+                {filterValue.length}
               </Badge>
               <div className="hidden items-center gap-1 lg:flex">
-                {selectedValues.length > 2 ? (
+                {filterValue.length > 2 ? (
                   <Badge
                     variant="secondary"
                     className="rounded-sm px-1 font-normal"
                   >
-                    {selectedValues.length} selected
+                    {filterValue.length} selected
                   </Badge>
                 ) : (
                   options
@@ -164,7 +117,6 @@ export function DataTableFacetedFilter<TData, TValue>(props: DataTableFacetedFil
             <CommandGroup className="max-h-[18.75rem] overflow-y-auto overflow-x-hidden">
               {options.map((option) => {
                 const isSelected = selectedSet.has(option.value);
-
                 return (
                   <CommandItem
                     key={`${option.value}`}
@@ -186,12 +138,12 @@ export function DataTableFacetedFilter<TData, TValue>(props: DataTableFacetedFil
                 );
               })}
             </CommandGroup>
-            {selectedValues.length > 0 && (
+            {filterValue.length > 0 && (
               <>
                 <CommandSeparator/>
                 <CommandGroup>
                   <CommandItem
-                    onSelect={() => onReset()}
+                    onSelect={onReset}
                     className="justify-center text-center"
                   >
                     Clear filters

@@ -29,13 +29,14 @@ export const newsDataTableColumns: ColumnDef<INewsBriefDto>[] = [
       search: {
         key: 'idRange',
         type: SearchInputType.NumberRange,
-        range: [1, 1000]
+        range: [1, 10_000]
       }
     },
     filterFn: 'equals'
   },
   {
     accessorKey: 'title',
+    enableSorting: false,
     meta: {
       label: 'Title',
       search: {

@@ -1,7 +1,7 @@
 import { ComponentProps, FC } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { NewsBriefDto } from '@/features/news/dtos/news-brief-dto';
+import { INewsBriefDto } from '@/features/news/dtos/news-brief-dto';
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import { BookOpenIcon, ImageMinusIcon } from 'lucide-react';
@@ -9,7 +9,7 @@ import { Link } from '@tanstack/react-router';
 
 
 interface INewsCardProps extends ComponentProps<typeof Card> {
-  news: NewsBriefDto;
+  news: INewsBriefDto;
 }
 
 const NewsCard: FC<INewsCardProps> = ({ news, className, ...props }) => {
@@ -34,7 +34,7 @@ const NewsCard: FC<INewsCardProps> = ({ news, className, ...props }) => {
         </div>
 
         <Button size="icon" variant="outline" className="ml-auto mt-auto" asChild>
-          <Link to="/news/$link" params={{ link: news.link }}>
+          <Link to="/news/$slug" params={{ slug: news.slug }}>
             <BookOpenIcon/>
           </Link>
         </Button>

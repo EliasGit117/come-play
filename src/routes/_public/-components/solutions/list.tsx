@@ -1,9 +1,9 @@
 import { ComponentProps, FC } from 'react';
 import { cn } from '@/lib/utils';
 import { Link, LinkOptions } from '@tanstack/react-router';
-import conferenceRoomImg from '../../../../../public/images/home/solutions/conference-room.jpg';
-import stadiumImg from '../../../../../public/images/home/solutions/stadium.jpg';
-import advertisingImg from '../../../../../public/images/home/solutions/advertising.png';
+import conferenceRoomImg from '/images/home/solutions/conference-room.jpg';
+import stadiumImg from '/images/home/solutions/stadium.jpg';
+import advertisingImg from '/images/home/solutions/advertising.png';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
 
 

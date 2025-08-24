@@ -1,10 +1,10 @@
 import { ComponentProps, FC } from 'react';
 import { cn } from '@/lib/utils';
-import YoutubeLogo from '/public/icons/socials/youtube.svg?react';
-import FacebookLogo from '/public/icons/socials/facebook.svg?react';
-import LinkedInLogo from '/public/icons/socials/linkedin.svg?react';
-import TwitterLogo from '/public/icons/socials/twitter.svg?react';
-import LightLogo from '/public/icons/logo-white.svg?react';
+import YoutubeLogo from '@/assets/icons/socials/youtube.svg?react';
+import FacebookLogo from '@/assets/icons/socials/facebook.svg?react';
+import LinkedInLogo from '@/assets/icons/socials/linkedin.svg?react';
+import TwitterLogo from '@/assets/icons/socials/twitter.svg?react';
+import LightLogo from '@/assets/icons/logo-white.svg?react';
 import { Button } from '@/components/ui/button';
 
 

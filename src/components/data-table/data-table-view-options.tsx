@@ -1,4 +1,6 @@
-"use no memo";
+'use client';
+'use no memo';
+import { useMemo } from 'react';
 import { Check, ChevronsUpDown, Settings2 } from 'lucide-react';
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
@@ -16,14 +18,14 @@ import {
   PopoverTrigger
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { useDataTableContext } from '@/components/data-table';
+import { Table as TanstackTable } from '@tanstack/react-table';
 
-interface DataTableViewOptionsProps<TData> {}
+interface DataTableViewOptionsProps<TData> {
+  table: TanstackTable<TData>;
+}
 
-export function DataTableViewOptions<TData>({}: DataTableViewOptionsProps<TData>) {
-  const { table } = useDataTableContext<TData>();
-
-  const columns = React.useMemo(() =>
+export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps<TData>) {
+  const columns = useMemo(() =>
     table
       .getAllColumns()
       .filter((col) => typeof col.accessorFn !== 'undefined' && col.getCanHide()), [table]
@@ -51,12 +53,7 @@ export function DataTableViewOptions<TData>({}: DataTableViewOptionsProps<TData>
             <CommandEmpty>No columns found.</CommandEmpty>
             <CommandGroup>
               {columns.map((column) => (
-                <CommandItem
-                  key={column.id}
-                  onSelect={() =>
-                    column.toggleVisibility(!column.getIsVisible())
-                  }
-                >
+                <CommandItem key={column.id} onSelect={() => column.toggleVisibility(!column.getIsVisible())}>
                   <span className="truncate">
                     {column.columnDef.meta?.label ?? column.id}
                   </span>

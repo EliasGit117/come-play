@@ -1,4 +1,4 @@
-import { ComponentProps, FC,  useState } from 'react';
+import { FC,  useState } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,8 +9,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button, buttonVariants } from '@/components/ui/button';
 import type { VariantProps } from 'class-variance-authority';
-import RoFlag from '/public/icons/flags/ro.svg?react'
-import RuFlag from '/public/icons/flags/ru.svg?react'
+import RoFlag from '@/assets/icons/flags/ro.svg?react'
+import RuFlag from '@/assets/icons/flags/ru.svg?react'
 
 
 interface IProps {

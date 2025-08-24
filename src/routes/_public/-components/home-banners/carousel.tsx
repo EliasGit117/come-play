@@ -4,11 +4,11 @@ import {
   CarouselContent,
   CarouselItem
 } from '@/components/ui/carousel';
-import videoBanner from '/public/videos/home/banners/video-banner.mp4';
-import banner1 from '/public/images/home/banners/banner-1.webp';
-import banner2 from '/public/images/home/banners/banner-2.webp';
-import banner3 from '/public/images/home/banners/banner-3.webp';
-import videoPreview from '/public/images/home/banners/video-placeholder.webp';
+import videoBanner from '/videos/home/banners/video-banner.mp4';
+import banner1 from '/images/home/banners/banner-1.webp';
+import banner2 from '/images/home/banners/banner-2.webp';
+import banner3 from '/images/home/banners/banner-3.webp';
+import videoPreview from '/images/home/banners/video-placeholder.webp';
 import { ComponentProps, FC, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Autoplay from 'embla-carousel-autoplay';
