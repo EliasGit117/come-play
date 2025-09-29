@@ -24,7 +24,7 @@ export const Route = createFileRoute('/admin/news/')({
   },
   head: () => {
     return {
-      meta: [{ title: 'Posts' }]
+      meta: [{ title: 'News' }]
     };
   }
 });

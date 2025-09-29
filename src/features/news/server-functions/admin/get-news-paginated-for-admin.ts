@@ -7,6 +7,7 @@ import { AdminNewsBriefDtoFactory } from '@/features/news/dtos/admin-news-brief-
 import { NewsStatus, Prisma } from '@prisma/client';
 import { PaginationResultDtoFactory } from '@/features/common/pagination/pagination-result-dto';
 import { dateRangeSchema, numberRangeSchema } from '@/components/data-table';
+import { hasValue } from '@/utils/has-value';
 
 
 export const getNewsPaginatedForAdminSchema = paginatedSchema.extend({
@@ -19,7 +20,8 @@ export const getNewsPaginatedForAdminSchema = paginatedSchema.extend({
     .optional()
     .catch(undefined),
   createdAt: dateRangeSchema.optional().catch(undefined),
-  updatedAt: dateRangeSchema.optional().catch(undefined)
+  updatedAt: dateRangeSchema.optional().catch(undefined),
+  hasImage: z.boolean().optional().catch(undefined)
 });
 
 export type TGetNewsPaginatedParamsForAdmin = z.infer<typeof getNewsPaginatedForAdminSchema>;
@@ -29,9 +31,11 @@ export const getNewsPaginatedForAdmin = createServerFn({ method: 'GET' })
   .handler(async ({ data }) => {
     const where: Prisma.NewsWhereInput = {};
 
-    if (data.id) {
+    if (hasValue(data.hasImage))
+      where.image = data.hasImage ? { isNot: null } : { is: null };
+
+    if (data.id)
       where.id = { equals: data.id };
-    }
 
     if (data.idRange) {
       const [minId, maxId] = data.idRange;
@@ -75,6 +79,9 @@ export const getNewsPaginatedForAdmin = createServerFn({ method: 'GET' })
 
     const [items, meta] = await prisma.news
       .paginate({
+        include: {
+          image: true
+        },
         orderBy: { [data.order ?? 'id']: data.dir ?? 'desc' },
         where
       })

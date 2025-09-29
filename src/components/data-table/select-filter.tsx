@@ -24,6 +24,7 @@ import {
   TFacetedOptionValue
 } from '@/components/data-table/types/tanstack-table-meta';
 import * as React from 'react';
+import { hasValue } from '@/utils/has-value';
 
 interface IDataTableSelectFilter<TData, TValue> {
   column: Column<TData, TValue>;
@@ -50,11 +51,13 @@ export function DataTableSelectFilter<TData, TValue>({ column }: IDataTableSelec
 
   const onReset = useCallback(() => column.setFilterValue(undefined), [column]);
 
+  const hasFilterValue = hasValue(filterValue);
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="border-dashed !px-2.5">
-          {!!filterValue ? (
+          {hasFilterValue ? (
             <div
               role="button"
               aria-label={`Clear ${title} filter`}
@@ -71,7 +74,7 @@ export function DataTableSelectFilter<TData, TValue>({ column }: IDataTableSelec
             <PlusCircle/>
           )}
           {title}
-          {!!filterValue && (
+          {hasFilterValue && (
             <>
               <Separator orientation="vertical" className="mx-0.5 data-[orientation=vertical]:h-4"/>
               <div className="items-center gap-1">

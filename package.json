@@ -52,6 +52,7 @@
     "recharts": "^2.15.3",
     "redaxios": "^0.5.1",
     "resend": "^4.6.0",
+    "sharp": "^0.34.4",
     "sonner": "^2.0.5",
     "tailwind-merge": "^2.6.0",
     "thumbhash": "^0.1.1",

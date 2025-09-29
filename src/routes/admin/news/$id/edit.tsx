@@ -12,9 +12,9 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { ResetIcon } from '@radix-ui/react-icons';
 import { Label } from '@/components/ui/label';
+import { IImagePickerValue } from '@/components/image-picker';
+import NewsImageUploader from '@/routes/admin/news/-components/news-form/news-image-uploader';
 import { useState } from 'react';
-import { createThumbhashFromFile } from '@/utils/thumbhash';
-import { ImagePicker, IImagePickerValue } from '@/components/image-picker';
 
 export const Route = createFileRoute('/admin/news/$id/edit')({
   component: RouteComponent,
@@ -28,6 +28,7 @@ export const Route = createFileRoute('/admin/news/$id/edit')({
 function RouteComponent() {
   const { id } = Route.useParams();
   const { data: news, isPending: isFetching } = useSuspenseQuery(getNewsByIdQueryOptions(id));
+  const [isImgPending, setIsImgPending] = useState<boolean>(false);
 
   const form = useForm<TNewsFormSchema>({
     resolver: zodResolver(newsFormSchema),
@@ -57,12 +58,13 @@ function RouteComponent() {
     });
   };
 
-  const isPending = isFetching || isUpdating;
 
-  const [imageData, setImageData] = useState<IImagePickerValue | undefined>({
-    src: 'https://fastly.picsum.photos/id/402/1000/800.jpg?grayscale&hmac=Z8HDrM-vmOsA2nJMFb9sU2Sf0HCaQu2e0k3em6F-jtI',
-    thumbhash: 'FwgSBoAIl2h5h4h2iWiIiIeJAAAAAAA'
-  });
+  const imageData: IImagePickerValue | undefined = !!news.image ?
+    { src: news.image.url, thumbhash: news.image.thumbhash } :
+    undefined;
+
+  const onImagePending = (value: boolean) => setIsImgPending(value);
+  const isPending = isFetching || isUpdating || isImgPending;
 
   return (
     <main className="container mx-auto p-4 pb-12 space-y-4 flex-1 relative">
@@ -76,18 +78,7 @@ function RouteComponent() {
       </article>
 
       <Label>Image</Label>
-      <ImagePicker
-        className="max-w-xs aspect-video"
-        value={imageData}
-        onFilesChange={async (file) => {
-          if (!file) {
-            setImageData(undefined);
-            return;
-          }
-
-          setImageData({ thumbhash: await createThumbhashFromFile(file), src: URL.createObjectURL(file) });
-        }}
-      />
+      <NewsImageUploader newsId={id} defaultImage={imageData} onPendingChange={onImagePending}/>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">

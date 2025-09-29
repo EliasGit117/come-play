@@ -15,11 +15,13 @@ export const getNewsById = createServerFn({ method: 'GET' })
   .handler(async ({ data: { id } }) => {
     const news = await prisma.news.findUnique({
       where: { id },
+      include: {
+        image: true
+      }
     });
 
-    if (!news) {
+    if (!news)
       throw new Error('News not found');
-    }
 
     return IAdminNewsDtoFactory.fromEntity(news);
   });

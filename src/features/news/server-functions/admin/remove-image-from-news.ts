@@ -14,14 +14,7 @@ export const removeNewsImageSchema = z.object({
 export const removeNewsImage = createServerFn({ method: 'POST' })
   .validator(removeNewsImageSchema)
   .handler(async ({ data }) => {
-    const image = await prisma.newsImage.findUnique({ where: { newsId: data.newsId } });
-    if (!image)
-      throw new Error('Image not found');
-
-    await prisma.$transaction(async (tx) => {
-      await tx.newsImage.delete({ where: { newsId: data.newsId } });
-      await utapi.deleteFiles([`${data.newsId}`]);
-    });
+    await removeImageFromNews(data.newsId)
   });
 
 
@@ -46,3 +39,16 @@ export const useRemoveImageFromNews = (options?: TOptions) => {
     }
   });
 };
+
+
+export async function removeImageFromNews(newsId: number) {
+  "use server";
+  const image = await prisma.newsImage.findUnique({ where: { newsId: newsId } });
+  if (!image)
+    throw new Error('Image not found');
+
+  await prisma.$transaction(async (tx) => {
+    await tx.newsImage.delete({ where: { newsId: newsId } });
+    await utapi.deleteFiles([`${image.id}`],  { keyType: "customId" });
+  });
+}

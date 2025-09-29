@@ -9,7 +9,9 @@ import {
   EyeIcon,
   EyeOffIcon,
   HashIcon,
-  HeadingIcon, LinkIcon,
+  HeadingIcon,
+  ImageIcon, ImageOffIcon,
+  LinkIcon,
   ListCheckIcon,
   PenIcon,
   TrashIcon
@@ -27,6 +29,7 @@ import {
 import { ColumnFilterType, DataTableColumnHeader } from '@/components/data-table';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { useDeleteNewsAlertDialog } from '@/routes/admin/news/-components/delete-news-alert-dialog/provider';
+import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
 
 const columnHelper = createColumnHelper<IAdminNewsBriefDto>();
 
@@ -43,6 +46,34 @@ export const newsColumns = [
         type: ColumnFilterType.NumberRange,
         min: 1,
         max: 5000
+      }
+    }
+  }),
+  columnHelper.accessor('image', {
+    enableSorting: false,
+    header: ({ column }) => <DataTableColumnHeader column={column}/>,
+    cell: ctx => {
+      const img = ctx.getValue();
+
+      if (!img)
+        return (
+          <div className='h-10 aspect-video rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex'>
+            <ImageOffIcon className='size-5'/>
+          </div>
+        )
+
+      return (<UnLazyImageSSR src={img.url} thumbhash={img.thumbhash} className='h-10 aspect-video rounded-sm'/>);
+    },
+    meta: {
+      label: 'Image',
+      key: 'hasImage',
+      icon: ImageIcon,
+      filter: {
+        type: ColumnFilterType.Select,
+        options: [
+          { title: 'Yes', value: true, icon: ImageIcon },
+          { title: 'No', value: false, icon: ImageOffIcon }
+        ]
       }
     }
   }),

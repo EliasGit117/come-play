@@ -1,29 +1,24 @@
-import { rgbaToThumbHash } from "thumbhash";
+import sharp from 'sharp';
+import { rgbaToThumbHash } from 'thumbhash';
 
-export async function createThumbhashFromFile(file: File): Promise<string> {
-  const imgBitmap = await createImageBitmap(file);
+export async function createThumbhashFromFile(file: File): Promise<Uint8Array> {
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const metadata = await sharp(buffer).metadata();
+  const origWidth = metadata.width ?? 0;
+  const origHeight = metadata.height ?? 0;
+  const maxSide = Math.max(origWidth, origHeight);
+  const target = maxSide > 200 ? 100 : maxSide;
 
-  const maxSize = 100;
-  let targetW = imgBitmap.width;
-  let targetH = imgBitmap.height;
+  const image = sharp(buffer).resize({
+    width: target,
+    height: target,
+    fit: 'inside',
+  });
 
-  if (targetW > targetH && targetW > maxSize) {
-    targetH = (targetH * maxSize) / targetW;
-    targetW = maxSize;
-  } else if (targetH > maxSize) {
-    targetW = (targetW * maxSize) / targetH;
-    targetH = maxSize;
-  }
+  const { data, info } = await image
+    .raw()
+    .ensureAlpha()
+    .toBuffer({ resolveWithObject: true });
 
-  const canvas = document.createElement("canvas");
-  canvas.width = Math.round(targetW);
-  canvas.height = Math.round(targetH);
-
-  const ctx = canvas.getContext("2d")!;
-  ctx.drawImage(imgBitmap, 0, 0, canvas.width, canvas.height);
-
-  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  const hash = rgbaToThumbHash(canvas.width, canvas.height, imageData.data);
-
-  return btoa(String.fromCharCode(...hash));
+  return rgbaToThumbHash(info.width, info.height, data);
 }
