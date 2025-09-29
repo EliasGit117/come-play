@@ -30,9 +30,8 @@ const UnLazyImageSSR: FC<IProps> = (props) => {
     loading = 'lazy',
     ...rest
   } = props;
+
   const target = useRef<HTMLImageElement | null>(null);
-
-
   const thumbhashSrc = thumbhash && createPngDataUriThumbhash(thumbhash);
   const blurhashSrc = blurhash && createPngDataUriBlurhash(blurhash);
   const placeholderSrc = thumbhashSrc ?? blurhashSrc;
@@ -52,7 +51,7 @@ const UnLazyImageSSR: FC<IProps> = (props) => {
     });
 
     return () => cleanup();
-  }, [thumbhash, blurhash, placeholderSize]);
+  }, [src, srcSet, autoSizes, blurhash, thumbhash, placeholderSrc, placeholderSize]);
 
   return (
     <img

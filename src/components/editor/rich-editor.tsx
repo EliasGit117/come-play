@@ -101,8 +101,9 @@ interface IRichEditorProps {
 const RichEditor: FC<IRichEditorProps> = ({ value, onChange, className, editorClassName }) => {
 
   return (
-    <div className={cn("border rounded-lg bg-transparent dark:bg-input/30", className)}>
+    <div className={cn("border rounded-lg bg-transparent dark:bg-input/30 min-h-[259px]", className)}>
       <EditorProvider
+        immediatelyRender={false}
         slotBefore={<MenuBar/>}
         extensions={extensions}
         content={value}
@@ -113,7 +114,7 @@ const RichEditor: FC<IRichEditorProps> = ({ value, onChange, className, editorCl
         editorProps={{
           attributes: {
             class: cn(
-              'prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-xl m-5 focus:outline-none max-w-4xl',
+              'prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-xl m-5 focus:outline-none max-w-none',
               editorClassName
             )
           }

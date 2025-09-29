@@ -23,19 +23,19 @@ const SolutionList: FC<IProps> = ({ className, ...props }) => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-2 md:gap-4 md:max-h-96">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-1 sm:gap-1.5 md:gap-2 md:max-h-96">
         {imageLinks.map((linkProps) =>
           <ImageLink key={linkProps.title} {...linkProps}/>
         )}
       </div>
 
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-1">
         {descriptions.map((desc, i) => (
           <div
             key={desc.title}
             className={cn(
-              "relative group p-2 md:p-4 overflow-hidden cursor-pointer",
+              "relative group p-2 md:p-4 overflow-hidden cursor-pointer rounded-md",
                 i === descriptions.length - 1 && 'col-span-1 md:col-span-2 lg:col-span-1'
             )}
           >
@@ -69,21 +69,21 @@ const imageLinks: IImageLinkProps[] = [
   {
     title: 'Conference Room',
     img: conferenceRoomImg,
-    className: 'md:row-span-2 max-h-32 md:max-h-none',
+    className: 'md:row-span-2 max-h-32 md:max-h-none rounded-t-md md:rounded-t-none md:rounded-l-md',
     linkOptions: { to: '/' },
     thumbhash: '2PcRDYBId5iPhod7iIeHiPaAeA5n'
   },
   {
     title: 'Races Stadium',
     img: stadiumImg,
-    className: 'max-h-32 md:max-h-none',
+    className: 'max-h-32 md:max-h-none md:rounded-tr-md',
     linkOptions: { to: '/' },
     thumbhash: 'o8YNFYR3eIh5d3efd5d5iFiFn/an'
   },
   {
     title: 'Advertising',
     img: advertisingImg,
-    className: 'md:col-start-2 max-h-32 md:max-h-none',
+    className: 'md:col-start-2 max-h-32 md:max-h-none rounded-b-md md:rounded-b-none md:rounded-br-md',
     linkOptions: { to: '/' },
     thumbhash: 'DQgKBYJ5V2h/iIZ1eEd4eASVngiq'
   }

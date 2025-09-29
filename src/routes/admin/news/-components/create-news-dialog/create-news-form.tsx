@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 import z from 'zod';
 import { Input } from '@/components/ui/input';
-import { createNewsSchema } from '@/features/news/server-functions/create-news';
+import { createNewsSchema } from '@/features/news/server-functions/admin/create-news';
 import { Checkbox } from '@/components/ui/checkbox';
 
 

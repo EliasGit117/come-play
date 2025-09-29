@@ -10,27 +10,22 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '@/components/ui/sidebar';
-import { SettingsIcon, LayoutDashboardIcon, NewspaperIcon, ShoppingCartIcon } from 'lucide-react';
+import { SettingsIcon, LayoutDashboardIcon, NewspaperIcon, ShoppingCartIcon, HomeIcon } from 'lucide-react';
 import { INavItem } from '@/routes/admin/-components/sidebar/types/nav-item';
 import { Link } from '@tanstack/react-router';
 import { NavSettings } from '@/routes/admin/-components/sidebar/nav-settings';
 
 
-interface IUser {
-  email: string;
-  name: string;
-}
 
+interface IAdminSidebarProps extends ComponentProps<typeof Sidebar> {}
 
-interface IAdminSidebarProps extends ComponentProps<typeof Sidebar> {
-  user: IUser;
-}
-
-export function AdminSidebar({ user, ...props }: IAdminSidebarProps) {
-  if (!user)
-    throw new Error('AppSidebar requires a user but received undefined.');
-
+export function AdminSidebar({ ...props }: IAdminSidebarProps) {
   const navMain: INavItem[] = [
+    {
+      title: 'Home',
+      linkOptions: { to: '/',  activeOptions: { exact: true } },
+      icon: HomeIcon
+    },
     {
       title: 'Dashboard',
       linkOptions: { to: '/admin', activeOptions: { exact: true } },
@@ -69,12 +64,11 @@ export function AdminSidebar({ user, ...props }: IAdminSidebarProps) {
       </SidebarHeader>
       <SidebarContent>
         <NavLinkGroup label="Main" items={navMain}/>
-        {/*<NavSecondary items={navSecondary}/>*/}
         <div className="flex-1"/>
         <NavSettings/>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={user}/>
+        <NavUser/>
       </SidebarFooter>
     </Sidebar>
   );

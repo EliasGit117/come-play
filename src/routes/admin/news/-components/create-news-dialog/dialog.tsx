@@ -15,7 +15,7 @@ import {
 import { Form } from "@/components/ui/form";
 import { TCreateNewsFormSchema, createNewsFormSchema, NewsForm } from './create-news-form';
 import { LoadingButton } from '@/components/ui/loading-button';
-import { useCreateNewsMutation } from '@/features/news/server-functions/create-news';
+import { useCreateNewsMutation } from '@/features/news/server-functions/admin/create-news';
 import { toast } from 'sonner';
 
 

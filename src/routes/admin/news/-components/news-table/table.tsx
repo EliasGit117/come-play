@@ -1,28 +1,27 @@
-'use no memo';
-import { Table } from '@tanstack/react-table';
-import { INewsBriefDto } from '@/features/news/dtos/news-brief-dto';
-import { ConfirmDialogProvider } from '@/components/ui/confirm-dialog';
-import { DataTable, DataTablePagination, DataTableToolbar } from '@/components/data-table';
 import { ComponentProps, FC } from 'react';
+import { Table } from '@tanstack/react-table';
+import { IAdminNewsBriefDto } from '@/features/news/dtos/admin-news-brief-dto';
 import { cn } from '@/lib/utils';
+import { DataTableProvider, DataTableToolbar, DataTable, DataTablePagination } from '@/components/data-table';
 
-
-interface IProps extends Omit<ComponentProps<'div'>, 'children'> {
-  className?: string;
-  table: Table<INewsBriefDto>;
+interface IProps extends ComponentProps<'div'> {
+  table: Table<IAdminNewsBriefDto>;
 }
 
-const NewsTable: FC<IProps> = ({ table, className, ...props }) => {
+export const NewsTable: FC<IProps> = ({ className, table, ...props }) => {
+  // noinspection BadExpressionStatementJS
+  "use no memo";
 
   return (
-    <ConfirmDialogProvider>
-      <div className={cn('flex flex-col gap-4', className)} {...props}>
-        <DataTableToolbar table={table}/>
-        <DataTable table={table}/>
-        <DataTablePagination table={table}/>
-      </div>
-    </ConfirmDialogProvider>
+    <div className={cn('flex flex-col gap-2', className)} {...props}>
+      <DataTableProvider table={table}>
+        <DataTableToolbar/>
+        <DataTable/>
+        <DataTablePagination/>
+      </DataTableProvider>
+    </div>
   );
 };
+
 
 export default NewsTable;

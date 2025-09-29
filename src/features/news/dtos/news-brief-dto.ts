@@ -5,10 +5,11 @@ export interface INewsBriefDto {
   title: string;
   slug: string;
   status: NewsStatus;
-  createdAt: string; // ISO string for safe serialization
+  createdAt: string;
 }
 
 export class NewsBriefDtoFactory {
+
   static fromEntity(news: News): INewsBriefDto {
     return {
       id: news.id,

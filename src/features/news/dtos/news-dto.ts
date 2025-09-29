@@ -2,9 +2,9 @@ import { News } from '@prisma/client';
 
 export interface INewsDto {
   id: number;
+  slug: string;
   title: string;
-  link: string;
-  content: string | null;
+  content?: string | null;
   createdAt: string;
 }
 
@@ -14,7 +14,7 @@ export class NewsDtoFactory {
     return {
       id: entity.id,
       title: entity.titleRo,
-      link: entity.link,
+      slug: entity.slug,
       createdAt: entity.createdAt.toISOString(),
       content: entity.contentRo,
     };

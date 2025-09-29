@@ -101,7 +101,8 @@ const SightDistanceSlider: FC = () => {
 
   return (
     <div className="space-y-2 mt-8">
-      <Label>Sight Distance(m)</Label>
+      <Label>Sight Distance (m)</Label>
+      <p>{sight.from} - {sight.to}</p>
       <RangeSlider
         min={0}
         max={30}
@@ -124,7 +125,7 @@ const PanelModelsSelector: FC = () => {
 
   return (
     <div className="space-y-2 mt-8">
-      <Label>Recommended Model(mm)</Label>
+      <Label>Recommended Model (mm)</Label>
       <div className="flex flex-wrap gap-2">
         {productModels.map(m => {
           const selected = !!panelModels.find(p => p.key === m.key);

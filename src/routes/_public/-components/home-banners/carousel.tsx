@@ -76,7 +76,7 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
       plugins={[Autoplay({ delay: 23000 })]}
     >
       <CarouselContent>
-        <CarouselItem className="relative">
+        <CarouselItem className="relative pl-0">
           <VideoPlaceholder
             placeholder={
               <img
@@ -105,7 +105,7 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
         </CarouselItem>
 
         {banners.map((banner, index) => (
-          <CarouselItem key={index} className="relative">
+          <CarouselItem key={index} className="relative pl-0">
             <img
               src={banner.imgSrc}
               alt={`banner-${index}`}

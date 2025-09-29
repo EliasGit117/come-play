@@ -13,8 +13,8 @@ function AdminLayout() {
 
   return (
     <SidebarProvider>
-      <AdminSidebar user={{ email: 'johndoe47@gmail.com', name: 'John Doe' }}/>
-      <SidebarInset>
+      <AdminSidebar/>
+      <SidebarInset className="overflow-hidden">
         <div className="container mx-auto px-4 py-2 flex gap-2 items-center">
           <SidebarTrigger className="-ml-1"/>
           <Separator orientation="vertical" className="max-h-4"/>

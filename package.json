@@ -15,7 +15,7 @@
     "@hookform/resolvers": "^5.1.1",
     "@igorkowalczyk/is-browser": "^5.1.0",
     "@prisma/client": "^6.10.1",
-    "@tailwindcss/vite": "^4.1.10",
+    "@tailwindcss/vite": "^4.1.13",
     "@tanstack/react-query": "^5.66.0",
     "@tanstack/react-query-devtools": "^5.66.0",
     "@tanstack/react-router": "^1.121.21",
@@ -54,10 +54,12 @@
     "resend": "^4.6.0",
     "sonner": "^2.0.5",
     "tailwind-merge": "^2.6.0",
-    "uploadthing": "^7.7.3",
+    "thumbhash": "^0.1.1",
+    "uploadthing": "^7.7.4",
     "use-debounce": "^10.0.5",
     "vaul": "^1.1.2",
     "zod": "^3.25.67",
+    "zod-form-data": "^3.0.1",
     "zustand": "^5.0.6"
   },
   "devDependencies": {
@@ -73,7 +75,7 @@
     "tw-animate-css": "^1.3.4",
     "type": "^2.7.3",
     "typescript": "^5.7.2",
-    "vite": "^6.3.5",
+    "vite": "^7.1.7",
     "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.4"
   }

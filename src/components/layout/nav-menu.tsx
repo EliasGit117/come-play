@@ -60,13 +60,11 @@ interface IDropdownMenuProps extends ComponentProps<typeof NavigationMenuItem> {
   triggerClassName?: string;
 }
 
-const DropdownMenu: FC<IDropdownMenuProps> = ({ title, items, triggerClassName, ...props}) => (
+const DropdownMenu: FC<IDropdownMenuProps> = ({ title, items, triggerClassName, ...props }) => (
   <NavigationMenuItem {...props}>
     <NavigationMenuTrigger className={triggerClassName}>{title}</NavigationMenuTrigger>
     <NavigationMenuContent>
-      <ul
-        className={cn('grid gap-2 w-[300px]', items.length > 4 && 'grid-cols-2 w-[400px]')}
-      >
+      <ul className={cn('grid gap-2 w-[300px]', items.length > 4 && 'grid-cols-2 w-[400px]')}>
         {items.map((item, idx) => (
           <li key={idx}>
             <NavigationMenuLink asChild>

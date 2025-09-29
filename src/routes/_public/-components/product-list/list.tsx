@@ -8,36 +8,47 @@ import fourthProductImg from '/images/home/products/product-4.webp';
 import fifthProductImg from '/images/home/products/product-5.webp';
 import sixthProductImg from '/images/home/products/product-6.webp';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
+import { Card, CardContent } from '@/components/ui/card';
 
 
-interface IProps extends ComponentProps<'section'> {}
+interface IProps extends ComponentProps<'section'> {
+}
 
 const ProductList: FC<IProps> = ({ className, ...props }) => {
 
   return (
-    <section
-      className={cn('grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-6 gap-4', className)}
-      {...props}
-    >
+    <section className={cn('space-y-8', className)} {...props}>
+      <div className="text-center">
+        <h2 className="text-3xl font-bold">
+          PRODUCTS
+        </h2>
+        <p className="text-gray-500 mt-2">
+          Discover the line of our products
+        </p>
+      </div>
 
-      {products.map((product) => (
-        <article key={product.title} className="rounded-lg overflow-hidden relative">
-          <Link to="/" className="overflow-hidden">
-            <UnLazyImageSSR
-              src={product.image}
-              alt={product.title}
-              className="w-full h-64 object-cover brightness-90"
-              thumbhash={product.thumbhash}
-            />
-          </Link>
-          <div className="absolute bottom-0 left-0 right-0 text-white p-2 md:p-4">
-            <h1 className="font-bold text-xl md:text-2xl text-gray-50 relative z-10">
-              {product.title}
-            </h1>
-          </div>
+      <div className={cn('grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-4 md:gap-6')}>
+        {products.map((product) => (
+          <article key={product.title}>
+            <Link to="/">
+              <Card className="relative max-w-xs p-0 shadow-none h-52 border-none overflow-clip">
+                <CardContent className="rounded-none overflow-clip px-0 relative flex-1">
+                  <UnLazyImageSSR
+                    src={product.image}
+                    alt={product.title}
+                    thumbhash={product.thumbhash}
+                    className="w-full h-full object-cover"
+                  />
+                </CardContent>
+              </Card>
 
-        </article>
-      ))}
+              <h1 className="text-base font-semibold text-center pt-2">
+                {product.title}
+              </h1>
+            </Link>
+          </article>
+        ))}
+      </div>
     </section>
   );
 };

@@ -23,7 +23,10 @@ interface IPanelSettingsProviderStore {
   setTilesYCount: (value: number | ((prevValue: number) => number)) => void;
 
   sight: { from: number; to: number };
-  setSight: (value: { from: number; to: number } | ((prevValue: { from: number; to: number }) => { from: number; to: number })) => void;
+  setSight: (value: { from: number; to: number } | ((prevValue: { from: number; to: number }) => {
+    from: number;
+    to: number
+  })) => void;
 }
 
 const PanelSettingsContext =
@@ -53,9 +56,20 @@ export const PanelSettingsProvider = ({ children }: { children: React.ReactNode 
       })),
 
       panelModels: getDefaultPanelModels(panelTypes[0].type),
-      setPanelModels: (value) => set((state) => ({
-        panelModels: typeof value === 'function' ? value(state.panelModels) : value
-      })),
+      setPanelModels: (value) => set((state) => {
+        const nextModels =
+          typeof value === 'function' ? value(state.panelModels) : value;
+
+        const minSight = Math.min(...nextModels.map((m) => m.sightFrom));
+        const maxSight = Math.max(...nextModels.map((m) => m.sightTo));
+
+        const newSight = {
+          from: Math.min(state.sight.from, minSight),
+          to: Math.max(state.sight.to, maxSight),
+        };
+
+        return { panelModels: nextModels, sight: newSight };
+      }),
 
       tilesXCount: 5,
       setTilesXCount: (value) => set((state) => ({
@@ -68,9 +82,12 @@ export const PanelSettingsProvider = ({ children }: { children: React.ReactNode 
       })),
 
       sight: { from: 0, to: 30 },
-      setSight: (value) => set((state) => ({
-        sight: typeof value === 'function' ? value(state.sight) : value
-      })),
+      setSight: (value) => set((state) => {
+        const nextValue = typeof value === 'function' ? value(state.sight) : value;
+        const filteredModels = state.product.models?.filter((p) => p.sightFrom <= nextValue.to && p.sightTo >= nextValue.from);
+
+        return { sight: nextValue, panelModels: filteredModels };
+      })
     }))
   );
 
@@ -81,15 +98,6 @@ export const PanelSettingsProvider = ({ children }: { children: React.ReactNode 
   );
 };
 
-
-// export const usePanelSettingsProvider = <T, >(selector: (state: IPanelSettingsProviderStore) => T) => {
-//   const store = useContext(PanelSettingsContext);
-//   if (!store)
-//     throw new Error('Missing PanelSettingsProvider');
-//
-//   return useStore(store, selector);
-// };
-//
 
 export const usePanelSettingsProvider = <T = ExtractState<IPanelSettingsProviderStore>>(
   selector: (state: IPanelSettingsProviderStore) => T,

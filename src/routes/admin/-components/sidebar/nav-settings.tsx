@@ -15,7 +15,6 @@ import {
   SidebarMenuItem, useSidebar
 } from '@/components/ui/sidebar';
 import { ComponentPropsWithoutRef } from 'react';
-import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react';
 
 
 
@@ -39,7 +38,6 @@ export function NavSettings({ ...props }: IProps & ComponentPropsWithoutRef<type
       </SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
-
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

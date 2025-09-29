@@ -28,13 +28,26 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
       return;
     }
 
-    const updateTopState = () => setIsAtTop(window.scrollY === 0);
+    let ticking = false;
 
-    updateTopState(); // Run immediately on mount
-    window.addEventListener('scroll', updateTopState, { passive: true });
+    const updateTopState = () => {
+      setIsAtTop(window.scrollY === 0);
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (ticking)
+        return;
+
+      window.requestAnimationFrame(updateTopState);
+      ticking = true;
+    };
+
+    updateTopState();
+    window.addEventListener('scroll', onScroll, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', updateTopState);
+      window.removeEventListener('scroll', onScroll);
     };
   }, [type]);
 

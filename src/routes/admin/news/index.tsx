@@ -1,26 +1,26 @@
-'use no memo';
+import { DeleteNewsAlertDialogProvider } from '@/routes/admin/news/-components/delete-news-alert-dialog/provider';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { PlusIcon, RotateCcwIcon } from 'lucide-react';
 import { zodValidator } from '@tanstack/zod-adapter';
 import { useDataTable } from '@/components/data-table';
 import {
-  getNewsPaginatedQueryOptions,
-  getNewsPaginatedSchema
-} from '@/features/news/server-functions/get-news-paginated';
-import NewsTable from '@/routes/admin/news/-components/news-table/table';
-import { newsDataTableColumns } from '@/routes/admin/news/-components/news-table/columns';
+  getNewsPaginatedForAdminQueryOptions,
+  getNewsPaginatedForAdminSchema
+} from '@/features/news/server-functions/admin/get-news-paginated-for-admin';
 import { useState } from 'react';
 import { CreateNewsDialog } from '@/routes/admin/news/-components/create-news-dialog/dialog';
 import ButtonWithTooltip from '@/components/ui/button-with-tooltip';
+import { newsColumns, NewsTable } from './-components/news-table';
+import { DeleteNewsAlertDialog } from '@/routes/admin/news/-components/delete-news-alert-dialog/alert-dialog';
 
 
 export const Route = createFileRoute('/admin/news/')({
   component: Component,
-  validateSearch: zodValidator(getNewsPaginatedSchema),
+  validateSearch: zodValidator(getNewsPaginatedForAdminSchema),
   loaderDeps: (deps) => (deps),
   loader: async ({ context, deps: { search } }) => {
-    return context.queryClient.prefetchQuery(getNewsPaginatedQueryOptions(search));
+    return context.queryClient.prefetchQuery(getNewsPaginatedForAdminQueryOptions(search));
   },
   head: () => {
     return {
@@ -30,11 +30,14 @@ export const Route = createFileRoute('/admin/news/')({
 });
 
 function Component() {
+  // noinspection BadExpressionStatementJS
+  "use no memo";
+
   const search = Route.useSearch();
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
   const { data, isPending, refetch } = useQuery({
-    ...getNewsPaginatedQueryOptions(search),
+    ...getNewsPaginatedForAdminQueryOptions(search),
     placeholderData: keepPreviousData
   });
 
@@ -44,45 +47,48 @@ function Component() {
     limit: search.limit,
     total: data?.totalCount,
     totalPages: data?.pageCount,
-    columns: newsDataTableColumns
+    columns: newsColumns
   });
 
   const refetchSync = () => refetch();
   const openCreateDialog = () => setCreateDialogOpen(true);
 
-
   return (
-    <main className="container mx-auto p-4 space-y-4 flex flex-col flex-1">
-      <article className="space-y-2">
-        <div className="flex items-center gap-2">
-          <h2 className="text-2xl">Title</h2>
+    <DeleteNewsAlertDialogProvider>
 
-          <div className="flex-1"/>
+      <main className="container mx-auto p-4 space-y-4 flex flex-col flex-1">
+        <article className="space-y-2">
+          <div className="flex items-center gap-2">
+            <h2 className="text-2xl">News</h2>
 
-          <ButtonWithTooltip
-            variant="ghost"
-            size="smIcon"
-            tooltip="Create"
-            disabled={isPending}
-            onClick={openCreateDialog}
-          >
-            <PlusIcon/>
-          </ButtonWithTooltip>
+            <div className="flex-1"/>
 
-          <ButtonWithTooltip
-            variant="ghost"
-            size="smIcon"
-            tooltip="Refresh"
-            onClick={refetchSync} disabled={isPending}
-          >
-            <RotateCcwIcon/>
-          </ButtonWithTooltip>
-        </div>
-      </article>
+            <ButtonWithTooltip
+              variant="ghost"
+              size="smIcon"
+              tooltip="Create"
+              disabled={isPending}
+              onClick={openCreateDialog}
+            >
+              <PlusIcon/>
+            </ButtonWithTooltip>
 
-      <NewsTable table={table}/>
+            <ButtonWithTooltip
+              variant="ghost"
+              size="smIcon"
+              tooltip="Refresh"
+              onClick={refetchSync} disabled={isPending}
+            >
+              <RotateCcwIcon/>
+            </ButtonWithTooltip>
+          </div>
+        </article>
 
-      <CreateNewsDialog open={createDialogOpen} setOpen={setCreateDialogOpen} afterSuccess={refetchSync}/>
-    </main>
+        <NewsTable table={table}/>
+
+        <CreateNewsDialog open={createDialogOpen} setOpen={setCreateDialogOpen}/>
+        <DeleteNewsAlertDialog/>
+      </main>
+    </DeleteNewsAlertDialogProvider>
   );
 }

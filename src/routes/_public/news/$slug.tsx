@@ -1,32 +1,52 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { getNewsBySlugQueryOptions } from '@/features/news/server-functions/get-news-by-slug';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { createFileRoute, notFound } from '@tanstack/react-router';
+import { getNewsBySlugQueryOptions } from '@/features/news/server-functions/public/get-news-by-slug';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
+import { Separator } from '@/components/ui/separator';
+
 
 export const Route = createFileRoute('/_public/news/$slug')({
   component: RouteComponent,
   loader: async ({ context: { queryClient }, params: { slug } }) => {
-    const res = await queryClient.prefetchQuery(getNewsBySlugQueryOptions(slug))
-    return { news: res }
+    const res = await queryClient
+      .ensureQueryData(getNewsBySlugQueryOptions(slug))
+      .catch(e => {
+        console.error(e);
+        throw notFound();
+      });
+
+    return { news: res };
   }
-})
+
+});
 
 function RouteComponent() {
   const { slug } = Route.useParams();
-  const { data } = useQuery({
-    ...getNewsBySlugQueryOptions(slug),
-    placeholderData: keepPreviousData,
-  });
+  const { data } = useSuspenseQuery({ ...getNewsBySlugQueryOptions(slug) });
 
   return (
-    <main className="container mx-auto p-4 space-y-8">
+    <main className="container mx-auto p-4 space-y-8 pt-8 pb-16">
       <header>
-        <h1 className="text-2xl font-bold tracking-tight">{data?.title}</h1>
-        <p className="text-muted-foreground">{data && format(data.createdAt, 'dd.MM.yyyy - HH:mm')}</p>
+        <p className="text-muted-foreground text-xs">
+          {data && format(data.createdAt, 'dd.MM.yyyy - HH:mm')}
+        </p>
+        <h1 className="text-2xl sm:text-3xl xl:text-4xl  font-semibold tracking-tight">
+          {data?.title}
+        </h1>
       </header>
 
-      <section aria-label="News list" className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      </section>
+      <Separator className="opacity"/>
+
+      {data?.content && (
+        <div
+          dangerouslySetInnerHTML={{ __html: data.content }}
+          className={cn(
+            'mt-4 prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-xl focus:outline-none max-w-none'
+          )}
+        />
+      )}
     </main>
+
   );
 }

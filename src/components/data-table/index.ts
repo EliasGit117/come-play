@@ -1,16 +1,23 @@
+import { DataTable } from './table';
+import { DataTableToolbar } from './toolbar';
 import { useDataTable } from './hooks/use-data-table';
-import { DataTable } from './data-table';
-import { DataTablePagination } from './data-table-pagination';
-import { DataTableToolbar } from './data-table-toolbar';
-import { DataTableColumnHeader } from './datatable-column-header';
-import * as Filtration from './types/filtration';
+import { DataTableColumnHeader } from './column-header';
+import { DataTablePagination } from './pagination';
+import { useDataTableContext, DataTableProvider } from './context';
+import { ColumnFilterType } from './types/tanstack-table-meta';
+import { dateRangeSchema, numberRangeSchema } from './types/schemas';
 
 export {
-  Filtration,
-  useDataTable,
   DataTable,
+  DataTableToolbar,
   DataTableColumnHeader,
   DataTablePagination,
-  DataTableToolbar
-}
+  useDataTable,
 
+  DataTableProvider,
+  useDataTableContext,
+
+  ColumnFilterType,
+  dateRangeSchema,
+  numberRangeSchema,
+};

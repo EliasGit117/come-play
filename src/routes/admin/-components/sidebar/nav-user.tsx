@@ -20,13 +20,14 @@ import React from 'react';
 import { Link } from '@tanstack/react-router';
 
 
-interface IUser {
-  email: string;
-  name: string;
-}
 
-export function NavUser({ user }: { user: IUser }) {
+
+export function NavUser() {
   const { isMobile } = useSidebar();
+  const user = {
+    email: 'test@gmail.com',
+    name: 'Test User',
+  }
 
   return (
     <SidebarMenu>

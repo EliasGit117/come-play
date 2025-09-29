@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { MinusIcon, PlusIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
 
 function useWindowSize() {
   const [windowSize, setWindowSize] = useState({
@@ -149,9 +150,10 @@ function RouteComponent() {
             }}
             className="relative border border-border/30"
           >
-            <img
+            <UnLazyImageSSR
               src={imgSrc}
               alt={`${product.name} preview`}
+              thumbhash='necRJYRod3h/h3d0eFd3d2mA2gTo'
               className="object-cover h-full w-full"
             />
 
