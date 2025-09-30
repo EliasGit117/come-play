@@ -90,6 +90,7 @@ type TReturn = Awaited<ReturnType<typeof setNewsImage>>;
 type TOptions = Omit<UseMutationOptions<TReturn, Error, TParams>, 'mutationFn'>;
 
 export const useSetNewsImageMutation = (options?: TOptions) => {
+
   return useMutation<TReturn, Error, TParams>({
     mutationKey: ['news', 'image', 'set'],
     mutationFn: async ({ file, newsId }) => {

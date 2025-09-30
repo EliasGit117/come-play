@@ -2,6 +2,7 @@ import z from 'zod';
 import { createServerFn } from '@tanstack/react-start';
 import prisma from '@/lib/prisma';
 import { useMutation, UseMutationOptions, useQueryClient } from '@tanstack/react-query';
+import { removeImageFromNews } from '@/features/news/server-functions/admin/remove-image-from-news';
 
 
 export const deleteNewsByIdSchema = z.object({
@@ -13,6 +14,9 @@ export type TDeleteNewsByIdParams = z.infer<typeof deleteNewsByIdSchema>;
 export const deleteNewsById = createServerFn({ method: 'POST' })
   .validator(deleteNewsByIdSchema)
   .handler(async ({ data: { id } }) => {
+    const existingImage = await prisma.newsImage.findUnique({ where: { newsId: id } });
+    if (!!existingImage)
+      await removeImageFromNews(id);
 
     await prisma.news.delete({ where: { id } });
   });
