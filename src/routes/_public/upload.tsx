@@ -71,7 +71,7 @@ function RouteComponent() {
 
 
 export const uploadFile = createServerFn({ method: 'POST' })
-  .validator((data) => {
+  .inputValidator((data) => {
     if (!(data instanceof FormData))
       throw new Error('Invalid form data');
 

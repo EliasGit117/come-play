@@ -11,7 +11,7 @@ export const getNewsByIdSchema = z.object({
 export type TGetNewsByIdParams = z.infer<typeof getNewsByIdSchema>;
 
 export const getNewsById = createServerFn({ method: 'GET' })
-  .validator(getNewsByIdSchema)
+  .inputValidator(getNewsByIdSchema)
   .handler(async ({ data: { id } }) => {
     const news = await prisma.news.findUnique({
       where: { id },

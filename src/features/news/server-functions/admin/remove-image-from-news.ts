@@ -12,7 +12,7 @@ export const removeNewsImageSchema = z.object({
 
 // Server function
 export const removeNewsImage = createServerFn({ method: 'POST' })
-  .validator(removeNewsImageSchema)
+  .inputValidator(removeNewsImageSchema)
   .handler(async ({ data }) => {
     await removeImageFromNews(data.newsId)
   });

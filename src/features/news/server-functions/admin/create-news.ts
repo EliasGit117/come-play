@@ -14,7 +14,7 @@ export const createNewsSchema = z.object({
 export type TCreatNewsSchema = z.infer<typeof createNewsSchema>;
 
 export const createNews = createServerFn({ method: 'POST' })
-  .validator(createNewsSchema)
+  .inputValidator(createNewsSchema)
   .handler(async ({ data }) => {
     const withSameSlug = await prisma.news.findFirst({ where: { slug: data.slug } });
 

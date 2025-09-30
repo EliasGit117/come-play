@@ -12,7 +12,7 @@ export const getNewsBySlugSchema = z.object({
 export type TGetNewsBySlugParams = z.infer<typeof getNewsBySlugSchema>;
 
 export const getNewsBySlug = createServerFn({ method: 'GET' })
-  .validator(getNewsBySlugSchema)
+  .inputValidator(getNewsBySlugSchema)
   .handler(async ({ data: { slug } }) => {
     const news = await prisma.news.findUnique({
       where: { slug: slug, status: NewsStatus.published }

@@ -20,7 +20,7 @@ export type TEditNewsSchema = z.infer<typeof editNewsSchema>;
 
 // Server function
 export const editNews = createServerFn({ method: 'GET' })
-  .validator(editNewsSchema)
+  .inputValidator(editNewsSchema)
   .handler(async ({ data }) => {
     const { id } = data;
 

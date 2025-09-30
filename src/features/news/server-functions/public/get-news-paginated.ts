@@ -25,7 +25,7 @@ export const getNewsPaginatedSchema = paginatedSchema.extend({
 export type TGetNewsPaginatedParams = z.infer<typeof getNewsPaginatedSchema>;
 
 export const getNewsPaginated = createServerFn({ method: 'GET' })
-  .validator(getNewsPaginatedSchema)
+  .inputValidator(getNewsPaginatedSchema)
   .handler(async ({ data }) => {
     const where: Prisma.NewsWhereInput = {};
 

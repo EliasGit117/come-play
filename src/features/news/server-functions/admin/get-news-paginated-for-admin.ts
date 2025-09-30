@@ -27,7 +27,7 @@ export const getNewsPaginatedForAdminSchema = paginatedSchema.extend({
 export type TGetNewsPaginatedParamsForAdmin = z.infer<typeof getNewsPaginatedForAdminSchema>;
 
 export const getNewsPaginatedForAdmin = createServerFn({ method: 'GET' })
-  .validator(getNewsPaginatedForAdminSchema)
+  .inputValidator(getNewsPaginatedForAdminSchema)
   .handler(async ({ data }) => {
     const where: Prisma.NewsWhereInput = {};
 

@@ -12,7 +12,7 @@ export type TDeleteNewsByIdParams = z.infer<typeof deleteNewsByIdSchema>;
 
 
 export const deleteNewsById = createServerFn({ method: 'POST' })
-  .validator(deleteNewsByIdSchema)
+  .inputValidator(deleteNewsByIdSchema)
   .handler(async ({ data: { id } }) => {
     const existingImage = await prisma.newsImage.findUnique({ where: { newsId: id } });
     if (!!existingImage)

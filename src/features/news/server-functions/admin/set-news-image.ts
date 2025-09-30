@@ -27,7 +27,7 @@ export const setNewsImageSchema = zfd.formData({
 
 // Server Function
 export const setNewsImage = createServerFn({ method: 'POST' })
-  .validator(setNewsImageSchema)
+  .inputValidator(setNewsImageSchema)
   .handler(async ({ data }) => {
     const news = await prisma.news.findUnique({ where: { id: data.newsId } });
     if (!news)
