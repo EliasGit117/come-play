@@ -41,7 +41,7 @@ function RouteComponent() {
         <div className="absolute inset-0 bg-black/20 backdrop-blur"/>
 
         <div
-          className="absolute inset-0 space-y-2 flex flex-col items-center justify-center text-center text-white p-4"
+          className="absolute inset-0 space-y-2 flex flex-col items-center justify-center text-center text-white p-4 pt-8"
         >
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
             {data?.title}
