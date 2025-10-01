@@ -2,12 +2,17 @@ import { createFileRoute, notFound } from '@tanstack/react-router';
 import { getNewsBySlugQueryOptions } from '@/features/news/server-functions/public/get-news-by-slug';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
+import { ro, ru } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
-import { Separator } from '@/components/ui/separator';
+import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
+import imgPlaceholder from '/images/news/placeholder.webp';
 
 
 export const Route = createFileRoute('/_public/news/$slug')({
   component: RouteComponent,
+  staticData: {
+    headerOptions: { type: 'fixed' }
+  },
   loader: async ({ context: { queryClient }, params: { slug } }) => {
     const res = await queryClient
       .ensureQueryData(getNewsBySlugQueryOptions(slug))
@@ -18,7 +23,6 @@ export const Route = createFileRoute('/_public/news/$slug')({
 
     return { news: res };
   }
-
 });
 
 function RouteComponent() {
@@ -26,23 +30,34 @@ function RouteComponent() {
   const { data } = useSuspenseQuery({ ...getNewsBySlugQueryOptions(slug) });
 
   return (
-    <main className="container mx-auto p-4 space-y-8 pt-8 pb-16">
-      <header>
-        <p className="text-muted-foreground text-xs">
-          {data && format(data.createdAt, 'dd.MM.yyyy - HH:mm')}
-        </p>
-        <h1 className="text-2xl sm:text-3xl xl:text-4xl  font-semibold tracking-tight">
-          {data?.title}
-        </h1>
-      </header>
+    <main className="space-y-4 md:space-y-6 lg:space-y-8 pb-16">
+      <header className="relative w-full h-64 sm:h-80 md:h-96">
+        <UnLazyImageSSR
+          className="absolute inset-0 h-full w-full object-cover brightness-50"
+          src={data.image?.url ?? imgPlaceholder}
+          thumbhash={!!data.image ? data.image.thumbhash : 'qPcFDIDImA3ulpqUfjRHaF/Ahw=='}
+        />
 
-      <Separator className="opacity"/>
+        <div className="absolute inset-0 bg-black/20 backdrop-blur"/>
+
+        <div
+          className="absolute inset-0 space-y-2 flex flex-col items-center justify-center text-center text-white p-4"
+        >
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
+            {data?.title}
+          </h1>
+          <p className="text-xs sm:text-sm md:text-base text-white/80">
+            Published {data && format(data.createdAt, 'd MMMM yyyy', { locale: ro })}
+          </p>
+        </div>
+      </header>
 
       {data?.content && (
         <div
           dangerouslySetInnerHTML={{ __html: data.content }}
           className={cn(
-            'mt-4 prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-xl focus:outline-none max-w-none'
+            'mt-4 prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-xl focus:outline-none',
+            'max-w-4xl mx-auto p-4'
           )}
         />
       )}

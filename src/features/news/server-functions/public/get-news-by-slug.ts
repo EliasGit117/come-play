@@ -15,12 +15,12 @@ export const getNewsBySlug = createServerFn({ method: 'GET' })
   .inputValidator(getNewsBySlugSchema)
   .handler(async ({ data: { slug } }) => {
     const news = await prisma.news.findUnique({
-      where: { slug: slug, status: NewsStatus.published }
+      where: { slug: slug, status: NewsStatus.published },
+      include: { image: true }
     });
 
     if (!news)
       throw new Error('Not Found');
-
 
     return NewsDtoFactory.fromEntity(news);
   });

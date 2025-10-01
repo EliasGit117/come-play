@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { CloudUpload, Upload, XIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
-import { ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 
 
 export interface IImagePickerValue {
@@ -29,7 +29,7 @@ interface INewsImageUploadProps extends Omit<FileUploadOptions,
 }
 
 
-export default function CoverImagePicker(props: INewsImageUploadProps) {
+const ImageCoverPicker: FC<INewsImageUploadProps> = (props) => {
   const {
     value,
     disabled,
@@ -169,3 +169,5 @@ export default function CoverImagePicker(props: INewsImageUploadProps) {
     </div>
   );
 }
+
+export default ImageCoverPicker;

@@ -114,7 +114,7 @@ const RichEditor: FC<IRichEditorProps> = ({ value, onChange, className, editorCl
         editorProps={{
           attributes: {
             class: cn(
-              'prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-xl m-5 focus:outline-none max-w-none',
+              'prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-xl m-5 focus:outline-none max-w-4xl',
               editorClassName
             )
           }

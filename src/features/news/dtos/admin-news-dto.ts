@@ -31,7 +31,7 @@ export class IAdminNewsDtoFactory {
   }
 
   static fromEntity<T extends News | TNewsWithImage>(entity: T): IAdminNewsDto {
-    const dto: IAdminNewsDto = { ...this.baseFromEntity(entity) };
+    const dto: IAdminNewsDto = this.baseFromEntity(entity);
     if ('image' in entity && entity.image)
       dto.image = AdminNewsImageDtoFactory.fromEntity(entity.image);
 

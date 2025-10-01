@@ -1,6 +1,6 @@
-import ImagePicker, { IImagePickerValue } from '@/components/image-picker/cover';
+import ImageCoverPicker, { IImagePickerValue } from '@/components/image-picker/cover';
 
 export {
-  ImagePicker,
+  ImageCoverPicker,
   type IImagePickerValue
 }
