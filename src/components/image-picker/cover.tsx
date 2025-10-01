@@ -22,14 +22,14 @@ interface INewsImageUploadProps extends Omit<FileUploadOptions,
 > {
   value?: IImagePickerValue;
   disabled?: boolean;
-  keepOpacity?: boolean
+  keepOpacity?: boolean;
   className?: string;
   onFilesChange?: (file: File | undefined) => void;
   children?: ReactNode;
 }
 
 
-export default function ImagePicker(props: INewsImageUploadProps) {
+export default function CoverImagePicker(props: INewsImageUploadProps) {
   const {
     value,
     disabled,
@@ -69,25 +69,29 @@ export default function ImagePicker(props: INewsImageUploadProps) {
   return (
     <div
       role="button"
-      tabIndex={disabled ? -1 : 0}
+      tabIndex={(!!value || disabled) ? -1 : 0}
       onDrop={handleDrop}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}
-      onKeyDown={disabled ? undefined : (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          openFileDialog();
-        }
-      }}
       className={cn(
         'group relative overflow-hidden rounded-xl transition-all duration-200 border border-border',
+        'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
         isDragging ? 'border-dashed border-primary bg-primary/5' :
           (!!value ? 'border-border bg-background hover:border-primary/50' : 'border-dashed border-muted-foreground/25 bg-muted/30 hover:border-primary hover:bg-primary/5'),
         disabled && 'pointer-events-none opacity-50',
         keepOpacity && 'opacity-100',
         className
       )}
+      onKeyDown={disabled ? undefined : (e) => {
+        if (!!value)
+          return;
+
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openFileDialog();
+        }
+      }}
     >
       <input {...getInputProps()} className="sr-only" tabIndex={-1}/>
 
@@ -100,16 +104,45 @@ export default function ImagePicker(props: INewsImageUploadProps) {
             className="h-full w-full object-cover"
           />
 
-          <div className="absolute inset-0 bg-black/0 transition-all duration-200 group-hover:bg-black/40"/>
+          <div
+            className={cn(
+              'absolute inset-0 bg-black',
+              'transition-opacity duration-200 opacity-0',
+              !disabled && 'group-hover:opacity-40 group-focus:opacity-40 group-focus-within:opacity-40'
+            )}
+          />
 
           <div
-            className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+            className={cn(
+              'absolute inset-0 flex items-center justify-center',
+              'opacity-0 transition-opacity duration-200',
+              !disabled && 'group-hover:opacity-100  group-focus:opacity-100 group-focus-within:opacity-100'
+            )}
+          >
             <div className="flex gap-2">
-              <Button onClick={openFileDialog} variant="secondary" size="sm">
+              <Button
+                size="sm"
+                onClick={openFileDialog}
+                variant="secondary"
+                aria-label="Replace image"
+                className={cn(
+                  'pointer-events-none',
+                  !disabled && 'group-hover:pointer-events-auto group-focus-within:pointer-events-auto group-focus:pointer-events-auto'
+                )}
+              >
                 <Upload/>
                 <span>Replace</span>
               </Button>
-              <Button onClick={removeImage} variant="destructive" size="sm">
+              <Button
+                size="sm"
+                onClick={removeImage}
+                variant="destructive"
+                aria-label="Remove image"
+                className={cn(
+                  'pointer-events-none',
+                  !disabled && 'group-hover:pointer-events-auto group-focus-within:pointer-events-auto group-focus:pointer-events-auto'
+                )}
+              >
                 <XIcon/>
                 <span>Remove</span>
               </Button>
