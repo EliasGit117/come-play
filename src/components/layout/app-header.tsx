@@ -8,6 +8,7 @@ import LanguageDropdown from '@/components/layout/language-dropdown';
 import { useAppSidebar } from '@/components/layout/app-sidebar-provider';
 import LightLogo from '@/assets/icons/logo-white.svg?react';
 import DarkLogo from '@/assets/icons/logo.svg?react';
+import { ThemeDropdown } from '@/components/theme';
 
 
 interface IAppHeader extends ComponentProps<'header'> {
@@ -56,7 +57,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
     <header
       className={cn(
         'sticky top-0 z-20 flex h-16 shrink-0 items-center gap-2 bg-background',
-        type === 'fixed' && 'fixed left-0 right-0 transition-colors duration-150',
+        type === 'fixed' && 'fixed left-0 right-0',
         isAtTop && 'text-white bg-transparent'
       )}
       {...props}
@@ -67,7 +68,10 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
             {isAtTop ? (
               <LightLogo className="size-8 xl:size-10"/>
             ) : (
-              <DarkLogo className="size-8 xl:size-10"/>
+              <>
+                <LightLogo className="size-8 xl:size-10 hidden dark:block"/>
+                <DarkLogo className="size-8 xl:size-10 dark:hidden"/>
+              </>
             )}
           </Link>
         </Button>
@@ -80,7 +84,9 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
         <div className="flex gap-2 items-center ml-auto">
           <LanguageDropdown buttonSize="icon" buttonVariant="ghost"/>
 
-          <Button variant="ghost" size="icon" className='transition-none' asChild>
+          <ThemeDropdown variant="ghost" className="ml-auto" size="smIcon" align="end"/>
+
+          <Button variant="ghost" size="icon" className="transition-none" asChild>
             <Link to="/calculator">
               <CalculatorIcon/>
             </Link>

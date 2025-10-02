@@ -7,11 +7,11 @@ import { ImageOffIcon } from 'lucide-react';
 import { INewsBriefDto } from '@/features/news/dtos/news-brief-dto';
 
 
-interface INewsCardProps extends ComponentProps<typeof Button> {
+interface INewsPreviewLinkProps extends ComponentProps<typeof Button> {
   news: INewsBriefDto;
 }
 
-const NewsLink: FC<INewsCardProps> = ({ news, className, ...props }) => {
+const NewsPreviewLink: FC<INewsPreviewLinkProps> = ({ news, className, ...props }) => {
 
   return (
     <Button
@@ -48,4 +48,4 @@ const NewsLink: FC<INewsCardProps> = ({ news, className, ...props }) => {
   );
 };
 
-export default NewsLink;
+export default NewsPreviewLink;

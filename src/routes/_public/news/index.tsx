@@ -1,7 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { zodValidator } from '@tanstack/zod-adapter';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import NewsLink from '@/routes/_public/news/-components/news-link';
 import {
   ArrowDownWideNarrowIcon,
   ArrowUpWideNarrowIcon, XIcon
@@ -24,6 +23,7 @@ import { ComponentProps, FC, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useDebouncedCallback } from 'use-debounce';
 import { Button } from '@/components/ui/button';
+import NewsPreviewLink from '@/components/news-preview-link';
 
 
 export const Route = createFileRoute('/_public/news/')({
@@ -61,7 +61,7 @@ function RouteComponent() {
       >
         {data?.items.map((item) => (
           <article key={item.id}>
-            <NewsLink news={item}/>
+            <NewsPreviewLink news={item}/>
           </article>
         ))}
       </section>

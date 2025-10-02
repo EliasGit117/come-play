@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as PublicRouteRouteImport } from './routes/_public/route'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
-import { Route as PublicUploadRouteImport } from './routes/_public/upload'
 import { Route as AdminNewsRouteRouteImport } from './routes/admin/news/route'
 import { Route as AdminNewsIndexRouteImport } from './routes/admin/news/index'
 import { Route as PublicNewsIndexRouteImport } from './routes/_public/news/index'
@@ -32,11 +31,6 @@ const PublicRouteRoute = PublicRouteRouteImport.update({
 const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => PublicRouteRoute,
-} as any)
-const PublicUploadRoute = PublicUploadRouteImport.update({
-  id: '/upload',
-  path: '/upload',
   getParentRoute: () => PublicRouteRoute,
 } as any)
 const AdminNewsRouteRoute = AdminNewsRouteRouteImport.update({
@@ -73,7 +67,6 @@ const AdminNewsIdEditRoute = AdminNewsIdEditRouteImport.update({
 export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteRouteWithChildren
   '/admin/news': typeof AdminNewsRouteRouteWithChildren
-  '/upload': typeof PublicUploadRoute
   '/': typeof PublicIndexRoute
   '/news/$slug': typeof PublicNewsSlugRoute
   '/calculator': typeof PublicCalculatorIndexRoute
@@ -83,7 +76,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/admin': typeof AdminRouteRouteWithChildren
-  '/upload': typeof PublicUploadRoute
   '/': typeof PublicIndexRoute
   '/news/$slug': typeof PublicNewsSlugRoute
   '/calculator': typeof PublicCalculatorIndexRoute
@@ -96,7 +88,6 @@ export interface FileRoutesById {
   '/_public': typeof PublicRouteRouteWithChildren
   '/admin': typeof AdminRouteRouteWithChildren
   '/admin/news': typeof AdminNewsRouteRouteWithChildren
-  '/_public/upload': typeof PublicUploadRoute
   '/_public/': typeof PublicIndexRoute
   '/_public/news/$slug': typeof PublicNewsSlugRoute
   '/_public/calculator/': typeof PublicCalculatorIndexRoute
@@ -109,7 +100,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/admin'
     | '/admin/news'
-    | '/upload'
     | '/'
     | '/news/$slug'
     | '/calculator'
@@ -119,7 +109,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/admin'
-    | '/upload'
     | '/'
     | '/news/$slug'
     | '/calculator'
@@ -131,7 +120,6 @@ export interface FileRouteTypes {
     | '/_public'
     | '/admin'
     | '/admin/news'
-    | '/_public/upload'
     | '/_public/'
     | '/_public/news/$slug'
     | '/_public/calculator/'
@@ -166,13 +154,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof PublicIndexRouteImport
-      parentRoute: typeof PublicRouteRoute
-    }
-    '/_public/upload': {
-      id: '/_public/upload'
-      path: '/upload'
-      fullPath: '/upload'
-      preLoaderRoute: typeof PublicUploadRouteImport
       parentRoute: typeof PublicRouteRoute
     }
     '/admin/news': {
@@ -221,7 +202,6 @@ declare module '@tanstack/react-router' {
 }
 
 interface PublicRouteRouteChildren {
-  PublicUploadRoute: typeof PublicUploadRoute
   PublicIndexRoute: typeof PublicIndexRoute
   PublicNewsSlugRoute: typeof PublicNewsSlugRoute
   PublicCalculatorIndexRoute: typeof PublicCalculatorIndexRoute
@@ -229,7 +209,6 @@ interface PublicRouteRouteChildren {
 }
 
 const PublicRouteRouteChildren: PublicRouteRouteChildren = {
-  PublicUploadRoute: PublicUploadRoute,
   PublicIndexRoute: PublicIndexRoute,
   PublicNewsSlugRoute: PublicNewsSlugRoute,
   PublicCalculatorIndexRoute: PublicCalculatorIndexRoute,

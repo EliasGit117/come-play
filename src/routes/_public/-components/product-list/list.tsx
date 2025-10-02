@@ -22,7 +22,7 @@ const ProductList: FC<IProps> = ({ className, ...props }) => {
         <h2 className="text-3xl font-bold">
           PRODUCTS
         </h2>
-        <p className="text-gray-500 mt-2">
+        <p className="text-muted-foreground mt-2">
           Discover the line of our products
         </p>
       </div>
@@ -37,7 +37,7 @@ const ProductList: FC<IProps> = ({ className, ...props }) => {
                     src={product.image}
                     alt={product.title}
                     thumbhash={product.thumbhash}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover dark:brightness-75"
                   />
                 </CardContent>
               </Card>

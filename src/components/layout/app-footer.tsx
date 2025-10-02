@@ -8,15 +8,14 @@ import LightLogo from '@/assets/icons/logo-white.svg?react';
 import { Button } from '@/components/ui/button';
 
 
-interface IProps extends ComponentProps<'footer'> {
-}
+interface IProps extends ComponentProps<'footer'> {}
 
 const AppFooter: FC<IProps> = ({ className, ...props }) => {
 
   return (
     <footer
       className={cn(
-        'bg-primary text-primary-foreground space-y-8',
+        'bg-primary dark:bg-muted text-primary-foreground dark:text-foreground space-y-8',
         className)
       }
       {...props}
@@ -38,19 +37,19 @@ const AppFooter: FC<IProps> = ({ className, ...props }) => {
           <LightLogo className="size-12"/>
 
           <div className="flex gap-2 items-center">
-            <Button variant='ghost' size='smIcon' className='!bg-muted/15 !text-white rounded-full'>
+            <Button variant='ghost' size='smIcon' className={iconLinkClassName}>
               <LinkedInLogo/>
             </Button>
 
-            <Button variant='ghost' size='smIcon' className='!bg-muted/15 !text-white rounded-full'>
+            <Button variant='ghost' size='smIcon' className={iconLinkClassName}>
               <YoutubeLogo/>
             </Button>
 
-            <Button variant='ghost' size='smIcon' className='!bg-muted/15 !text-white rounded-full'>
+            <Button variant='ghost' size='smIcon' className={iconLinkClassName}>
               <FacebookLogo/>
             </Button>
 
-            <Button variant='ghost' size='smIcon' className='!bg-muted/15 !text-white rounded-full'>
+            <Button variant='ghost' size='smIcon' className={iconLinkClassName}>
               <TwitterLogo/>
             </Button>
           </div>
@@ -59,5 +58,7 @@ const AppFooter: FC<IProps> = ({ className, ...props }) => {
     </footer>
   );
 };
+
+const iconLinkClassName = '!bg-muted/15 dark:!bg-primary/15 !text-white rounded-full';
 
 export default AppFooter;

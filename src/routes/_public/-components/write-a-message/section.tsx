@@ -1,7 +1,9 @@
 import { ComponentProps, FC } from 'react';
 import { cn } from '@/lib/utils';
 import Form from './form';
-import { Building2, Lightbulb, Clock, Star } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { MailIcon, PhoneIcon } from 'lucide-react';
+import { ChatBubbleIcon } from '@radix-ui/react-icons';
 
 
 interface IProps extends ComponentProps<'section'> {
@@ -10,52 +12,53 @@ interface IProps extends ComponentProps<'section'> {
 const WriteAMessageSection: FC<IProps> = ({ className, ...props }) => {
 
   return (
-    <section className={cn('space-y-16', className)} {...props}>
+    <section className={cn('grid lg:grid-cols-2 gap-4 md:gap-8', className)} {...props}>
       <div>
-        <h2 className="text-3xl font-bold tracking-tight text-foreground text-center">
-          WRITE A MESSAGE
+        <h2 className="text-3xl font-bold tracking-tight text-foregrounds uppercase">
+          Have a question?
         </h2>
-        <p className="mt-4 max-w-4xl mx-auto text-muted-foreground text-sm text-center">
-          Guangzhou Baolun Electronic Co., Ltd(itc) was founded in 1993, with more
-          than 7,000 staff in total. We are a professional manufacturer and LED
-          display supplier of LED display visual products. Our products are exported
-          all over the world with good reputation. itc successful cases exceed
-          1,500,000.
-        </p>
+
+        <div className="mt-4 lg:max-w-xl text-muted-foreground text-sm">
+          <p>
+            We’re here to help! Fill out the form or reach us via email or phone. Our Customer Care Team is available to
+            help you get the best experience out of K18 Hair whether you have an issue about your order or looking for
+            helpful hair tips.
+          </p>
+          <br/>
+          <p>
+            Everyone gets a personalized response, so please allow 24 hours during business hours for a reply. Our
+            business hours are M-F from 9am to 5pm PT.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-1 -ml-2.5 mt-4">
+          <Button variant="link" className="gap-4 w-fit" asChild>
+            <a href="mailto:some@email.com">
+              <MailIcon/>
+              some@email.com
+            </a>
+          </Button>
+
+          <Button variant="link" className="gap-4 w-fit" asChild>
+            <a href="tel:+37360900001">
+              <PhoneIcon/>
+              +37360900001
+            </a>
+          </Button>
+
+          <Button variant="link" className="gap-4 w-fit" asChild>
+            <a>
+              <ChatBubbleIcon/>
+              Chat with us
+            </a>
+          </Button>
+        </div>
       </div>
 
-      <div className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-        {items.map(({ Icon, title }, idx) => (
-          <div key={idx} className="flex flex-col items-center text-center space-y-4">
-            <Icon className="size-8 sm:size-10 text-primary" />
-            <p className="text-xs sm:text-sm text-foreground text-center">{title}</p>
-          </div>
-        ))}
-      </div>
-
-      <Form className="max-w-4xl mx-auto"/>
+      <Form className=""/>
     </section>
   );
 };
-
-const items = [
-  {
-    Icon: Building2,
-    title: '30+ years LED manufacturer',
-  },
-  {
-    Icon: Lightbulb,
-    title: 'LED display company Innovative R&D',
-  },
-  {
-    Icon: Clock,
-    title: '24h Zealous service',
-  },
-  {
-    Icon: Star,
-    title: 'Professional LED solution provider',
-  },
-];
 
 
 export default WriteAMessageSection;

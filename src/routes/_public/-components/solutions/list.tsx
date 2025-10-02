@@ -5,10 +5,10 @@ import conferenceRoomImg from '/images/home/solutions/conference-room.jpg';
 import stadiumImg from '/images/home/solutions/stadium.jpg';
 import advertisingImg from '/images/home/solutions/advertising.png';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
+import { Building2, Clock, Lightbulb, Star } from 'lucide-react';
 
 
-interface IProps extends ComponentProps<'section'> {
-}
+interface IProps extends ComponentProps<'section'> {}
 
 const SolutionList: FC<IProps> = ({ className, ...props }) => {
 
@@ -18,7 +18,7 @@ const SolutionList: FC<IProps> = ({ className, ...props }) => {
         <h2 className="text-3xl font-bold">
           SOLUTIONS
         </h2>
-        <p className="text-gray-500 mt-2">
+        <p className="text-muted-foreground mt-2">
           Global success LED screen display cases of over 1.5 million
         </p>
       </div>
@@ -43,18 +43,34 @@ const SolutionList: FC<IProps> = ({ className, ...props }) => {
             <div className="absolute left-0 top-0 h-full w-0 bg-primary transition-all duration-400 group-hover:w-full z-0"></div>
 
             {/* Text content */}
-            <h3 className="font-bold uppercase mb-2 text-lg relative z-10 transition-colors duration-300 group-hover:text-white">
+            <h3 className="font-bold uppercase mb-2 text-lg relative z-10 transition-colors duration-300 group-hover:text-primary-foreground">
               {desc.title}
             </h3>
-            <p className="text-sm text-muted-foreground relative z-10 transition-colors duration-300 group-hover:text-white">
+            <p className="text-sm text-muted-foreground relative z-10 transition-colors duration-300 group-hover:text-primary-foreground">
               {desc.text}
             </p>
+          </div>
+        ))}
+      </div>
+
+      <div className="my-12 md:my-24 grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+        {iconItems.map(({ Icon, title }, idx) => (
+          <div key={idx} className="flex flex-col items-center text-center space-y-4">
+            <Icon className="size-8 sm:size-10 text-primary" />
+            <p className="text-xs sm:text-sm text-foreground text-center">{title}</p>
           </div>
         ))}
       </div>
     </section>
   );
 };
+
+const iconItems = [
+  { Icon: Building2, title: '30+ years LED manufacturer' },
+  { Icon: Lightbulb, title: 'LED display company Innovative R&D' },
+  { Icon: Clock, title: '24h Zealous service' },
+  { Icon: Star, title: 'Professional LED solution provider' },
+];
 
 
 interface IImageLinkProps {
