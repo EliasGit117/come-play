@@ -6,6 +6,7 @@ import { ro, ru } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
 import imgPlaceholder from '/images/news/placeholder.webp';
+import { NotFoundCard } from '@/components/not-found-card';
 
 
 export const Route = createFileRoute('/_public/news/$slug')({
@@ -22,6 +23,36 @@ export const Route = createFileRoute('/_public/news/$slug')({
       });
 
     return { news: res };
+  },
+  notFoundComponent: () => {
+
+    return (
+      <>
+        <div className="relative w-full h-64 sm:h-80 md:h-96">
+          <UnLazyImageSSR
+            className="absolute inset-0 h-full w-full object-cover brightness-50"
+            src={imgPlaceholder}
+            thumbhash={'WecNFYR5dmZiiHegiJiIqptRfxf2'}
+          />
+
+          <div className="absolute inset-0 bg-black/20 backdrop-blur"/>
+
+          <div
+            className="absolute inset-0 space-y-2 flex flex-col items-center justify-center text-center text-white p-4 pt-8"
+          >
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
+              Oops...
+            </h1>
+            <p className="text-xs sm:text-sm md:text-base text-white/80">
+              News has not been found
+            </p>
+          </div>
+        </div>
+        <main className="container mx-auto p-4">
+          <NotFoundCard className="mx-auto"/>
+        </main>
+      </>
+    );
   }
 });
 

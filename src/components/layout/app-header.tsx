@@ -56,7 +56,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
     <header
       className={cn(
         'sticky top-0 z-20 flex h-16 shrink-0 items-center gap-2 bg-background',
-        type === 'fixed' && 'fixed left-0 right-0',
+        type === 'fixed' && 'fixed left-0 right-0 transition-colors duration-150',
         isAtTop && 'text-white bg-transparent'
       )}
       {...props}
@@ -80,7 +80,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
         <div className="flex gap-2 items-center ml-auto">
           <LanguageDropdown buttonSize="icon" buttonVariant="ghost"/>
 
-          <Button variant="ghost" size="icon" asChild>
+          <Button variant="ghost" size="icon" className='transition-none' asChild>
             <Link to="/calculator">
               <CalculatorIcon/>
             </Link>

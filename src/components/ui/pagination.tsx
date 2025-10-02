@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { ComponentProps, forwardRef } from 'react';
 import { Link, LinkProps } from '@tanstack/react-router';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Pagination = ({ className, ...props }: ComponentProps<'nav'>) => (
   <nav
@@ -161,6 +162,129 @@ const PaginationEllipsis = ({
 );
 PaginationEllipsis.displayName = 'PaginationEllipsis';
 
+
+interface IBasicPaginationProps {
+  page?: number;
+  totalPages?: number;
+  className?: string;
+  resetScroll?: boolean;
+}
+
+function BasicPagination({ className, page = 1, totalPages = 1, resetScroll }: IBasicPaginationProps) {
+  const isMobile = useIsMobile();
+
+  const pages = getPaginationList({
+    page: page,
+    totalPages: totalPages,
+    maxItemCount: isMobile ? 7 : 9
+  });
+
+
+  return (
+    <div className={className}>
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              to="."
+              textHidden
+              disabled={page <= 1}
+              resetScroll={resetScroll}
+              search={(pv: Record<string, unknown>) => ({ ...pv, page: page - 1 })}
+            />
+          </PaginationItem>
+
+          {pages.map((p, idx) => (
+            <PaginationItem key={idx}>
+              {p === -1 ? (
+                <PaginationEllipsis/>
+              ) : (
+                <PaginationLink
+                  to="."
+                  resetScroll={resetScroll}
+                  search={(pv: Record<string, unknown>) => ({ ...pv, page: p })}
+                  className={cn('transition-none', isMobile && 'text-xs')}
+                  isActive={p === page}
+                >
+                  {p}
+                </PaginationLink>
+              )}
+            </PaginationItem>
+          ))}
+
+          <PaginationItem>
+            <PaginationNext
+              to="."
+              textHidden
+              disabled={page >= totalPages}
+              resetScroll={resetScroll}
+              search={(pv: Record<string, unknown>) => ({ ...pv, page: page + 1 })}
+            />
+          </PaginationItem>
+
+        </PaginationContent>
+      </Pagination>
+    </div>
+  );
+}
+BasicPagination.displayName = 'BasicPagination';
+
+
+interface IGetPaginationListParams {
+  page: number;
+  totalPages: number;
+  maxItemCount: number;
+}
+
+function getPaginationList(params: IGetPaginationListParams): number[] {
+  const { page, totalPages, maxItemCount } = params;
+  if (totalPages <= 0) return [];
+  if (totalPages <= maxItemCount) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  const nearBeginningThreshold = Math.ceil(maxItemCount / 2);
+  const nearEndThreshold = totalPages - Math.ceil(maxItemCount / 2) + 1;
+
+  const result = [];
+
+  if (page <= nearBeginningThreshold) {
+    for (let i = 1; i <= maxItemCount - 2; i++) {
+      result.push(i);
+    }
+    result.push(-1);
+    result.push(totalPages);
+    return result;
+  }
+
+  if (page >= nearEndThreshold) {
+    result.push(1);
+    result.push(-1);
+    for (let i = totalPages - (maxItemCount - 3); i <= totalPages; i++) {
+      result.push(i);
+    }
+    return result;
+  }
+
+  result.push(1);
+  result.push(-1);
+
+  const middleCount = maxItemCount - 4;
+
+  const halfMiddle = Math.floor(middleCount / 2);
+  const middleStart = Math.max(2, page - halfMiddle);
+  const middleEnd = Math.min(totalPages - 1, middleStart + middleCount - 1);
+
+  for (let i = middleStart; i <= middleEnd; i++) {
+    result.push(i);
+  }
+
+  result.push(-1);
+  result.push(totalPages);
+  return result;
+}
+
+
 export {
   Pagination,
   PaginationContent,
@@ -170,5 +294,6 @@ export {
   PaginationNext,
   PaginationPrevious,
   PaginationLast,
-  PaginationFirst
+  PaginationFirst,
+  BasicPagination
 };

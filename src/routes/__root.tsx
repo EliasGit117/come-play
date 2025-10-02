@@ -4,11 +4,9 @@
 import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from '@tanstack/react-router';
 import type { QueryClient } from '@tanstack/react-query';
 import { DefaultCatchBoundary } from '@/components/default-catch-boundary';
-import { NotFound } from '@/components/not-found';
 import appCss from '@/styles/app.css?url';
 import { seo } from '@/utils/seo';
 import { Providers } from '@/providers';
-import { AppFooter, AppHeader, AppSidebar } from '@/components/layout';
 
 interface IRootRouteProps {
   queryClient: QueryClient;
@@ -41,7 +39,6 @@ export const Route = createRootRouteWithContext<IRootRouteProps>()({
       </RootDocument>
     );
   },
-  notFoundComponent: () => <NotFound/>,
   component: RootComponent
 });
 

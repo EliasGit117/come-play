@@ -24,7 +24,7 @@ const triggerAltClassName = cn(
 
 
 const HeaderNavMenu: FC<IProps> = ({ transparent, ...props }) => {
-  const triggerClassName = transparent ? triggerAltClassName : '';
+  const triggerClassName = cn('uppercase bg-transparent duration-0 [&_svg]:duration-0 [&_svg]:transition-none', transparent ? triggerAltClassName : '');
 
   return (
     <NavigationMenu viewport={false} {...props}>
@@ -35,13 +35,16 @@ const HeaderNavMenu: FC<IProps> = ({ transparent, ...props }) => {
               key={idx}
               title={menu.title}
               items={menu.items}
-              triggerClassName={cn(triggerClassName, 'uppercase')}
+              triggerClassName={triggerClassName}
             />
           ) : (
             <NavigationMenuItem key={idx}>
               <NavigationMenuLink
-                className={cn(navigationMenuTriggerStyle(), triggerClassName, 'uppercase')}
                 asChild
+                className={cn(
+                  navigationMenuTriggerStyle(),
+                  triggerClassName,
+                )}
               >
                 <Link {...menu.item.linkOpt}>{menu.item.label}</Link>
               </NavigationMenuLink>
