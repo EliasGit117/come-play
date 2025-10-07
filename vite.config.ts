@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 import svgr from 'vite-plugin-svgr';
 import { fileURLToPath } from 'node:url';
 import viteReact from '@vitejs/plugin-react';
-import { nitroV2Plugin } from '@tanstack/nitro-v2-vite-plugin'
+import { nitro } from 'nitro/vite'
 
 const prismaNodeModulesPath = `${getModulePath('@prisma/client')}/node_modules`;
 
@@ -19,7 +19,7 @@ export default defineConfig({
     viteReact({ babel: { plugins: [['babel-plugin-react-compiler', { target: '19' }]] } }),
     tailwindcss(),
     svgr(),
-    nitroV2Plugin()
+    nitro()
   ],
   resolve: {
     alias: {

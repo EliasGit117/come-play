@@ -80,6 +80,7 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
           <VideoPlaceholder
             placeholder={
               <img
+                fetchPriority="high"
                 src={videoPreview}
                 alt="placeholder"
                 className="min-h-96 h-full w-full max-h-svh object-cover"
