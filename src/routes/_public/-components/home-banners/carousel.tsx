@@ -38,7 +38,7 @@ const banners: IBanner[] = [
       link: { to: '/' }
     }
   },
-  { imgSrc: banner2, },
+  { imgSrc: banner2 },
   {
     imgSrc: banner3,
     data: {
@@ -99,10 +99,7 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
             </video>
           </VideoPlaceholder>
 
-          <BannerOverlay data={{
-            heading: 'itc LED Display Solution',
-            link: { to: '/' }
-          }} />
+          <BannerOverlay data={{ heading: 'itc LED Display Solution', link: { to: '/' } }}/>
         </CarouselItem>
 
         {banners.map((banner, index) => (
@@ -113,7 +110,7 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
               className="min-h-96 object-cover w-full max-h-svh brightness-75"
               key={index}
             />
-            {banner.data && <BannerOverlay data={banner.data} />}
+            {banner.data && <BannerOverlay data={banner.data}/>}
           </CarouselItem>
         ))}
       </CarouselContent>
@@ -140,7 +137,9 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
                 data-active={current === index + 1}
                 className="size-3 p-0 data-[active=true]:bg-primary border data-[active=true]:border-secondary"
                 onClick={() => api?.scrollTo(index)}
-              />
+              >
+                <span className='sr-only'>To {current} slide</span>
+              </Button>
             ))}
 
             <Button
@@ -167,8 +166,9 @@ interface BannerOverlayProps {
 
 const BannerOverlay: React.FC<BannerOverlayProps> = ({ data, className }) => {
   return (
-    <div className={cn("absolute z-20 left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-full", className)}>
-      <div className="container mx-auto py-4 px-8 space-y-3 sm:space-y-4 lg:space-y-5 xl:space-y-6 text-white whitespace-pre-line">
+    <div className={cn('absolute z-20 left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-full', className)}>
+      <div
+        className="container mx-auto py-4 px-8 space-y-3 sm:space-y-4 lg:space-y-5 xl:space-y-6 text-white whitespace-pre-line">
         <p className="text-xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl font-semibold leading-tight">
           {data.heading}
         </p>

@@ -36,6 +36,7 @@ const LanguageDropdown: FC<IProps> = ({ buttonVariant, buttonSize, ...props }) =
       <DropdownMenuTrigger asChild>
         <Button variant={buttonVariant} size={buttonSize} {...props}>
           {lang === 'ro' ? <RoFlag className="size-5"/> : <RuFlag className='size-5'/>}
+          <span className='sr-only'>Language dropdown</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

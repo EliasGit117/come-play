@@ -24,7 +24,7 @@ const SolutionList: FC<IProps> = ({ className, ...props }) => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-0.5 sm:gap-1 md:max-h-96">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-1 sm:gap-2 md:max-h-96">
         {imageLinks.map((linkProps) =>
           <ImageLink key={linkProps.title} {...linkProps}/>
         )}

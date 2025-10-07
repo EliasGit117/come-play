@@ -3,19 +3,16 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { cn } from '@/lib/utils';
-import { PhoneInput } from '@/components/ui/phone-input';
-import { CountryDropdown } from '@/components/ui/country-dropdown';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { SendIcon } from 'lucide-react';
 
 const contactSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  country: z.string().min(1, 'Country is required'),
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
   email: z.string().email('Invalid email address'),
   phone: z.string().min(1, 'Phone is required'),
   message: z.string().min(1, 'Message is required')
@@ -30,8 +27,8 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
   const form = useForm<TContactForm>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
-      name: '',
-      country: '',
+      firstName: '',
+      lastName: '',
       email: '',
       phone: '',
       message: ''
@@ -53,16 +50,12 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
       <form onSubmit={form.handleSubmit(onSubmit)} className={cn('grid md:grid-cols-2 gap-4', className)} {...props}>
         <FormField
           control={form.control}
-          name="name"
+          name="firstName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>First name</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Enter your full name"
-                  {...field}
-                  autoComplete="name"
-                />
+                <Input placeholder="Enter your first name" {...field}/>
               </FormControl>
               <FormMessage/>
             </FormItem>
@@ -71,21 +64,18 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
 
         <FormField
           control={form.control}
-          name="country"
+          name="lastName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Country</FormLabel>
+              <FormLabel>Last name</FormLabel>
               <FormControl>
-                <CountryDropdown
-                  placeholder="Select your country"
-                  defaultValue={field.value}
-                  onChange={(country) => field.onChange(country.alpha3)}
-                />
+                <Input placeholder="Enter your last name" {...field}/>
               </FormControl>
               <FormMessage/>
             </FormItem>
           )}
         />
+
 
         <FormField
           control={form.control}

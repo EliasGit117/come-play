@@ -94,6 +94,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
 
           <Button variant="ghost" size="icon" className="xl:hidden" onClick={() => setOpenSidebar(true)}>
             <MenuIcon/>
+            <span>Sidebar button</span>
           </Button>
         </div>
       </div>
