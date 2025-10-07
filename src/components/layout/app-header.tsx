@@ -89,12 +89,13 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
           <Button variant="ghost" size="icon" className="transition-none" asChild>
             <Link to="/calculator">
               <CalculatorIcon/>
+              <span className='sr-only'>Calculation page</span>
             </Link>
           </Button>
 
           <Button variant="ghost" size="icon" className="xl:hidden" onClick={() => setOpenSidebar(true)}>
             <MenuIcon/>
-            <span>Sidebar button</span>
+            <span className='sr-only'>Sidebar button</span>
           </Button>
         </div>
       </div>

@@ -39,18 +39,22 @@ const AppFooter: FC<IProps> = ({ className, ...props }) => {
           <div className="flex gap-2 items-center">
             <Button variant='ghost' size='icon-sm' className={iconLinkClassName}>
               <LinkedInLogo/>
+              <span className='sr-only'>Linkedin link</span>
             </Button>
 
             <Button variant='ghost' size='icon-sm' className={iconLinkClassName}>
               <YoutubeLogo/>
+              <span className='sr-only'>Youtube link</span>
             </Button>
 
             <Button variant='ghost' size='icon-sm' className={iconLinkClassName}>
               <FacebookLogo/>
+              <span className='sr-only'>Facebook link</span>
             </Button>
 
             <Button variant='ghost' size='icon-sm' className={iconLinkClassName}>
               <TwitterLogo/>
+              <span className='sr-only'>Twitter link</span>
             </Button>
           </div>
         </div>
