@@ -8,7 +8,8 @@ import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
 import { Building2, Clock, Lightbulb, Star } from 'lucide-react';
 
 
-interface IProps extends ComponentProps<'section'> {}
+interface IProps extends ComponentProps<'section'> {
+}
 
 const SolutionList: FC<IProps> = ({ className, ...props }) => {
 
@@ -23,7 +24,7 @@ const SolutionList: FC<IProps> = ({ className, ...props }) => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-1 sm:gap-1.5 md:gap-2 md:max-h-96">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-0.5 sm:gap-1 md:max-h-96">
         {imageLinks.map((linkProps) =>
           <ImageLink key={linkProps.title} {...linkProps}/>
         )}
@@ -35,18 +36,21 @@ const SolutionList: FC<IProps> = ({ className, ...props }) => {
           <div
             key={desc.title}
             className={cn(
-              "relative group p-2 md:p-4 overflow-hidden cursor-pointer rounded-md",
-                i === descriptions.length - 1 && 'col-span-1 md:col-span-2 lg:col-span-1'
+              'relative group p-2 md:p-4 overflow-hidden cursor-pointer rounded-md',
+              i === descriptions.length - 1 && 'col-span-1 md:col-span-2 lg:col-span-1'
             )}
           >
             {/* Hidden red bar that slides in on hover */}
-            <div className="absolute left-0 top-0 h-full w-0 bg-primary transition-all duration-400 group-hover:w-full z-0"></div>
+            <div
+              className="absolute left-0 top-0 h-full w-0 bg-primary transition-all duration-400 group-hover:w-full z-0"></div>
 
             {/* Text content */}
-            <h3 className="font-bold uppercase mb-2 text-lg relative z-10 transition-colors duration-300 group-hover:text-primary-foreground">
+            <h3
+              className="font-bold uppercase mb-2 text-lg relative z-10 transition-colors duration-300 group-hover:text-primary-foreground">
               {desc.title}
             </h3>
-            <p className="text-sm text-muted-foreground relative z-10 transition-colors duration-300 group-hover:text-primary-foreground">
+            <p
+              className="text-sm text-muted-foreground relative z-10 transition-colors duration-300 group-hover:text-primary-foreground">
               {desc.text}
             </p>
           </div>
@@ -56,7 +60,7 @@ const SolutionList: FC<IProps> = ({ className, ...props }) => {
       <div className="my-12 md:my-24 grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
         {iconItems.map(({ Icon, title }, idx) => (
           <div key={idx} className="flex flex-col items-center text-center space-y-4">
-            <Icon className="size-8 sm:size-10 text-primary" />
+            <Icon className="size-8 sm:size-10 text-primary"/>
             <p className="text-xs sm:text-sm text-foreground text-center">{title}</p>
           </div>
         ))}
@@ -69,7 +73,7 @@ const iconItems = [
   { Icon: Building2, title: '30+ years LED manufacturer' },
   { Icon: Lightbulb, title: 'LED display company Innovative R&D' },
   { Icon: Clock, title: '24h Zealous service' },
-  { Icon: Star, title: 'Professional LED solution provider' },
+  { Icon: Star, title: 'Professional LED solution provider' }
 ];
 
 
@@ -107,7 +111,10 @@ const imageLinks: IImageLinkProps[] = [
 
 const ImageLink: FC<IImageLinkProps> = ({ linkOptions, img, title, className, thumbhash }) => {
   return (
-    <Link className={cn('group relative h-full w-full overflow-hidden', className)}{...linkOptions}>
+    <Link
+      className={cn('group relative h-full w-full overflow-hidden border border-border/50', className)}
+      {...linkOptions}
+    >
       <UnLazyImageSSR
         src={img}
         alt={title}
@@ -134,23 +141,23 @@ const ImageLink: FC<IImageLinkProps> = ({ linkOptions, img, title, className, th
 const descriptions = [
   {
     title: 'Transportation',
-    text: 'Transportation hubs have the challenge of needing to communicate with their travelers around the clock. itc provides advanced LED displays to convey traffic guidance information timely to travelers, ensuring their exciting and smooth journey.',
+    text: 'Transportation hubs have the challenge of needing to communicate with their travelers around the clock. itc provides advanced LED displays to convey traffic guidance information timely to travelers, ensuring their exciting and smooth journey.'
   },
   {
     title: 'Stage & Events',
-    text: 'Based on cutting-edge core technologies and extensive experiences working with global clients, itc products realize various requirements for a huge show or event. We aim to create a memorable and engaging experience for the audience with itc LED screen.',
+    text: 'Based on cutting-edge core technologies and extensive experiences working with global clients, itc products realize various requirements for a huge show or event. We aim to create a memorable and engaging experience for the audience with itc LED screen.'
   },
   {
     title: 'Studio',
-    text: 'As for the studio solution, our premium products bring your broadcasting stories to life by conveying vivid and dynamic visual performance to the audience.',
+    text: 'As for the studio solution, our premium products bring your broadcasting stories to life by conveying vivid and dynamic visual performance to the audience.'
   },
   {
     title: 'Scenic Spot & Public',
-    text: 'Dynamic LED displays for public spaces: High-brightness, weather-resistant screens delivering vibrant visuals and real-time information at tourist hubs.',
+    text: 'Dynamic LED displays for public spaces: High-brightness, weather-resistant screens delivering vibrant visuals and real-time information at tourist hubs.'
   },
   {
     title: 'Control Room',
-    text: 'In terms of the control room solution, LED display technology enables users to interface with diverse information sources, and simultaneously process with mass of data efficiently. To help monitor multiple information flows effectively in a control room.',
+    text: 'In terms of the control room solution, LED display technology enables users to interface with diverse information sources, and simultaneously process with mass of data efficiently. To help monitor multiple information flows effectively in a control room.'
   }
 ];
 

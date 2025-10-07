@@ -74,7 +74,7 @@ const LinkButton = () => {
             <Button
               type="button"
               variant={isActive ? 'secondary' : 'ghost'}
-              size="smIcon"
+              size="icon-sm"
               onClick={togglePopover}
               disabled={!canToggle}
               aria-label={isActive ? 'Edit Link' : 'Add Link'}

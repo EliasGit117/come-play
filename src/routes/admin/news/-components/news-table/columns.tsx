@@ -165,7 +165,7 @@ export const newsColumns = [
         <div className="text-right">
           <DropdownMenu>
             <DropdownMenuTrigger className="" asChild>
-              <Button size="xsIcon" variant="ghost">
+              <Button size="icon-xs" variant="ghost">
                 <EllipsisIcon/>
               </Button>
             </DropdownMenuTrigger>

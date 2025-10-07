@@ -6,11 +6,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { LoadingButton } from '@/components/ui/loading-button';
-import { SaveIcon } from 'lucide-react';
+import { SaveIcon, UndoIcon } from 'lucide-react';
 import { useEditNewsMutation } from '@/features/news/server-functions/admin/edit-news';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import { ResetIcon } from '@radix-ui/react-icons';
 import { Label } from '@/components/ui/label';
 import { IImagePickerValue } from '@/components/image-picker';
 import NewsImageUploader from '@/routes/admin/news/-components/news-form/news-image-uploader';
@@ -95,7 +94,7 @@ function RouteComponent() {
             onClick={() => form.reset()}
             className="border"
           >
-            <ResetIcon/>
+            <UndoIcon/>
             <span className="sr-only sm:not-sr-only">Reset</span>
           </Button>
         </div>

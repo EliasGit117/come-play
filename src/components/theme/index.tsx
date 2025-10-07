@@ -62,10 +62,7 @@ const colorSchemes = ['light', 'dark'];
 const MEDIA = '(prefers-color-scheme: dark)';
 const isServer = typeof window === 'undefined';
 const ThemeContext = React.createContext<UseThemeProps | undefined>(undefined);
-const defaultContext: UseThemeProps = {
-  setTheme: (_) => {
-  }, themes: []
-};
+const defaultContext: UseThemeProps = { setTheme: (_) => {}, themes: [] };
 
 export const useTheme = () => React.useContext(ThemeContext) ?? defaultContext;
 
@@ -73,7 +70,9 @@ export const ThemeProvider = (props: ThemeProviderProps): React.ReactNode => {
   const context = React.useContext(ThemeContext);
 
   // Ignore nested context providers, just passthrough children
-  if (context) return props.children;
+  if (context)
+    return props.children;
+
   return <Theme {...props} />;
 };
 

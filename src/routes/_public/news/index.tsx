@@ -5,7 +5,6 @@ import {
   ArrowDownWideNarrowIcon,
   ArrowUpWideNarrowIcon, XIcon
 } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -22,8 +21,8 @@ import {
 import { ComponentProps, FC, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useDebouncedCallback } from 'use-debounce';
-import { Button } from '@/components/ui/button';
 import NewsPreviewLink from '@/components/news-preview-link';
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group';
 
 
 export const Route = createFileRoute('/_public/news/')({
@@ -101,39 +100,29 @@ const SearchPanel: FC<ComponentProps<'div'>> = ({ className, ...props }) => {
       replace: true,
       search: (pv) => ({ ...pv, title: undefined })
     });
-  }
+  };
 
   return (
     <div className={cn('flex items-center gap-2', className)} {...props}>
       <span className="hidden md:block ml-auto"/>
 
-      <div className="relative">
-        <Input
+      <InputGroup className="md:max-w-xs">
+        <InputGroupInput
           value={_title}
           placeholder="Search by title"
-          className='md:max-w-xs'
           onChange={(e) => {
             setTitle(e.target.value);
             debouncedInputChange(e.target.value);
           }}
         />
-
         {_title && (
-          <div className="absolute right-1 top-0 bottom-0 flex">
-            <Button
-              tabIndex={-1}
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="size-6 my-auto text-muted-foreground"
-              onClick={clearText}
-            >
-              <XIcon className="size-3.5"/>
-              <span className="sr-only">Clear</span>
-            </Button>
-          </div>
+          <InputGroupAddon align="inline-end">
+            <InputGroupButton onClick={clearText} size="icon-xs">
+              <XIcon/>
+            </InputGroupButton>
+          </InputGroupAddon>
         )}
-      </div>
+      </InputGroup>
 
       <Select value={dir} onValueChange={onDirSelectValueChange}>
         <SelectTrigger className="justify-start" asChild>

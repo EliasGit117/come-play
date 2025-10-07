@@ -29,7 +29,7 @@ const ItalicButton = ({ ...props }: IProps) => {
       <TooltipTrigger asChild>
         <Button
           type="button"
-          size="smIcon"
+          size="icon-sm"
           variant={state.active ? 'secondary' : 'ghost'}
           onClick={() => editor.chain().focus().toggleItalic().run()}
           disabled={state.disabled}

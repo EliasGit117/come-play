@@ -1,11 +1,10 @@
 import { ChangeEvent, ComponentProps, useEffect, useRef } from 'react';
 import { Column } from '@tanstack/react-table';
 import { ColumnFilterType } from '@/components/data-table/types/tanstack-table-meta';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import { XIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useDebouncedCallback } from 'use-debounce';
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group';
 
 interface IDataTableTextFilterProps<TData, TValue>
   extends ComponentProps<typeof Input> {
@@ -52,40 +51,25 @@ export function DataTableTextFilter<TData, TValue>(props: IDataTableTextFilterPr
     throw new Error('Filter must be a type Text');
 
   return (
-    <div className="relative">
-      <Input
-        {...restOfProps}
+    <InputGroup className="h-8 w-40 lg:w-56">
+      <InputGroupInput
         ref={inputRef}
+        {...restOfProps}
         id={`${title}-filter`}
         type={type}
         placeholder={meta?.filter?.placeholder ?? title}
         defaultValue={filterValue ?? ''}
         onChange={handleChange}
-        className={cn(
-          'h-8 w-40 lg:w-56',
-          '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
-          inputRef.current?.value && 'pr-8',
-          className
-        )}
       />
 
       {filterValue && (
-        <div className="absolute right-1 top-0 bottom-0 flex">
-          <Button
-            tabIndex={-1}
-            type="button"
-            variant="ghost"
-            size="icon"
-            className="size-6 my-auto text-muted-foreground"
-            onClick={reset}
-            disabled={restOfProps.disabled}
-          >
-            <XIcon className="size-3.5"/>
-            <span className="sr-only">Clear</span>
-          </Button>
-        </div>
+        <InputGroupAddon align="inline-end">
+          <InputGroupButton onClick={reset} size="icon-xs">
+            <XIcon/>
+          </InputGroupButton>
+        </InputGroupAddon>
       )}
-    </div>
+    </InputGroup>
   );
 }
 

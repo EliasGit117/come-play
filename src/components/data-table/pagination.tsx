@@ -35,7 +35,7 @@ export function DataTablePagination<TData>(props: IDataTablePaginationProps<TDat
   "use no memo";
 
   const { table } = useDataTableContext();
-  const { resetScroll, className, buttonsSize = 'smIcon', ...restOfProps } = props;
+  const { resetScroll, className, buttonsSize = 'icon-sm', ...restOfProps } = props;
 
   const page = table.getState().pagination.pageIndex + 1;
   const totalPages = table.getPageCount();

@@ -65,7 +65,7 @@ function Component() {
 
             <ButtonWithTooltip
               variant="ghost"
-              size="smIcon"
+              size="icon-sm"
               tooltip="Create"
               disabled={isPending}
               onClick={openCreateDialog}
@@ -75,7 +75,7 @@ function Component() {
 
             <ButtonWithTooltip
               variant="ghost"
-              size="smIcon"
+              size="icon-sm"
               tooltip="Refresh"
               onClick={refetchSync} disabled={isPending}
             >

@@ -124,7 +124,7 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
             <Button
               data-slot="carousel-previous"
               variant="lightGhost"
-              size="xsIcon"
+              size="icon-xs"
               className={cn()}
               onClick={() => api?.scrollPrev()}
             >
@@ -145,7 +145,7 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
             <Button
               data-slot="carousel-previous"
               variant="lightGhost"
-              size="xsIcon"
+              size="icon-xs"
               className={cn()}
               onClick={() => api?.scrollNext()}
             >

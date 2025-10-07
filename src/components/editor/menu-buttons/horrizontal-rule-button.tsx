@@ -26,7 +26,7 @@ const HorizontalRuleButton = ({ ...props }: IProps) => {
       <TooltipTrigger asChild>
         <Button
           type="button"
-          size="smIcon"
+          size="icon-sm"
           variant="ghost"
           onClick={() => editor.chain().focus().setHorizontalRule().run()}
           disabled={state.disabled}

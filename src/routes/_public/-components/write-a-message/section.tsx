@@ -2,8 +2,7 @@ import { ComponentProps, FC } from 'react';
 import { cn } from '@/lib/utils';
 import Form from './form';
 import { Button } from '@/components/ui/button';
-import { MailIcon, PhoneIcon } from 'lucide-react';
-import { ChatBubbleIcon } from '@radix-ui/react-icons';
+import { MailIcon, MessageCircleIcon, PhoneIcon } from 'lucide-react';
 
 
 interface IProps extends ComponentProps<'section'> {
@@ -48,7 +47,7 @@ const WriteAMessageSection: FC<IProps> = ({ className, ...props }) => {
 
           <Button variant="link" className="gap-4 w-fit" asChild>
             <a>
-              <ChatBubbleIcon/>
+              <MessageCircleIcon/>
               Chat with us
             </a>
           </Button>

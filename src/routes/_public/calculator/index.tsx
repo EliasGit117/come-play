@@ -84,7 +84,7 @@ function RouteComponent() {
             <Label>Vertical count</Label>
             <div className="flex justify-center">
               <Button
-                size="smIcon"
+                size="icon-sm"
                 variant="secondary"
                 className="rounded-r-none border"
                 disabled={tilesYCount <= 1}
@@ -98,7 +98,7 @@ function RouteComponent() {
                 readOnly
               />
               <Button
-                size="smIcon"
+                size="icon-sm"
                 variant="secondary"
                 className='rounded-l-none border'
                 disabled={tilesYCount >= 100}
@@ -114,7 +114,7 @@ function RouteComponent() {
             <Label>Horizontal count</Label>
             <div className="flex justify-center">
               <Button
-                size="smIcon"
+                size="icon-sm"
                 variant="secondary"
                 className="rounded-r-none border"
                 disabled={tilesXCount <= 1}
@@ -128,7 +128,7 @@ function RouteComponent() {
                 readOnly
               />
               <Button
-                size="smIcon"
+                size="icon-sm"
                 variant="secondary"
                 className='rounded-l-none border'
                 disabled={tilesXCount >= 100}
@@ -188,7 +188,7 @@ function RouteComponent() {
         </div>
 
         <OpenPanelSettingsButton
-          size="xlIcon"
+          size="icon-xl"
           className="fixed bottom-6 right-6 border border-border/50 rounded-full"
         />
       </main>

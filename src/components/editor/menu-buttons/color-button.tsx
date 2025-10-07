@@ -24,7 +24,7 @@ const ColorButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="smIcon">
+        <Button variant="ghost" size="icon-sm">
           <PaletteIcon />
         </Button>
       </DropdownMenuTrigger>

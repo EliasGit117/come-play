@@ -31,7 +31,7 @@ const ProductList: FC<IProps> = ({ className, ...props }) => {
         {products.map((product) => (
           <article key={product.title}>
             <Link to="/">
-              <Card className="relative max-w-xs p-0 shadow-none h-52 border-none overflow-clip">
+              <Card className="relative max-w-xs p-0 shadow-none h-52 border-border/50 overflow-clip">
                 <CardContent className="rounded-none overflow-clip px-0 relative flex-1">
                   <UnLazyImageSSR
                     src={product.image}

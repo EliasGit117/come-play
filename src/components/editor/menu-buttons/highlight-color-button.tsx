@@ -24,7 +24,7 @@ const HighlightButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="smIcon" type="button">
+        <Button variant="ghost" size="icon-sm" type="button">
           <HighlighterIcon />
         </Button>
       </DropdownMenuTrigger>

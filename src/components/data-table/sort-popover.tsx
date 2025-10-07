@@ -60,7 +60,7 @@ export function DataTableSortPopover<TData>({ ...props }: IDataTableSortPopoverP
             <p className="font-semibld text-sm">Sort by</p>
 
             {!!currentSort && (
-              <Button variant="ghost" size="xsIcon" className="-m-1" disabled={!currentSort} onClick={clearSorting}>
+              <Button variant="ghost" size="icon-xs" className="-m-1" disabled={!currentSort} onClick={clearSorting}>
                 <BrushCleaningIcon/>
               </Button>
             )}

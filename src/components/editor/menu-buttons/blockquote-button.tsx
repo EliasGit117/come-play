@@ -28,7 +28,7 @@ const BlockquoteButton = ({ ...props }: IProps) => {
       <TooltipTrigger asChild>
         <Button
           type="button"
-          size="smIcon"
+          size="icon-sm"
           variant={state.active ? 'secondary' : 'ghost'}
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
           disabled={state.disabled}

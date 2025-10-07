@@ -26,7 +26,7 @@ const UnderlineButton = ({ ...props }: IProps) => {
       <TooltipTrigger asChild>
         <Button
           type="button"
-          size="smIcon"
+          size="icon-sm"
           variant={state.active ? 'secondary' : 'ghost'}
           onClick={() => editor.chain().focus().toggleUnderline().run()}
           disabled={state.disabled}

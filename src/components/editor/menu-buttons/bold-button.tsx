@@ -30,7 +30,7 @@ const BoldButton = ({ ...props }: IProps) => {
       <TooltipTrigger asChild>
         <Button
           type="button"
-          size="smIcon"
+          size="icon-sm"
           variant={state.active ? 'secondary' : 'ghost'}
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={state.disabled}
