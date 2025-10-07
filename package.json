@@ -84,7 +84,6 @@
     "typescript": "^5.7.2",
     "vite": "^7.1.7",
     "vite-plugin-svgr": "^4.3.0",
-    "vite-tsconfig-paths": "^5.1.4",
-    "nitro": "npm:nitro-nightly"
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }
