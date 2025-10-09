@@ -1,5 +1,6 @@
 @import "tailwindcss" source("../");
 @import "tw-animate-css";
+
 @plugin "@tailwindcss/typography";
 @plugin "@igorkowalczyk/is-browser";
 
@@ -116,7 +117,13 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* TODO: Temporary fix to show content with disabled JS (SSR). Better to find a reason of problem later. */
+  body>[hidden]:where(:not([hidden="until-found"])) {
+    @apply !block;
   }
 }

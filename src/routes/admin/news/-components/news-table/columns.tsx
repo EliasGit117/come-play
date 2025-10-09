@@ -64,7 +64,12 @@ export const newsColumns = [
 
       return (
         <figure className='h-10 aspect-video rounded-sm overflow-hidden'>
-        <UnLazyImageSSR src={img.url} thumbhash={img.thumbhash} className='w-full h-full object-cover'/>
+        <UnLazyImageSSR
+          src={img.url}
+          thumbhash={img.thumbhash}
+          className='w-full h-full object-cover'
+          alt='News image'
+        />
         </figure>
       );
     },
