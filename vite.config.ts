@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import viteReact from '@vitejs/plugin-react';
 import { nitroV2Plugin } from '@tanstack/nitro-v2-vite-plugin'
 
+const prismaNodeModulesPath = `${getModulePath('@prisma/client')}/node_modules`;
 
 export default defineConfig({
   server: {
@@ -20,6 +21,11 @@ export default defineConfig({
     svgr(),
     nitroV2Plugin()
   ],
+  resolve: {
+    alias: {
+      '.prisma/client/index-browser': `${prismaNodeModulesPath}/.prisma/client/index-browser.js`
+    }
+  }
 });
 
 function getModulePath(moduleName: string) {
