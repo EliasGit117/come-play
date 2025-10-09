@@ -15,8 +15,8 @@ import Autoplay from 'embla-carousel-autoplay';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
-import VideoPlaceholder from '@/video-placeholder';
 import { Link, LinkOptions } from '@tanstack/react-router';
+import VideoPlaceholder from '@/components/video-placeholder';
 
 interface IBannerData {
   heading: string;

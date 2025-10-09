@@ -1,17 +1,17 @@
 "use client";
 
-import { useState, useEffect, ReactNode, ReactElement, cloneElement } from 'react';
+import { useState, useEffect, ReactNode, ReactElement, cloneElement, FC } from 'react';
 import { cn } from '@/lib/utils';
 import { VideoHTMLAttributes } from 'react';
 
-export type VideoPlaceholderProps = {
+export interface IVideoPlaceholderProps {
   placeholder: ReactNode;
   children: ReactElement<VideoHTMLAttributes<HTMLVideoElement>>; // strictly <video>
   transitionDuration?: number; // in ms
   background?: string; // optional container background color
 };
 
-export default function VideoPlaceholder(props: VideoPlaceholderProps) {
+const VideoPlaceholder: FC<IVideoPlaceholderProps> = (props) => {
   const {
     placeholder,
     children,
@@ -61,3 +61,5 @@ export default function VideoPlaceholder(props: VideoPlaceholderProps) {
     </div>
   );
 }
+
+export default VideoPlaceholder;
