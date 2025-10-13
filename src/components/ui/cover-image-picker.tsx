@@ -29,7 +29,7 @@ interface INewsImageUploadProps extends Omit<FileUploadOptions,
 }
 
 
-const ImageCoverPicker: FC<INewsImageUploadProps> = (props) => {
+const CoverImagePicker: FC<INewsImageUploadProps> = (props) => {
   const {
     value,
     disabled,
@@ -78,7 +78,7 @@ const ImageCoverPicker: FC<INewsImageUploadProps> = (props) => {
         'group relative overflow-hidden rounded-xl transition-all duration-200 border border-border',
         'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
         isDragging ? 'border-dashed border-primary bg-primary/5' :
-          (!!value ? 'border-border bg-background hover:border-primary/50' : 'border-dashed border-muted-foreground/25 bg-muted/30 hover:border-primary hover:bg-primary/5'),
+          (!!value ? 'border-border bg-background hover:border-primary/25' : 'border-dashed border-muted-foreground/25 bg-muted/30 hover:border-primary hover:bg-primary/5'),
         disabled && 'pointer-events-none opacity-50',
         keepOpacity && 'opacity-100',
         className
@@ -120,32 +120,37 @@ const ImageCoverPicker: FC<INewsImageUploadProps> = (props) => {
             )}
           >
             <div className="flex gap-2">
-              <Button
-                size="sm"
-                onClick={openFileDialog}
-                variant="secondary"
-                aria-label="Replace image"
-                className={cn(
-                  'pointer-events-none',
-                  !disabled && 'group-hover:pointer-events-auto group-focus-within:pointer-events-auto group-focus:pointer-events-auto'
-                )}
-              >
-                <Upload/>
-                <span>Replace</span>
-              </Button>
-              <Button
-                size="sm"
-                onClick={removeImage}
-                variant="destructive"
-                aria-label="Remove image"
-                className={cn(
-                  'pointer-events-none',
-                  !disabled && 'group-hover:pointer-events-auto group-focus-within:pointer-events-auto group-focus:pointer-events-auto'
-                )}
-              >
-                <XIcon/>
-                <span>Remove</span>
-              </Button>
+              <div className="bg-background rounded-md">
+                <Button
+                  size="sm"
+                  onClick={openFileDialog}
+                  variant="secondary"
+                  aria-label="Replace image"
+                  className={cn(
+                    'pointer-events-none',
+                    !disabled && 'group-hover:pointer-events-auto group-focus-within:pointer-events-auto group-focus:pointer-events-auto'
+                  )}
+                >
+                  <Upload/>
+                  <span>Replace</span>
+                </Button>
+              </div>
+
+              <div className="bg-background rounded-md">
+                <Button
+                  size="sm"
+                  onClick={removeImage}
+                  variant="destructive"
+                  aria-label="Remove image"
+                  className={cn(
+                    'pointer-events-none',
+                    !disabled && 'group-hover:pointer-events-auto group-focus-within:pointer-events-auto group-focus:pointer-events-auto'
+                  )}
+                >
+                  <XIcon/>
+                  <span>Remove</span>
+                </Button>
+              </div>
             </div>
           </div>
         </>
@@ -168,6 +173,6 @@ const ImageCoverPicker: FC<INewsImageUploadProps> = (props) => {
       {children}
     </div>
   );
-}
+};
 
-export default ImageCoverPicker;
+export default CoverImagePicker;

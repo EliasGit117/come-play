@@ -19,34 +19,18 @@ import { useTheme } from '@/components/theme';
 import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react';
 
 
-
 const localeOptions = [
   { title: 'Romana', value: 'ro' },
   { title: 'Русский', value: 'ru' }
 ] as const;
 
-interface IProps {
-}
+interface IProps {}
 
 
 export function NavSettings({ ...props }: IProps & ComponentPropsWithoutRef<typeof SidebarGroup>) {
   const locale = 'ro';
   const { isMobile } = useSidebar();
   const { theme, setTheme } = useTheme();
-
-  const getThemeIcon = () => {
-    const className = 'ml-auto text-muted-foreground';
-
-    switch (theme) {
-      case 'light':
-        return <SunIcon className={className}/>;
-      case 'dark':
-        return <MoonIcon className={className}/>;
-      case 'system':
-      default:
-        return <MonitorIcon className={className}/>;
-    }
-  };
 
   return (
     <SidebarGroup {...props}>
@@ -60,7 +44,8 @@ export function NavSettings({ ...props }: IProps & ComponentPropsWithoutRef<type
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
                   <span>Theme</span>
-                  {getThemeIcon()}
+                  <SunIcon className='ml-auto text-muted-foreground dark:hidden'/>
+                  <MoonIcon className='ml-auto text-muted-foreground hidden dark:block'/>
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent

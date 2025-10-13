@@ -1,13 +1,15 @@
 /// <reference types="vite/client" />
 /// <reference types="vite-plugin-svgr/client" />
 
-import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from '@tanstack/react-router';
+import { HeadContent, Outlet, Scripts, createRootRouteWithContext, useRouterState } from '@tanstack/react-router';
 import type { QueryClient } from '@tanstack/react-query';
 import { DefaultCatchBoundary } from '@/components/default-catch-boundary';
 import appCss from '@/styles/app.css?url';
 import { seo } from '@/utils/seo';
 import { Providers } from '@/providers';
 import { ThemeProvider } from '@/components/theme';
+import { useMountedEffect } from '@/hooks/use-mounted-effect';
+import { ReactNode } from 'react';
 
 interface IRootRouteProps {
   queryClient: QueryClient;
@@ -51,7 +53,8 @@ function RootComponent() {
   );
 }
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootDocument({ children }: { children: ReactNode }) {
+
   return (
     <html suppressHydrationWarning>
       <head>
@@ -63,12 +66,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
 
       <body className="flex flex-col min-h-svh">
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <ThemeProvider defaultTheme="system">
         <Providers>
           {children}
         </Providers>
         {/*<TanStackRouterDevtools position="bottom-right" />*/}
         {/*<ReactQueryDevtools buttonPosition="bottom-left" />*/}
+        <ScrollRestorationScript/>
         <Scripts/>
       </ThemeProvider>
       </body>
@@ -76,3 +80,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   );
 }
 
+// TODO: A workaround to move page to top on navigation change
+const ScrollRestorationScript = () => {
+  const pathname = useRouterState({ select: state => state.location.pathname })
+
+  useMountedEffect(() => {
+    window.scrollTo({ top: 0 })
+  }, [pathname])
+
+  return null;
+}

@@ -16,32 +16,9 @@ import { Link } from '@tanstack/react-router';
 import { NavSettings } from '@/routes/admin/-components/sidebar/nav-settings';
 
 
-
 interface IAdminSidebarProps extends ComponentProps<typeof Sidebar> {}
 
 export function AdminSidebar({ ...props }: IAdminSidebarProps) {
-  const navMain: INavItem[] = [
-    {
-      title: 'Home',
-      linkOptions: { to: '/',  activeOptions: { exact: true } },
-      icon: HomeIcon
-    },
-    {
-      title: 'Dashboard',
-      linkOptions: { to: '/admin', activeOptions: { exact: true } },
-      icon: LayoutDashboardIcon
-    },
-    {
-      title: 'News',
-      linkOptions: { to: '/admin/news' },
-      icon: NewspaperIcon
-    },
-    {
-      title: 'Settings',
-      linkOptions: { to: '/' },
-      icon: SettingsIcon
-    }
-  ];
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
@@ -73,3 +50,26 @@ export function AdminSidebar({ ...props }: IAdminSidebarProps) {
     </Sidebar>
   );
 }
+
+const navMain: INavItem[] = [
+  {
+    title: 'Home',
+    linkOptions: { to: '/',  activeOptions: { exact: true } },
+    icon: HomeIcon
+  },
+  {
+    title: 'Dashboard',
+    linkOptions: { to: '/admin', activeOptions: { exact: true } },
+    icon: LayoutDashboardIcon
+  },
+  {
+    title: 'News',
+    linkOptions: { to: '/admin/news' },
+    icon: NewspaperIcon
+  },
+  {
+    title: 'Settings',
+    linkOptions: { to: '/' },
+    icon: SettingsIcon
+  }
+];

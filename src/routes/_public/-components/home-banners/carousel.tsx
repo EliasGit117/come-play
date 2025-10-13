@@ -179,8 +179,7 @@ const BannerOverlay: React.FC<BannerOverlayProps> = ({ data, className }) => {
         )}
         {data.link && (
           <Button
-            variant="secondary"
-            className="text-xs sm:text-sm md:text-base lg:h-10 xl:h-12"
+            className="text-xs sm:text-sm md:text-base h-fit lg:h-10 xl:h-12 !bg-white !text-black"
             asChild
           >
             <Link {...data.link}>

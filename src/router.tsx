@@ -21,6 +21,7 @@ export function getRouter() {
     context: { queryClient },
     defaultPreload: 'intent',
     defaultErrorComponent: DefaultCatchBoundary,
+    scrollRestoration: false,
     defaultNotFoundComponent: () => {
       return (
         <main className="container mx-auto p-4">
@@ -28,7 +29,6 @@ export function getRouter() {
         </main>
       );
     },
-    scrollRestoration: true
 
   });
   setupRouterSsrQueryIntegration({

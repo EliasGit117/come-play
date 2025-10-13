@@ -1,10 +1,11 @@
 import { ComponentProps, FC, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { useSetNewsImageMutation } from '@/features/news/server-functions/admin/set-news-image';
-import { IImagePickerValue, ImageCoverPicker } from '@/components/image-picker';
 import { useRemoveImageFromNews } from '@/features/news/server-functions/admin/remove-image-from-news';
 import { LoaderCircleIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import CoverImagePicker, { IImagePickerValue } from '@/components/ui/cover-image-picker';
+import { Button } from '@/components/ui/button';
 
 
 interface INewsImageUploaderProps extends ComponentProps<'div'> {
@@ -62,7 +63,10 @@ export const NewsImageUploader: FC<INewsImageUploaderProps> = (props) => {
 
   return (
     <div className={cn(className)} {...restOfProps}>
-      <ImageCoverPicker
+      <Button variant='destructive'>
+        Remove
+      </Button>
+      <CoverImagePicker
         className={cn("max-w-xs aspect-video relative", disabled && !isPending && 'opacity-50')}
         value={imageData}
         onFilesChange={onFilesChange}
@@ -78,7 +82,7 @@ export const NewsImageUploader: FC<INewsImageUploaderProps> = (props) => {
             </span>
           </div>
         )}
-      </ImageCoverPicker>
+      </CoverImagePicker>
 
     </div>
   );

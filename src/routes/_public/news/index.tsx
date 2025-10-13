@@ -48,16 +48,13 @@ function RouteComponent() {
     <main className="container mx-auto flex flex-col flex-1 gap-8 p-4">
       <header className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">News</h1>
-          <p className="text-muted-foreground">Stay updated with the most recent articles</p>
+          <h1 className="text-3xl font-bold tracking-tight">News</h1>
+          <p className="text-muted-foreground mt-2">Stay updated with the most recent articles</p>
         </div>
-        <SearchPanel/>
+        <SearchPanel className='mt-auto'/>
       </header>
 
-      <section
-        aria-label="News list"
-        className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-      >
+      <section aria-label="News list" className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {data?.items.map((item) => (
           <article key={item.id}>
             <NewsPreviewLink news={item}/>

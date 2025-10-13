@@ -3,7 +3,7 @@ import {
   SidebarGroupContent, SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem
+  SidebarMenuItem, useSidebar
 } from '@/components/ui/sidebar';
 import { Link } from '@tanstack/react-router';
 import { INavItem } from '@/routes/admin/-components/sidebar/types/nav-item';
@@ -15,6 +15,7 @@ interface INavLinkGroup {
 }
 
 export function NavLinkGroup({ items, label }: INavLinkGroup) {
+  const { setOpenMobile } = useSidebar();
 
   return (
     <SidebarGroup>
@@ -25,6 +26,7 @@ export function NavLinkGroup({ items, label }: INavLinkGroup) {
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton tooltip={item.title} asChild>
                 <Link
+                  onClick={() => setOpenMobile(false)}
                   activeProps={{ className: 'bg-sidebar-accent font-medium text-sidebar-accent-foreground' }}
                   {...item.linkOptions}
                 >

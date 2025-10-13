@@ -18,8 +18,8 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
   const matches = useMatches();
   const headerOptions = matches.find((match) => match.staticData.headerOptions)?.staticData.headerOptions;
   const { type } = headerOptions ?? { type: 'sticky' };
-  const setOpenSidebar = useAppSidebar(s => s.setOpen);
 
+  const setOpenSidebar = useAppSidebar(s => s.setOpen);
   const [isAtTop, setIsAtTop] = useState(type !== 'sticky');
 
 
@@ -52,13 +52,14 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
     };
   }, [type]);
 
-
   return (
     <header
       className={cn(
-        'sticky top-0 z-20 flex h-16 shrink-0 items-center gap-2 bg-background',
-        type === 'fixed' && 'fixed left-0 right-0',
-        isAtTop && 'text-white bg-transparent'
+        'sticky top-0 z-20 flex h-16 shrink-0 items-center gap-2',
+        'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90',
+        'dark:supports-[backdrop-filter]:bg-background/75',
+        type === 'fixed' && 'fixed left-0 right-0 border-b',
+        isAtTop && 'text-white !bg-transparent backdrop-blur-none border-b-transparent',
       )}
       {...props}
     >
