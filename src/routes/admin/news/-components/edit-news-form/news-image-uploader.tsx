@@ -5,6 +5,7 @@ import { useRemoveImageFromNews } from '@/features/news/server-functions/admin/r
 import { LoaderCircleIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import CoverImagePicker, { IImagePickerValue } from '@/components/ui/cover-image-picker';
+import { Spinner } from '@/components/ui/spinner';
 
 
 interface INewsImageUploaderProps extends ComponentProps<'div'> {
@@ -71,7 +72,7 @@ export const NewsImageUploader: FC<INewsImageUploaderProps> = (props) => {
       >
         {isPending && (
           <div className="absolute inset-0 flex gap-1 items-center justify-center bg-black/40 text-white z-10">
-            <LoaderCircleIcon className="animate-spin"/>
+            <Spinner/>
             <span className="text-sm font-medium">
               {isUploading && 'Uploading...'}
               {isRemoving && 'Removing...'}

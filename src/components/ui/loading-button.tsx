@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Button } from './button';
 import { LoaderCircle } from 'lucide-react';
+import { Spinner } from '@/components/ui/spinner';
 
 
 interface IProps extends React.ComponentProps<typeof Button> {
@@ -14,7 +15,7 @@ function LoadingButton(props: IProps) {
   if (loading)
     return (
       <Button {...restOfProps} asChild={false} disabled={disabled ?? true}>
-        <LoaderCircle className="animate-spin"/>
+        <Spinner/>
         {!hideText && <span>Loading</span>}
       </Button>
     );

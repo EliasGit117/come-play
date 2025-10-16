@@ -35,7 +35,7 @@ const AppSidebar = () => {
         </SheetHeader>
 
         <div className="flex flex-col gap-4 p-5 overflow-y-auto">
-          <Accordion type="single" className="w-full">
+          <Accordion type="single" className="w-full" collapsible>
             {headerLinks.map((link, index) => {
               if (link.type === MenuItemType.Group) {
                 return (
