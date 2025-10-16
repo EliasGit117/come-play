@@ -77,7 +77,8 @@ function Component() {
               variant="ghost"
               size="icon-sm"
               tooltip="Refresh"
-              onClick={refetchSync} disabled={isPending}
+              onClick={refetchSync}
+              disabled={isPending}
             >
               <RotateCcwIcon/>
             </ButtonWithTooltip>

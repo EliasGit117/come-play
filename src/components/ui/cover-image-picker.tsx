@@ -123,7 +123,10 @@ const CoverImagePicker: FC<INewsImageUploadProps> = (props) => {
               <div className="bg-background rounded-md">
                 <Button
                   size="sm"
-                  onClick={openFileDialog}
+                  onClick={(event) => {
+                    event.currentTarget.blur();
+                    openFileDialog();
+                  }}
                   variant="secondary"
                   aria-label="Replace image"
                   className={cn(
@@ -139,7 +142,10 @@ const CoverImagePicker: FC<INewsImageUploadProps> = (props) => {
               <div className="bg-background rounded-md">
                 <Button
                   size="sm"
-                  onClick={removeImage}
+                  onClick={(event) => {
+                    event.currentTarget.blur();
+                    removeImage();
+                  }}
                   variant="destructive"
                   aria-label="Remove image"
                   className={cn(

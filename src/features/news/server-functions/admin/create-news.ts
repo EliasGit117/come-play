@@ -8,7 +8,8 @@ import { IAdminNewsDto, IAdminNewsDtoFactory } from '@/features/news/dtos/admin-
 export const createNewsSchema = z.object({
   slug: z.string().regex(/^[a-zA-Z0-9-]+$/).min(3).max(1000),
   titleRo: z.string().min(3).max(256),
-  titleRu: z.string().min(3).max(256)
+  titleRu: z.string().min(3).max(256),
+  editAfterCreation: z.boolean()
 });
 
 export type TCreatNewsSchema = z.infer<typeof createNewsSchema>;
@@ -23,7 +24,9 @@ export const createNews = createServerFn({ method: 'POST' })
 
     const news = await prisma.news.create({
       data: {
-        ...data,
+        slug: data.slug,
+        titleRo: data.titleRo,
+        titleRu: data.titleRu,
         contentRo: null,
         contentRu: null
       }
@@ -43,9 +46,9 @@ export const useCreateNewsMutation = (options?: TOptions) => {
     mutationKey: ['news', 'create'],
     mutationFn: (values) => createNews({ data: values }),
     ...options,
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data, variables, onMutateResult, context) => {
       void queryClient.invalidateQueries({ predicate: (query) => query.queryKey[0] === 'news' && query.queryKey[1] === 'paginated' });
-      options?.onSuccess?.(data, variables, context);
+      options?.onSuccess?.(data, variables, onMutateResult, context);
     }
   });
 };

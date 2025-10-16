@@ -1,12 +1,9 @@
 import { Color } from '@tiptap/extension-color';
-import Underline from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
 import { TextStyle } from '@tiptap/extension-text-style';
 import Highlight from '@tiptap/extension-highlight';
 import Youtube from '@tiptap/extension-youtube';
 import TextAlign from '@tiptap/extension-text-align'
-import Link from '@tiptap/extension-link'
-
 import { EditorProvider, useCurrentEditor } from '@tiptap/react';
 import React, { FC } from 'react';
 import BoldButton from '@/components/editor/menu-buttons/bold-button';
@@ -73,20 +70,17 @@ const extensions = [
       keepMarks: true,
       keepAttributes: false
     },
-    blockquote: {
-
-    }
+    blockquote: {},
+    link: { openOnClick: false },
   }),
   TextStyle,
   Color,
   Highlight,
-  Underline,
   Youtube,
   TextAlign.configure({
     types: ['heading', 'paragraph'],
     alignments: ['left', 'center', 'right', 'justify'],
   }),
-  Link.configure({ openOnClick: false }),
 ];
 
 

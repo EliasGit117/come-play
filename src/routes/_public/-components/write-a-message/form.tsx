@@ -1,14 +1,14 @@
 import React, { ComponentProps, FC } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { cn } from '@/lib/utils';
+import { Form } from '@/components/ui/form';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { SendIcon } from 'lucide-react';
+import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 
 const contactSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
@@ -47,97 +47,102 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className={cn('grid md:grid-cols-2 gap-4', className)} {...props}>
-        <FormField
-          control={form.control}
-          name="firstName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>First name</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter your first name" {...field}/>
-              </FormControl>
-              <FormMessage/>
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Last name</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter your last name" {...field}/>
-              </FormControl>
-              <FormMessage/>
-            </FormItem>
-          )}
-        />
-
-
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
+      <form onSubmit={form.handleSubmit(onSubmit)} className={className} {...props}>
+        <FieldGroup className="grid md:grid-cols-2 gap-4">
+          <Controller
+            name="firstName"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="first-name-input">First name</FieldLabel>
                 <Input
-                  placeholder="Enter your email"
                   {...field}
-                  autoComplete="email"
+                  id="first-name-input"
+                  aria-invalid={fieldState.invalid}
+                  placeholder="John"
                 />
-              </FormControl>
-              <FormMessage/>
-            </FormItem>
-          )}
-        />
+                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+              </Field>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Phone</FormLabel>
-              <FormControl>
+          <Controller
+            name="lastName"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="last-name-input">Last name</FieldLabel>
                 <Input
-                  placeholder="Enter your phone number"
                   {...field}
-                  autoComplete="tel"
+                  id="last-name-input"
+                  aria-invalid={fieldState.invalid}
+                  placeholder="Doe"
                 />
-              </FormControl>
-              <FormMessage/>
-            </FormItem>
-          )}
-        />
+                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+              </Field>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="message"
-          render={({ field }) => (
-            <FormItem className="col-span-full">
-              <FormLabel>Message</FormLabel>
-              <FormControl>
+          <Controller
+            name="email"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="email-input">Email</FieldLabel>
+                <Input
+                  {...field}
+                  id="email-input"
+                  aria-invalid={fieldState.invalid}
+                  placeholder="johnDoe537@yahoo.com"
+                />
+                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+              </Field>
+            )}
+          />
+
+          <Controller
+            name="email"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="phone-input">Email</FieldLabel>
+                <Input
+                  {...field}
+                  id="phone-input"
+                  aria-invalid={fieldState.invalid}
+                  placeholder="+37360000000"
+                />
+                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+              </Field>
+            )}
+          />
+
+          <Controller
+            name="message"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field className="col-span-full" data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="message-text-area">Message</FieldLabel>
                 <Textarea
-                  placeholder="Here you can write a message for us"
-                  className="min-h-44"
                   {...field}
+                  id="message-text-area"
+                  aria-invalid={fieldState.invalid}
+                  placeholder="Here you can write a message for us"
+                  className='min-h-40'
                   autoComplete="off"
                 />
-              </FormControl>
-              <FormMessage/>
-            </FormItem>
-          )}
-        />
+                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+              </Field>
+            )}
+          />
 
-        <div className="flex col-span-full">
-          <LoadingButton className="w-full md:w-fit md:ml-auto" loading={false} disabled={false}>
-            <span>Submit</span>
-            <SendIcon/>
-          </LoadingButton>
-        </div>
+          <Field orientation='horizontal' className='col-span-full'>
+            <LoadingButton className="w-full md:w-fit md:ml-auto" loading={false} disabled={false}>
+              <span>Submit</span>
+              <SendIcon/>
+            </LoadingButton>
+          </Field>
+        </FieldGroup>
       </form>
     </Form>
   );

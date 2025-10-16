@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { getNewsByIdQueryOptions } from '@/features/news/server-functions/admin/get-news-by-id';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { NewsForm, newsFormSchema, TNewsFormSchema } from '@/routes/admin/news/-components/news-form/news-form';
+import { NewsForm, newsFormSchema, TNewsFormSchema } from '@/routes/admin/news/-components/edit-news-form/form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
@@ -11,9 +11,9 @@ import { useEditNewsMutation } from '@/features/news/server-functions/admin/edit
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { IImagePickerValue } from '@/components/image-picker';
-import NewsImageUploader from '@/routes/admin/news/-components/news-form/news-image-uploader';
+import NewsImageUploader from '@/routes/admin/news/-components/edit-news-form/news-image-uploader';
 import { useState } from 'react';
+import { IImagePickerValue } from '@/components/ui/cover-image-picker';
 
 export const Route = createFileRoute('/admin/news/$id/edit')({
   component: RouteComponent,
@@ -85,7 +85,7 @@ function RouteComponent() {
         </form>
       </Form>
 
-      <div className="fixed flex bottom-3 right-4 mr-2 ml-auto z-10 gap-2">
+      <div className="fixed bottom-4 z-10 flex container justify-end pr-8 gap-2">
         <div className="bg-background shadow-md rounded-md">
           <Button
             type="button"

@@ -13,7 +13,7 @@ import {
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
 import { Form } from '@/components/ui/form';
-import { NewsForm } from './form';
+import { NewsForm } from './create-news-form';
 import { LoadingButton } from '@/components/ui/loading-button';
 import {
   createNewsSchema,

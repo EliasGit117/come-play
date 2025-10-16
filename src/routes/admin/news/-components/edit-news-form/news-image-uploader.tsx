@@ -5,7 +5,6 @@ import { useRemoveImageFromNews } from '@/features/news/server-functions/admin/r
 import { LoaderCircleIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import CoverImagePicker, { IImagePickerValue } from '@/components/ui/cover-image-picker';
-import { Button } from '@/components/ui/button';
 
 
 interface INewsImageUploaderProps extends ComponentProps<'div'> {
@@ -63,9 +62,6 @@ export const NewsImageUploader: FC<INewsImageUploaderProps> = (props) => {
 
   return (
     <div className={cn(className)} {...restOfProps}>
-      <Button variant='destructive'>
-        Remove
-      </Button>
       <CoverImagePicker
         className={cn("max-w-xs aspect-video relative", disabled && !isPending && 'opacity-50')}
         value={imageData}

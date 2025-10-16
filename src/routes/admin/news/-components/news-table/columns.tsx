@@ -31,8 +31,8 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { useDeleteNewsAlertDialog } from '@/routes/admin/news/-components/delete-news-alert-dialog/provider';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
 
-const columnHelper = createColumnHelper<IAdminNewsBriefDto>();
 
+const columnHelper = createColumnHelper<IAdminNewsBriefDto>();
 
 export const newsColumns = [
   columnHelper.accessor('id', {
@@ -63,7 +63,7 @@ export const newsColumns = [
         )
 
       return (
-        <figure className='h-10 aspect-video rounded-sm overflow-hidden'>
+        <figure className='h-10 aspect-video rounded-sm overflow-hidden border border-border/50'>
         <UnLazyImageSSR
           src={img.url}
           thumbhash={img.thumbhash}
