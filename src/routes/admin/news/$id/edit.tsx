@@ -17,9 +17,15 @@ import { IImagePickerValue } from '@/components/ui/cover-image-picker';
 
 export const Route = createFileRoute('/admin/news/$id/edit')({
   component: RouteComponent,
+  staticData: {
+    breadcrumbs: [{ title: 'Edit news' }]
+  },
   loader: async ({ params: { id }, context }) => {
     const data = await context.queryClient.ensureQueryData(getNewsByIdQueryOptions(id));
-    return { post: data };
+    return {
+      post: data,
+      breadcrumbs: [{ title: `Edit «${data.titleRo}»` }]
+    };
   },
   head: () => ({ meta: [{ title: `Edit news` }] })
 });
@@ -67,15 +73,6 @@ function RouteComponent() {
 
   return (
     <main className="container mx-auto p-4 pb-12 space-y-4 flex-1 relative">
-      <article>
-        <h2 className="text-2xl">
-          Edit news
-        </h2>
-        <p className="text-sm text-muted-foreground">
-          Here you can change data of news
-        </p>
-      </article>
-
       <Label>Image</Label>
       <NewsImageUploader newsId={id} defaultImage={imageData} onPendingChange={onImagePending}/>
 
@@ -85,27 +82,30 @@ function RouteComponent() {
         </form>
       </Form>
 
-      <div className="fixed bottom-4 z-10 flex container justify-end pr-8 gap-2">
-        <div className="bg-background shadow-md rounded-md">
-          <Button
-            type="button"
-            variant="secondary"
-            disabled={!form.formState.isDirty || isPending}
-            onClick={() => form.reset()}
-            className="border"
-          >
-            <UndoIcon/>
-            <span className="sr-only sm:not-sr-only">Reset</span>
-          </Button>
-        </div>
+      <div className="absolute bottom-4 left-0 right-0 z-10">
+        <div className="flex justify-end container mx-auto gap-2 px-4">
+          <div className="bg-background shadow-md rounded-md">
+            <Button
+              type="button"
+              variant="secondary"
+              disabled={!form.formState.isDirty || isPending}
+              onClick={() => form.reset()}
+              className="border"
+            >
+              <UndoIcon/>
+              <span className="sr-only sm:not-sr-only">Reset</span>
+            </Button>
+          </div>
 
-        <div className="bg-background shadow-md rounded-md">
-          <LoadingButton onClick={() => form.handleSubmit(onSubmit)()} loading={isPending}>
-            <SaveIcon/>
-            <span className="sr-only sm:not-sr-only">Save</span>
-          </LoadingButton>
+          <div className="bg-background shadow-md rounded-md">
+            <LoadingButton onClick={() => form.handleSubmit(onSubmit)()} loading={isPending}>
+              <SaveIcon/>
+              <span className="sr-only sm:not-sr-only">Save</span>
+            </LoadingButton>
+          </div>
         </div>
       </div>
+
     </main>
   );
 }

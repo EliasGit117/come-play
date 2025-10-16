@@ -57,36 +57,25 @@ function RootDocument({ children }: { children: ReactNode }) {
 
   return (
     <html suppressHydrationWarning>
-      <head>
-        <meta name="viewport" content="initial-scale=1, viewport-fit=cover, width=device-width"/>
-        <meta name="theme-color" media="(prefers-color-scheme: light)" content="oklch(1 0 0)"/>
-        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="oklch(0.145 0 0)"/>
+    <head>
+      <meta name="viewport" content="initial-scale=1, viewport-fit=cover, width=device-width"/>
+      <meta name="theme-color" media="(prefers-color-scheme: light)" content="oklch(1 0 0)"/>
+      <meta name="theme-color" media="(prefers-color-scheme: dark)" content="oklch(0.145 0 0)"/>
 
-        <HeadContent/>
-      </head>
+      <HeadContent/>
+    </head>
 
-      <body className="flex flex-col min-h-svh">
-      <ThemeProvider defaultTheme="system">
-        <Providers>
-          {children}
-        </Providers>
-        {/*<TanStackRouterDevtools position="bottom-right" />*/}
-        {/*<ReactQueryDevtools buttonPosition="bottom-left" />*/}
-        <ScrollRestorationScript/>
-        <Scripts/>
-      </ThemeProvider>
-      </body>
+    <body className="flex flex-col min-h-svh">
+    <ThemeProvider defaultTheme="system">
+      <Providers>
+        {children}
+      </Providers>
+      {/*<TanStackRouterDevtools position="bottom-right" />*/}
+      {/*<ReactQueryDevtools buttonPosition="bottom-left" />*/}
+      <Scripts/>
+    </ThemeProvider>
+    </body>
     </html>
   );
 }
 
-// TODO: A workaround to move page to top on navigation change
-const ScrollRestorationScript = () => {
-  const pathname = useRouterState({ select: state => state.location.pathname })
-
-  useMountedEffect(() => {
-    window.scrollTo({ top: 0 })
-  }, [pathname])
-
-  return null;
-}

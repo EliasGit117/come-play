@@ -57,19 +57,20 @@ export const newsColumns = [
 
       if (!img)
         return (
-          <div className='h-10 aspect-video rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex'>
-            <ImageOffIcon className='size-5'/>
+          <div
+            className="h-10 aspect-video rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex">
+            <ImageOffIcon className="size-5"/>
           </div>
-        )
+        );
 
       return (
-        <figure className='h-10 aspect-video rounded-sm overflow-hidden border border-border/50'>
-        <UnLazyImageSSR
-          src={img.url}
-          thumbhash={img.thumbhash}
-          className='w-full h-full object-cover'
-          alt='News image'
-        />
+        <figure className="h-10 aspect-video rounded-sm overflow-hidden border border-border/50 bg-muted">
+          <UnLazyImageSSR
+            src={img.url}
+            thumbhash={img.thumbhash}
+            className="w-full h-full object-cover"
+            alt="News image"
+          />
         </figure>
       );
     },

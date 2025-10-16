@@ -123,7 +123,7 @@
   }
 
   /* TODO: Temporary fix to show content with disabled JS (SSR). Better to find a reason of problem later. */
-  div[id="S:0"][hidden]:where(:not([hidden=until-found])) {
-    @apply !block;
-  }
+  /*div[id="S:0"][hidden]:where(:not([hidden=until-found])) {*/
+  /*  @apply !block;*/
+  /*}*/
 }

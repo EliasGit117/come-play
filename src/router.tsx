@@ -4,6 +4,7 @@ import { DefaultCatchBoundary } from './components/default-catch-boundary';
 import { NotFoundCard } from './components/not-found-card';
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query';
 import { createRouter } from '@tanstack/react-router';
+import { TBreadcrumbData } from '@/routes/admin/-components/admin-header/breadcrumb-nav';
 
 
 export function getRouter() {
@@ -21,7 +22,7 @@ export function getRouter() {
     context: { queryClient },
     defaultPreload: 'intent',
     defaultErrorComponent: DefaultCatchBoundary,
-    scrollRestoration: false,
+    scrollRestoration: true,
     defaultNotFoundComponent: () => {
       return (
         <main className="container mx-auto p-4">
@@ -46,8 +47,11 @@ declare module '@tanstack/react-router' {
 
 
   interface StaticDataRouteOption {
+    hideBreadcrumbs?: boolean;
+    breadcrumbs?: TBreadcrumbData[];
     headerOptions?: {
       type?: 'fixed' | 'sticky';
     };
+
   }
 }

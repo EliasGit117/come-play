@@ -10,7 +10,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '@/components/ui/sidebar';
-import { SettingsIcon, LayoutDashboardIcon, NewspaperIcon, ShoppingCartIcon, HomeIcon } from 'lucide-react';
+import {
+  SettingsIcon,
+  LayoutDashboardIcon,
+  NewspaperIcon,
+  ShoppingCartIcon,
+  HomeIcon,
+  GalleryHorizontalIcon
+} from 'lucide-react';
 import { INavItem } from '@/routes/admin/-components/sidebar/types/nav-item';
 import { Link } from '@tanstack/react-router';
 import { NavSettings } from '@/routes/admin/-components/sidebar/nav-settings';
@@ -61,6 +68,11 @@ const navMain: INavItem[] = [
     title: 'Dashboard',
     linkOptions: { to: '/admin', activeOptions: { exact: true } },
     icon: LayoutDashboardIcon
+  },
+  {
+    title: 'Banners',
+    linkOptions: { to: '/admin/banners', activeOptions: { exact: true } },
+    icon: GalleryHorizontalIcon,
   },
   {
     title: 'News',

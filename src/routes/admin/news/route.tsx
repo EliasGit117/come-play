@@ -2,12 +2,9 @@ import { createFileRoute, Outlet } from '@tanstack/react-router';
 
 
 export const Route = createFileRoute('/admin/news')({
-  component: NewsLayout,
+  staticData: {
+    breadcrumbs: [{ title: 'News' }]
+  },
 });
 
 
-function NewsLayout() {
-  return (
-    <Outlet/>
-  );
-}
