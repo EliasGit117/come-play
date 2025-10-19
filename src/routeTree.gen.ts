@@ -19,6 +19,7 @@ import { Route as PublicNewsIndexRouteImport } from './routes/_public/news/index
 import { Route as PublicCalculatorIndexRouteImport } from './routes/_public/calculator/index'
 import { Route as PublicNewsSlugRouteImport } from './routes/_public/news/$slug'
 import { Route as AdminNewsIdEditRouteImport } from './routes/admin/news/$id/edit'
+import { Route as AdminBannersIdEditRouteImport } from './routes/admin/banners/$id/edit'
 
 const AdminRouteRoute = AdminRouteRouteImport.update({
   id: '/admin',
@@ -69,6 +70,11 @@ const AdminNewsIdEditRoute = AdminNewsIdEditRouteImport.update({
   path: '/$id/edit',
   getParentRoute: () => AdminNewsRouteRoute,
 } as any)
+const AdminBannersIdEditRoute = AdminBannersIdEditRouteImport.update({
+  id: '/banners/$id/edit',
+  path: '/banners/$id/edit',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteRouteWithChildren
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/news': typeof PublicNewsIndexRoute
   '/admin/banners': typeof AdminBannersIndexRoute
   '/admin/news/': typeof AdminNewsIndexRoute
+  '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
 }
 export interface FileRoutesByTo {
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/news': typeof PublicNewsIndexRoute
   '/admin/banners': typeof AdminBannersIndexRoute
   '/admin/news': typeof AdminNewsIndexRoute
+  '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
 }
 export interface FileRoutesById {
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/_public/news/': typeof PublicNewsIndexRoute
   '/admin/banners/': typeof AdminBannersIndexRoute
   '/admin/news/': typeof AdminNewsIndexRoute
+  '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
 }
 export interface FileRouteTypes {
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/admin/banners'
     | '/admin/news/'
+    | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -125,6 +135,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/admin/banners'
     | '/admin/news'
+    | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
   id:
     | '__root__'
@@ -137,6 +148,7 @@ export interface FileRouteTypes {
     | '/_public/news/'
     | '/admin/banners/'
     | '/admin/news/'
+    | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
   fileRoutesById: FileRoutesById
 }
@@ -217,6 +229,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminNewsIdEditRouteImport
       parentRoute: typeof AdminNewsRouteRoute
     }
+    '/admin/banners/$id/edit': {
+      id: '/admin/banners/$id/edit'
+      path: '/banners/$id/edit'
+      fullPath: '/admin/banners/$id/edit'
+      preLoaderRoute: typeof AdminBannersIdEditRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
   }
 }
 
@@ -255,11 +274,13 @@ const AdminNewsRouteRouteWithChildren = AdminNewsRouteRoute._addFileChildren(
 interface AdminRouteRouteChildren {
   AdminNewsRouteRoute: typeof AdminNewsRouteRouteWithChildren
   AdminBannersIndexRoute: typeof AdminBannersIndexRoute
+  AdminBannersIdEditRoute: typeof AdminBannersIdEditRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminNewsRouteRoute: AdminNewsRouteRouteWithChildren,
   AdminBannersIndexRoute: AdminBannersIndexRoute,
+  AdminBannersIdEditRoute: AdminBannersIdEditRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(

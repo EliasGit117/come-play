@@ -54,10 +54,6 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, aft
     }
   });
 
-
-  const onSubmit = (values: TCreatNewsSchema) => mutate(values);
-  const handleSubmit = () => form.handleSubmit(onSubmit)();
-
   useEffect(() => {
     if (!open)
       return;
@@ -65,11 +61,12 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, aft
     form.reset();
   }, [open]);
 
+
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent className="max-w-2xl">
         <Form {...form}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={form.handleSubmit((values: TCreatNewsSchema) => mutate(values))}>
             <AlertDialogHeader>
               <AlertDialogTitle>Create News</AlertDialogTitle>
               <AlertDialogDescription>
@@ -86,7 +83,7 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, aft
                 Cancel
               </AlertDialogCancel>
 
-              <LoadingButton type="button" loading={isPending} onClick={handleSubmit}>
+              <LoadingButton type="submit" loading={isPending}>
                 Submit
               </LoadingButton>
             </AlertDialogFooter>

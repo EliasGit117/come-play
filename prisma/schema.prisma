@@ -48,3 +48,54 @@ model NewsImage {
   @@index([newsId])
   @@map("news_images")
 }
+
+model Banner {
+  id       Int     @id @default(autoincrement())
+  titleRo  String  @map("title_ro")
+  titleRu  String  @map("title_ru")
+  path     String?
+  order    Int
+  isActive Boolean @default(true) @map("is_active")
+
+  desktopImage BannerImage? @relation("DesktopImage")
+  tabletImage  BannerImage? @relation("TabletImage")
+  mobileImage  BannerImage? @relation("MobileImage")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@index([isActive, order])
+  @@map("banners")
+}
+
+enum BannerImageType {
+  desktop
+  tablet
+  mobile
+}
+
+model BannerImage {
+  id           Int             @id @default(autoincrement())
+  url          String
+  thumbhash    Bytes?
+  type         String
+  size         Int
+  originalName String?         @map("original_name")
+  width        Int?
+  height       Int?
+  imageType    BannerImageType @map("image_type")
+
+  desktopBannerId Int? @unique @map("desktop_banner_id")
+  tabletBannerId  Int? @unique @map("tablet_banner_id")
+  mobileBannerId  Int? @unique @map("mobile_banner_id")
+
+  bannerDesktop Banner? @relation("DesktopImage", fields: [desktopBannerId], references: [id])
+  bannerTablet  Banner? @relation("TabletImage", fields: [tabletBannerId], references: [id])
+  bannerMobile  Banner? @relation("MobileImage", fields: [mobileBannerId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@index([desktopBannerId, tabletBannerId, mobileBannerId])
+  @@map("banner_images")
+}

@@ -1,8 +1,6 @@
 import { useDataTableContext } from '@/components/data-table/context';
 import { ComponentProps, useMemo } from 'react';
-import { Check, Settings2 } from 'lucide-react';
-import * as React from 'react';
-import { Button } from '@/components/ui/button';
+import { Check, Settings2Icon } from 'lucide-react';
 import {
   Command,
   CommandEmpty,
@@ -17,6 +15,7 @@ import {
   PopoverTrigger
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
+import AdaptiveButton from '@/components/ui/adaptive-button';
 
 interface IDataTableViewOptionsProps<TData> extends ComponentProps<typeof PopoverTrigger> {
 }
@@ -35,18 +34,16 @@ export function DataTableViewOptions<TData>({ ...props }: IDataTableViewOptionsP
   return (
     <Popover>
       <PopoverTrigger {...props} asChild>
-        <Button
+        <AdaptiveButton
           aria-label="Toggle columns"
           role="combobox"
           variant="outline"
           size="sm"
-          className="h-8 w-8 sm:w-fit"
-        >
-          <Settings2/>
-          <span className='sr-only sm:not-sr-only'>View</span>
-        </Button>
+          icon={Settings2Icon}
+          text='View'
+        />
       </PopoverTrigger>
-      <PopoverContent align="end" className="w-44 p-0">
+      <PopoverContent align="start" className="w-44 p-0">
         <Command>
           <CommandInput placeholder="Search columns..."/>
           <CommandList>

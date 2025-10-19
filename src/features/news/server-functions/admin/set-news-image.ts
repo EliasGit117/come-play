@@ -46,7 +46,7 @@ export const setNewsImage = createServerFn({ method: 'POST' })
 
     const conversionRes = await convertToModernImage(origBuffer, originalFile.name, 'webp');
     const { buffer: finalBuffer, mimeType, filename, width, height } = conversionRes;
-    const optimisedFile = new File([finalBuffer], filename, { type: mimeType });
+    const optimisedFile = new File([new Uint8Array(finalBuffer)], filename, { type: mimeType });
 
     const thumbhash = await createThumbhashFromFile(optimisedFile);
 
@@ -55,7 +55,7 @@ export const setNewsImage = createServerFn({ method: 'POST' })
         url: '',
         type: mimeType,
         size: finalBuffer.length,
-        originalName: filename,
+        originalName: generateName(filename, data.newsId),
         newsId: data.newsId,
         width: width,
         height: height,
@@ -71,17 +71,17 @@ export const setNewsImage = createServerFn({ method: 'POST' })
         throw new Error('File upload failed');
 
 
-      await prisma.newsImage.update({ where: { id: placeholder.id }, data: { url: uploadRes.data.ufsUrl } });
+      const updated = await prisma.newsImage.update({
+        where: { id: placeholder.id },
+        data: { url: uploadRes.data.ufsUrl }
+      });
 
+      return AdminNewsImageDtoFactory.fromEntity(updated);
     } catch (e) {
+
       await prisma.newsImage.delete({ where: { id: placeholder.id } });
       throw e;
     }
-
-    const final = await prisma.newsImage.findUnique({ where: { id: placeholder.id } });
-    if (!final) throw new Error('Something went wrong - image disappeared');
-
-    return AdminNewsImageDtoFactory.fromEntity(final);
   });
 
 // React Hook
@@ -96,7 +96,7 @@ export const useSetNewsImageMutation = (options?: TOptions) => {
     mutationFn: async ({ file, newsId }) => {
       const formData = new FormData();
       formData.append('newsId', String(newsId));
-      formData.append('file', file, appendIdToFilename(file.name, newsId));
+      formData.append('file', file, file.name);
 
       return setNewsImage({ data: formData });
     },
@@ -106,11 +106,11 @@ export const useSetNewsImageMutation = (options?: TOptions) => {
 
 
 // Helper to append ID to filename (for client-side FormData)
-export function appendIdToFilename(filename: string, id: string | number) {
+export function generateName(filename: string, id: string | number) {
   const lastDotIndex = filename.lastIndexOf('.');
-  if (lastDotIndex === -1) return `${filename}-${id}`;
+  if (lastDotIndex === -1)
+    throw new Error(`File name doesn't have file extension`);
 
-  const name = filename.slice(0, lastDotIndex);
   const extension = filename.slice(lastDotIndex);
-  return `${name}-${id}${extension}`;
+  return `news-banner-${id}${extension}`;
 }

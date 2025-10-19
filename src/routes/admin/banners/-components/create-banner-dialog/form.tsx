@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
-import { TCreatNewsSchema } from '@/features/news/server-functions/admin/create-news';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Field,
@@ -11,6 +10,7 @@ import {
   FieldGroup,
   FieldLabel
 } from '@/components/ui/field';
+import { TCreateBannerSchema } from '@/features/banners/server-functions/admin/create-banner';
 
 
 export interface IPostProps {
@@ -18,23 +18,23 @@ export interface IPostProps {
   className?: string;
 }
 
-export const NewsForm: FC<IPostProps> = ({ className, disabled }) => {
-  const form = useFormContext<TCreatNewsSchema>();
+export const BannerForm: FC<IPostProps> = ({ className, disabled }) => {
+  const form = useFormContext<TCreateBannerSchema>();
 
   return (
     <fieldset disabled={disabled} className={className}>
       <FieldGroup>
         <Controller
-          name="slug"
+          name="path"
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="slug-input">Slug</FieldLabel>
+              <FieldLabel htmlFor="path-input">Path</FieldLabel>
               <Input
                 {...field}
-                id="slug-input"
+                id="path-input"
                 aria-invalid={fieldState.invalid}
-                placeholder="some-slug-for-product"
+                placeholder="some-path-for-the-banner"
                 autoComplete="off"
               />
               {fieldState.invalid && (
@@ -54,7 +54,7 @@ export const NewsForm: FC<IPostProps> = ({ className, disabled }) => {
                 {...field}
                 id="title-ro-input"
                 aria-invalid={fieldState.invalid}
-                placeholder="Denumirea produsului"
+                placeholder="Denumirea pentru banner"
                 autoComplete="off"
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
@@ -67,12 +67,12 @@ export const NewsForm: FC<IPostProps> = ({ className, disabled }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="title-ru-input">Romanian title</FieldLabel>
+              <FieldLabel htmlFor="title-ru-input">Russian title</FieldLabel>
               <Input
                 {...field}
                 id="title-ru-input"
                 aria-invalid={fieldState.invalid}
-                placeholder="Название продукта"
+                placeholder="Название для баннера"
                 autoComplete="off"
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
@@ -97,7 +97,7 @@ export const NewsForm: FC<IPostProps> = ({ className, disabled }) => {
                   Edit after creation
                 </FieldLabel>
                 <FieldDescription>
-                  Redirect to created product page to edit it
+                  Redirect to edit banner page to add new data or change existing ones
                 </FieldDescription>
                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
               </FieldContent>

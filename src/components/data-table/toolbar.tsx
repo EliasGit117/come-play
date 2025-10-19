@@ -1,4 +1,4 @@
-import { ComponentProps, useCallback, useMemo } from 'react';
+import { ComponentProps, ReactNode, useCallback, useMemo } from 'react';
 import { XIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -17,6 +17,7 @@ import { DataTableNumberRangeFilter } from '@/components/data-table/number-range
 
 
 interface IDataTableToolbarProps<TData> extends ComponentProps<'div'> {
+  topToolbarChildren?: ReactNode;
 }
 
 export function DataTableToolbar<TData>(props: IDataTableToolbarProps<TData>) {
@@ -24,7 +25,7 @@ export function DataTableToolbar<TData>(props: IDataTableToolbarProps<TData>) {
   'use no memo';
 
   const { table } = useDataTableContext();
-  const { children, className, ...restOfProps } = props;
+  const { className, topToolbarChildren, ...restOfProps } = props;
   const isFiltered = table.getState().columnFilters.length > 0;
   const columns = useMemo(() => table.getAllColumns().filter((column) => column.getCanFilter()), [table]);
   const onReset = useCallback(() => table.resetColumnFilters(), [table]);
@@ -33,12 +34,15 @@ export function DataTableToolbar<TData>(props: IDataTableToolbarProps<TData>) {
     <div
       role="toolbar"
       aria-orientation="horizontal"
-      className={cn(
-        'flex w-full items-start justify-between gap-2 py-1',
-        className
-      )}
+      className={cn('flex flex-col w-full gap-4', className)}
       {...restOfProps}
     >
+      <div className="flex items-center gap-2">
+        <DataTableViewOptions/>
+        <DataTableSortPopover/>
+        {topToolbarChildren}
+      </div>
+
       <div className="flex flex-1 flex-wrap items-center gap-2">
         {columns.map((column) => (
           <DataTableToolbarFilter key={column.id} column={column}/>
@@ -55,11 +59,6 @@ export function DataTableToolbar<TData>(props: IDataTableToolbarProps<TData>) {
             Reset
           </Button>
         )}
-      </div>
-      <div className="flex items-center gap-2">
-        {children}
-        <DataTableSortPopover/>
-        <DataTableViewOptions/>
       </div>
     </div>
   );
@@ -89,7 +88,7 @@ function DataTableToolbarFilter<TData>(props: DataTableToolbarFilterProps<TData>
         return <DataTableNumberFilter column={column} key={column.id}/>;
 
       case ColumnFilterType.NumberRange:
-        return <DataTableNumberRangeFilter column={column} key={column.id}/>
+        return <DataTableNumberRangeFilter column={column} key={column.id}/>;
 
       case ColumnFilterType.Select:
         return <DataTableSelectFilter column={column} key={column.id}/>;

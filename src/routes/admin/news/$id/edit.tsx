@@ -12,19 +12,19 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import NewsImageUploader from '@/routes/admin/news/-components/edit-news-form/news-image-uploader';
-import { useState } from 'react';
+import {  FC, useState } from 'react';
 import { IImagePickerValue } from '@/components/ui/cover-image-picker';
+import { useSidebar } from '@/components/ui/sidebar';
+import { cn } from '@/lib/utils';
 
 export const Route = createFileRoute('/admin/news/$id/edit')({
   component: RouteComponent,
-  staticData: {
-    breadcrumbs: [{ title: 'Edit news' }]
-  },
+  staticData: { breadcrumbs: { title: 'Edit news' } },
   loader: async ({ params: { id }, context }) => {
     const data = await context.queryClient.ensureQueryData(getNewsByIdQueryOptions(id));
     return {
       post: data,
-      breadcrumbs: [{ title: `Edit «${data.titleRo}»` }]
+      breadcrumbs: { title: `Edit «${data.titleRo}»` }
     };
   },
   head: () => ({ meta: [{ title: `Edit news` }] })
@@ -82,31 +82,62 @@ function RouteComponent() {
         </form>
       </Form>
 
-      <div className="absolute bottom-4 left-0 right-0 z-10">
-        <div className="flex justify-end container mx-auto gap-2 px-4">
-          <div className="bg-background shadow-md rounded-md">
-            <Button
-              type="button"
-              variant="secondary"
-              disabled={!form.formState.isDirty || isPending}
-              onClick={() => form.reset()}
-              className="border"
-            >
-              <UndoIcon/>
-              <span className="sr-only sm:not-sr-only">Reset</span>
-            </Button>
-          </div>
-
-          <div className="bg-background shadow-md rounded-md">
-            <LoadingButton onClick={() => form.handleSubmit(onSubmit)()} loading={isPending}>
-              <SaveIcon/>
-              <span className="sr-only sm:not-sr-only">Save</span>
-            </LoadingButton>
-          </div>
-        </div>
-      </div>
-
+      <BottomButtons
+        onSubmitClick={() => form.handleSubmit(onSubmit)()}
+        onResetClick={() => form.reset()}
+        disabled={form.formState.isDirty}
+        isLoading={isPending}
+      />
     </main>
   );
 }
 
+interface IBottomButtons {
+  disabled?: boolean;
+  isLoading?: boolean;
+  onResetClick?: () => void;
+  onSubmitClick?: () => void;
+  className?: string;
+}
+
+const BottomButtons: FC<IBottomButtons> = (props) => {
+  const { disabled, isLoading, onSubmitClick, onResetClick, className, ...restOfProps } = props;
+  const { state, isMobile } = useSidebar();
+
+  return (
+    <div
+      className={cn(
+        'fixed bottom-4 left-0 right-0 z-10',
+        (state === 'expanded' && !isMobile) && 'left-[var(--sidebar-width)]',
+        className
+      )}
+      {...restOfProps}
+    >
+      <div className="flex container mx-auto justify-end ml-auto gap-2 px-4">
+        <div className="bg-background shadow-md rounded-md">
+          <Button
+            type="button"
+            variant="secondary"
+            disabled={disabled || isLoading}
+            onClick={onResetClick}
+            className="border"
+          >
+            <UndoIcon/>
+            <span className="sr-only sm:not-sr-only">Reset</span>
+          </Button>
+        </div>
+
+        <div className="bg-background shadow-md rounded-md">
+          <LoadingButton
+            hideTextOnMobile
+            // onClick={() => form.handleSubmit(onSubmit)()} loading={isPending}
+            onClick={onSubmitClick} loading={isLoading}
+          >
+            <SaveIcon/>
+            <span className="sr-only sm:not-sr-only">Save</span>
+          </LoadingButton>
+        </div>
+      </div>
+    </div>
+  );
+};

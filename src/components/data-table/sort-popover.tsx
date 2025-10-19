@@ -1,7 +1,6 @@
 import { useDataTableContext } from '@/components/data-table/context';
 import { useState } from 'react';
-import { ArrowDownIcon, ArrowDownUp, ArrowUpIcon, BrushCleaningIcon } from 'lucide-react';
-import * as React from 'react';
+import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon, BrushCleaningIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Popover,
@@ -15,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
+import AdaptiveButton from '@/components/ui/adaptive-button';
 
 interface IDataTableSortPopoverProps<TData>
   extends React.ComponentProps<typeof PopoverTrigger> {
@@ -48,13 +48,10 @@ export function DataTableSortPopover<TData>({ ...props }: IDataTableSortPopoverP
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger {...props} asChild>
-        <Button variant="outline" size="sm" className='h-8 w-8 sm:w-fit'>
-          <ArrowDownUp className="h-4 w-4"/>
-          <span className='sr-only sm:not-sr-only'>Sort</span>
-        </Button>
+        <AdaptiveButton variant="outline" size="sm" icon={ArrowUpDownIcon} text="Sort"/>
       </PopoverTrigger>
 
-      <PopoverContent align="end" className="p-3">
+      <PopoverContent align="start" className="p-3">
         <div className="space-y-2">
           <div className="flex justify-between">
             <p className="font-semibld text-sm">Sort by</p>

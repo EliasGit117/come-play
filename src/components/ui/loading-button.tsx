@@ -1,22 +1,25 @@
 import * as React from 'react';
 import { Button } from './button';
-import { LoaderCircle } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
+import { cn } from '@/lib/utils';
 
 
 interface IProps extends React.ComponentProps<typeof Button> {
   loading?: boolean;
   hideText?: boolean;
+  hideTextOnMobile?: boolean;
 }
 
 function LoadingButton(props: IProps) {
-  const { loading, hideText, children, disabled, ...restOfProps } = props;
+  const { loading, hideText, children, disabled, hideTextOnMobile, ...restOfProps } = props;
 
   if (loading)
     return (
       <Button {...restOfProps} asChild={false} disabled={disabled ?? true}>
         <Spinner/>
-        {!hideText && <span>Loading</span>}
+        {!hideText && (
+          <span className={cn(hideTextOnMobile && 'hidden sm:block')}>Loading</span>
+        )}
       </Button>
     );
 

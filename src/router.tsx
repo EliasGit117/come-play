@@ -48,7 +48,7 @@ declare module '@tanstack/react-router' {
 
   interface StaticDataRouteOption {
     hideBreadcrumbs?: boolean;
-    breadcrumbs?: TBreadcrumbData[];
+    breadcrumbs?: TBreadcrumbData | TBreadcrumbData[];
     headerOptions?: {
       type?: 'fixed' | 'sticky';
     };
