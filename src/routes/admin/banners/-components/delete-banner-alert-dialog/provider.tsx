@@ -10,9 +10,7 @@ interface IDeleteBannerAlertDialogProvider {
   isPending: boolean;
 }
 
-const DeleteBannerAlertDialogContext = createContext<
-  IDeleteBannerAlertDialogProvider | undefined
->(undefined);
+const DeleteBannerAlertDialogContext = createContext<IDeleteBannerAlertDialogProvider | undefined>(undefined);
 
 export const DeleteBannerAlertDialogProvider = ({
                                                   children

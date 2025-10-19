@@ -19,7 +19,6 @@ import { DeleteBannerAlertDialog } from '@/routes/admin/banners/-components/dele
 
 export const Route = createFileRoute('/admin/banners/')({
   component: RouteComponent,
-  staticData: { breadcrumbs: { title: 'Banners' } },
   validateSearch: zodValidator(getBannersPaginatedForAdminSchema),
   loaderDeps: (deps) => deps,
   loader: async ({ context, deps: { search } }) => {

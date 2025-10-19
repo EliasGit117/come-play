@@ -212,7 +212,7 @@ export const bannerColumns = [
       </Badge>
     ),
     meta: {
-      label: 'Active',
+      label: 'Is active',
       icon: CheckIcon,
       filter: {
         type: ColumnFilterType.Select,

@@ -23,7 +23,7 @@ const NewsPreviewLink: FC<INewsPreviewLinkProps> = ({ news, className, ...props 
     >
       <Link to="/news/$slug" params={{ slug: news.slug }}>
         {news.image ? (
-          <figure className='rounded-lg border overflow-clip bg-muted h-full w-full'>
+          <figure className='rounded-lg border border-border/25 overflow-clip bg-muted h-full w-full'>
             <UnLazyImageSSR
               className="aspect-video object-cover h-full w-full"
               src={news.image.url}
@@ -32,7 +32,7 @@ const NewsPreviewLink: FC<INewsPreviewLinkProps> = ({ news, className, ...props 
             />
           </figure>
         ) : (
-          <figure className="rounded-lg aspect-video h-full w-full bg-muted flex items-center justify-center border">
+          <figure className="rounded-lg aspect-video h-full w-full bg-muted flex items-center justify-center">
             <ImageOffIcon className="size-6 text-muted-foreground/25"/>
           </figure>
         )}

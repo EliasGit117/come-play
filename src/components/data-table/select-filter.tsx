@@ -91,7 +91,7 @@ export function DataTableSelectFilter<TData, TValue>({ column }: IDataTableSelec
 
       <PopoverContent className="w-[12.5rem] p-0" align="start">
         <Command>
-          <CommandInput placeholder={title}/>
+          {options.length > 5 && <CommandInput placeholder={title}/>}
           <CommandList className="max-h-full">
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup className="max-h-[18.75rem] overflow-y-auto overflow-x-hidden">

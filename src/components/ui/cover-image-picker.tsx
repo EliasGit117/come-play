@@ -26,6 +26,7 @@ interface INewsImageUploadProps extends Omit<FileUploadOptions,
   className?: string;
   onFilesChange?: (file: File | undefined) => void;
   children?: ReactNode;
+  imageClassName?: string;
 }
 
 
@@ -39,6 +40,7 @@ const CoverImagePicker: FC<INewsImageUploadProps> = (props) => {
     initialFiles,
     children,
     keepOpacity,
+    imageClassName,
     ...fileUploadProps
   } = props;
 
@@ -98,10 +100,10 @@ const CoverImagePicker: FC<INewsImageUploadProps> = (props) => {
       {!!value ? (
         <>
           <UnLazyImageSSR
+            alt="Image"
             src={value.src}
             thumbhash={value.thumbhash}
-            alt="Image"
-            className="h-full w-full object-cover"
+            className={cn("h-full w-full object-cover", imageClassName)}
           />
 
           <div
@@ -119,7 +121,7 @@ const CoverImagePicker: FC<INewsImageUploadProps> = (props) => {
               !disabled && 'group-hover:opacity-100  group-focus:opacity-100 group-focus-within:opacity-100'
             )}
           >
-            <div className="flex gap-2">
+            <div className="flex flex-col md:flex-row gap-2">
               <div className="bg-background rounded-md">
                 <Button
                   size="sm"

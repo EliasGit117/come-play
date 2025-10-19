@@ -9,7 +9,7 @@ export interface IAdminBannerDto {
   id: number;
   titleRo: string;
   titleRu: string;
-  link: string | null;
+  path: string | null;
   order: number;
   isActive: boolean;
   createdAt: string;
@@ -20,12 +20,12 @@ export interface IAdminBannerDto {
 
 export class IAdminBannerDtoFactory {
 
-  private static baseFromEntity(entity: Banner): Omit<IAdminBannerDto, 'desktopImage' | 'tabletImage' | 'mobileImage'> {
+  private static baseFromEntity(entity: Banner): IAdminBannerDto {
     return {
       id: entity.id,
       titleRo: entity.titleRo,
       titleRu: entity.titleRu,
-      link: entity.link,
+      path: entity.path,
       order: entity.order,
       isActive: entity.isActive,
       createdAt: entity.createdAt.toISOString()

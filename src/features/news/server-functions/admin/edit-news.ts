@@ -51,11 +51,11 @@ export const useEditNewsMutation = (options?: TOptions) => {
     mutationKey: ['news', 'create'],
     mutationFn: (values) => editNews({ data: values }),
     ...options,
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data, variables, onMutateResult, context) => {
       void queryClient.invalidateQueries({ predicate: (query) => query.queryKey[0] === 'news' && query.queryKey[1] === 'paginated' });
       void queryClient.invalidateQueries({ queryKey: ['news', data.slug] });
 
-      options?.onSuccess?.(data, variables, context);
+      options?.onSuccess?.(data, variables, onMutateResult, context);
     }
   });
 };
