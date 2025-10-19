@@ -5,15 +5,15 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { LoadingButton } from '@/components/ui/loading-button';
-import { LucideIcon, MonitorIcon, PhoneIcon, SaveIcon, SmartphoneIcon, TabletIcon, UndoIcon } from 'lucide-react';
+import { LucideIcon, MonitorIcon, SaveIcon, SmartphoneIcon, TabletIcon, UndoIcon } from 'lucide-react';
 import { useEditBannerMutation } from '@/features/banners/server-functions/admin/edit-banner';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { ElementType, FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { useSidebar } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
-import { Banner, BannerImageType } from '@prisma/client';
+import { BannerImageType } from '@prisma/client';
 import {
   editBannerFormSchema,
   EditBannerForm,
