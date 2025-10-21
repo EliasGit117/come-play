@@ -55,6 +55,55 @@ export async function removeBannerImage(bannerId: number, imageType: BannerImage
 
   await prisma.$transaction(async (tx) => {
     await tx.bannerImage.delete({ where: { id: image.id } });
-    await utapi.deleteFiles([`${image.id}`], { keyType: "customId" });
+    await utapi.deleteFiles([`banner-${[fieldMap[imageType]]}-${image.id}`], { keyType: "customId" });
+  });
+}
+
+
+export async function removeAllBannerImages(bannerId: number) {
+  "use server";
+
+  const banner = await prisma.banner.findUnique({
+    where: { id: bannerId },
+    include: {
+      desktopImage: true,
+      tabletImage: true,
+      mobileImage: true
+    }
+  });
+
+  if (!banner)
+    throw new Error('Banner has not been found');
+
+  const images = [
+    banner.desktopImage,
+    banner.tabletImage,
+    banner.mobileImage
+  ].filter((img): img is NonNullable<typeof img> => img !== null);
+
+  if (images.length === 0)
+    return;
+
+  await prisma.$transaction(async (tx) => {
+    const imageIds = images.map(img => img.id);
+
+    await tx.bannerImage.deleteMany({ where: { id: { in: imageIds } } });
+
+    const customIds = images.map(img => {
+      if (img.desktopBannerId)
+        return `banner-desktopBannerId-${img.id}`;
+
+      if (img.tabletBannerId)
+        return `banner-tabletBannerId-${img.id}`;
+
+      if (img.mobileBannerId)
+        return `banner-mobileBannerId-${img.id}`;
+
+      return null;
+    }).filter((id): id is string => id !== null);
+
+    if (customIds.length > 0) {
+      await utapi.deleteFiles(customIds, { keyType: "customId" });
+    }
   });
 }

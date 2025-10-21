@@ -8,6 +8,8 @@ type TBannerWithImages = Prisma.BannerGetPayload<{
 export interface IAdminBannerBriefDto {
   id: number;
   title: string;
+  titleRo?: string;
+  titleRu?: string;
   path: string | null;
   order: number;
   isActive: boolean;
@@ -22,7 +24,9 @@ export class AdminBannerBriefDtoFactory {
   private static baseFromEntity(banner: Banner): Omit<IAdminBannerBriefDto, 'desktopImage' | 'tabletImage' | 'mobileImage'> {
     return {
       id: banner.id,
-      title: banner.titleRo,
+      title: banner.title,
+      titleRo: banner.titleRo || undefined,
+      titleRu: banner.titleRu || undefined,
       path: banner.path,
       order: banner.order,
       isActive: banner.isActive,

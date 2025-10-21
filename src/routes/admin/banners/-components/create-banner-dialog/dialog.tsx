@@ -21,7 +21,8 @@ import {
 } from '@/features/banners/server-functions/admin/create-banner';
 import './form';
 import { BannerForm } from '@/routes/admin/banners/-components/create-banner-dialog/form';
-
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { SendIcon, XIcon } from 'lucide-react';
 
 interface CreateNewsDialogProps {
   open: boolean;
@@ -37,6 +38,8 @@ const CreateBannerDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, afterSuc
       path: '',
       titleRo: '',
       titleRu: '',
+      textRo: '',
+      textRu: '',
       editAfterCreation: true
     }
   });
@@ -66,24 +69,26 @@ const CreateBannerDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, afterSuc
       <AlertDialogContent className="max-w-2xl">
         <Form {...form}>
           <form onSubmit={form.handleSubmit((values: TCreateBannerSchema) => mutate(values))}>
-          <AlertDialogHeader>
+            <AlertDialogHeader>
               <AlertDialogTitle>Create Banner</AlertDialogTitle>
               <AlertDialogDescription>
                 Fill out the form below to create a new banner entry.
               </AlertDialogDescription>
             </AlertDialogHeader>
 
-            <div className="mt-4">
-              <BannerForm/>
-            </div>
+            <ScrollArea type='always' className="mt-4 h-[50dvh]">
+              <BannerForm className='mr-4'/>
+            </ScrollArea>
 
-            <AlertDialogFooter className="mt-6">
-              <AlertDialogCancel type="button">
-                Cancel
+            <AlertDialogFooter className="flex-row mt-6">
+              <AlertDialogCancel type="button" className='flex-1 sm:flex-none'>
+                <XIcon/>
+                <span>Cancel</span>
               </AlertDialogCancel>
 
-              <LoadingButton type="submit" loading={isPending}>
-                Submit
+              <LoadingButton type="submit" loading={isPending} className='flex-1 sm:flex-none'>
+                <SendIcon/>
+                <span>Submit</span>
               </LoadingButton>
             </AlertDialogFooter>
           </form>

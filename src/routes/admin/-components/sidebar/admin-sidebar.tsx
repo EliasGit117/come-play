@@ -71,7 +71,7 @@ const navMain: INavItem[] = [
   },
   {
     title: 'Banners',
-    linkOptions: { to: '/admin/banners', activeOptions: { exact: true } },
+    linkOptions: { to: '/admin/banners' },
     icon: GalleryHorizontalIcon,
   },
   {

@@ -49,13 +49,14 @@ export const setNewsImage = createServerFn({ method: 'POST' })
     const optimisedFile = new File([new Uint8Array(finalBuffer)], filename, { type: mimeType });
 
     const thumbhash = await createThumbhashFromFile(optimisedFile);
+    const name = generateName(filename, data.newsId);
 
     const placeholder = await prisma.newsImage.create({
       data: {
         url: '',
         type: mimeType,
         size: finalBuffer.length,
-        originalName: generateName(filename, data.newsId),
+        originalName: name,
         newsId: data.newsId,
         width: width,
         height: height,
@@ -64,7 +65,7 @@ export const setNewsImage = createServerFn({ method: 'POST' })
     });
 
     try {
-      const utFile = new UTFile([optimisedFile], optimisedFile.name, { customId: `${placeholder.id}` });
+      const utFile = new UTFile([optimisedFile],name, { customId: `news-banner-${placeholder.id}` });
       const uploadRes = await utapi.uploadFiles(utFile);
       if (!uploadRes.data?.ufsUrl)
         // noinspection ExceptionCaughtLocallyJS

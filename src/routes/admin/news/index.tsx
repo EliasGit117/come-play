@@ -61,7 +61,7 @@ function Component() {
   return (
     <DeleteNewsAlertDialogProvider>
 
-      <main className="container mx-auto px-4 space-y-4 flex flex-col flex-1">
+      <main className="container mx-auto p-4 space-y-4 flex flex-col flex-1">
         <NewsTable
           table={table}
           topToolbarChildren={

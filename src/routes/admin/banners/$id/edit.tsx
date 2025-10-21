@@ -21,6 +21,8 @@ import {
 } from '@/routes/admin/banners/$id/-components/edit-banner-form/form';
 import { IImagePickerValue } from '@/components/ui/cover-image-picker';
 import BannerImageUploader from '@/routes/admin/banners/$id/-components/edit-banner-form/banner-image-uploader';
+import { format } from 'date-fns';
+
 
 export const Route = createFileRoute('/admin/banners/$id/edit')({
   component: RouteComponent,
@@ -54,36 +56,15 @@ function RouteComponent() {
     mobile: false
   });
 
-  console.log('Full banner object:', JSON.stringify(banner, null, 2));
-
   const form = useForm<TEditBannerFormSchema>({
     resolver: zodResolver(editBannerFormSchema),
-    defaultValues: {
-      titleRo: banner.titleRo,
-      titleRu: banner.titleRu,
-      path: banner.path ?? '',
-      order: banner.order,
-      isActive: banner.isActive
-    }
+    defaultValues: { ...banner, path: banner.path ?? '' }
   });
 
   const { mutate, isPending: isUpdating } = useEditBannerMutation({
     onError: (error) => toast.error(error.name, { description: error.message }),
-    onSuccess: data => form.reset({
-      titleRo: data.titleRo,
-      titleRu: data.titleRu,
-      path: data.path ?? '',
-      order: data.order,
-      isActive: data.isActive
-    })
+    onSuccess: data => form.reset({ ...data, path: data.path ?? '' })
   });
-
-  const onSubmit = (values: TEditBannerFormSchema) => {
-    mutate({
-      id: parseInt(id),
-      ...values
-    });
-  };
 
   const handleImagePending = (imageType: BannerImageType) => (value: boolean) => {
     setPendingImages(prev => ({ ...prev, [imageType]: value }));
@@ -108,11 +89,16 @@ function RouteComponent() {
   const bannerUploaders: IBannerUploaderItem[] = [
     { type: 'desktop', label: 'Desktop', icon: MonitorIcon, className: 'max-w-[30rem]', image: desktopImage },
     { type: 'tablet', label: 'Tablet', icon: TabletIcon, className: 'max-w-[20rem]', image: tabletImage },
-    { type: 'mobile', label: 'Phone', icon: SmartphoneIcon, className: 'max-w-[15rem]', image: mobileImage },
+    { type: 'mobile', label: 'Phone', icon: SmartphoneIcon, className: 'max-w-[15rem]', image: mobileImage }
   ];
 
   return (
     <main className="container mx-auto p-4 pb-12 space-y-4 flex-1 relative">
+      <p className="text-muted-foreground text-xs">
+        Created: {format(banner.createdAt, 'dd.MM.yyyy - HH:mm')},
+        Updated: {format(banner.updatedAt, 'dd.MM.yyyy - HH:mm')}
+      </p>
+
       <div className="space-y-4">
         <Label>Images</Label>
 
@@ -130,7 +116,7 @@ function RouteComponent() {
                 defaultImage={image}
                 onPendingChange={handleImagePending(type)}
                 label={label}
-                className="h-40 w-full"
+                className="h-36 md:h-42 lg:h-46 w-full"
                 imageClassName="object-cover h-full w-full"
               />
             </div>
@@ -141,17 +127,14 @@ function RouteComponent() {
       </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <form
+          onSubmit={form.handleSubmit((values: TEditBannerFormSchema) => mutate({ id: parseInt(id), ...values }))}
+          className="flex flex-col gap-4"
+        >
           <EditBannerForm disabled={isPending}/>
+          <BottomButtons onResetClick={() => form.reset()} disabled={!form.formState.isDirty} isLoading={isPending}/>
         </form>
       </Form>
-
-      <BottomButtons
-        onSubmitClick={() => form.handleSubmit(onSubmit)()}
-        onResetClick={() => form.reset()}
-        disabled={!form.formState.isDirty}
-        isLoading={isPending}
-      />
     </main>
   );
 }
@@ -180,7 +163,7 @@ const BottomButtons: FC<IBottomButtons> = (props) => {
       <div className="flex container mx-auto justify-end ml-auto gap-2 px-4">
         <div className="bg-background shadow-md rounded-md">
           <Button
-            type="button"
+            type='button'
             variant="secondary"
             disabled={disabled || isLoading}
             onClick={onResetClick}
@@ -192,11 +175,7 @@ const BottomButtons: FC<IBottomButtons> = (props) => {
         </div>
 
         <div className="bg-background shadow-md rounded-md">
-          <LoadingButton
-            hideTextOnMobile
-            onClick={onSubmitClick}
-            loading={isLoading}
-          >
+          <LoadingButton hideTextOnMobile onClick={onSubmitClick} loading={isLoading} type="submit">
             <SaveIcon/>
             <span className="sr-only sm:not-sr-only">Save</span>
           </LoadingButton>

@@ -41,7 +41,7 @@ const columnHelper = createColumnHelper<IAdminBannerBriefDto>();
 
 export const bannerColumns = [
   columnHelper.accessor('id', {
-    header: ({ column }) => <DataTableColumnHeader column={column} />,
+    header: ({ column }) => <DataTableColumnHeader column={column}/>,
     cell: (ctx) => ctx.getValue(),
     meta: {
       label: 'Id',
@@ -54,21 +54,30 @@ export const bannerColumns = [
       }
     }
   }),
+  columnHelper.accessor('order', {
+    header: ({ column }) => <DataTableColumnHeader column={column}/>,
+    cell: (ctx) => ctx.getValue(),
+    meta: {
+      label: 'Order',
+      icon: ListOrderedIcon
+    }
+  }),
   columnHelper.accessor('desktopImage', {
     enableSorting: false,
-    header: ({ column }) => <DataTableColumnHeader column={column} />,
+    header: ({ column }) => <DataTableColumnHeader column={column}/>,
     cell: (ctx) => {
       const img = ctx.getValue();
 
       if (!img)
         return (
-          <div className="h-10 aspect-video rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex">
-            <ImageOffIcon className="size-5" />
+          <div
+            className="w-30 h-12 rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex">
+            <ImageOffIcon className="size-5"/>
           </div>
         );
 
       return (
-        <figure className="h-10 aspect-video rounded-sm overflow-hidden border border-border/50 bg-muted">
+        <figure className="w-30 h-12 rounded-sm overflow-hidden border border-border/50 bg-muted">
           <UnLazyImageSSR
             src={img.url}
             thumbhash={img.thumbhash}
@@ -93,19 +102,20 @@ export const bannerColumns = [
   }),
   columnHelper.accessor('tabletImage', {
     enableSorting: false,
-    header: ({ column }) => <DataTableColumnHeader column={column} />,
+    header: ({ column }) => <DataTableColumnHeader column={column}/>,
     cell: (ctx) => {
       const img = ctx.getValue();
 
       if (!img)
         return (
-          <div className="h-10 aspect-video rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex">
-            <ImageOffIcon className="size-5" />
+          <div
+            className="w-25 h-12 rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex">
+            <ImageOffIcon className="size-5"/>
           </div>
         );
 
       return (
-        <figure className="h-10 aspect-video rounded-sm overflow-hidden border border-border/50 bg-muted">
+        <figure className="w-25 h-12 rounded-sm overflow-hidden border border-border/50 bg-muted">
           <UnLazyImageSSR
             src={img.url}
             thumbhash={img.thumbhash}
@@ -130,19 +140,20 @@ export const bannerColumns = [
   }),
   columnHelper.accessor('mobileImage', {
     enableSorting: false,
-    header: ({ column }) => <DataTableColumnHeader column={column} />,
+    header: ({ column }) => <DataTableColumnHeader column={column}/>,
     cell: (ctx) => {
       const img = ctx.getValue();
 
       if (!img)
         return (
-          <div className="h-10 aspect-video rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex">
-            <ImageOffIcon className="size-5" />
+          <div
+            className="w-20 h-12 rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex">
+            <ImageOffIcon className="size-5"/>
           </div>
         );
 
       return (
-        <figure className="h-10 aspect-video rounded-sm overflow-hidden border border-border/50 bg-muted">
+        <figure className="w-20 h-12 rounded-sm overflow-hidden border border-border/50 bg-muted">
           <UnLazyImageSSR
             src={img.url}
             thumbhash={img.thumbhash}
@@ -165,23 +176,12 @@ export const bannerColumns = [
       }
     }
   }),
-  columnHelper.accessor('title', {
-    enableSorting: false,
-    header: ({ column }) => <DataTableColumnHeader column={column} />,
-    cell: (ctx) => ctx.getValue(),
-    meta: {
-      label: 'Title',
-      icon: HeadingIcon,
-      filter: {
-        type: ColumnFilterType.Text,
-        placeholder: 'Search by title'
-      }
-    }
-  }),
   columnHelper.accessor('path', {
     enableSorting: false,
-    header: ({ column }) => <DataTableColumnHeader column={column} />,
-    cell: (ctx) => ctx.getValue() || '-',
+    header: ({ column }) => <DataTableColumnHeader column={column}/>,
+    cell: (ctx) =>  (
+      <p className="text-xs italic">{ctx.getValue() || '-'}</p>
+    ),
     meta: {
       label: 'Path',
       icon: LinkIcon,
@@ -191,22 +191,27 @@ export const bannerColumns = [
       }
     }
   }),
-  columnHelper.accessor('order', {
-    header: ({ column }) => <DataTableColumnHeader column={column} />,
-    cell: (ctx) => ctx.getValue(),
+  columnHelper.accessor('title', {
+    enableSorting: false,
+    header: ({ column }) => <DataTableColumnHeader column={column}/>,
+    cell: (ctx) => <p className="text-xs">{ctx.getValue()}</p>,
     meta: {
-      label: 'Order',
-      icon: ListOrderedIcon
+      label: 'Title',
+      icon: HeadingIcon,
+      filter: {
+        type: ColumnFilterType.Text,
+        placeholder: 'Search by title'
+      }
     }
   }),
   columnHelper.accessor('isActive', {
-    header: ({ column }) => <DataTableColumnHeader column={column} />,
+    header: ({ column }) => <DataTableColumnHeader column={column}/>,
     cell: ({ getValue }) => (
       <Badge variant="outline" className="gap-2 py-1 px-2 m-0">
         {getValue() ? (
-          <CheckIcon className="size-3.5" />
+          <CheckIcon className="size-3.5"/>
         ) : (
-          <XIcon className="size-3.5" />
+          <XIcon className="size-3.5"/>
         )}
         <span>{getValue() ? 'Active' : 'Inactive'}</span>
       </Badge>
@@ -224,7 +229,7 @@ export const bannerColumns = [
     }
   }),
   columnHelper.accessor('createdAt', {
-    header: ({ column }) => <DataTableColumnHeader column={column} />,
+    header: ({ column }) => <DataTableColumnHeader column={column}/>,
     cell: (ctx) => (
       <span className="text-xs">
         {format(ctx.getValue(), 'dd.MM.yyyy - HH:mm')}
@@ -239,7 +244,7 @@ export const bannerColumns = [
     }
   }),
   columnHelper.accessor('updatedAt', {
-    header: ({ column }) => <DataTableColumnHeader column={column} />,
+    header: ({ column }) => <DataTableColumnHeader column={column}/>,
     cell: (ctx) => (
       <span className="text-xs">
         {format(ctx.getValue(), 'dd.MM.yyyy - HH:mm')}
@@ -267,7 +272,7 @@ export const bannerColumns = [
           <DropdownMenu>
             <DropdownMenuTrigger className="" asChild>
               <Button size="icon-xs" variant="ghost">
-                <EllipsisIcon />
+                <EllipsisIcon/>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-40" align="end">
@@ -278,14 +283,14 @@ export const bannerColumns = [
                     onClick={() => navigate({ to: path })}
                   >
                     <span>Go to page</span>
-                    <LinkIcon className="ml-auto size-4" />
+                    <LinkIcon className="ml-auto size-4"/>
                   </DropdownMenuItem>
                 )}
 
                 <DropdownMenuItem asChild>
                   <Link to="/admin/banners/$id/edit" params={{ id: `${id}` }}>
                     <span>Edit</span>
-                    <PenIcon className="ml-auto size-4" />
+                    <PenIcon className="ml-auto size-4"/>
                   </Link>
                 </DropdownMenuItem>
 
@@ -294,7 +299,7 @@ export const bannerColumns = [
                   onClick={() => setId(id)}
                 >
                   <span>Delete</span>
-                  <TrashIcon className="ml-auto size-4" />
+                  <TrashIcon className="ml-auto size-4"/>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>

@@ -11,7 +11,7 @@ import { ChevronDownIcon, EyeIcon, EyeOffIcon } from 'lucide-react';
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 
 
-export const newsFormSchema = z.object({
+export const editNewsFormSchema = z.object({
   slug: z.string().regex(/^[a-zA-Z0-9-]+$/).min(3).max(1000),
   status: z.nativeEnum(NewsStatus),
   titleRo: z.string().min(3).max(256),
@@ -20,15 +20,15 @@ export const newsFormSchema = z.object({
   contentRu: z.string().max(10240).optional()
 });
 
-export type TNewsFormSchema = z.infer<typeof newsFormSchema>;
+export type TEditNewsFormSchema = z.infer<typeof editNewsFormSchema>;
 
-export interface IPostProps {
+export interface IEditNewsFormProps {
   disabled?: boolean;
   className?: string;
 }
 
-export const NewsForm: FC<IPostProps> = ({ className, disabled }) => {
-  const form = useFormContext<TNewsFormSchema>();
+export const EditNewsForm: FC<IEditNewsFormProps> = ({ className, disabled }) => {
+  const form = useFormContext<TEditNewsFormSchema>();
 
   return (
     <fieldset disabled={disabled} className={className}>

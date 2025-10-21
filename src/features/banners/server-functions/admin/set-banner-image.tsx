@@ -12,14 +12,14 @@ import { convertToModernImage } from '@/utils/image-conversion';
 import { UTFile } from 'uploadthing/server';
 
 // Constants
-const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
 export const setBannerImageSchema = zfd.formData({
   bannerId: zfd.numeric(),
   imageType: zfd.text().transform((val) => val as BannerImageType),
   file: zfd.file()
-    .refine((file) => file.size <= MAX_FILE_SIZE, { message: 'File size must not exceed 2MB' })
+    .refine((file) => file.size <= MAX_FILE_SIZE, { message: 'File size must not exceed 5MB' })
     .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), { message: 'Only .jpg, .png, .webp, .gif files are allowed' })
 });
 
@@ -52,12 +52,14 @@ export const setBannerImage = createServerFn({ method: 'POST' })
       [BannerImageType.mobile]: 'mobileBannerId'
     };
 
+    const name = generateName(filename, data.bannerId, data.imageType);
+
     const placeholder = await prisma.bannerImage.create({
       data: {
         url: '',
         type: mimeType,
         size: finalBuffer.length,
-        originalName: generateName(filename, data.bannerId, data.imageType),
+        originalName: name,
         width: width,
         height: height,
         imageType: data.imageType,
@@ -67,7 +69,7 @@ export const setBannerImage = createServerFn({ method: 'POST' })
     });
 
     try {
-      const utFile = new UTFile([optimisedFile], optimisedFile.name, { customId: `${placeholder.id}` });
+      const utFile = new UTFile([optimisedFile], name, { customId: `banner-${[fieldMap[data.imageType]]}-${placeholder.id}` });
       const uploadRes = await utapi.uploadFiles(utFile);
 
       if (!uploadRes.data?.url)

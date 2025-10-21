@@ -51,8 +51,11 @@ model NewsImage {
 
 model Banner {
   id       Int     @id @default(autoincrement())
-  titleRo  String  @map("title_ro")
-  titleRu  String  @map("title_ru")
+  title    String  @map("title")
+  titleRo  String? @map("title_ro")
+  titleRu  String? @map("title_ru")
+  textRo   String? @map("text_ro")
+  textRu   String? @map("text_ru")
   path     String?
   order    Int
   isActive Boolean @default(true) @map("is_active")

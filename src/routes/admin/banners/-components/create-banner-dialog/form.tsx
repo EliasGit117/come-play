@@ -11,6 +11,7 @@ import {
   FieldLabel
 } from '@/components/ui/field';
 import { TCreateBannerSchema } from '@/features/banners/server-functions/admin/create-banner';
+import { Textarea } from '@/components/ui/textarea';
 
 
 export interface IPostProps {
@@ -24,6 +25,24 @@ export const BannerForm: FC<IPostProps> = ({ className, disabled }) => {
   return (
     <fieldset disabled={disabled} className={className}>
       <FieldGroup>
+        <Controller
+          name="titleRo"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="title-ro-input">Romanian title</FieldLabel>
+              <Input
+                {...field}
+                id="title-ro-input"
+                aria-invalid={fieldState.invalid}
+                placeholder="Denumirea pentru banner"
+                autoComplete="off"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+            </Field>
+          )}
+        />
+
         <Controller
           name="path"
           control={form.control}
@@ -73,6 +92,42 @@ export const BannerForm: FC<IPostProps> = ({ className, disabled }) => {
                 id="title-ru-input"
                 aria-invalid={fieldState.invalid}
                 placeholder="Название для баннера"
+                autoComplete="off"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+            </Field>
+          )}
+        />
+
+        <Controller
+          name="textRo"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="text-ro-input">Romanian text</FieldLabel>
+              <Textarea
+                {...field}
+                id="text-ro-input"
+                aria-invalid={fieldState.invalid}
+                placeholder="Descriire"
+                autoComplete="off"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+            </Field>
+          )}
+        />
+
+        <Controller
+          name="textRu"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="title-ru-input">Russian text</FieldLabel>
+              <Textarea
+                {...field}
+                id="title-ru-input"
+                aria-invalid={fieldState.invalid}
+                placeholder="Описание"
                 autoComplete="off"
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}

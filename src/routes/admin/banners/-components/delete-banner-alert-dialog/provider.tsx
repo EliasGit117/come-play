@@ -1,4 +1,3 @@
-// routes/admin/banners/-components/delete-banner-alert-dialog/provider.tsx
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { useDeleteBannerMutation } from '@/features/banners/server-functions/admin/delete-banner-by-id';
 import { toast } from 'sonner';

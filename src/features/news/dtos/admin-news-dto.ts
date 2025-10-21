@@ -12,6 +12,7 @@ export interface IAdminNewsDto {
   contentRo: string | null;
   contentRu: string | null;
   createdAt: string;
+  updatedAt: string;
   image?: IAdminNewsImageDto;
 }
 
@@ -26,7 +27,8 @@ export class IAdminNewsDtoFactory {
       titleRu: entity.titleRu,
       contentRo: entity.contentRo,
       contentRu: entity.contentRu,
-      createdAt: entity.createdAt.toISOString()
+      createdAt: entity.createdAt.toISOString(),
+      updatedAt: entity.updatedAt.toISOString(),
     };
   }
 

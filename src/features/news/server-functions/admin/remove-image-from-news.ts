@@ -29,13 +29,13 @@ export const useRemoveImageFromNews = (options?: TOptions) => {
     mutationKey: ['news', 'image', 'delete'],
     mutationFn: (params) => removeNewsImage(params),
     ...options,
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data, variables, onMutateResult, context) => {
       void queryClient.invalidateQueries({
         predicate: (query) =>
           query.queryKey[0] === 'news' && query.queryKey[1] === 'paginated'
       });
 
-      options?.onSuccess?.(data, variables, context);
+      options?.onSuccess?.(data, variables, onMutateResult, context);
     }
   });
 };
@@ -49,6 +49,6 @@ export async function removeImageFromNews(newsId: number) {
 
   await prisma.$transaction(async (tx) => {
     await tx.newsImage.delete({ where: { newsId: newsId } });
-    await utapi.deleteFiles([`${image.id}`],  { keyType: "customId" });
+    await utapi.deleteFiles([`news-banner-${image.id}`],  { keyType: "customId" });
   });
 }

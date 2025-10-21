@@ -6,10 +6,12 @@ import { IAdminBannerDto, IAdminBannerDtoFactory } from '@/features/banners/dtos
 
 export const editBannerSchema = z.object({
   id: z.number(),
-  titleRo: z.string().min(3).max(256),
-  titleRu: z.string().min(3).max(256),
-  path: z.string().regex(/^[a-zA-Z0-9-/]+$/).min(3).max(1000).optional().or(z.literal('')),
-  order: z.number().int().min(0),
+  path: z.string().regex(/^[a-zA-Z0-9-/]+$/).max(1000).optional(),
+  title: z.string().min(3).max(128),
+  titleRo: z.string().max(128).optional(),
+  titleRu: z.string().max(128).optional(),
+  textRu: z.string().max(512).optional(),
+  textRo: z.string().max(512).optional(),
   isActive: z.boolean()
 });
 

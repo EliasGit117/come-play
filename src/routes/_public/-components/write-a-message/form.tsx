@@ -138,8 +138,8 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
 
           <Field orientation='horizontal' className='col-span-full'>
             <LoadingButton className="w-full md:w-fit md:ml-auto" loading={false} disabled={false}>
-              <span>Submit</span>
               <SendIcon/>
+              <span>Submit</span>
             </LoadingButton>
           </Field>
         </FieldGroup>

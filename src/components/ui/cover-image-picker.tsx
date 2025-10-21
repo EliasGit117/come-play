@@ -4,7 +4,8 @@ import { Button } from '@/components/ui/button';
 import { CloudUpload, Upload, XIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
+import { toast } from 'sonner';
 
 
 export interface IImagePickerValue {
@@ -65,6 +66,13 @@ const CoverImagePicker: FC<INewsImageUploadProps> = (props) => {
     },
     ...fileUploadProps
   });
+
+  useEffect(() => {
+    if (!errors.length) return;
+
+    const errorMsg = errors.join(', ');
+    toast.error('Error', { description: errorMsg });
+  }, [errors]);
 
   const removeImage = () => onFilesChange?.(undefined);
 

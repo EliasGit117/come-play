@@ -99,7 +99,7 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
             </video>
           </VideoPlaceholder>
 
-          <BannerOverlay data={{ heading: 'itc LED Display Solution', link: { to: '/' } }}/>
+          <BannerOverlay data={{ heading: 'itc LED Display Solution' }}/>
         </CarouselItem>
 
         {banners.map((banner, index) => (

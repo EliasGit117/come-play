@@ -1,4 +1,3 @@
-// routes/admin/banners/-components/banner-image-uploader.tsx
 import { ComponentProps, FC, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { useSetBannerImageMutation } from '@/features/banners/server-functions/admin/set-banner-image';
@@ -50,7 +49,8 @@ export const BannerImageUploader: FC<IBannerImageUploaderProps> = (props) => {
   useEffect(() => onPendingChange?.(isPending), [isPending]);
 
   const onFilesChange = async (file: File | undefined) => {
-    if (isPending) return;
+    if (isPending)
+      return;
 
     if (!file) {
       await removeAsync({ data: { bannerId: numBannerId, imageType } });

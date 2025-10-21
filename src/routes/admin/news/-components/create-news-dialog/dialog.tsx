@@ -22,6 +22,7 @@ import {
 } from '@/features/news/server-functions/admin/create-news';
 import { toast } from 'sonner';
 import { useNavigate } from '@tanstack/react-router';
+import { SendIcon, XIcon } from 'lucide-react';
 
 
 interface CreateNewsDialogProps {
@@ -80,11 +81,13 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, aft
 
             <AlertDialogFooter className="mt-6">
               <AlertDialogCancel type="button">
-                Cancel
+                <XIcon/>
+                <span>Cancel</span>
               </AlertDialogCancel>
 
               <LoadingButton type="submit" loading={isPending}>
-                Submit
+                <SendIcon/>
+                <span>Submit</span>
               </LoadingButton>
             </AlertDialogFooter>
           </form>

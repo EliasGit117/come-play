@@ -6,9 +6,12 @@ import { IAdminBannerDto, IAdminBannerDtoFactory } from '@/features/banners/dtos
 
 
 export const createBannerSchema = z.object({
-  path: z.string().regex(/^[a-zA-Z0-9-/]+$/).min(3).max(1000),
-  titleRo: z.string().min(3).max(256),
-  titleRu: z.string().min(3).max(256),
+  path: z.string().regex(/^[a-zA-Z0-9-/]+$/).max(1000).optional(),
+  title: z.string().min(3).max(128),
+  titleRo: z.string().max(128).optional(),
+  titleRu: z.string().max(128).optional(),
+  textRu: z.string().max(512).optional(),
+  textRo: z.string().max(512).optional(),
   editAfterCreation: z.boolean()
 });
 
@@ -24,8 +27,11 @@ export const createBanner = createServerFn({ method: 'POST' })
 
       return tx.banner.create({
         data: {
-          titleRo: data.titleRo,
-          titleRu: data.titleRu,
+          title: data.title,
+          titleRo: data.titleRo || null,
+          titleRu: data.titleRu || null,
+          textRo: data.textRo || null,
+          textRu: data.textRu || null,
           path: data.path || null,
           order: (maxOrder._max.order ?? 0) + 1,
           isActive: false

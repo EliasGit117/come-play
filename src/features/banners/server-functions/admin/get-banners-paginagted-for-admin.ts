@@ -62,8 +62,7 @@ export const getBannersPaginatedForAdmin = createServerFn({ method: 'GET' })
 
     if (!!data.title)
       where.OR = [
-        { titleRo: { contains: data.title, mode: 'insensitive' } },
-        { titleRu: { contains: data.title, mode: 'insensitive' } }
+        { title: { contains: data.title, mode: 'insensitive' } }
       ];
 
     if (!!data.path)
@@ -91,7 +90,7 @@ export const getBannersPaginatedForAdmin = createServerFn({ method: 'GET' })
           tabletImage: true,
           mobileImage: true
         },
-        orderBy: { [data.order ?? 'id']: data.dir ?? 'desc' },
+        orderBy: { [data.order ?? 'order']: data.dir ?? 'asc' },
         where
       })
       .withPages({
@@ -100,10 +99,7 @@ export const getBannersPaginatedForAdmin = createServerFn({ method: 'GET' })
         page: data.page ?? 1
       });
 
-    return PaginationResultDtoFactory.getWithCount(
-      AdminBannerBriefDtoFactory.fromEntities(items),
-      meta
-    );
+    return PaginationResultDtoFactory.getWithCount(AdminBannerBriefDtoFactory.fromEntities(items), meta);
   });
 
 export function getBannersPaginatedForAdminQueryOptions(
