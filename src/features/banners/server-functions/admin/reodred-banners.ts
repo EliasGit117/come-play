@@ -1,4 +1,4 @@
-import z from 'zod';
+import { z } from 'zod';
 import { createServerFn } from '@tanstack/react-start';
 import prisma from '@/lib/prisma';
 import { useMutation, UseMutationOptions, useQueryClient } from '@tanstack/react-query';

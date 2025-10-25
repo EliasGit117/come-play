@@ -5,8 +5,8 @@ import CreateBannerDialog from '@/routes/admin/banners/-components/create-banner
 import { useState } from 'react';
 import { zodValidator } from '@tanstack/zod-adapter';
 import {
-  getBannersPaginatedForAdminQueryOptions,
-  getBannersPaginatedForAdminSchema
+  getBannersForAdminQueryOptions,
+  getBannersForAdminSchema
 } from '@/features/banners/server-functions/admin/get-banners-paginagted-for-admin';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { bannerColumns, BannerTable } from '@/routes/admin/banners/-components/banners-table';
@@ -24,11 +24,11 @@ import {
 
 export const Route = createFileRoute('/admin/banners/')({
   component: RouteComponent,
-  validateSearch: zodValidator(getBannersPaginatedForAdminSchema),
+  validateSearch: zodValidator(getBannersForAdminSchema),
   loaderDeps: (deps) => deps,
-  loader: async ({ context, deps: { search } }) => {
-    return context.queryClient.prefetchQuery(getBannersPaginatedForAdminQueryOptions(search));
-  },
+  // loader: async ({ context, deps: { search } }) => {
+  //   return context.queryClient.prefetchQuery(getBannersForAdminQueryOptions(search));
+  // },
   head: () => {
     return { meta: [{ title: 'Banners' }] };
   }
@@ -41,17 +41,18 @@ function RouteComponent() {
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
   const { data, isPending, refetch } = useQuery({
-    ...getBannersPaginatedForAdminQueryOptions(search),
+    ...getBannersForAdminQueryOptions(search),
     placeholderData: keepPreviousData
   });
 
   const { table } = useDataTable({
-    data: data?.items,
-    page: data?.page,
-    limit: search.limit,
-    total: data?.totalCount,
-    totalPages: data?.pageCount,
+    data: data,
+    page: 1,
+    limit: 10,
+    total: data?.length,
+    totalPages: 1,
     columns: bannerColumns,
+    pageOnSearchChange: 'none',
     initialState: {
       columnVisibility: {
         id: false,
@@ -71,8 +72,9 @@ function RouteComponent() {
     <DeleteBannerAlertDialogProvider>
       <ReorderBannerSheetProvider>
 
-        <main className="container mx-auto p-4 space-y-4 flex flex-col flex-1">
+        <main className="container mx-auto p-4 pt-0 space-y-4 flex flex-col flex-1">
           <BannerTable
+            isLoading={isPending}
             table={table}
             topToolbarChildren={
               <>

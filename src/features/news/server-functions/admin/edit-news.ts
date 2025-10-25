@@ -1,22 +1,9 @@
-import z from 'zod';
 import { createServerFn } from '@tanstack/react-start';
 import prisma from '@/lib/prisma';
 import { useMutation, UseMutationOptions, useQueryClient } from '@tanstack/react-query';
 import { IAdminNewsDto, IAdminNewsDtoFactory } from '@/features/news/dtos/admin-news-dto';
-import { NewsStatus } from '@prisma/client';
+import { editNewsSchema } from '@/features/news/schemas/edit-news';
 
-// Schema
-export const editNewsSchema = z.object({
-  id: z.number(),
-  slug: z.string().regex(/^[a-zA-Z0-9-]+$/).min(3).max(1000),
-  status: z.nativeEnum(NewsStatus),
-  titleRo: z.string().min(3).max(256),
-  titleRu: z.string().min(3).max(256),
-  contentRo: z.string().max(10240).optional(),
-  contentRu: z.string().max(10240).optional(),
-});
-
-export type TEditNewsSchema = z.infer<typeof editNewsSchema>;
 
 // Server function
 export const editNews = createServerFn({ method: 'GET' })

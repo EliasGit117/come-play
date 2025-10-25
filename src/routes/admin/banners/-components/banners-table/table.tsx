@@ -14,17 +14,13 @@ interface IProps extends ComponentProps<'div'> {
   topToolbarChildren?: ReactNode;
 }
 
-export const BannerTable: FC<IProps> = ({
-                                          className,
-                                          topToolbarChildren,
-                                          table,
-                                          ...props
-                                        }) => {
+export const BannerTable: FC<IProps> = (props) => {
   // noinspection BadExpressionStatementJS
   'use no memo';
+  const { className, topToolbarChildren, table, ...restOfProps } = props;
 
   return (
-    <div className={cn('flex flex-col gap-2', className)} {...props}>
+    <div className={cn('flex flex-col gap-2', className)} {...restOfProps}>
       <DataTableProvider table={table}>
         <DataTableToolbar topToolbarChildren={topToolbarChildren} />
         <DataTable />

@@ -1,12 +1,10 @@
-import z from 'zod';
+import { z } from 'zod';
 import { createServerFn } from '@tanstack/react-start';
 import prisma from '@/lib/prisma';
 import { queryOptions } from '@tanstack/react-query';
 import { IAdminBannerDtoFactory } from '@/features/banners/dtos/admin-banner-dto';
 
-export const getBannerByIdSchema = z.object({
-  id: z.number()
-});
+export const getBannerByIdSchema = z.object({ id: z.number() });
 
 export type TGetBannerByIdParams = z.infer<typeof getBannerByIdSchema>;
 

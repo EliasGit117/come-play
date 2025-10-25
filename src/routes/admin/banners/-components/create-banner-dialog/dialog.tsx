@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -14,15 +14,14 @@ import { Form } from '@/components/ui/form';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { toast } from 'sonner';
 import { useNavigate } from '@tanstack/react-router';
-import {
-  createBannerSchema,
-  TCreateBannerSchema,
-  useCreateBannerMutation
-} from '@/features/banners/server-functions/admin/create-banner';
 import './form';
 import { BannerForm } from '@/routes/admin/banners/-components/create-banner-dialog/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { SendIcon, XIcon } from 'lucide-react';
+import { createBannerSchema, TCreateBannerSchema } from '@/features/banners/schemas/create-banner';
+import { useCreateBannerMutation } from '@/features/banners/server-functions/admin/create-banner';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 
 interface CreateNewsDialogProps {
   open: boolean;
@@ -32,6 +31,7 @@ interface CreateNewsDialogProps {
 
 const CreateBannerDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, afterSuccess }) => {
   const navigate = useNavigate();
+  const [editAfterCreation, setEditAfterCreation] = useState(true);
   const form = useForm<TCreateBannerSchema>({
     resolver: zodResolver(createBannerSchema),
     defaultValues: {
@@ -40,7 +40,6 @@ const CreateBannerDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, afterSuc
       titleRu: '',
       textRo: '',
       textRu: '',
-      editAfterCreation: true
     }
   });
 
@@ -51,7 +50,7 @@ const CreateBannerDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, afterSuc
       toast.success('Banner has been successfully created');
       afterSuccess?.();
 
-      if (data.editAfterCreation)
+      if (editAfterCreation)
         void navigate({ to: '/admin/banners/$id/edit', params: { id: `${res.id}` } });
     }
   });
@@ -61,6 +60,7 @@ const CreateBannerDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, afterSuc
     if (!open)
       return;
 
+    setEditAfterCreation(true);
     form.reset();
   }, [open]);
 
@@ -79,6 +79,23 @@ const CreateBannerDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, afterSuc
             <ScrollArea type='always' className="mt-4 h-[50dvh]">
               <BannerForm className='mr-4'/>
             </ScrollArea>
+
+            <div className="flex items-start gap-3 mt-8">
+              <Checkbox
+                id="edit-after-creation-checkbox"
+                checked={editAfterCreation}
+                onCheckedChange={(v) => setEditAfterCreation(!!v)}
+                disabled={isPending}
+              />
+              <div className="grid gap-2">
+                <Label htmlFor="edit-after-creation-checkbox">
+                  Edit after creation
+                </Label>
+                <p className="text-muted-foreground text-sm">
+                  Redirect to edit banner page to add new data or change existing ones
+                </p>
+              </div>
+            </div>
 
             <AlertDialogFooter className="flex-row mt-6">
               <AlertDialogCancel type="button" className='flex-1 sm:flex-none'>

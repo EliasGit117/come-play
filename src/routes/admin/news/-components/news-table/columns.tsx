@@ -101,16 +101,12 @@ export const newsColumns = [
     }
   }),
   columnHelper.accessor('slug', {
-    enableSorting: false,
     header: ({ column }) => <DataTableColumnHeader column={column}/>,
     cell: ctx => ctx.getValue(),
     meta: {
       label: 'Slug',
       icon: LinkIcon,
-      filter: {
-        type: ColumnFilterType.Text,
-        placeholder: 'Search by slug'
-      }
+      filter: { type: ColumnFilterType.Text, placeholder: 'Search by slug' }
     }
   }),
   columnHelper.accessor('status', {

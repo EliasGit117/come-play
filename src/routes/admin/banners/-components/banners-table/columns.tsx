@@ -62,122 +62,58 @@ export const bannerColumns = [
       icon: ListOrderedIcon
     }
   }),
-  columnHelper.accessor('desktopImage', {
-    enableSorting: false,
-    header: ({ column }) => <DataTableColumnHeader column={column}/>,
+  columnHelper.accessor(row => row,{
+    id: 'images',
+    header: ({ column }) => <DataTableColumnHeader column={column} />,
     cell: (ctx) => {
-      const img = ctx.getValue();
+      const { desktopImage, tabletImage, mobileImage } = ctx.row.original;
 
-      if (!img)
+      const renderImage = (img: any, label: string, className: string) => {
+        if (!img)
+          return (
+            <div
+              className={`${className} rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex`}
+              title={`${label} — No image`}
+            >
+              <ImageOffIcon className="size-5" />
+            </div>
+          );
+
         return (
-          <div
-            className="w-30 h-12 rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex">
-            <ImageOffIcon className="size-5"/>
-          </div>
+          <figure className={`${className} rounded-sm overflow-hidden border border-border/50 bg-muted`} title={label}>
+            <UnLazyImageSSR
+              src={img.url}
+              thumbhash={img.thumbhash}
+              className="w-full h-full object-cover"
+              alt={`${label} banner`}
+            />
+          </figure>
         );
+      };
 
       return (
-        <figure className="w-30 h-12 rounded-sm overflow-hidden border border-border/50 bg-muted">
-          <UnLazyImageSSR
-            src={img.url}
-            thumbhash={img.thumbhash}
-            className="w-full h-full object-cover"
-            alt="Desktop banner"
-          />
-        </figure>
+        <div className="flex gap-2 items-center">
+          {renderImage(desktopImage, 'Desktop', 'w-28 h-12')}
+          {renderImage(tabletImage, 'Tablet', 'w-24 h-12')}
+          {renderImage(mobileImage, 'Mobile', 'w-20 h-12')}
+        </div>
       );
     },
     meta: {
-      label: 'Desktop',
-      key: 'hasDesktopImage',
-      icon: MonitorIcon,
+      label: 'Images',
+      icon: ImageIcon,
+      key: 'images',
       filter: {
-        type: ColumnFilterType.Select,
+        type: ColumnFilterType.MultiSelect,
         options: [
-          { title: 'Yes', value: true, icon: ImageIcon },
-          { title: 'No', value: false, icon: ImageOffIcon }
-        ]
-      }
-    }
-  }),
-  columnHelper.accessor('tabletImage', {
-    enableSorting: false,
-    header: ({ column }) => <DataTableColumnHeader column={column}/>,
-    cell: (ctx) => {
-      const img = ctx.getValue();
-
-      if (!img)
-        return (
-          <div
-            className="w-25 h-12 rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex">
-            <ImageOffIcon className="size-5"/>
-          </div>
-        );
-
-      return (
-        <figure className="w-25 h-12 rounded-sm overflow-hidden border border-border/50 bg-muted">
-          <UnLazyImageSSR
-            src={img.url}
-            thumbhash={img.thumbhash}
-            className="w-full h-full object-cover"
-            alt="Tablet banner"
-          />
-        </figure>
-      );
-    },
-    meta: {
-      label: 'Tablet',
-      key: 'hasTabletImage',
-      icon: TabletIcon,
-      filter: {
-        type: ColumnFilterType.Select,
-        options: [
-          { title: 'Yes', value: true, icon: ImageIcon },
-          { title: 'No', value: false, icon: ImageOffIcon }
-        ]
-      }
-    }
-  }),
-  columnHelper.accessor('mobileImage', {
-    enableSorting: false,
-    header: ({ column }) => <DataTableColumnHeader column={column}/>,
-    cell: (ctx) => {
-      const img = ctx.getValue();
-
-      if (!img)
-        return (
-          <div
-            className="w-20 h-12 rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex">
-            <ImageOffIcon className="size-5"/>
-          </div>
-        );
-
-      return (
-        <figure className="w-20 h-12 rounded-sm overflow-hidden border border-border/50 bg-muted">
-          <UnLazyImageSSR
-            src={img.url}
-            thumbhash={img.thumbhash}
-            className="w-full h-full object-cover"
-            alt="Mobile banner"
-          />
-        </figure>
-      );
-    },
-    meta: {
-      label: 'Mobile',
-      key: 'hasMobileImage',
-      icon: SmartphoneIcon,
-      filter: {
-        type: ColumnFilterType.Select,
-        options: [
-          { title: 'Yes', value: true, icon: ImageIcon },
-          { title: 'No', value: false, icon: ImageOffIcon }
+          { title: 'Has desktop', value: 'desktop', icon: MonitorIcon },
+          { title: 'Has tablet', value: 'tablet', icon: TabletIcon },
+          { title: 'Has mobile', value: 'mobile', icon: SmartphoneIcon }
         ]
       }
     }
   }),
   columnHelper.accessor('path', {
-    enableSorting: false,
     header: ({ column }) => <DataTableColumnHeader column={column}/>,
     cell: (ctx) =>  (
       <p className="text-xs italic">{ctx.getValue() || '-'}</p>
@@ -192,7 +128,6 @@ export const bannerColumns = [
     }
   }),
   columnHelper.accessor('title', {
-    enableSorting: false,
     header: ({ column }) => <DataTableColumnHeader column={column}/>,
     cell: (ctx) => <p className="text-xs">{ctx.getValue()}</p>,
     meta: {

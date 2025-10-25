@@ -9,7 +9,7 @@ import {
 import { isMatch, Link, useMatches } from '@tanstack/react-router';
 import { ComponentProps, FC, Fragment } from 'react';
 import { cn } from '@/lib/utils';
-import z from 'zod';
+import { z } from 'zod'
 import { Button } from '@/components/ui/button';
 import { HomeIcon } from 'lucide-react';
 

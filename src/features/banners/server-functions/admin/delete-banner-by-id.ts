@@ -1,6 +1,6 @@
 import { createServerFn } from '@tanstack/react-start';
 import prisma from '@/lib/prisma';
-import z from 'zod';
+import { z } from 'zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { removeAllBannerImages } from '@/features/banners/server-functions/admin/remove-banner-image';
 

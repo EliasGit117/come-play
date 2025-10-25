@@ -1,4 +1,4 @@
-import z from 'zod';
+import { z } from 'zod';
 import { createServerFn } from '@tanstack/react-start';
 import prisma from '@/lib/prisma';
 import { useMutation, UseMutationOptions, useQueryClient } from '@tanstack/react-query';
@@ -32,13 +32,13 @@ export const useDeleteNewsMutation = (options?: TOptions) => {
     mutationKey: ['news', 'delete'],
     mutationFn: (params) => deleteNewsById(params),
     ...options,
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data, variables, onMutateResult, context) => {
       void queryClient.invalidateQueries({
         predicate: (query) =>
           query.queryKey[0] === 'news' && query.queryKey[1] === 'paginated'
       });
 
-      options?.onSuccess?.(data, variables, context);
+      options?.onSuccess?.(data, variables, onMutateResult, context);
     }
   });
 };

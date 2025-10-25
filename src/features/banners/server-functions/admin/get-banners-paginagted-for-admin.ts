@@ -1,18 +1,18 @@
 import { createServerFn } from '@tanstack/react-start';
 import prisma from '@/lib/prisma';
-import { paginatedSchema } from '@/features/common/pagination/pagination-validation';
-import z from 'zod';
+import { z } from 'zod';
 import { queryOptions } from '@tanstack/react-query';
 import { Prisma } from '@prisma/client';
-import { PaginationResultDtoFactory } from '@/features/common/pagination/pagination-result-dto';
 import { dateRangeSchema, numberRangeSchema } from '@/components/data-table';
 import { hasValue } from '@/utils/has-value';
 import { AdminBannerBriefDtoFactory } from '@/features/banners/dtos/admin-banner-brief-dto';
 
-export const getBannersPaginatedForAdminSchema = paginatedSchema.extend({
-  order: z.enum(['id', 'createdAt', 'updatedAt', 'title', 'order', 'isActive'])
+
+export const getBannersForAdminSchema = z.object({
+  order: z.enum(['id', 'createdAt', 'updatedAt', 'title', 'path', 'order', 'isActive'])
     .optional()
     .catch(undefined),
+  dir: z.enum(['asc', 'desc']).optional(),
   id: z.number().int().optional().catch(undefined),
   idRange: numberRangeSchema.optional().catch(undefined),
   title: z.string().optional().catch(undefined),
@@ -20,34 +20,27 @@ export const getBannersPaginatedForAdminSchema = paginatedSchema.extend({
   isActive: z.boolean().optional().catch(undefined),
   createdAt: dateRangeSchema.optional().catch(undefined),
   updatedAt: dateRangeSchema.optional().catch(undefined),
-  hasDesktopImage: z.boolean().optional().catch(undefined),
-  hasTabletImage: z.boolean().optional().catch(undefined),
-  hasMobileImage: z.boolean().optional().catch(undefined)
+  images: z.array(z.enum(['desktop', 'tablet', 'mobile'])).optional().catch(undefined),
 });
 
-export type TGetBannersPaginatedParamsForAdmin = z.infer<
-  typeof getBannersPaginatedForAdminSchema
->;
+export type TGetBannersForAdminSchema = z.infer<typeof getBannersForAdminSchema>;
 
-export const getBannersPaginatedForAdmin = createServerFn({ method: 'GET' })
-  .inputValidator(getBannersPaginatedForAdminSchema)
+export const getBannersForAdmin = createServerFn({ method: 'GET' })
+  .inputValidator(getBannersForAdminSchema)
   .handler(async ({ data }) => {
     const where: Prisma.BannerWhereInput = {};
 
-    if (hasValue(data.hasDesktopImage))
-      where.desktopImage = data.hasDesktopImage
-        ? { isNot: null }
-        : { is: null };
+    if (hasValue(data.images)) {
+      if (data.images?.includes('desktop'))
+        where.desktopImage = { isNot: null };
 
-    if (hasValue(data.hasTabletImage))
-      where.tabletImage = data.hasTabletImage
-        ? { isNot: null }
-        : { is: null };
+      if (data.images?.includes('tablet'))
+        where.tabletImage = { isNot: null };
 
-    if (hasValue(data.hasMobileImage))
-      where.mobileImage = data.hasMobileImage
-        ? { isNot: null }
-        : { is: null };
+      if (data.images?.includes('mobile'))
+        where.mobileImage = { isNot: null };
+    }
+
 
     if (data.id) where.id = { equals: data.id };
 
@@ -55,15 +48,15 @@ export const getBannersPaginatedForAdmin = createServerFn({ method: 'GET' })
       const [minId, maxId] = data.idRange;
       where.id = {};
 
-      if (minId !== null) where.id.gte = minId;
+      if (minId !== null)
+        where.id.gte = minId;
 
-      if (maxId !== null) where.id.lte = maxId;
+      if (maxId !== null)
+        where.id.lte = maxId;
     }
 
     if (!!data.title)
-      where.OR = [
-        { title: { contains: data.title, mode: 'insensitive' } }
-      ];
+      where.OR = [{ title: { contains: data.title, mode: 'insensitive' } }];
 
     if (!!data.path)
       where.path = { contains: data.path, mode: 'insensitive' };
@@ -73,42 +66,41 @@ export const getBannersPaginatedForAdmin = createServerFn({ method: 'GET' })
 
     if (data.createdAt?.from || data.createdAt?.to) {
       where.createdAt = {};
-      if (data.createdAt.from) where.createdAt.gte = data.createdAt.from;
-      if (data.createdAt.to) where.createdAt.lte = data.createdAt.to;
+
+      if (data.createdAt.from)
+        where.createdAt.gte = data.createdAt.from;
+
+      if (data.createdAt.to)
+        where.createdAt.lte = data.createdAt.to;
     }
 
     if (data.updatedAt?.from || data.updatedAt?.to) {
       where.updatedAt = {};
-      if (data.updatedAt.from) where.updatedAt.gte = data.updatedAt.from;
-      if (data.updatedAt.to) where.updatedAt.lte = data.updatedAt.to;
+      if (data.updatedAt.from)
+        where.updatedAt.gte = data.updatedAt.from;
+
+      if (data.updatedAt.to)
+        where.updatedAt.lte = data.updatedAt.to;
     }
 
-    const [items, meta] = await prisma.banner
-      .paginate({
-        include: {
-          desktopImage: true,
-          tabletImage: true,
-          mobileImage: true
-        },
-        orderBy: { [data.order ?? 'order']: data.dir ?? 'asc' },
-        where
-      })
-      .withPages({
-        includePageCount: true,
-        limit: data.limit ?? 10,
-        page: data.page ?? 1
-      });
+    const items = await prisma.banner.findMany({
+      include: {
+        desktopImage: true,
+        tabletImage: true,
+        mobileImage: true
+      },
+      orderBy: { [data.order ?? 'order']: data.dir ?? 'asc' },
+      where: where
+    });
 
-    return PaginationResultDtoFactory.getWithCount(AdminBannerBriefDtoFactory.fromEntities(items), meta);
+    return AdminBannerBriefDtoFactory.fromEntities(items);
   });
 
-export function getBannersPaginatedForAdminQueryOptions(
-  params: TGetBannersPaginatedParamsForAdmin
-) {
+export function getBannersForAdminQueryOptions(params: TGetBannersForAdminSchema) {
   return queryOptions({
-    queryKey: ['banners', 'paginated', params],
-    queryFn: () => getBannersPaginatedForAdmin({ data: params }),
-    staleTime: 30_000,
-    gcTime: 30_000
+    queryKey: ['banners', 'admin', params],
+    queryFn: () => getBannersForAdmin({ data: params }),
+    staleTime: 10_000,
+    gcTime: 10_000
   });
 }

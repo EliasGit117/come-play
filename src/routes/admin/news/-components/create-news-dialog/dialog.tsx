@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -15,14 +15,13 @@ import {
 import { Form } from '@/components/ui/form';
 import { NewsForm } from './form';
 import { LoadingButton } from '@/components/ui/loading-button';
-import {
-  createNewsSchema,
-  TCreatNewsSchema,
-  useCreateNewsMutation
-} from '@/features/news/server-functions/admin/create-news';
 import { toast } from 'sonner';
 import { useNavigate } from '@tanstack/react-router';
 import { SendIcon, XIcon } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+import { createNewsSchema, TCreateNewsSchema } from '@/features/news/schemas/create-news';
+import { useCreateNewsMutation } from '@/features/news/server-functions/admin/create-news';
 
 
 interface CreateNewsDialogProps {
@@ -33,24 +32,24 @@ interface CreateNewsDialogProps {
 
 export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, afterSuccess }) => {
   const navigate = useNavigate();
-  const form = useForm<TCreatNewsSchema>({
+  const [editAfterCreation, setEditAfterCreation] = useState(true);
+  const form = useForm<TCreateNewsSchema>({
     resolver: zodResolver(createNewsSchema),
     defaultValues: {
       slug: '',
       titleRo: '',
       titleRu: '',
-      editAfterCreation: true
     }
   });
 
   const { mutate, isPending } = useCreateNewsMutation({
     onError: (e) => toast.error(e.name, { description: e.message }),
-    onSuccess: (res, data) => {
+    onSuccess: (res) => {
       setOpen(false);
       toast.success('News has been successfully created');
       afterSuccess?.();
 
-      if (data.editAfterCreation)
+      if (editAfterCreation)
         void navigate({ to: '/admin/news/$id/edit', params: { id: `${res.id}` } });
     }
   });
@@ -59,6 +58,7 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, aft
     if (!open)
       return;
 
+    setEditAfterCreation(true);
     form.reset();
   }, [open]);
 
@@ -67,7 +67,7 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, aft
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent className="max-w-2xl">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit((values: TCreatNewsSchema) => mutate(values))}>
+          <form onSubmit={form.handleSubmit((values: TCreateNewsSchema) => mutate(values))}>
             <AlertDialogHeader>
               <AlertDialogTitle>Create News</AlertDialogTitle>
               <AlertDialogDescription>
@@ -77,7 +77,25 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, aft
 
             <div className="mt-4">
               <NewsForm/>
+
+              <div className="flex items-start gap-3 mt-8">
+                <Checkbox
+                  id="edit-after-creation-checkbox"
+                  checked={editAfterCreation}
+                  onCheckedChange={(v) => setEditAfterCreation(!!v)}
+                  disabled={isPending}
+                />
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-after-creation-checkbox">
+                    Edit after creation
+                  </Label>
+                  <p className="text-muted-foreground text-sm">
+                    Redirect to created product page to edit it
+                  </p>
+                </div>
+              </div>
             </div>
+
 
             <AlertDialogFooter className="mt-6">
               <AlertDialogCancel type="button">

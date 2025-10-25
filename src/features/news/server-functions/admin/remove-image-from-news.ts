@@ -2,7 +2,7 @@ import { createServerFn } from '@tanstack/react-start';
 import { useMutation, UseMutationOptions, useQueryClient } from '@tanstack/react-query';
 import prisma from '@/lib/prisma';
 import { utapi } from '@/lib/upload-thing';
-import z from 'zod';
+import { z } from 'zod';
 
 
 // Schema

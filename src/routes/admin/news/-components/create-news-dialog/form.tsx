@@ -1,16 +1,13 @@
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
-import { TCreatNewsSchema } from '@/features/news/server-functions/admin/create-news';
-import { Checkbox } from '@/components/ui/checkbox';
 import {
   Field,
-  FieldContent,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel
 } from '@/components/ui/field';
+import { TCreateNewsSchema } from '@/features/news/schemas/create-news';
 
 
 export interface IPostProps {
@@ -19,7 +16,7 @@ export interface IPostProps {
 }
 
 export const NewsForm: FC<IPostProps> = ({ className, disabled }) => {
-  const form = useFormContext<TCreatNewsSchema>();
+  const form = useFormContext<TCreateNewsSchema>();
 
   return (
     <fieldset disabled={disabled} className={className}>
@@ -79,30 +76,6 @@ export const NewsForm: FC<IPostProps> = ({ className, disabled }) => {
             </Field>
           )}
         />
-
-        <Controller
-          name="editAfterCreation"
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <Field orientation="horizontal" data-invalid={fieldState.invalid}>
-              <Checkbox
-                id="edit-after-creation-checkbox"
-                name={field.name}
-                aria-invalid={fieldState.invalid}
-                checked={field.value}
-                onCheckedChange={field.onChange}
-              />
-              <FieldContent>
-                <FieldLabel htmlFor="edit-after-creation-checkbox" className="font-normal">
-                  Edit after creation
-                </FieldLabel>
-                <FieldDescription>
-                  Redirect to created product page to edit it
-                </FieldDescription>
-                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-              </FieldContent>
-            </Field>
-          )}/>
       </FieldGroup>
     </fieldset>
   );

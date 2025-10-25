@@ -1,21 +1,9 @@
-import z from 'zod';
 import { createServerFn } from '@tanstack/react-start';
 import prisma from '@/lib/prisma';
 import { useMutation, UseMutationOptions, useQueryClient } from '@tanstack/react-query';
 import { IAdminBannerDto, IAdminBannerDtoFactory } from '@/features/banners/dtos/admin-banner-dto';
+import { editBannerSchema } from '@/features/banners/schemas/edit-banner';
 
-export const editBannerSchema = z.object({
-  id: z.number(),
-  path: z.string().regex(/^[a-zA-Z0-9-/]+$/).max(1000).optional(),
-  title: z.string().min(3).max(128),
-  titleRo: z.string().max(128).optional(),
-  titleRu: z.string().max(128).optional(),
-  textRu: z.string().max(512).optional(),
-  textRo: z.string().max(512).optional(),
-  isActive: z.boolean()
-});
-
-export type TEditBannerSchema = z.infer<typeof editBannerSchema>;
 
 export const editBanner = createServerFn({ method: 'GET' })
   .inputValidator(editBannerSchema)

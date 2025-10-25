@@ -2,15 +2,16 @@ import { useCallback, useMemo, useState } from 'react';
 import { ColumnDef, ColumnFiltersState, SortingState } from '@tanstack/react-table';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useDebouncedCallback } from 'use-debounce';
-import z from 'zod';
+import { z } from 'zod';
 import { Updater } from '@tanstack/store';
 
 interface IUseDataTableSearchProps<TData> {
   columns: ColumnDef<TData, any>[];
+  pageOnSearchChange?: number | 'none';
   replace?: boolean;
 }
 
-export function useDataTableSearch<TData>({ columns, replace = true }: IUseDataTableSearchProps<TData>) {
+export function useDataTableSearch<TData>({ columns, pageOnSearchChange = 1, replace = true }: IUseDataTableSearchProps<TData>) {
   // noinspection BadExpressionStatementJS
   'use no memo';
 
@@ -45,7 +46,7 @@ export function useDataTableSearch<TData>({ columns, replace = true }: IUseDataT
         ...prev,
         ...resetKeys(columnsMap),
         ...clean,
-        page: 1
+        page: pageOnSearchChange !== 'none' && pageOnSearchChange
       }),
       replace: replace
     });

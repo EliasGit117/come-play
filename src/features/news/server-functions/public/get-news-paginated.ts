@@ -1,7 +1,7 @@
 import { createServerFn } from '@tanstack/react-start';
 import prisma from '@/lib/prisma';
 import { paginatedSchema } from '@/features/common/pagination/pagination-validation';
-import z from 'zod';
+import { z } from 'zod';
 import { queryOptions } from '@tanstack/react-query';
 import { NewsStatus, Prisma } from '@prisma/client';
 import { PaginationResultDtoFactory } from '@/features/common/pagination/pagination-result-dto';

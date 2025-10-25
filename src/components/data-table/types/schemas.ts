@@ -1,4 +1,4 @@
-import z from 'zod';
+import { z } from 'zod';
 
 export const dateRangeSchema = z.object({
   from: z.union([z.date(), z.string().datetime().transform(val => new Date(val))]).optional(),

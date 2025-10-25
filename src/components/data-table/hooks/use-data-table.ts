@@ -23,6 +23,7 @@ interface IUseDataTableProps<TData> extends Omit<TableOptions<TData>,
   total?: number;
   totalPages?: number;
   history?: 'push' | 'replace';
+  pageOnSearchChange?: number | 'none';
 }
 
 
@@ -39,11 +40,13 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
     totalPages = 1,
     limit = 10,
     history = 'replace',
+    pageOnSearchChange,
     ...tableProps
   } = props;
 
   const { columnFiltersState, setColumnFiltersState, sortingState, setSortingState } = useDataTableSearch({
-    columns: columns
+    columns: columns,
+    pageOnSearchChange: pageOnSearchChange
   });
 
   const [columnPinning, setColumnPinning] = useState<ColumnPinningState>(initialState?.columnPinning ?? {

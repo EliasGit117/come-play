@@ -1,7 +1,7 @@
 import { FormControl } from '@/components/ui/form';
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import z from 'zod';
+import { z } from 'zod'
 import { Input } from '@/components/ui/input';
 import { RichEditor } from '@/components/editor';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';

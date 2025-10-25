@@ -1,18 +1,10 @@
-import z from 'zod';
 import { createServerFn } from '@tanstack/react-start';
 import prisma from '@/lib/prisma';
 import { useMutation, UseMutationOptions, useQueryClient } from '@tanstack/react-query';
 import { IAdminNewsDto, IAdminNewsDtoFactory } from '@/features/news/dtos/admin-news-dto';
+import { createNewsSchema } from '@/features/news/schemas/create-news';
 
 
-export const createNewsSchema = z.object({
-  slug: z.string().regex(/^[a-zA-Z0-9-]+$/).min(3).max(1000),
-  titleRo: z.string().min(3).max(256),
-  titleRu: z.string().min(3).max(256),
-  editAfterCreation: z.boolean()
-});
-
-export type TCreatNewsSchema = z.infer<typeof createNewsSchema>;
 
 export const createNews = createServerFn({ method: 'POST' })
   .inputValidator(createNewsSchema)
