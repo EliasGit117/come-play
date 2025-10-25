@@ -26,9 +26,9 @@ export const Route = createFileRoute('/admin/banners/')({
   component: RouteComponent,
   validateSearch: zodValidator(getBannersForAdminSchema),
   loaderDeps: (deps) => deps,
-  // loader: async ({ context, deps: { search } }) => {
-  //   return context.queryClient.prefetchQuery(getBannersForAdminQueryOptions(search));
-  // },
+  loader: async ({ context, deps: { search } }) => {
+    return context.queryClient.prefetchQuery(getBannersForAdminQueryOptions(search));
+  },
   head: () => {
     return { meta: [{ title: 'Banners' }] };
   }
@@ -72,9 +72,8 @@ function RouteComponent() {
     <DeleteBannerAlertDialogProvider>
       <ReorderBannerSheetProvider>
 
-        <main className="container mx-auto p-4 pt-0 space-y-4 flex flex-col flex-1">
+        <main className="container mx-auto p-4 space-y-4 flex flex-col flex-1">
           <BannerTable
-            isLoading={isPending}
             table={table}
             topToolbarChildren={
               <>

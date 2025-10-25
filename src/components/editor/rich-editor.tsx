@@ -5,7 +5,7 @@ import Highlight from '@tiptap/extension-highlight';
 import Youtube from '@tiptap/extension-youtube';
 import TextAlign from '@tiptap/extension-text-align'
 import { EditorProvider, useCurrentEditor } from '@tiptap/react';
-import React, { FC } from 'react';
+import React, { ComponentProps, FC } from 'react';
 import BoldButton from '@/components/editor/menu-buttons/bold-button';
 import ItalicButton from '@/components/editor/menu-buttons/italic-button';
 import StrikeButton from '@/components/editor/menu-buttons/strike-button';
@@ -25,7 +25,9 @@ import AlignDropdown from '@/components/editor/menu-buttons/align-dropdown';
 import LinkButton from '@/components/editor/menu-buttons/link-button';
 import { cn } from '@/lib/utils';
 
-const MenuBar = () => {
+interface IMenuBarProps extends ComponentProps<'div'> {}
+
+const MenuBar: FC<IMenuBarProps> = ({ className, ...props }) => {
   const { editor } = useCurrentEditor();
 
   if (!editor) {
@@ -33,7 +35,7 @@ const MenuBar = () => {
   }
 
   return (
-    <div className="sticky top-0 bg-background z-10 p-1 rounded-t-lg border-b">
+    <div className={cn("bg-background p-1 rounded-t-lg border-b", className)} {...props}>
       <div className="flex flex-wrap gap-1 items-center">
         <UndoButton/>
         <RedoButton/>
@@ -90,15 +92,16 @@ interface IRichEditorProps {
   onChange: (content: string) => void;
   className?: string;
   editorClassName?: string;
+  menuBarClassName?: string;
 }
 
-const RichEditor: FC<IRichEditorProps> = ({ value, onChange, className, editorClassName }) => {
+const RichEditor: FC<IRichEditorProps> = ({ value, onChange, className, menuBarClassName, editorClassName }) => {
 
   return (
     <div className={cn("border rounded-lg bg-transparent dark:bg-input/30 min-h-[259px]", className)}>
       <EditorProvider
         immediatelyRender={false}
-        slotBefore={<MenuBar/>}
+        slotBefore={<MenuBar className={menuBarClassName}/>}
         extensions={extensions}
         content={value}
         onUpdate={({ editor }) => {

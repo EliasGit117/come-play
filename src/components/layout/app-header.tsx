@@ -55,7 +55,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
   return (
     <header
       className={cn(
-        'sticky top-0 z-20 flex h-16 shrink-0 items-center gap-2',
+        'sticky top-0 flex h-16 shrink-0 items-center gap-2',
         'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90',
         'dark:supports-[backdrop-filter]:bg-background/75',
         type === 'fixed' && 'fixed left-0 right-0 border-b',

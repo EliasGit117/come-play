@@ -15,7 +15,7 @@ function AdminLayout() {
   return (
     <SidebarProvider>
       <AdminSidebar/>
-      <SidebarInset className="overflow-hidden relative">
+      <SidebarInset className="min-w-0">
         <AdminHeader/>
         <Outlet/>
       </SidebarInset>

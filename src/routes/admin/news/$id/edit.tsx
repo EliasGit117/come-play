@@ -75,7 +75,7 @@ function RouteComponent() {
   const isPending = isFetching || isUpdating || isImgPending;
 
   return (
-    <main className="container mx-auto p-4 pb-12 space-y-4 flex-1 relative">
+    <main className="container mx-auto p-4 pb-16 space-y-4 flex-1 relative">
       <p className="text-muted-foreground text-xs">
         Created: {format(news.createdAt, 'dd.MM.yyyy - HH:mm')},
         Updated: {format(news.updatedAt, 'dd.MM.yyyy - HH:mm')}
