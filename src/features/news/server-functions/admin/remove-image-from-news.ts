@@ -14,7 +14,7 @@ export const removeNewsImageSchema = z.object({
 export const removeNewsImage = createServerFn({ method: 'POST' })
   .inputValidator(removeNewsImageSchema)
   .handler(async ({ data }) => {
-    await removeImageFromNews(data.newsId)
+    await removeImageFromNews(data.newsId);
   });
 
 
@@ -26,13 +26,15 @@ export const useRemoveImageFromNews = (options?: TOptions) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: ['news', 'image', 'delete'],
+    mutationKey: ['admin', 'news', 'image', 'delete'],
     mutationFn: (params) => removeNewsImage(params),
     ...options,
     onSuccess: (data, variables, onMutateResult, context) => {
       void queryClient.invalidateQueries({
         predicate: (query) =>
-          query.queryKey[0] === 'news' && query.queryKey[1] === 'paginated'
+          query.queryKey[0] === 'admin' &&
+          query.queryKey[1] === 'news' &&
+          query.queryKey[2] === 'paginated'
       });
 
       options?.onSuccess?.(data, variables, onMutateResult, context);
@@ -42,13 +44,13 @@ export const useRemoveImageFromNews = (options?: TOptions) => {
 
 
 export async function removeImageFromNews(newsId: number) {
-  "use server";
+  'use server';
   const image = await prisma.newsImage.findUnique({ where: { newsId: newsId } });
   if (!image)
     throw new Error('Image not found');
 
   await prisma.$transaction(async (tx) => {
     await tx.newsImage.delete({ where: { newsId: newsId } });
-    await utapi.deleteFiles([`news-banner-${image.id}`],  { keyType: "customId" });
+    await utapi.deleteFiles([`news-banner-${image.id}`], { keyType: 'customId' });
   });
 }

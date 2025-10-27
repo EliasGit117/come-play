@@ -29,7 +29,7 @@ export const useDeleteNewsMutation = (options?: TOptions) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: ['news', 'delete'],
+    mutationKey: ['admin', 'news', 'delete'],
     mutationFn: (params) => deleteNewsById(params),
     ...options,
     onSuccess: (data, variables, onMutateResult, context) => {

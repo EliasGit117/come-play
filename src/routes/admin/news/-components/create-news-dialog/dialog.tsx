@@ -22,6 +22,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { createNewsSchema, TCreateNewsSchema } from '@/features/news/schemas/create-news';
 import { useCreateNewsMutation } from '@/features/news/server-functions/admin/create-news';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 
 interface CreateNewsDialogProps {
@@ -65,7 +66,7 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, aft
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogContent className="max-w-2xl">
+      <AlertDialogContent className="sm:max-w-2xl">
         <Form {...form}>
           <form onSubmit={form.handleSubmit((values: TCreateNewsSchema) => mutate(values))}>
             <AlertDialogHeader>
@@ -75,8 +76,8 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, aft
               </AlertDialogDescription>
             </AlertDialogHeader>
 
-            <div className="mt-4">
-              <NewsForm/>
+            <ScrollArea className="pr-4">
+              <NewsForm className='max-h-96'/>
 
               <div className="flex items-start gap-3 mt-8">
                 <Checkbox
@@ -94,16 +95,15 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, aft
                   </p>
                 </div>
               </div>
-            </div>
+            </ScrollArea>
 
-
-            <AlertDialogFooter className="mt-6">
-              <AlertDialogCancel type="button">
+            <AlertDialogFooter className="flex-row mt-6">
+              <AlertDialogCancel type="button" className='flex-1 sm:flex-none'>
                 <XIcon/>
                 <span>Cancel</span>
               </AlertDialogCancel>
 
-              <LoadingButton type="submit" loading={isPending}>
+              <LoadingButton type="submit" loading={isPending} className='flex-1 sm:flex-none'>
                 <SendIcon/>
                 <span>Submit</span>
               </LoadingButton>

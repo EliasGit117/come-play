@@ -3,19 +3,19 @@ import { Table } from "@tanstack/react-table";
 
 export interface IDataTableContext<TData> {
   table: Table<TData>;
+  isPending?: boolean;
 }
 
-export interface IDataTableProviderProps<TData> {
-  table: Table<TData>;
+export interface IDataTableProviderProps<TData> extends IDataTableContext<TData>{
   children: ReactNode;
 }
 
 const DataTableContext = createContext<IDataTableContext<any> | undefined>(undefined);
 
-export function DataTableProvider<TData>({ table, children, }: IDataTableProviderProps<TData>) {
+export function DataTableProvider<TData>({ children, ...props }: IDataTableProviderProps<TData>) {
 
   return (
-    <DataTableContext.Provider value={{ table }}>
+    <DataTableContext.Provider value={props}>
       {children}
     </DataTableContext.Provider>
   );

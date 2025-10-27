@@ -28,7 +28,7 @@ export const EditBannerForm: FC<IEditBannerFormProps> = ({ className, disabled }
 
   return (
     <fieldset disabled={disabled} className={className}>
-      <FieldGroup className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <FieldGroup className="grid grid-cols-1 lg:grid-cols-4 gap-4">
         <Controller
           name="title"
           control={form.control}
@@ -107,7 +107,7 @@ export const EditBannerForm: FC<IEditBannerFormProps> = ({ className, disabled }
           name="textRo"
           control={form.control}
           render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
+            <Field className='lg:col-span-2' data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="text-ro-textarea">Romanian text</FieldLabel>
               <Textarea
                 {...field}
@@ -125,7 +125,7 @@ export const EditBannerForm: FC<IEditBannerFormProps> = ({ className, disabled }
           name="textRu"
           control={form.control}
           render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
+            <Field className='lg:col-span-2' data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="text-ru-textarea">Russian text</FieldLabel>
               <Textarea
                 {...field}
@@ -143,7 +143,7 @@ export const EditBannerForm: FC<IEditBannerFormProps> = ({ className, disabled }
           name="isActive"
           control={form.control}
           render={({ field, fieldState }) => (
-            <Field orientation="horizontal" data-invalid={fieldState.invalid}>
+            <Field className='lg:col-span-2' orientation="horizontal" data-invalid={fieldState.invalid}>
               <Checkbox
                 id="is-active-checkbox"
                 name={field.name}

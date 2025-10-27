@@ -15,11 +15,6 @@ import {
 } from '@/routes/admin/banners/-components/delete-banner-alert-dialog/provider';
 import { useDataTable } from '@/components/data-table';
 import { DeleteBannerAlertDialog } from '@/routes/admin/banners/-components/delete-banner-alert-dialog/alert-dialog';
-import {
-  ReorderBannerSheet,
-  ReorderBannerSheetProvider,
-  ReorderBannerSheetTrigger
-} from '@/routes/admin/banners/-components/reorder-banners';
 
 
 export const Route = createFileRoute('/admin/banners/')({
@@ -70,49 +65,42 @@ function RouteComponent() {
 
   return (
     <DeleteBannerAlertDialogProvider>
-      <ReorderBannerSheetProvider>
-
-        <main className="container mx-auto p-4 space-y-4 flex flex-col flex-1">
-          <BannerTable
-            table={table}
-            topToolbarChildren={
-              <>
-                <div className="flex-1"/>
-                <ReorderBannerSheetTrigger>
-                  <AdaptiveButton
-                    variant="ghost"
-                    size="sm"
-                    disabled={isPending}
-                    icon={ListStartIcon}
-                    text="Reorder"
-                  />
-                </ReorderBannerSheetTrigger>
+      <main className="container mx-auto p-4 space-y-4 flex flex-col flex-1">
+        <BannerTable
+          table={table}
+          topToolbarChildren={
+            <>
+              <div className="flex-1"/>
                 <AdaptiveButton
                   variant="ghost"
                   size="sm"
                   disabled={isPending}
-                  onClick={openCreateDialog}
-                  icon={FilePlus2Icon}
-                  text="Create"
+                  icon={ListStartIcon}
+                  text="Reorder"
                 />
-                <AdaptiveButton
-                  variant="ghost"
-                  size="sm"
-                  onClick={refetchSync}
-                  disabled={isPending}
-                  icon={RotateCcwIcon}
-                  text="Refresh"
-                />
-              </>
-            }
-          />
+              <AdaptiveButton
+                variant="ghost"
+                size="sm"
+                disabled={isPending}
+                onClick={openCreateDialog}
+                icon={FilePlus2Icon}
+                text="Create"
+              />
+              <AdaptiveButton
+                variant="ghost"
+                size="sm"
+                onClick={refetchSync}
+                disabled={isPending}
+                icon={RotateCcwIcon}
+                text="Refresh"
+              />
+            </>
+          }
+        />
 
-          <ReorderBannerSheet/>
-          <CreateBannerDialog open={createDialogOpen} setOpen={setCreateDialogOpen}/>
-          <DeleteBannerAlertDialog/>
-        </main>
-
-      </ReorderBannerSheetProvider>
+        <CreateBannerDialog open={createDialogOpen} setOpen={setCreateDialogOpen}/>
+        <DeleteBannerAlertDialog/>
+      </main>
     </DeleteBannerAlertDialogProvider>
   );
 }

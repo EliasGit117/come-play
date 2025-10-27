@@ -27,12 +27,13 @@ const AdminHeader: React.FC<IAdminHeaderProps> = ({ className, ...props }) => {
     };
 
     const onScroll = () => {
-      if (ticking) return;
+      if (ticking)
+        return;
+
       window.requestAnimationFrame(updateTopState);
       ticking = true;
     };
 
-    // Initialize state
     updateTopState();
 
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -45,7 +46,7 @@ const AdminHeader: React.FC<IAdminHeaderProps> = ({ className, ...props }) => {
     <header
       ref={headerRef}
       className={cn(
-        'sticky top-0 border-b z-10',
+        'sticky top-0 border-b z-20',
         'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90',
         'dark:supports-[backdrop-filter]:bg-background/75',
         className

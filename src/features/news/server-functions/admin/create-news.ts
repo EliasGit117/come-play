@@ -35,7 +35,7 @@ export const useCreateNewsMutation = (options?: TOptions) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: ['news', 'create'],
+    mutationKey: ['admin', 'news', 'create'],
     mutationFn: (values) => createNews({ data: values }),
     ...options,
     onSuccess: (data, variables, onMutateResult, context) => {

@@ -23,6 +23,7 @@ import { useCreateBannerMutation } from '@/features/banners/server-functions/adm
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 
+
 interface CreateNewsDialogProps {
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -39,7 +40,7 @@ const CreateBannerDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, afterSuc
       titleRo: '',
       titleRu: '',
       textRo: '',
-      textRu: '',
+      textRu: ''
     }
   });
 
@@ -66,7 +67,7 @@ const CreateBannerDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, afterSuc
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogContent className="max-w-2xl">
+      <AlertDialogContent className="sm:max-w-2xl">
         <Form {...form}>
           <form onSubmit={form.handleSubmit((values: TCreateBannerSchema) => mutate(values))}>
             <AlertDialogHeader>
@@ -76,8 +77,8 @@ const CreateBannerDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, afterSuc
               </AlertDialogDescription>
             </AlertDialogHeader>
 
-            <ScrollArea type='always' className="mt-4 h-[50dvh]">
-              <BannerForm className='mr-4'/>
+            <ScrollArea type="always" className="mt-4 pr-4">
+              <BannerForm className="max-h-96"/>
             </ScrollArea>
 
             <div className="flex items-start gap-3 mt-8">

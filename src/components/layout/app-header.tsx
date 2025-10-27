@@ -15,20 +15,14 @@ interface IAppHeader extends ComponentProps<'header'> {
 }
 
 const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
+  const setOpenSidebar = useAppSidebar(s => s.setOpen);
   const matches = useMatches();
   const headerOptions = matches.find((match) => match.staticData.headerOptions)?.staticData.headerOptions;
   const { type } = headerOptions ?? { type: 'sticky' };
 
-  const setOpenSidebar = useAppSidebar(s => s.setOpen);
-  const [isAtTop, setIsAtTop] = useState(type !== 'sticky');
-
+  const [isAtTop, setIsAtTop] = useState(!!window.scrollY);
 
   useEffect(() => {
-    if (type === 'sticky') {
-      setIsAtTop(false);
-      return;
-    }
-
     let ticking = false;
 
     const updateTopState = () => {
@@ -45,21 +39,20 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
     };
 
     updateTopState();
+
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, [type]);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <header
       className={cn(
-        'sticky top-0 flex h-16 shrink-0 items-center gap-2',
+        'sticky top-0 flex h-16 shrink-0 items-center gap-2 z-20',
         'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90',
-        'dark:supports-[backdrop-filter]:bg-background/75',
-        type === 'fixed' && 'fixed left-0 right-0 border-b',
-        isAtTop && 'text-white !bg-transparent backdrop-blur-none border-b-transparent',
+        'dark:supports-[backdrop-filter]:bg-background/75 border-b',
+        type === 'fixed' && 'fixed left-0 right-0',
+        isAtTop && 'text-white !bg-transparent backdrop-blur-none border-b-transparent'
       )}
       {...props}
     >
@@ -90,13 +83,13 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
           <Button variant="ghost" size="icon" className="transition-none" asChild>
             <Link to="/calculator">
               <CalculatorIcon/>
-              <span className='sr-only'>Calculation page</span>
+              <span className="sr-only">Calculation page</span>
             </Link>
           </Button>
 
           <Button variant="ghost" size="icon" className="xl:hidden" onClick={() => setOpenSidebar(true)}>
             <MenuIcon/>
-            <span className='sr-only'>Sidebar button</span>
+            <span className="sr-only">Sidebar button</span>
           </Button>
         </div>
       </div>

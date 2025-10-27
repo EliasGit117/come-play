@@ -21,7 +21,7 @@ export const BannerForm: FC<IPostProps> = ({ className, disabled }) => {
 
   return (
     <fieldset disabled={disabled} className={className}>
-      <FieldGroup>
+      <FieldGroup className='grid grid-cols-1 sm:grid-cols-2'>
         <Controller
           name="title"
           control={form.control}

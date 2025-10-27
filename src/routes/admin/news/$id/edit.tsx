@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { getNewsByIdQueryOptions } from '@/features/news/server-functions/admin/get-news-by-id';
+import { getNewsByIdQueryOptions } from '@/features/news/server-functions/admin/get-news-by-id-for-admin';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   EditNewsForm,

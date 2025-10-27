@@ -97,9 +97,9 @@ export const getNewsPaginatedForAdmin = createServerFn({ method: 'GET' })
 
 export function getNewsPaginatedForAdminQueryOptions(params: TGetNewsPaginatedParamsForAdmin) {
   return queryOptions({
-    queryKey: ['news', 'paginated', params],
+    queryKey: ['admin', 'news', 'paginated', params],
     queryFn: () => getNewsPaginatedForAdmin({ data: params }),
     staleTime: 30_000,
-    gcTime: 30_000
+    gcTime: 60_000
   });
 }

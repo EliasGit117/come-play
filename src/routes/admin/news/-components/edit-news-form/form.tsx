@@ -136,7 +136,7 @@ export const EditNewsForm: FC<IEditNewsFormProps> = ({ className, disabled }) =>
                     value={field.value ?? ''}
                     onChange={field.onChange}
                     editorClassName="min-h-44 mx-auto px-4"
-                    menuBarClassName='sticky top-[calc(3rem+1px)]'
+                    menuBarClassName='sticky top-[calc(3rem+1px)] z-10'
                   />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                 </Field>
@@ -155,7 +155,7 @@ export const EditNewsForm: FC<IEditNewsFormProps> = ({ className, disabled }) =>
                     value={field.value ?? ''}
                     onChange={field.onChange}
                     editorClassName="min-h-44 mx-auto px-4"
-                    menuBarClassName='sticky top-[calc(3rem+1px)]'
+                    menuBarClassName='sticky top-[calc(3rem+1px)] z-10'
                   />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                 </Field>

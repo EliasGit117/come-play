@@ -87,8 +87,8 @@ function RouteComponent() {
         <div
           dangerouslySetInnerHTML={{ __html: data.content }}
           className={cn(
-            'mt-4 prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-xl focus:outline-none',
-            'max-w-4xl mx-auto p-4'
+            'container mx-auto p-4 max-w-4xl',
+            'mt-4 prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-x focus:outline-none',
           )}
         />
       )}

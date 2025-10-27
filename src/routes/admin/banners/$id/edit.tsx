@@ -93,7 +93,7 @@ function RouteComponent() {
   ];
 
   return (
-    <main className="container mx-auto p-4 pb-12 space-y-4 flex-1 relative">
+    <main className="container mx-auto p-4 pb-16 space-y-4 flex-1 relative">
       <p className="text-muted-foreground text-xs">
         Created: {format(banner.createdAt, 'dd.MM.yyyy - HH:mm')},
         Updated: {format(banner.updatedAt, 'dd.MM.yyyy - HH:mm')}
