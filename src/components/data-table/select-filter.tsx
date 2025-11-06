@@ -24,7 +24,7 @@ import {
   TFacetedOptionValue
 } from '@/components/data-table/types/tanstack-table-meta';
 import * as React from 'react';
-import { hasValue } from '@/utils/has-value';
+import { hasValue } from '@/lib/has-value';
 
 interface IDataTableSelectFilter<TData, TValue> {
   column: Column<TData, TValue>;

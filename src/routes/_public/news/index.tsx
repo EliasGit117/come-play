@@ -40,8 +40,6 @@ function RouteComponent() {
   const { data } = useQuery({
     ...getNewsPaginatedQueryOptions(searchParams),
     placeholderData: keepPreviousData,
-    gcTime: 0,
-    staleTime: 0
   });
 
   return (

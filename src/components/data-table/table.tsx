@@ -15,7 +15,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 interface DataTableProps<TData> extends ComponentProps<'div'> {
   actionBar?: ReactNode;
-  skeletonCellClassName?: string;
+  showSkeleton?: boolean;
+  defaultSkeletonClassName?: string;
 }
 
 export function DataTable<TData>(props: DataTableProps<TData>) {
@@ -27,7 +28,8 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
     actionBar,
     children,
     className,
-    skeletonCellClassName,
+    defaultSkeletonClassName,
+    showSkeleton = true,
     ...restOfProps
   } = props;
 
@@ -36,13 +38,8 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
   const visibleColumns = table.getVisibleLeafColumns();
   const pageSize = table.getState().pagination.pageSize ?? 10;
 
-  const isEmpty = !rowModel.rows?.length;
-
   return (
-    <div
-      className={cn('flex w-full flex-col gap-2.5 overflow-auto', className)}
-      {...restOfProps}
-    >
+    <div className={cn('flex w-full flex-col gap-2.5 overflow-auto', className)} {...restOfProps}>
       {children}
       <div className="overflow-hidden rounded-md border">
         <Table>
@@ -65,16 +62,23 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
           </TableHeader>
 
           <TableBody>
-            {isPending && isEmpty ? (
+            {(showSkeleton && isPending) ? (
               Array.from({ length: pageSize }).map((_, rowIndex) => (
                 <TableRow key={`skeleton-${rowIndex}`}>
                   {visibleColumns.map((column, colIndex) => (
                     <TableCell
-                      className={cn("h-10", skeletonCellClassName)}
                       key={`skeleton-cell-${rowIndex}-${colIndex}`}
+                      className='h-10'
                       style={{ ...getCommonPinningStyles({ column }) }}
                     >
-                      <Skeleton className='h-full w-full' />
+                      {column.columnDef.meta?.skeletonItem ?? (
+                        <Skeleton
+                          className={cn(
+                          'h-4 w-full',
+                            defaultSkeletonClassName,
+                            column.columnDef.meta?.skeletonClassName
+                          )}/>
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>

@@ -1,5 +1,6 @@
 import { RowData } from '@tanstack/react-table';
 import { LucideIcon } from 'lucide-react';
+import { ReactNode } from 'react';
 
 export enum ColumnFilterType {
   Text = 'text',
@@ -78,5 +79,7 @@ declare module '@tanstack/react-table' {
     filter?: TColumnFilterOptions;
     label?: string;
     icon?: LucideIcon;
+    skeletonClassName?: string;
+    skeletonItem?: ReactNode;
   }
 }

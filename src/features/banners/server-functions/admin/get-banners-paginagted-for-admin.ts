@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { queryOptions } from '@tanstack/react-query';
 import { Prisma } from '@prisma/client';
 import { dateRangeSchema, numberRangeSchema } from '@/components/data-table';
-import { hasValue } from '@/utils/has-value';
+import { hasValue } from '@/lib/has-value';
 import { AdminBannerBriefDtoFactory } from '@/features/banners/dtos/admin-banner-brief-dto';
 
 

@@ -5,7 +5,7 @@ import {
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogFooter
+  AlertDialogFooter, AlertDialogDescription
 } from '@/components/ui/alert-dialog';
 import { useDeleteBannerAlertDialog } from '@/routes/admin/banners/-components/delete-banner-alert-dialog/provider';
 
@@ -27,10 +27,10 @@ export const DeleteBannerAlertDialog: React.FC = () => {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Delete Banner</AlertDialogTitle>
-          <p>
+          <AlertDialogDescription>
             Are you sure you want to delete this banner? This action cannot be
             undone.
-          </p>
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>

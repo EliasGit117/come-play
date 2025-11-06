@@ -7,7 +7,7 @@ import { AdminNewsBriefDtoFactory } from '@/features/news/dtos/admin-news-brief-
 import { NewsStatus, Prisma } from '@prisma/client';
 import { PaginationResultDtoFactory } from '@/features/common/pagination/pagination-result-dto';
 import { dateRangeSchema, numberRangeSchema } from '@/components/data-table';
-import { hasValue } from '@/utils/has-value';
+import { hasValue } from '@/lib/has-value';
 
 
 export const getNewsPaginatedForAdminSchema = paginatedSchema.extend({

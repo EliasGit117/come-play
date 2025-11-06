@@ -42,6 +42,7 @@ export const newsColumns = [
       label: 'Id',
       key: 'idRange',
       icon: HashIcon,
+      skeletonClassName: 'w-10 h-6',
       filter: {
         type: ColumnFilterType.NumberRange,
         min: 1,
@@ -78,6 +79,7 @@ export const newsColumns = [
       label: 'Image',
       key: 'hasImage',
       icon: ImageIcon,
+      skeletonClassName: 'h-10 w-18',
       filter: {
         type: ColumnFilterType.Select,
         options: [
@@ -94,6 +96,7 @@ export const newsColumns = [
     meta: {
       label: 'Title',
       icon: HeadingIcon,
+      skeletonClassName: 'h-6 w-40',
       filter: {
         type: ColumnFilterType.Text,
         placeholder: 'Search by title'
@@ -106,6 +109,7 @@ export const newsColumns = [
     meta: {
       label: 'Slug',
       icon: LinkIcon,
+      skeletonClassName: 'h-6 w-36',
       filter: { type: ColumnFilterType.Text, placeholder: 'Search by slug' }
     }
   }),
@@ -123,6 +127,7 @@ export const newsColumns = [
     meta: {
       label: 'Status',
       icon: ListCheckIcon,
+      skeletonClassName: 'h-6 w-20',
       filter: {
         type: ColumnFilterType.MultiSelect,
         options: [
@@ -138,6 +143,7 @@ export const newsColumns = [
     meta: {
       label: 'Created',
       icon: CalendarPlusIcon,
+      skeletonClassName: 'h-6 w-30',
       filter: {
         type: ColumnFilterType.DateRange
       }
@@ -149,6 +155,7 @@ export const newsColumns = [
     meta: {
       label: 'Updated',
       icon: CalendarClockIcon,
+      skeletonClassName: 'h-6 w-30',
       filter: {
         type: ColumnFilterType.DateRange
       }
@@ -156,7 +163,10 @@ export const newsColumns = [
   }),
   columnHelper.display({
     id: 'actions',
-    meta: { label: 'Actions' },
+    meta: {
+      label: 'Actions',
+      skeletonClassName: 'ml-auto h-7 w-7',
+    },
     cell: (ctx) => {
       const navigate = useNavigate();
       const { setId } = useDeleteNewsAlertDialog();

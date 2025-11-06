@@ -16,20 +16,13 @@ const AdminHeader: React.FC<IAdminHeaderProps> = ({ className, ...props }) => {
 
     const updateTopState = () => {
       if (!headerRef.current) return;
-
-      if (window.scrollY === 0) {
-        headerRef.current.classList.add('!bg-transparent', 'backdrop-blur-none', 'border-b-transparent');
-      } else {
-        headerRef.current.classList.remove('!bg-transparent', 'backdrop-blur-none', 'border-b-transparent');
-      }
-
+      const isScrolled = window.scrollY > 0;
+      headerRef.current.setAttribute('data-scrolled', isScrolled ? 'true' : 'false');
       ticking = false;
     };
 
     const onScroll = () => {
-      if (ticking)
-        return;
-
+      if (ticking) return;
       window.requestAnimationFrame(updateTopState);
       ticking = true;
     };
@@ -37,16 +30,15 @@ const AdminHeader: React.FC<IAdminHeaderProps> = ({ className, ...props }) => {
     updateTopState();
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-    };
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
     <header
       ref={headerRef}
+      data-scrolled='false'
       className={cn(
-        'sticky top-0 border-b z-20',
+        'sticky top-0 data-[scrolled=true]:border-b z-20',
         'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90',
         'dark:supports-[backdrop-filter]:bg-background/75',
         className

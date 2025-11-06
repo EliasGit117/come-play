@@ -1,5 +1,13 @@
 import * as React from 'react';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogFooter } from '@/components/ui/alert-dialog';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogFooter, AlertDialogDescription
+} from '@/components/ui/alert-dialog';
 import { useDeleteNewsAlertDialog } from '@/routes/admin/news/-components/delete-news-alert-dialog/provider';
 
 export const DeleteNewsAlertDialog: React.FC = () => {
@@ -19,13 +27,16 @@ export const DeleteNewsAlertDialog: React.FC = () => {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Delete News</AlertDialogTitle>
-          <p>Are you sure you want to delete this news? This action cannot be undone.</p>
+          <AlertDialogDescription>
+            Are you sure you want to delete this news? This action cannot be undone.
+          </AlertDialogDescription>
         </AlertDialogHeader>
+
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isPending}>
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction variant='destructive' onClick={handleDelete} disabled={isPending}>
+          <AlertDialogAction variant="destructive" onClick={handleDelete} disabled={isPending}>
             {isPending ? 'Deleting...' : 'Delete'}
           </AlertDialogAction>
         </AlertDialogFooter>

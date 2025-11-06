@@ -8,15 +8,16 @@ import { DataTableProvider, DataTableToolbar, DataTable, DataTablePagination } f
 interface IProps extends ComponentProps<'div'> {
   table: Table<IAdminNewsBriefDto>;
   topToolbarChildren?: ReactNode;
+  isPending?: boolean;
 }
 
-export const NewsTable: FC<IProps> = ({ className, topToolbarChildren, table, ...props }) => {
+export const NewsTable: FC<IProps> = ({ className, topToolbarChildren, table, isPending, ...props }) => {
   // noinspection BadExpressionStatementJS
   "use no memo";
 
   return (
     <div className={cn('flex flex-col gap-2', className)} {...props}>
-      <DataTableProvider table={table}>
+      <DataTableProvider table={table} isPending={isPending}>
         <DataTableToolbar topToolbarChildren={topToolbarChildren}/>
         <DataTable/>
         <DataTablePagination/>

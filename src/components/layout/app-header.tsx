@@ -1,4 +1,4 @@
-import { ComponentProps, FC, useEffect, useState } from 'react';
+import { ComponentProps, FC, useState } from 'react';
 import { Link, useMatches } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { CalculatorIcon, MenuIcon } from 'lucide-react';
@@ -9,10 +9,10 @@ import { useAppSidebar } from '@/components/layout/app-sidebar-provider';
 import LightLogo from '@/assets/icons/logo-white.svg?react';
 import DarkLogo from '@/assets/icons/logo.svg?react';
 import { ThemeDropdown } from '@/components/theme';
+import { useBodyScrollPosition } from '@n8tb1t/use-scroll-position';
 
 
-interface IAppHeader extends ComponentProps<'header'> {
-}
+interface IAppHeader extends ComponentProps<'header'> {}
 
 const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
   const setOpenSidebar = useAppSidebar(s => s.setOpen);
@@ -20,30 +20,8 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
   const headerOptions = matches.find((match) => match.staticData.headerOptions)?.staticData.headerOptions;
   const { type } = headerOptions ?? { type: 'sticky' };
 
-  const [isAtTop, setIsAtTop] = useState(!!window.scrollY);
-
-  useEffect(() => {
-    let ticking = false;
-
-    const updateTopState = () => {
-      setIsAtTop(window.scrollY === 0);
-      ticking = false;
-    };
-
-    const onScroll = () => {
-      if (ticking)
-        return;
-
-      window.requestAnimationFrame(updateTopState);
-      ticking = true;
-    };
-
-    updateTopState();
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  const [isAtTop, setIsAtTop] = useState<boolean>(true);
+  useBodyScrollPosition(({ top }) => setIsAtTop(top));
 
   return (
     <header
@@ -52,14 +30,15 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
         'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90',
         'dark:supports-[backdrop-filter]:bg-background/75 border-b',
         type === 'fixed' && 'fixed left-0 right-0',
-        isAtTop && 'text-white !bg-transparent backdrop-blur-none border-b-transparent'
+        isAtTop && '!bg-transparent backdrop-blur-none border-b-transparent',
+        (isAtTop && type === 'fixed') && 'text-white'
       )}
       {...props}
     >
       <div className="container mx-auto px-4 flex gap-2 items-center">
         <Button variant="lightGhost" size="dense" className="-ml-1" asChild>
           <Link to="/">
-            {isAtTop ? (
+            {(isAtTop && type === 'fixed') ? (
               <LightLogo className="size-8 xl:size-10"/>
             ) : (
               <>

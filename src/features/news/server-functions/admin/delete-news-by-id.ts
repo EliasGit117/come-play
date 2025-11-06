@@ -35,7 +35,9 @@ export const useDeleteNewsMutation = (options?: TOptions) => {
     onSuccess: (data, variables, onMutateResult, context) => {
       void queryClient.invalidateQueries({
         predicate: (query) =>
-          query.queryKey[0] === 'news' && query.queryKey[1] === 'paginated'
+          query.queryKey[0] === 'admin' &&
+          query.queryKey[1] === 'news' &&
+          query.queryKey[2] === 'paginated'
       });
 
       options?.onSuccess?.(data, variables, onMutateResult, context);

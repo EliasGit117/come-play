@@ -1,7 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import AdaptiveButton from '@/components/ui/adaptive-button';
 import { FilePlus2Icon, ListStartIcon, RotateCcwIcon } from 'lucide-react';
-import CreateBannerDialog from '@/routes/admin/banners/-components/create-banner-dialog/dialog';
 import { useState } from 'react';
 import { zodValidator } from '@tanstack/zod-adapter';
 import {
@@ -15,6 +14,7 @@ import {
 } from '@/routes/admin/banners/-components/delete-banner-alert-dialog/provider';
 import { useDataTable } from '@/components/data-table';
 import { DeleteBannerAlertDialog } from '@/routes/admin/banners/-components/delete-banner-alert-dialog/alert-dialog';
+import CreateBannerDialog from '@/routes/admin/banners/-components/create-banner-dialog';
 
 
 export const Route = createFileRoute('/admin/banners/')({
@@ -68,16 +68,17 @@ function RouteComponent() {
       <main className="container mx-auto p-4 space-y-4 flex flex-col flex-1">
         <BannerTable
           table={table}
+          isPending={isPending}
           topToolbarChildren={
             <>
               <div className="flex-1"/>
-                <AdaptiveButton
-                  variant="ghost"
-                  size="sm"
-                  disabled={isPending}
-                  icon={ListStartIcon}
-                  text="Reorder"
-                />
+              <AdaptiveButton
+                variant="ghost"
+                size="sm"
+                disabled={isPending}
+                icon={ListStartIcon}
+                text="Reorder"
+              />
               <AdaptiveButton
                 variant="ghost"
                 size="sm"

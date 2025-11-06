@@ -64,6 +64,7 @@ function Component() {
       <main className="container mx-auto p-4 space-y-4 flex flex-col flex-1">
         <NewsTable
           table={table}
+          isPending={isPending}
           topToolbarChildren={
             <>
               <div className="flex-1"/>
@@ -78,8 +79,8 @@ function Component() {
               <AdaptiveButton
                 variant="ghost"
                 size="sm"
-                onClick={refetchSync}
                 disabled={isPending}
+                onClick={refetchSync}
                 icon={RotateCcwIcon}
                 text="Refresh"
               />

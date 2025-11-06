@@ -36,6 +36,7 @@ import {
 import { Link, useNavigate } from '@tanstack/react-router';
 import { useDeleteBannerAlertDialog } from '@/routes/admin/banners/-components/delete-banner-alert-dialog/provider';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const columnHelper = createColumnHelper<IAdminBannerBriefDto>();
 
@@ -47,6 +48,7 @@ export const bannerColumns = [
       label: 'Id',
       key: 'idRange',
       icon: HashIcon,
+      skeletonClassName: 'h-6 w-8',
       filter: {
         type: ColumnFilterType.NumberRange,
         min: 1,
@@ -59,12 +61,13 @@ export const bannerColumns = [
     cell: (ctx) => ctx.getValue(),
     meta: {
       label: 'Order',
-      icon: ListOrderedIcon
+      icon: ListOrderedIcon,
+      skeletonClassName: 'h-6 w-8',
     }
   }),
-  columnHelper.accessor(row => row,{
+  columnHelper.accessor(row => row, {
     id: 'images',
-    header: ({ column }) => <DataTableColumnHeader column={column} />,
+    header: ({ column }) => <DataTableColumnHeader column={column}/>,
     cell: (ctx) => {
       const { desktopImage, tabletImage, mobileImage } = ctx.row.original;
 
@@ -75,7 +78,7 @@ export const bannerColumns = [
               className={`${className} rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex`}
               title={`${label} — No image`}
             >
-              <ImageOffIcon className="size-5" />
+              <ImageOffIcon className="size-5"/>
             </div>
           );
 
@@ -110,17 +113,24 @@ export const bannerColumns = [
           { title: 'Has tablet', value: 'tablet', icon: TabletIcon },
           { title: 'Has mobile', value: 'mobile', icon: SmartphoneIcon }
         ]
-      }
+      },
+      skeletonItem:
+        <div className="flex gap-2 items-center">
+          <Skeleton className='w-28 h-11'/>
+          <Skeleton className='w-24 h-11'/>
+          <Skeleton className='w-20 h-11'/>
+        </div>
     }
   }),
   columnHelper.accessor('path', {
     header: ({ column }) => <DataTableColumnHeader column={column}/>,
-    cell: (ctx) =>  (
+    cell: (ctx) => (
       <p className="text-xs italic">{ctx.getValue() || '-'}</p>
     ),
     meta: {
       label: 'Path',
       icon: LinkIcon,
+      skeletonClassName: 'h-6 w-32',
       filter: {
         type: ColumnFilterType.Text,
         placeholder: 'Search by path'
@@ -133,6 +143,7 @@ export const bannerColumns = [
     meta: {
       label: 'Title',
       icon: HeadingIcon,
+      skeletonClassName: 'h-6 w-32',
       filter: {
         type: ColumnFilterType.Text,
         placeholder: 'Search by title'
@@ -154,13 +165,14 @@ export const bannerColumns = [
     meta: {
       label: 'Is active',
       icon: CheckIcon,
+      skeletonClassName: 'h-6 w-20',
       filter: {
         type: ColumnFilterType.Select,
         options: [
           { title: 'Active', value: true, icon: CheckIcon },
           { title: 'Inactive', value: false, icon: XIcon }
         ]
-      }
+      },
     }
   }),
   columnHelper.accessor('createdAt', {
@@ -173,6 +185,7 @@ export const bannerColumns = [
     meta: {
       label: 'Created',
       icon: CalendarPlusIcon,
+      skeletonClassName: 'h-6 w-26',
       filter: {
         type: ColumnFilterType.DateRange
       }
@@ -188,6 +201,7 @@ export const bannerColumns = [
     meta: {
       label: 'Updated',
       icon: CalendarClockIcon,
+      skeletonClassName: 'h-6 w-26',
       filter: {
         type: ColumnFilterType.DateRange
       }
@@ -195,7 +209,10 @@ export const bannerColumns = [
   }),
   columnHelper.display({
     id: 'actions',
-    meta: { label: 'Actions' },
+    meta: {
+      label: 'Actions',
+      skeletonClassName: 'h-7 w-7 ml-auto',
+    },
     cell: (ctx) => {
       const navigate = useNavigate();
       const { setId } = useDeleteBannerAlertDialog();
