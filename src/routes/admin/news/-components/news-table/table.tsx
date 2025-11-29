@@ -20,10 +20,10 @@ import { CreateNewsDialog } from '@/routes/admin/news/-components/create-news-di
 import { CreateNewsDialogTrigger } from '@/routes/admin/news/-components/create-news-dialog/trigger';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import { TrashIcon } from 'lucide-react';
+import { FilePlus2Icon, TrashIcon } from 'lucide-react';
 import { useDeleteNewsByIdsMutation } from '@/features/news/server-functions/admin/delete-news-by-ids';
 import { useConfirm } from '@/components/ui/confirm-dialog';
-
+import * as React from 'react';
 
 
 interface IProps extends ComponentProps<'div'> {
@@ -64,7 +64,7 @@ export const NewsTable: FC<IProps> = (props) => {
       description: 'Are you sure you want to delete selected news?',
       confirmText: 'Delete',
       cancelText: 'Cancel'
-    })
+    });
 
     if (!isConfirmed)
       return;
@@ -81,25 +81,31 @@ export const NewsTable: FC<IProps> = (props) => {
 
   return (
     <div className={cn('flex flex-col gap-2', className)} {...divProps}>
-        <CreateNewsDialogProvider>
-          <DataTableProvider table={table} isPending={isPending}>
-            <DataTableToolbar>
-              <div className="flex-1"/>
-              {selectedItems.length > 0 && (
-                <Button size="sm" variant="ghost-destructive" onClick={deleteNews} disabled={isLoading}>
-                  <TrashIcon/>
-                  <span className="sr-only sm:not-sr-only">Delete</span>
-                </Button>
-              )}
-              <CreateNewsDialogTrigger size="sm" variant="ghost" className="w-8 sm:w-fit"/>
-            </DataTableToolbar>
+      <CreateNewsDialogProvider>
+        <DataTableProvider table={table} isPending={isPending}>
+          <DataTableToolbar>
+            <div className="flex-1"/>
+            {selectedItems.length > 0 && (
+              <Button size="sm" variant="ghost-destructive" onClick={deleteNews} disabled={isLoading}>
+                <TrashIcon/>
+                <span className="sr-only sm:not-sr-only">Delete</span>
+              </Button>
+            )}
 
-            <DataTable/>
-            <DataTablePagination/>
-          </DataTableProvider>
+            <CreateNewsDialogTrigger size="sm" variant="ghost" className="w-8 lg:w-fit" asChild>
+              <button>
+                <FilePlus2Icon/>
+                <span className="sr-only lg:not-sr-only">Create news</span>
+              </button>
+            </CreateNewsDialogTrigger>
+          </DataTableToolbar>
 
-          <CreateNewsDialog/>
-        </CreateNewsDialogProvider>
+          <DataTable/>
+          <DataTablePagination/>
+        </DataTableProvider>
+
+        <CreateNewsDialog/>
+      </CreateNewsDialogProvider>
     </div>
   );
 };

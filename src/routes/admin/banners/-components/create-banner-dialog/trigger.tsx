@@ -20,7 +20,7 @@ export const CreateBannerDialogTrigger: FC<ICreateBannerDialogTriggerProps> = (p
       {(asChild && children) ?? (
         <>
           <FilePlus2Icon />
-          <span className="sr-only sm:not-sr-only">Create Banner</span>
+          <span className="sr-only sm:not-sr-only">Create banner</span>
         </>
       )}
     </Button>

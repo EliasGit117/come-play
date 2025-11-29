@@ -12,7 +12,7 @@ import {
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { bannerColumns } from '@/routes/admin/banners/-components/banners-table/columns';
 import AdaptiveButton from '@/components/ui/adaptive-button';
-import { ListStartIcon, TrashIcon } from 'lucide-react';
+import { FilePlus2Icon, ListStartIcon, TrashIcon } from 'lucide-react';
 import { CreateBannerDialogTrigger } from '@/routes/admin/banners/-components/create-banner-dialog/trigger';
 import { CreateBannerDialog } from '@/routes/admin/banners/-components/create-banner-dialog/dialog';
 import { CreateBannerDialogProvider } from '@/routes/admin/banners/-components/create-banner-dialog/provider';
@@ -69,7 +69,7 @@ export const BannerTable: FC<IProps> = (props) => {
       description: 'Are you sure you want to delete selected banners?',
       confirmText: 'Delete',
       cancelText: 'Cancel'
-    })
+    });
 
     if (!isConfirmed)
       return;
@@ -98,7 +98,7 @@ export const BannerTable: FC<IProps> = (props) => {
                 onClick={deleteBanners}
               >
                 <TrashIcon/>
-                <span className="sr-only sm:not-sr-only">Delete</span>
+                <span className="sr-only lg:not-sr-only">Delete</span>
               </Button>
             )}
 
@@ -107,10 +107,16 @@ export const BannerTable: FC<IProps> = (props) => {
               size="sm"
               disabled={isPending}
               icon={ListStartIcon}
-              text="Reorder"
+              text="Reorder banners"
+              breakpoint="lg"
             />
 
-            <CreateBannerDialogTrigger size="sm" variant="ghost" className="w-8 sm:w-fit"/>
+            <CreateBannerDialogTrigger size="sm" variant="ghost" className="w-8 lg:w-fit" asChild>
+              <button>
+                <FilePlus2Icon/>
+                <span className="sr-only lg:not-sr-only">Create banner</span>
+              </button>
+            </CreateBannerDialogTrigger>
           </DataTableToolbar>
 
           <DataTable/>

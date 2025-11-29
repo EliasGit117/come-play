@@ -15,7 +15,7 @@ export const CreateNewsDialogTrigger: FC<ICreateNewsDialogTriggerProps> = (props
       {(asChild && children) ?? (
         <>
           <FilePlus2Icon/>
-          <span className="sr-only sm:not-sr-only">Create</span>
+          <span className="sr-only sm:not-sr-only">Create news</span>
         </>
       )}
     </Button>

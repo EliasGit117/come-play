@@ -77,25 +77,26 @@ export const CreateBannerDialog: FC<CreateBannerDialogProps> = ({ afterSuccess }
               </AlertDialogDescription>
             </AlertDialogHeader>
 
-            <ScrollArea className="pr-4">
+            <ScrollArea className="pr-4 mt-4" type='always'>
               <BannerForm className="max-h-96"/>
-              <div className="flex items-start gap-3 mt-8">
-                <Checkbox
-                  id="edit-after-creation-checkbox"
-                  checked={editAfterCreation}
-                  onCheckedChange={(v) => setEditAfterCreation(!!v)}
-                  disabled={isPending}
-                />
-                <div className="grid gap-2">
-                  <Label htmlFor="edit-after-creation-checkbox">
-                    Edit after creation
-                  </Label>
-                  <p className="text-muted-foreground text-sm">
-                    Redirect to edit banner page to add or change details.
-                  </p>
-                </div>
-              </div>
             </ScrollArea>
+
+            <div className="flex items-start gap-3 mt-4">
+              <Checkbox
+                id="edit-after-creation-checkbox"
+                checked={editAfterCreation}
+                onCheckedChange={(v) => setEditAfterCreation(!!v)}
+                disabled={isPending}
+              />
+              <div className="grid gap-2">
+                <Label htmlFor="edit-after-creation-checkbox">
+                  Edit after creation
+                </Label>
+                <p className="text-muted-foreground text-sm">
+                  Redirect to edit banner page to add or change details.
+                </p>
+              </div>
+            </div>
 
             <AlertDialogFooter className="flex-row mt-6">
               <AlertDialogCancel

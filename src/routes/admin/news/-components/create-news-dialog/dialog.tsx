@@ -76,10 +76,10 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ afterSuccess }) =>
               </AlertDialogDescription>
             </AlertDialogHeader>
 
-            <ScrollArea className="pr-4">
+            <ScrollArea className="pr-4 mt-4" type='always'>
               <NewsForm className='max-h-96'/>
 
-              <div className="flex items-start gap-3 mt-8">
+              <div className="flex items-start gap-3 mt-4">
                 <Checkbox
                   id="edit-after-creation-checkbox"
                   checked={editAfterCreation}

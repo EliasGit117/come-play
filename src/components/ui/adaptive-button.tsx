@@ -12,14 +12,17 @@ interface ButtonWithTooltipProps extends Omit<ComponentProps<typeof Button>, 'si
   icon: LucideIcon;
   text: string;
   size?: 'sm' | 'default';
+  breakpoint?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
 const sizeClasName = {
   default: 'h-9 w-9 sm:w-fit',
-  sm: 'h-8 w-8 sm:w-fit rounded-md gap-1.5 px-3 has-[>svg]:px-2.5',
-}
+  sm: 'h-8 w-8 sm:w-fit rounded-md gap-1.5 px-3 has-[>svg]:px-2.5'
+};
 
+const _ = 'sm:hidden md:hidden lg:hidden xl:hidden 2xl:hidden sm:not-sr-only md:not-sr-only';
 const AdaptiveButton: FC<ButtonWithTooltipProps> = (props) => {
+
   const {
     tooltip,
     tooltipDelay = 500,
@@ -27,8 +30,12 @@ const AdaptiveButton: FC<ButtonWithTooltipProps> = (props) => {
     icon: Icon,
     className,
     size = 'default',
+    breakpoint = 'sm',
     ...buttonProps
   } = props;
+
+  const textClass = `sr-only ${breakpoint}:not-sr-only`;
+  const tooltipClass = `block ${breakpoint}:hidden`;
 
   return (
     <Tooltip delayDuration={tooltipDelay}>
@@ -38,11 +45,11 @@ const AdaptiveButton: FC<ButtonWithTooltipProps> = (props) => {
           className={cn(sizeClasName[size], className)}
           {...buttonProps}
         >
-          <Icon />
-          <p className='sr-only sm:not-sr-only'>{text}</p>
+          <Icon/>
+          <p className={textClass}>{text}</p>
         </Button>
       </TooltipTrigger>
-      <TooltipContent className='block sm:hidden'>
+      <TooltipContent className={tooltipClass}>
         <p>{tooltip ?? text}</p>
       </TooltipContent>
     </Tooltip>
