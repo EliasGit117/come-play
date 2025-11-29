@@ -110,7 +110,12 @@ export const useSetBannerImageMutation = (options?: TOptions) => {
         predicate: (query) =>
           query.queryKey[0] === 'banners' && query.queryKey[1] === 'paginated'
       });
+      void queryClient.refetchQueries({
+        predicate: (query) =>
+          query.queryKey[0] === 'banners' && query.queryKey[1] === 'paginated'
+      });
       void queryClient.invalidateQueries({ queryKey: ['banners', variables.bannerId] });
+      void queryClient.refetchQueries({ queryKey: ['banners', variables.bannerId] });
 
       options?.onSuccess?.(data, variables, onMutateResult, context);
     }

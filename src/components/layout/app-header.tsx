@@ -86,7 +86,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
           />
 
           <div className="flex gap-2 items-center ml-auto">
-            <LanguageDropdown buttonVariant="ghost"/>
+            <LanguageDropdown buttonVariant="ghost" align='end'/>
             <ThemeDropdown
               variant="ghost"
               className="ml-auto"

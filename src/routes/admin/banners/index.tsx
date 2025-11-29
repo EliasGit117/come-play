@@ -3,7 +3,7 @@ import { zodValidator } from '@tanstack/zod-adapter';
 import {
   getBannersForAdminQueryOptions,
   getBannersForAdminSchema
-} from '@/features/banners/server-functions/admin/get-banners-paginagted-for-admin';
+} from '@/features/banners/server-functions/admin/get-banners-for-admin';
 import { BannerTable } from '@/routes/admin/banners/-components/banners-table';
 
 

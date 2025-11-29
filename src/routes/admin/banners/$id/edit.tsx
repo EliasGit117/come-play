@@ -71,8 +71,6 @@ function RouteComponent() {
   };
 
   const isImgPending = Object.values(pendingImages).some(Boolean);
-  const isPending = isFetching || isUpdating || isImgPending;
-
 
   const desktopImage: IImagePickerValue | undefined = !!banner?.desktopImage
     ? { src: banner.desktopImage.url, thumbhash: banner.desktopImage.thumbhash }
@@ -131,8 +129,12 @@ function RouteComponent() {
           onSubmit={form.handleSubmit((values: TEditBannerFormSchema) => mutate({ id: parseInt(id), ...values }))}
           className="flex flex-col gap-4"
         >
-          <EditBannerForm disabled={isPending}/>
-          <BottomButtons onResetClick={() => form.reset()} disabled={!form.formState.isDirty} isLoading={isPending}/>
+          <EditBannerForm disabled={isFetching || isUpdating || isImgPending}/>
+          <BottomButtons
+            onResetClick={() => form.reset()}
+            disabled={!form.formState.isDirty || isImgPending}
+            isLoading={isFetching || isUpdating}
+          />
         </form>
       </Form>
     </main>
@@ -163,7 +165,7 @@ const BottomButtons: FC<IBottomButtons> = (props) => {
       <div className="flex container mx-auto justify-end ml-auto gap-2 px-4">
         <div className="bg-background shadow-md rounded-md">
           <Button
-            type='button'
+            type="button"
             variant="secondary"
             disabled={disabled || isLoading}
             onClick={onResetClick}
@@ -175,7 +177,7 @@ const BottomButtons: FC<IBottomButtons> = (props) => {
         </div>
 
         <div className="bg-background shadow-md rounded-md">
-          <LoadingButton hideTextOnMobile onClick={onSubmitClick} loading={isLoading} type="submit">
+          <LoadingButton hideTextOnMobile onClick={onSubmitClick} disabled={disabled} loading={isLoading} type="submit">
             <SaveIcon/>
             <span className="sr-only sm:not-sr-only">Save</span>
           </LoadingButton>

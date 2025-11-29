@@ -36,6 +36,12 @@ export const useRemoveImageFromNews = (options?: TOptions) => {
           query.queryKey[1] === 'news' &&
           query.queryKey[2] === 'paginated'
       });
+      void queryClient.refetchQueries({
+        predicate: (query) =>
+          query.queryKey[0] === 'admin' &&
+          query.queryKey[1] === 'news' &&
+          query.queryKey[2] === 'paginated'
+      });
 
       options?.onSuccess?.(data, variables, onMutateResult, context);
     }

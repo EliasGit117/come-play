@@ -72,7 +72,6 @@ function RouteComponent() {
     undefined;
 
   const onImagePending = (value: boolean) => setIsImgPending(value);
-  const isPending = isFetching || isUpdating || isImgPending;
 
   return (
     <main className="container mx-auto p-4 pb-16 space-y-4 flex-1 relative">
@@ -89,12 +88,12 @@ function RouteComponent() {
           onSubmit={form.handleSubmit((values: TEditNewsFormSchema) => mutate({ id: parseInt(id), ...values }))}
           className="flex flex-col gap-4"
         >
-          <EditNewsForm disabled={isPending}/>
+          <EditNewsForm disabled={isFetching || isUpdating || isImgPending}/>
 
           <BottomButtons
             onResetClick={() => form.reset()}
-            disabled={form.formState.isDirty}
-            isLoading={isPending}
+            disabled={form.formState.isDirty || isImgPending}
+            isLoading={isFetching || isUpdating}
           />
         </form>
       </Form>
@@ -139,7 +138,7 @@ const BottomButtons: FC<IBottomButtons> = (props) => {
         </div>
 
         <div className="bg-background shadow-md rounded-md">
-          <LoadingButton type="submit" hideTextOnMobile onClick={onSubmitClick} loading={isLoading}>
+          <LoadingButton type="submit" hideTextOnMobile onClick={onSubmitClick} disabled={disabled} loading={isLoading}>
             <SaveIcon/>
             <span className="sr-only sm:not-sr-only">Save</span>
           </LoadingButton>

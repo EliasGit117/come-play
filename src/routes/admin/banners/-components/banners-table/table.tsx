@@ -8,7 +8,7 @@ import {
 import {
   getBannersForAdminQueryOptions,
   TGetBannersForAdminSchema
-} from '@/features/banners/server-functions/admin/get-banners-paginagted-for-admin';
+} from '@/features/banners/server-functions/admin/get-banners-for-admin';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { bannerColumns } from '@/routes/admin/banners/-components/banners-table/columns';
 import AdaptiveButton from '@/components/ui/adaptive-button';

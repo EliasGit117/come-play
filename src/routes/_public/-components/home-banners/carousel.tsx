@@ -4,50 +4,19 @@ import {
   CarouselContent,
   CarouselItem
 } from '@/components/ui/carousel';
-import videoBanner from '/videos/home/banners/video-banner.mp4';
-import banner1 from '/images/home/banners/banner-1.webp';
-import banner2 from '/images/home/banners/banner-2.webp';
-import banner3 from '/images/home/banners/banner-3.webp';
-import videoPreview from '/images/home/banners/video-placeholder.webp';
 import { ComponentProps, FC, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Autoplay from 'embla-carousel-autoplay';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
-import { Link, LinkOptions } from '@tanstack/react-router';
-import VideoPlaceholder from '@/components/video-placeholder';
-
-interface IBannerData {
-  heading: string;
-  subheading?: string;
-  link?: LinkOptions;
-}
-
-interface IBanner {
-  imgSrc: string;
-  data?: IBannerData;
-}
-
-const banners: IBanner[] = [
-  {
-    imgSrc: banner1,
-    data: {
-      heading: 'Outdoor LED Display',
-      subheading: 'K series outdoor LED screen',
-      link: { to: '/' }
-    }
-  },
-  { imgSrc: banner2 },
-  {
-    imgSrc: banner3,
-    data: {
-      heading: 'Rental Outdoor LED Video\nWall E/F Series',
-      subheading: 'Quickly present exquisite display for your show anywhere',
-      link: { to: '/' }
-    }
-  }
-];
+import { Link } from '@tanstack/react-router';
+import { useQuery } from '@tanstack/react-query';
+import { getBannersQueryOptions } from '@/features/banners/server-functions/public/get-banners';
+import { Skeleton } from '@/components/ui/skeleton';
+import { IBannerDto } from '@/features/banners/dtos/banner-dto';
+import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
+import { useMediaQuery } from '@/hooks/use-media-query';
 
 
 interface IProps extends ComponentProps<typeof Carousel> {
@@ -58,6 +27,8 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
 
+  const { isPending, data } = useQuery(getBannersQueryOptions());
+
   useEffect(() => {
     if (!api)
       return;
@@ -67,52 +38,60 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
     api.on('select', () => setCurrent(api.selectedScrollSnap() + 1));
   }, [api]);
 
+  if (isPending)
+    return (
+      <div className="flex flex-col w-full aspect-[3/2]">
+        <Skeleton className="flex-1 w-full"/>
+      </div>
+    );
+
   return (
     <Carousel
       {...props}
       className={cn('w-full', className)}
       setApi={setApi}
       opts={{ loop: true }}
-      plugins={[Autoplay({ delay: 23000 })]}
+      plugins={[Autoplay({ delay: 6000 })]}
     >
       <CarouselContent>
-        <CarouselItem className="relative pl-0">
-          <VideoPlaceholder
-            placeholder={
-              <img
-                fetchPriority="high"
-                src={videoPreview}
-                alt="placeholder"
-                className="min-h-96 h-full w-full max-h-svh object-cover"
-              />
-            }
-          >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              webkit-playsinline="true"
-              className="brightness-50 min-h-96 object-cover w-full max-h-svh"
-            >
-              <source src={videoBanner} type="video/mp4"/>
-            </video>
-          </VideoPlaceholder>
+        {/*{(!data || data.length === 0) && (*/}
+        {/*  <CarouselItem className="relative pl-0">*/}
+        {/*    <VideoPlaceholder*/}
+        {/*      placeholder={*/}
+        {/*        <img*/}
+        {/*          fetchPriority="high"*/}
+        {/*          src={videoPreview}*/}
+        {/*          alt="placeholder"*/}
+        {/*          className="min-h-96 h-full w-full max-h-svh object-cover"*/}
+        {/*        />*/}
+        {/*      }*/}
+        {/*    >*/}
+        {/*      <video*/}
+        {/*        autoPlay*/}
+        {/*        muted*/}
+        {/*        loop*/}
+        {/*        playsInline*/}
+        {/*        webkit-playsinline="true"*/}
+        {/*        className="brightness-50 min-h-96 object-cover w-full max-h-svh"*/}
+        {/*      >*/}
+        {/*        <source src={videoBanner} type="video/mp4"/>*/}
+        {/*      </video>*/}
+        {/*    </VideoPlaceholder>*/}
 
-          <BannerOverlay data={{ heading: 'itc LED Display Solution' }}/>
-        </CarouselItem>
+        {/*    <BannerOverlay banner={{ heading: 'itc LED Display Solution' }}/>*/}
+        {/*  </CarouselItem>*/}
+        {/*)}*/}
 
-        {banners.map((banner, index) => (
-          <CarouselItem key={index} className="relative pl-0">
-            <img
-              src={banner.imgSrc}
-              alt={`banner-${index}`}
-              className="min-h-96 object-cover w-full max-h-svh brightness-75"
-              key={index}
-            />
-            {banner.data && <BannerOverlay data={banner.data}/>}
-          </CarouselItem>
-        ))}
+        {data?.map((banner, index) => {
+          const hasData = !!banner.title || banner.text;
+
+          return (
+            <CarouselItem key={index} className="relative pl-0">
+              <BannerImage banner={banner}/>
+              {hasData && (<BannerOverlay banner={banner}/>)}
+            </CarouselItem>
+          );
+        })}
       </CarouselContent>
 
       {!!api && (
@@ -138,7 +117,7 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
                 className="size-3 p-0 data-[active=true]:bg-primary border data-[active=true]:border-secondary"
                 onClick={() => api?.scrollTo(index)}
               >
-                <span className='sr-only'>To {current} slide</span>
+                <span className="sr-only">To {current} slide</span>
               </Button>
             ))}
 
@@ -159,36 +138,74 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
   );
 };
 
+
 interface BannerOverlayProps {
-  data: IBannerData;
+  banner: IBannerDto;
   className?: string;
 }
 
-const BannerOverlay: React.FC<BannerOverlayProps> = ({ data, className }) => {
+const BannerOverlay: React.FC<BannerOverlayProps> = ({ banner, className }) => {
+  const { title, text, path } = banner;
+
   return (
     <div className={cn('absolute z-20 left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-full', className)}>
       <div
         className="container mx-auto py-4 px-8 space-y-3 sm:space-y-4 lg:space-y-5 xl:space-y-6 text-white whitespace-pre-line">
-        <p className="text-xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl font-semibold leading-tight">
-          {data.heading}
-        </p>
-        {data.subheading && (
-          <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
-            {data.subheading}
+        {title && (
+          <p className="text-xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl font-semibold leading-tight">
+            {title}
           </p>
         )}
-        {data.link && (
-          <Button
-            className="text-xs sm:text-sm md:text-base h-fit lg:h-10 xl:h-12 !bg-white !text-black"
-            asChild
-          >
-            <Link {...data.link}>
+
+        {text && (
+          <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
+            {text}
+          </p>
+        )}
+
+        {path && (
+          <Button className="text-xs sm:text-sm md:text-base h-fit lg:h-10 xl:h-12 !bg-white !text-black" asChild>
+            <Link to={path}>
               Show details
             </Link>
           </Button>
         )}
       </div>
     </div>
+  );
+};
+
+interface BannerImageProps {
+  banner: IBannerDto;
+}
+
+export const BannerImage: FC<BannerImageProps> = ({ banner }) => {
+  const isMobile = useMediaQuery('(max-width: 480px)');
+  const isTablet = useMediaQuery('(max-width: 768px) and (min-width: 481px)');
+  const isDesktop = useMediaQuery('(min-width: 769px)');
+
+  const image =
+    (isDesktop && banner.desktopImage) ||
+    (isTablet && banner.tabletImage) ||
+    (isMobile && banner.mobileImage) ||
+    banner.desktopImage ||
+    banner.tabletImage ||
+    banner.mobileImage;
+
+  if (!image)
+    return null;
+
+  const thumbhash = image.thumbhash;
+  const src = image.url;
+
+  return (
+    <UnLazyImageSSR
+      autoSizes
+      src={src}
+      thumbhash={thumbhash}
+      alt={banner.title || `banner-${banner.id}`}
+      className="w-full h-full max-h-svh object-cover brightness-75 dark:brightness-65"
+    />
   );
 };
 

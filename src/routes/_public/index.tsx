@@ -5,6 +5,7 @@ import { SolutionList } from './-components/solutions';
 import { WriteAMessageSection } from './-components/write-a-message';
 import LatestNews from '@/routes/_public/-components/latest-news';
 import { getLatestNewsQueryOptions } from '@/features/news/server-functions/public/get-latest-news';
+import { getBannersQueryOptions } from '@/features/banners/server-functions/public/get-banners';
 
 
 export const Route = createFileRoute('/_public/')({
@@ -12,8 +13,11 @@ export const Route = createFileRoute('/_public/')({
   staticData: {
     headerOptions: { type: 'fixed' }
   },
-  loader: ({ context: { queryClient } }) => {
-    return queryClient.prefetchQuery(getLatestNewsQueryOptions());
+  loader: async ({ context: { queryClient } }) => {
+    const newsPromise = queryClient.prefetchQuery(getLatestNewsQueryOptions());
+    const bannersPromise = queryClient.prefetchQuery(getBannersQueryOptions());
+
+    return Promise.all([newsPromise, bannersPromise]);
   },
 })
 

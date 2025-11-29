@@ -43,6 +43,7 @@ export const useCreateBannerMutation = (options?: TOptions) => {
     ...options,
     onSuccess: (data, variables, onMutateResult, context) => {
       void queryClient.invalidateQueries({ predicate: (query) => query.queryKey[0] === 'admin' && query.queryKey[1] === 'banners' });
+      void queryClient.refetchQueries({ predicate: (query) => query.queryKey[0] === 'admin' && query.queryKey[1] === 'banners' });
       options?.onSuccess?.(data, variables, onMutateResult, context);
     }
   });

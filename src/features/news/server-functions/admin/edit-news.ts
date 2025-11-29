@@ -39,13 +39,21 @@ export const useEditNewsMutation = (options?: TOptions) => {
     mutationFn: (values) => editNews({ data: values }),
     ...options,
     onSuccess: (data, variables, onMutateResult, context) => {
-      void queryClient.invalidateQueries({ predicate: (query) =>
+      void queryClient.invalidateQueries({
+        predicate: query =>
+          query.queryKey[0] === 'admin' &&
+          query.queryKey[1] === 'news' &&
+          query.queryKey[2] === 'paginated'
+      });
+      void queryClient.refetchQueries({
+        predicate: query =>
           query.queryKey[0] === 'admin' &&
           query.queryKey[1] === 'news' &&
           query.queryKey[2] === 'paginated'
       });
 
       void queryClient.invalidateQueries({ queryKey: ['news', data.slug] });
+      void queryClient.refetchQueries({ queryKey: ['news', data.slug] });
 
       options?.onSuccess?.(data, variables, onMutateResult, context);
     }

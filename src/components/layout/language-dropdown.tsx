@@ -15,12 +15,13 @@ import { ChevronsUpDownIcon, LanguagesIcon } from 'lucide-react';
 
 interface IProps extends ComponentProps<typeof DropdownMenuTrigger> {
   buttonVariant?: VariantProps<typeof buttonVariants>['variant'];
+  align?: 'start' | 'center' | 'end';
 }
 
 const langs = [{ value: 'ro', title: 'Romana' }, { value: 'ru', title: 'Русский' }] as const;
 type TLangValue = typeof langs[number]['value'];
 
-const LanguageDropdown: FC<IProps> = ({ buttonVariant, ...props }) => {
+const LanguageDropdown: FC<IProps> = ({ buttonVariant, align, ...props }) => {
   const [lang, setLang] = useState<TLangValue>('ro');
 
   const handleChange = (value: string) => {
@@ -46,7 +47,7 @@ const LanguageDropdown: FC<IProps> = ({ buttonVariant, ...props }) => {
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="min-w-36">
+      <DropdownMenuContent className="min-w-36" align={align}>
         <DropdownMenuLabel className="flex items-center gap-2">
           <LanguagesIcon className="size-4"/>
           <span>Language</span>

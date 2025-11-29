@@ -35,7 +35,11 @@ export const useEditBannerMutation = (options?: TOptions) => {
       void queryClient.invalidateQueries({
         predicate: (query) => query.queryKey[0] === 'banners' && query.queryKey[1] === 'paginated'
       });
+      void queryClient.refetchQueries({
+        predicate: (query) => query.queryKey[0] === 'banners' && query.queryKey[1] === 'paginated'
+      });
       void queryClient.invalidateQueries({ queryKey: ['banners', data.id] });
+      void queryClient.refetchQueries({ queryKey: ['banners', data.id] });
 
       options?.onSuccess?.(data, variables, onMutateResult, context);
     }
