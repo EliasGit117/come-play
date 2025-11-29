@@ -1,4 +1,4 @@
-import { ComponentProps, ReactNode, useCallback, useMemo } from 'react';
+import { ComponentProps, PropsWithChildren, ReactNode, useCallback, useMemo } from 'react';
 import { XIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -16,7 +16,7 @@ import { DataTableDateRangeFilter } from '@/components/data-table/date-range-fil
 import { DataTableNumberRangeFilter } from '@/components/data-table/number-range-filter';
 
 
-interface IDataTableToolbarProps<TData> extends ComponentProps<'div'> {
+interface IDataTableToolbarProps<TData> extends PropsWithChildren<ComponentProps<'div'>> {
   topToolbarChildren?: ReactNode;
 }
 
@@ -25,7 +25,7 @@ export function DataTableToolbar<TData>(props: IDataTableToolbarProps<TData>) {
   'use no memo';
 
   const { table } = useDataTableContext();
-  const { className, topToolbarChildren, ...restOfProps } = props;
+  const { className, topToolbarChildren, children, ...restOfProps } = props;
   const isFiltered = table.getState().columnFilters.length > 0;
   const columns = useMemo(() => table.getAllColumns().filter((column) => column.getCanFilter()), [table]);
   const onReset = useCallback(() => table.resetColumnFilters(), [table]);
@@ -40,7 +40,7 @@ export function DataTableToolbar<TData>(props: IDataTableToolbarProps<TData>) {
       <div className="flex items-center gap-2">
         <DataTableViewOptions/>
         <DataTableSortPopover/>
-        {topToolbarChildren}
+        {children}
       </div>
 
       <div className="flex flex-1 flex-wrap items-center gap-2">

@@ -3,25 +3,24 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
-  DropdownMenuRadioGroup, DropdownMenuRadioItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Button, buttonVariants } from '@/components/ui/button';
 import type { VariantProps } from 'class-variance-authority';
-import RoFlag from '@/assets/icons/flags/ro.svg?react'
-import RuFlag from '@/assets/icons/flags/ru.svg?react'
+import { ChevronsUpDownIcon, LanguagesIcon } from 'lucide-react';
 
 
 interface IProps extends ComponentProps<typeof DropdownMenuTrigger> {
   buttonVariant?: VariantProps<typeof buttonVariants>['variant'];
-  buttonSize?: VariantProps<typeof buttonVariants>['size'];
 }
 
 const langs = [{ value: 'ro', title: 'Romana' }, { value: 'ru', title: 'Русский' }] as const;
 type TLangValue = typeof langs[number]['value'];
 
-const LanguageDropdown: FC<IProps> = ({ buttonVariant, buttonSize, ...props }) => {
+const LanguageDropdown: FC<IProps> = ({ buttonVariant, ...props }) => {
   const [lang, setLang] = useState<TLangValue>('ro');
 
   const handleChange = (value: string) => {
@@ -34,18 +33,37 @@ const LanguageDropdown: FC<IProps> = ({ buttonVariant, buttonSize, ...props }) =
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant={buttonVariant} size={buttonSize} {...props}>
-          {lang === 'ro' ? <RoFlag className="size-5"/> : <RuFlag className='size-5'/>}
-          <span className='sr-only'>Language dropdown</span>
+        <Button variant={buttonVariant} size='sm' {...props}>
+          <span className='uppercase sm:hidden'>{lang}</span>
+
+          <LanguagesIcon className='hidden sm:block opacity-65'/>
+          <span className='hidden sm:block'>
+            {langs.find(item => item.value === lang)?.title}
+          </span>
+          <ChevronsUpDownIcon className='hidden sm:block opacity-65'/>
+
+          <span className="sr-only">Language dropdown</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel>Language</DropdownMenuLabel>
+
+      <DropdownMenuContent className="min-w-36">
+        <DropdownMenuLabel className="flex items-center gap-2">
+          <LanguagesIcon className="size-4"/>
+          <span>Language</span>
+        </DropdownMenuLabel>
         <DropdownMenuSeparator/>
         <DropdownMenuRadioGroup value={lang} onValueChange={handleChange}>
-          {langs.map(l =>
-            <DropdownMenuRadioItem value={l.value} key={l.value}>
-              {l.title}
+          {langs.map(({ value, title }) =>
+            <DropdownMenuRadioItem
+              key={value}
+              value={value}
+              className="justify-between gap-4"
+              onClick={() => setLang(value)}
+            >
+              <span>{title}</span>
+              <span className="text-xs uppercase text-muted-foreground">
+                {value}
+              </span>
             </DropdownMenuRadioItem>
           )}
         </DropdownMenuRadioGroup>

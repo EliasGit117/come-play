@@ -23,15 +23,15 @@ import { Label } from '@/components/ui/label';
 import { createNewsSchema, TCreateNewsSchema } from '@/features/news/schemas/create-news';
 import { useCreateNewsMutation } from '@/features/news/server-functions/admin/create-news';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { useCreateNewsDialogContext } from '@/routes/admin/news/-components/create-news-dialog/provider';
 
 
 interface CreateNewsDialogProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
   afterSuccess?: () => void;
 }
 
-export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, afterSuccess }) => {
+export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ afterSuccess }) => {
+  const { isOpen, setIsOpen } = useCreateNewsDialogContext();
   const navigate = useNavigate();
   const [editAfterCreation, setEditAfterCreation] = useState(true);
   const form = useForm<TCreateNewsSchema>({
@@ -46,7 +46,7 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, aft
   const { mutate, isPending } = useCreateNewsMutation({
     onError: (e) => toast.error(e.name, { description: e.message }),
     onSuccess: (res) => {
-      setOpen(false);
+      setIsOpen(false);
       toast.success('News has been successfully created');
       afterSuccess?.();
 
@@ -56,16 +56,16 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ open, setOpen, aft
   });
 
   useEffect(() => {
-    if (!open)
+    if (!isOpen)
       return;
 
     setEditAfterCreation(true);
     form.reset();
-  }, [open]);
+  }, [isOpen]);
 
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent className="sm:max-w-2xl">
         <Form {...form}>
           <form onSubmit={form.handleSubmit((values: TCreateNewsSchema) => mutate(values))}>

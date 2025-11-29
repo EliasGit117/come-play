@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDataTableSearch } from '@/components/data-table/hooks/use-data-table-search';
 import {
   useReactTable,
   getCoreRowModel,
   TableOptions,
-  VisibilityState, ColumnPinningState
+  VisibilityState, ColumnPinningState, RowSelectionState
 } from '@tanstack/react-table';
 
 interface IUseDataTableProps<TData> extends Omit<TableOptions<TData>,
@@ -56,6 +56,12 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
 
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(initialState?.columnVisibility ?? {});
 
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>(initialState?.rowSelection ?? {});
+
+  useEffect(() => {
+    setRowSelection({});
+  }, [data, page, limit, columnFiltersState, sortingState]);
+
   const table = useReactTable({
     ...tableProps,
     data: data,
@@ -70,6 +76,7 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
     manualSorting: true,
     manualFiltering: true,
 
+    onRowSelectionChange: setRowSelection,
     onColumnVisibilityChange: setColumnVisibility,
     onSortingChange: setSortingState,
     onColumnFiltersChange: setColumnFiltersState,
@@ -78,6 +85,7 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
     rowCount: total,
     pageCount: totalPages,
     state: {
+      rowSelection: rowSelection,
       columnPinning: columnPinning,
       columnFilters: columnFiltersState,
       pagination: { pageIndex: page - 1, pageSize: limit },
@@ -86,6 +94,17 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
     }
   });
 
-  return { table, columnFiltersState, setColumnFiltersState };
+  const selectedItems = useMemo(() => {
+    return table.getSelectedRowModel().rows.map(r => r.original);
+  }, [rowSelection, table]);
+
+  return {
+    table,
+    columnFiltersState,
+    setColumnFiltersState,
+    rowSelection,
+    setRowSelection,
+    selectedItems
+  };
 }
 

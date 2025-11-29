@@ -78,24 +78,6 @@ export const headerLinks: TLinkItem[] = [
   },
   {
     type: MenuItemType.Group,
-    title: 'Cases',
-    items: [
-      { label: 'Conference Room', description: 'Display solutions for conference environments.', linkOpt: { to: '/' } },
-      { label: 'Advertising', description: 'LED displays for marketing and promotion.', linkOpt: { to: '/' } },
-      { label: 'Race Stadium', description: 'High-visibility screens for sports venues.', linkOpt: { to: '/' } },
-      { label: 'Transportation', description: 'Signage and displays for transit hubs.', linkOpt: { to: '/' } },
-      { label: 'Stage & Exhibition', description: 'Dynamic displays for events and expos.', linkOpt: { to: '/' } },
-      { label: 'Studio', description: 'Professional LED solutions for studios.', linkOpt: { to: '/' } },
-      {
-        label: 'Scenic Spot & Public',
-        description: 'Outdoor displays for tourist and public areas.',
-        linkOpt: { to: '/' }
-      },
-      { label: 'Control Room', description: 'Visualization walls for monitoring centers.', linkOpt: { to: '/' } }
-    ]
-  },
-  {
-    type: MenuItemType.Group,
     title: 'News',
     items: [
       { label: 'All news', description: 'Discover latest news', linkOpt: { to: '/news' } },

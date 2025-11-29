@@ -14,12 +14,9 @@ export function getCommonPinningStyles<TData>({ column, withBorder = false }: IP
   const isLastLeftPinnedColumn = isLeftPinned && column.getIsLastColumn('left');
   const isFirstRightPinnedColumn = isRightPinned && column.getIsFirstColumn('right');
 
-  const borderShadow =
-    withBorder && (isLastLeftPinnedColumn || isFirstRightPinnedColumn)
-      ? isLastLeftPinnedColumn
-        ? '-4px 0 4px -4px var(--border) inset'
-        : '4px 0 4px -4px var(--border) inset'
-      : undefined;
+  const borderShadow = withBorder && (isLastLeftPinnedColumn || isFirstRightPinnedColumn) ?
+    (isLastLeftPinnedColumn ? '-1px 0 0 0 var(--border) inset' : '1px 0 0 0 var(--border) inset') :
+    undefined;
 
   const pinnedPosition =
     isLeftPinned ? { left: `${column.getStart('left')}px` } :
@@ -28,7 +25,6 @@ export function getCommonPinningStyles<TData>({ column, withBorder = false }: IP
   return {
     position: isPinned ? 'sticky' : 'relative',
     zIndex: isPinned ? 1 : 0,
-    // opacity: isPinned ? 0.97 : 1,
     background: 'var(--background)',
     width: column.getSize(),
     boxShadow: borderShadow,

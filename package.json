@@ -74,6 +74,7 @@
     "zustand": "^5.0.6"
   },
   "devDependencies": {
+    "@bprogress/react": "^1.2.7",
     "@tailwindcss/typography": "^0.5.16",
     "@tanstack/nitro-v2-vite-plugin": "^1.132.21",
     "@types/node": "^22.5.4",

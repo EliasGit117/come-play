@@ -1,26 +1,29 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { useState, ReactNode } from 'react';
+import { contextFactory } from '@/lib/context-factory';
 
-interface ICreateNewsAlertDialogProvider {
+interface ICreateNewsDialogProvider {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  open: () => void;
 }
 
-const CreateNewsAlertDialogContext = createContext<ICreateNewsAlertDialogProvider | undefined>(undefined);
+const [CreateNewsDialogContext, useCreateNewsDialogContext] = contextFactory<ICreateNewsDialogProvider>({
+  name: 'CreateNewsDialogContext'
+});
 
-export const CreateNewsAlertDialogProvider = ({ children }: { children: ReactNode }) => {
+
+export const CreateNewsDialogProvider = ({ children }: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const open = () => setIsOpen(true);
 
   return (
-    <CreateNewsAlertDialogContext.Provider value={{ isOpen: isOpen, setIsOpen: setIsOpen }}>
+    <CreateNewsDialogContext.Provider value={{ isOpen: isOpen, setIsOpen: setIsOpen, open: open }}>
       {children}
-    </CreateNewsAlertDialogContext.Provider>
+    </CreateNewsDialogContext.Provider>
   );
 };
 
-export const useCreateNewsAlertDialog = () => {
-  const context = useContext(CreateNewsAlertDialogContext);
-  if (!context)
-    throw new Error("useCreateNewsAlertDialog must be used within a CreateNewsAlertDialogContext");
-
-  return context;
+export {
+  CreateNewsDialogContext,
+  useCreateNewsDialogContext
 };

@@ -1,27 +1,20 @@
-import { ComponentProps, createContext, FC, use, useEffect, useMemo, useState } from 'react';
+import { createContext, use, useEffect, useMemo, useState } from 'react';
 import { FunctionOnce } from '@/lib/function-once';
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuRadioGroup, DropdownMenuRadioItem,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
-import { MoonIcon, SunIcon } from 'lucide-react';
 
-export type ResolvedTheme = 'dark' | 'light'
-export type Theme = ResolvedTheme | 'system'
+
+export type TResolvedTheme = 'dark' | 'light'
+export type TTheme = TResolvedTheme | 'system'
 
 interface ThemeProviderProps {
   children: React.ReactNode
-  defaultTheme?: Theme
+  defaultTheme?: TTheme
   storageKey?: string
 }
 
 interface ThemeProviderState {
-  theme: Theme
-  resolvedTheme: ResolvedTheme
-  setTheme: (theme: Theme) => void
+  theme: TTheme
+  resolvedTheme: TResolvedTheme
+  setTheme: (theme: TTheme) => void
 }
 
 const initialState: ThemeProviderState = {
@@ -39,10 +32,10 @@ export function ThemeProvider({
                                 defaultTheme = 'system',
                                 storageKey = 'conar.theme',
                               }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => (isBrowser ? (localStorage.getItem(storageKey) as Theme) : defaultTheme) || defaultTheme,
+  const [theme, setTheme] = useState<TTheme>(
+    () => (isBrowser ? (localStorage.getItem(storageKey) as TTheme) : defaultTheme) || defaultTheme,
   )
-  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>('light')
+  const [resolvedTheme, setResolvedTheme] = useState<TResolvedTheme>('light')
 
   useEffect(() => {
     const root = window.document.documentElement
@@ -58,7 +51,7 @@ export function ThemeProvider({
         return
       }
 
-      setResolvedTheme(theme as ResolvedTheme)
+      setResolvedTheme(theme as TResolvedTheme)
       root.classList.add(theme)
     }
 
@@ -71,7 +64,7 @@ export function ThemeProvider({
   const value = useMemo(() => ({
     theme,
     resolvedTheme,
-    setTheme: (theme: Theme) => {
+    setTheme: (theme: TTheme) => {
       localStorage.setItem(storageKey, theme)
       setTheme(theme)
     },
@@ -108,40 +101,3 @@ export function useTheme() {
 
   return context
 }
-
-interface IThemeDropdownProps extends ComponentProps<typeof Button> {
-  align?: 'start' | 'center' | 'end';
-}
-
-export const ThemeDropdown: FC<IThemeDropdownProps> = ({ align, ...props }) => {
-  const { theme, setTheme } = useTheme();
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="dense" {...props}>
-          <SunIcon className="dark:hidden"/>
-          <MoonIcon className="hidden dark:block"/>
-          <span className='sr-only'>
-            Toggle theme dropdown
-          </span>
-        </Button>
-      </DropdownMenuTrigger>
-
-      <DropdownMenuContent align={align}>
-        <DropdownMenuRadioGroup value={theme}>
-          <DropdownMenuRadioItem value="light" onClick={() => setTheme('light')}>
-            Light
-          </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="dark" onClick={() => setTheme('dark')}>
-            Dark
-          </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="system" onClick={() => setTheme('system')}>
-            System
-          </DropdownMenuRadioItem>
-        </DropdownMenuRadioGroup>
-      </DropdownMenuContent>
-
-    </DropdownMenu>
-  );
-};
