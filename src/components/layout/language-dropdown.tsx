@@ -51,7 +51,9 @@ const LanguageDropdown: FC<IProps> = ({ buttonVariant, ...props }) => {
           <LanguagesIcon className="size-4"/>
           <span>Language</span>
         </DropdownMenuLabel>
+
         <DropdownMenuSeparator/>
+
         <DropdownMenuRadioGroup value={lang} onValueChange={handleChange}>
           {langs.map(({ value, title }) =>
             <DropdownMenuRadioItem

@@ -42,7 +42,7 @@ export const useCreateBannerMutation = (options?: TOptions) => {
     mutationFn: (values) => createBanner({ data: values }),
     ...options,
     onSuccess: (data, variables, onMutateResult, context) => {
-      void queryClient.invalidateQueries({ predicate: (query) => query.queryKey[0] === 'banners' && query.queryKey[1] === 'paginated' });
+      void queryClient.invalidateQueries({ predicate: (query) => query.queryKey[0] === 'admin' && query.queryKey[1] === 'banners' });
       options?.onSuccess?.(data, variables, onMutateResult, context);
     }
   });

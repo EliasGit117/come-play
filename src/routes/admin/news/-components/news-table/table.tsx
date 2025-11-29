@@ -41,7 +41,9 @@ export const NewsTable: FC<IProps> = (props) => {
     placeholderData: keepPreviousData
   });
 
-  const columns = useMemo(() => newsColumns({ disabled: isPending }), [isPending]);
+  const { isPending: isDeleting, mutateAsync: deleteAsync } = useDeleteNewsByIdsMutation();
+  const isLoading = isPending || isDeleting;
+  const columns = useMemo(() => newsColumns({ disabled: isLoading }), [isLoading]);
 
   const { table, selectedItems } = useDataTable({
     data: data?.items,
@@ -52,8 +54,6 @@ export const NewsTable: FC<IProps> = (props) => {
     columns: columns,
     initialState: { columnPinning: { left: ['select'], right: ['actions'] } }
   });
-
-  const { isPending: isDeleting, mutateAsync } = useDeleteNewsByIdsMutation();
 
   const deleteNews = useCallback(async () => {
     if (selectedItems.length === 0)
@@ -69,16 +69,15 @@ export const NewsTable: FC<IProps> = (props) => {
     if (!isConfirmed)
       return;
 
-    toast.promise(mutateAsync({
+    toast.promise(deleteAsync({
       data: { ids: selectedItems.map((i) => i.id) }
     }), {
       loading: 'Deleting news...',
       success: 'News deleted successfully!',
       error: (err) => err instanceof Error ? err.message : 'Failed to delete news.'
     });
-  }, [mutateAsync, selectedItems]);
+  }, [deleteAsync, selectedItems]);
 
-  const isLoading = isPending || isDeleting;
 
   return (
     <div className={cn('flex flex-col gap-2', className)} {...divProps}>

@@ -1,13 +1,17 @@
-import { Column } from '@tanstack/react-table';
+import { Column, Row } from '@tanstack/react-table';
 import { CSSProperties } from 'react';
 
-interface IPinningProps<TData> {
+
+interface IPinningStylesParams<TData> {
+  row?: Row<TData>;
   column: Column<TData>;
   withBorder?: boolean;
 }
 
-export function getCommonPinningStyles<TData>({ column, withBorder = false }: IPinningProps<TData>): CSSProperties {
+export function getCommonPinningStyles<TData>(params: IPinningStylesParams<TData>): CSSProperties {
+  const { column, withBorder, row} = params;
   const isPinned = column.getIsPinned();
+  const isSelected = row?.getIsSelected();
   const isLeftPinned = isPinned === 'left';
   const isRightPinned = isPinned === 'right';
 
@@ -25,7 +29,7 @@ export function getCommonPinningStyles<TData>({ column, withBorder = false }: IP
   return {
     position: isPinned ? 'sticky' : 'relative',
     zIndex: isPinned ? 1 : 0,
-    background: 'var(--background)',
+    background: isSelected ? 'var(--muted-generated-50)' : 'var(--background)',
     width: column.getSize(),
     boxShadow: borderShadow,
     ...pinnedPosition

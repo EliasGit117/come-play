@@ -22,7 +22,7 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
+  DropdownMenuLabel, DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { ColumnFilterType, DataTableColumnHeader } from '@/components/data-table';
@@ -43,7 +43,7 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
   return ([
     columnHelper.display({
       id: 'select',
-      size: 20,
+      size: 32,
       enableSorting: false,
       enableHiding: false,
       header: ({ table }) => (
@@ -200,7 +200,7 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
     }),
     columnHelper.display({
       id: 'actions',
-      size: 32,
+      size: 44,
       meta: {
         label: 'Actions',
         skeletonClassName: 'ml-auto h-7 w-7'
@@ -218,8 +218,14 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
                   <EllipsisIcon/>
                 </Button>
               </DropdownMenuTrigger>
+
               <DropdownMenuContent className="w-40" align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuLabel>
+                  Actions
+                </DropdownMenuLabel>
+
+                <DropdownMenuSeparator/>
+
                 <DropdownMenuGroup>
                   <DropdownMenuItem onClick={() => navigate({ to: '/news/$slug', params: { slug: slug } })}>
                     <span>Go to page</span>

@@ -98,7 +98,7 @@ export const getBannersForAdmin = createServerFn({ method: 'GET' })
 
 export function getBannersForAdminQueryOptions(params: TGetBannersForAdminSchema) {
   return queryOptions({
-    queryKey: ['banners', 'admin', params],
+    queryKey: ['admin', 'banners', params],
     queryFn: () => getBannersForAdmin({ data: params }),
     staleTime: 10_000,
     gcTime: 10_000

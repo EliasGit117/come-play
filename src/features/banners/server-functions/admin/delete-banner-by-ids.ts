@@ -5,7 +5,7 @@ import { useMutation, UseMutationOptions, useQueryClient } from '@tanstack/react
 import { removeAllBannerImages } from '@/features/banners/server-functions/admin/remove-banner-image';
 
 export const deleteBannersByIdsSchema = z.object({
-  ids: z.array(z.number()).nonempty()
+  ids: z.array(z.number())
 });
 
 export type TDeleteBannersByIdsParams = z.infer<typeof deleteBannersByIdsSchema>;
@@ -103,9 +103,7 @@ export const useDeleteBannersByIdsMutation = (options?: TOptions) => {
     mutationFn: (params) => deleteBannersByIds(params),
     ...options,
     onSuccess: async (data, variables, onMutateResult, context) => {
-      // Refresh banners query
-      await queryClient.invalidateQueries({ queryKey: ['banners'] });
-
+      void queryClient.invalidateQueries({ predicate: (query) => query.queryKey[0] === 'admin' && query.queryKey[1] === 'banners' });
       options?.onSuccess?.(data, variables, onMutateResult, context);
     }
   });

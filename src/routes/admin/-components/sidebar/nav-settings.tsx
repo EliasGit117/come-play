@@ -3,7 +3,7 @@ import {
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
+  DropdownMenuRadioItem, DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import {
@@ -16,7 +16,8 @@ import {
 } from '@/components/ui/sidebar';
 import { ComponentPropsWithoutRef } from 'react';
 import { useTheme } from '@/components/theme';
-import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react';
+import { LanguagesIcon, MonitorIcon, MoonIcon, SunIcon, SunMoonIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 
 const localeOptions = [
@@ -49,15 +50,19 @@ export function NavSettings({ ...props }: IProps & ComponentPropsWithoutRef<type
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+                className={cn("w-(--radix-dropdown-menu-trigger-width) rounded-lg", !isMobile && 'w-44')}
                 side={isMobile ? 'bottom' : 'right'}
                 align="end"
                 sideOffset={4}
               >
                 <DropdownMenuRadioGroup value={theme}>
-                  <DropdownMenuLabel>
-                    Theme selection
+                  <DropdownMenuLabel className="flex gap-2 items-center">
+                    <SunMoonIcon className="size-4"/>
+                    <span>Theme</span>
                   </DropdownMenuLabel>
+
+                  <DropdownMenuSeparator/>
+
                   <DropdownMenuRadioItem value="light" onClick={() => setTheme('light')}>
                     <span>Light</span>
                     <SunIcon className="ml-auto text-muted-foreground"/>
@@ -89,20 +94,29 @@ export function NavSettings({ ...props }: IProps & ComponentPropsWithoutRef<type
               </DropdownMenuTrigger>
 
               <DropdownMenuContent
-                className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+                className={cn("w-(--radix-dropdown-menu-trigger-width) rounded-lg", !isMobile && 'w-44')}
                 side={isMobile ? 'bottom' : 'right'}
                 align="end"
                 sideOffset={4}
               >
                 <DropdownMenuRadioGroup value={locale}>
-                  <DropdownMenuLabel>Language selection</DropdownMenuLabel>
-                  {localeOptions.map((item) =>
+                  <DropdownMenuLabel className="flex items-center gap-2">
+                    <LanguagesIcon className="size-4"/>
+                    <span>Language</span>
+                  </DropdownMenuLabel>
+
+                  <DropdownMenuSeparator/>
+
+                  {localeOptions.map(({ value, title }) =>
                     <DropdownMenuRadioItem
-                      value={item.value}
-                      onClick={() => {
-                      }}
+                      key={value}
+                      value={value}
+                      className="justify-between gap-4"
                     >
-                      <span>{item.title}</span>
+                      <span>{title}</span>
+                      <span className="text-xs uppercase text-muted-foreground">
+                        {value}
+                      </span>
                     </DropdownMenuRadioItem>
                   )}
 

@@ -1,4 +1,4 @@
-import { ComponentProps, PropsWithChildren, ReactNode, useCallback, useMemo } from 'react';
+import { ComponentProps, PropsWithChildren, useCallback, useMemo } from 'react';
 import { XIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -17,7 +17,6 @@ import { DataTableNumberRangeFilter } from '@/components/data-table/number-range
 
 
 interface IDataTableToolbarProps<TData> extends PropsWithChildren<ComponentProps<'div'>> {
-  topToolbarChildren?: ReactNode;
 }
 
 export function DataTableToolbar<TData>(props: IDataTableToolbarProps<TData>) {
@@ -25,7 +24,7 @@ export function DataTableToolbar<TData>(props: IDataTableToolbarProps<TData>) {
   'use no memo';
 
   const { table } = useDataTableContext();
-  const { className, topToolbarChildren, children, ...restOfProps } = props;
+  const { className, children, ...restOfProps } = props;
   const isFiltered = table.getState().columnFilters.length > 0;
   const columns = useMemo(() => table.getAllColumns().filter((column) => column.getCanFilter()), [table]);
   const onReset = useCallback(() => table.resetColumnFilters(), [table]);

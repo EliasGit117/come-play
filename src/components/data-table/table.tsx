@@ -68,13 +68,13 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                   {visibleColumns.map((column, colIndex) => (
                     <TableCell
                       key={`skeleton-cell-${rowIndex}-${colIndex}`}
-                      className='h-10'
+                      className="h-10"
                       style={{ ...getCommonPinningStyles({ column }) }}
                     >
                       {column.columnDef.meta?.skeletonItem ?? (
                         <Skeleton
                           className={cn(
-                          'h-4 w-full',
+                            'h-4 w-full',
                             defaultSkeletonClassName,
                             column.columnDef.meta?.skeletonClassName
                           )}/>
@@ -84,21 +84,22 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                 </TableRow>
               ))
             ) : rowModel.rows?.length ? (
-              rowModel.rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      key={cell.id}
-                      style={{ ...getCommonPinningStyles({ column: cell.column }) }}
-                    >
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+              rowModel.rows.map((row) => {
+                const isSelected = row.getIsSelected();
+
+                return (
+                  <TableRow key={row.id} data-state={isSelected && 'selected'} className="group">
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell
+                        key={cell.id}
+                        style={{ ...getCommonPinningStyles({ column: cell.column, row: row }) }}
+                        className={cn(!isSelected && 'group-hover:!bg-[var(--muted-generated-25)]')}
+                      >
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
+                    ))}
+                  </TableRow>);
+              })
             ) : (
               <TableRow>
                 <TableCell
