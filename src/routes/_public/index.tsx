@@ -15,7 +15,7 @@ export const Route = createFileRoute('/_public/')({
   },
   loader: async ({ context: { queryClient } }) => {
     const newsPromise = queryClient.prefetchQuery(getLatestNewsQueryOptions());
-    const bannersPromise = queryClient.prefetchQuery(getBannersQueryOptions());
+    const bannersPromise = queryClient.ensureQueryData(getBannersQueryOptions());
 
     return Promise.all([newsPromise, bannersPromise]);
   },

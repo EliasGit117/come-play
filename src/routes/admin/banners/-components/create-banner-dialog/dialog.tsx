@@ -23,11 +23,11 @@ import { createBannerSchema, TCreateBannerSchema } from '@/features/banners/sche
 import { useCreateBannerMutation } from '@/features/banners/server-functions/admin/create-banner';
 import { useCreateBannerDialogContext } from './provider';
 
-interface CreateBannerDialogProps {
+interface ICreateBannerDialogProps {
   afterSuccess?: () => void;
 }
 
-export const CreateBannerDialog: FC<CreateBannerDialogProps> = ({ afterSuccess }) => {
+export const CreateBannerDialog: FC<ICreateBannerDialogProps> = ({ afterSuccess }) => {
   const { isOpen, setIsOpen } = useCreateBannerDialogContext();
   const navigate = useNavigate();
   const [editAfterCreation, setEditAfterCreation] = useState(true);

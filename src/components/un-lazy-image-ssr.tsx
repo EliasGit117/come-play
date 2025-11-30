@@ -60,7 +60,7 @@ const UnLazyImageSSR: FC<IProps> = (props) => {
       src={placeholderSrc}
       srcSet={srcSet}
       data-src={src}
-      data-srcset={src}
+      data-srcset={srcSet}
       data-sizes={autoSizes ? 'auto' : undefined}
       loading={loading}
       className={cn('safari:blur-xs safari:scale-105', className)}

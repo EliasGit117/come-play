@@ -11,8 +11,7 @@ import {
 } from '@/features/banners/server-functions/admin/get-banners-for-admin';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { bannerColumns } from '@/routes/admin/banners/-components/banners-table/columns';
-import AdaptiveButton from '@/components/ui/adaptive-button';
-import { FilePlus2Icon, ListStartIcon, TrashIcon } from 'lucide-react';
+import { TrashIcon } from 'lucide-react';
 import { CreateBannerDialogTrigger } from '@/routes/admin/banners/-components/create-banner-dialog/trigger';
 import { CreateBannerDialog } from '@/routes/admin/banners/-components/create-banner-dialog/dialog';
 import { CreateBannerDialogProvider } from '@/routes/admin/banners/-components/create-banner-dialog/provider';
@@ -20,6 +19,9 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { useConfirm } from '@/components/ui/confirm-dialog';
 import { useDeleteBannersByIdsMutation } from '@/features/banners/server-functions/admin/delete-banner-by-ids';
+import { ReorderBannersDialogProvider } from '@/routes/admin/banners/-components/reorder-banners-dialog/provider';
+import { ReorderBannersDialogTrigger } from '@/routes/admin/banners/-components/reorder-banners-dialog/trigger';
+import { ReorderBannersDialog } from '@/routes/admin/banners/-components/reorder-banners-dialog/dialog';
 
 interface IProps extends ComponentProps<'div'> {
   search?: TGetBannersForAdminSchema;
@@ -86,44 +88,34 @@ export const BannerTable: FC<IProps> = (props) => {
 
   return (
     <CreateBannerDialogProvider>
-      <div className={cn('flex flex-col gap-2', className)} {...restOfProps}>
-        <DataTableProvider table={table} isPending={isPending}>
-          <DataTableToolbar>
-            <div className="flex-1"/>
-            {selectedItems.length > 0 && (
-              <Button
-                size="sm"
-                variant="ghost-destructive"
-                disabled={isLoading}
-                onClick={deleteBanners}
-              >
-                <TrashIcon/>
-                <span className="sr-only lg:not-sr-only">Delete</span>
-              </Button>
-            )}
+      <ReorderBannersDialogProvider>
+        <div className={cn('flex flex-col gap-2', className)} {...restOfProps}>
+          <DataTableProvider table={table} isPending={isPending}>
+            <DataTableToolbar>
+              <div className="flex-1"/>
+              {selectedItems.length > 0 && (
+                <Button
+                  size="sm"
+                  variant="ghost-destructive"
+                  disabled={isLoading}
+                  onClick={deleteBanners}
+                >
+                  <TrashIcon/>
+                  <span className="sr-only lg:not-sr-only">Delete</span>
+                </Button>
+              )}
 
-            <AdaptiveButton
-              variant="ghost"
-              size="sm"
-              disabled={isPending}
-              icon={ListStartIcon}
-              text="Reorder banners"
-              breakpoint="lg"
-            />
+              <ReorderBannersDialogTrigger variant="ghost" size="sm" disabled={isPending} shortText />
+              <CreateBannerDialogTrigger variant="ghost" size="sm" disabled={isPending} shortText />
+            </DataTableToolbar>
 
-            <CreateBannerDialogTrigger size="sm" variant="ghost" className="w-8 lg:w-fit" asChild>
-              <button>
-                <FilePlus2Icon/>
-                <span className="sr-only lg:not-sr-only">Create banner</span>
-              </button>
-            </CreateBannerDialogTrigger>
-          </DataTableToolbar>
+            <DataTable/>
 
-          <DataTable/>
-
-          <CreateBannerDialog/>
-        </DataTableProvider>
-      </div>
+            <ReorderBannersDialog/>
+            <CreateBannerDialog/>
+          </DataTableProvider>
+        </div>
+      </ReorderBannersDialogProvider>
     </CreateBannerDialogProvider>
   );
 };

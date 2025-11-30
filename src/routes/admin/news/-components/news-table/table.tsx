@@ -20,7 +20,7 @@ import { CreateNewsDialog } from '@/routes/admin/news/-components/create-news-di
 import { CreateNewsDialogTrigger } from '@/routes/admin/news/-components/create-news-dialog/trigger';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import { FilePlus2Icon, TrashIcon } from 'lucide-react';
+import { TrashIcon } from 'lucide-react';
 import { useDeleteNewsByIdsMutation } from '@/features/news/server-functions/admin/delete-news-by-ids';
 import { useConfirm } from '@/components/ui/confirm-dialog';
 import * as React from 'react';
@@ -92,12 +92,7 @@ export const NewsTable: FC<IProps> = (props) => {
               </Button>
             )}
 
-            <CreateNewsDialogTrigger size="sm" variant="ghost" className="w-8 lg:w-fit" asChild>
-              <button>
-                <FilePlus2Icon/>
-                <span className="sr-only lg:not-sr-only">Create news</span>
-              </button>
-            </CreateNewsDialogTrigger>
+            <CreateNewsDialogTrigger size="sm" variant="ghost" className="w-8 lg:w-fit" shortText/>
           </DataTableToolbar>
 
           <DataTable/>

@@ -96,10 +96,12 @@ export const getBannersForAdmin = createServerFn({ method: 'GET' })
     return AdminBannerBriefDtoFactory.fromEntities(items);
   });
 
-export function getBannersForAdminQueryOptions(params: TGetBannersForAdminSchema) {
+export function getBannersForAdminQueryOptions(params?: TGetBannersForAdminSchema) {
+  const paramsValue = params ?? {};
+
   return queryOptions({
     queryKey: ['admin', 'banners', params],
-    queryFn: () => getBannersForAdmin({ data: params }),
+    queryFn: () => getBannersForAdmin({ data: paramsValue }),
     staleTime: 10_000,
     gcTime: 10_000
   });
