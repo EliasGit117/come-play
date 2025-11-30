@@ -58,6 +58,7 @@ const UnLazyImageSSR: FC<IProps> = (props) => {
       ref={target}
       alt={alt}
       src={placeholderSrc}
+      srcSet={srcSet}
       data-src={src}
       data-srcset={src}
       data-sizes={autoSizes ? 'auto' : undefined}

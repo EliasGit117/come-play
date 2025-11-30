@@ -2,8 +2,7 @@ import { createServerFn } from '@tanstack/react-start';
 import prisma from '@/lib/prisma';
 import { z } from 'zod';
 import { queryOptions } from '@tanstack/react-query';
-import { Prisma } from '@prisma/client';
-import { BannerDtoFactory } from '@/features/banners/dtos/banner-dto';
+import { BannerBriefDtoFactory } from '@/features/banners/dtos/banner-brief-dto';
 
 
 export const getBannersSchema = z.object({});
@@ -13,8 +12,6 @@ export type TGetBannersSchema = z.infer<typeof getBannersSchema>;
 export const getBanners = createServerFn({ method: 'GET' })
   .inputValidator(getBannersSchema)
   .handler(async ({}) => {
-    const where: Prisma.BannerWhereInput = {};
-
     const items = await prisma.banner.findMany({
       include: {
         desktopImage: true,
@@ -22,10 +19,10 @@ export const getBanners = createServerFn({ method: 'GET' })
         mobileImage: true
       },
       orderBy: { order: 'asc' },
-      where: where
+      where: { isActive: true }
     });
 
-    return BannerDtoFactory.fromEntities(items);
+    return BannerBriefDtoFactory.fromEntities(items);
   });
 
 export function getBannersQueryOptions(params?: TGetBannersSchema) {
