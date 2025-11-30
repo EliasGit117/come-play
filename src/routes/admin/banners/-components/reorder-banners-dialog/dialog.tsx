@@ -21,6 +21,9 @@ import { cn } from '@/lib/utils';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { KeyboardSensor, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
+import { Badge } from '@/components/ui/badge';
+import { useReorderBannersMutation } from '@/features/banners/server-functions/admin/reodred-banners';
+import { toast } from 'sonner';
 
 
 interface IReorderBannerDialogProps {
@@ -30,59 +33,81 @@ interface IReorderBannerDialogProps {
 export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSuccess }) => {
   const { isOpen, setIsOpen } = useReorderBannersDialogContext();
   const mouseSensor = useSensor(MouseSensor);
-  const touchSensor = useSensor(TouchSensor, { activationConstraint: { delay: 300, tolerance: 8 } });
-  const keyboardSensor = useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates });
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: { delay: 300, tolerance: 8 },
+  });
+  const keyboardSensor = useSensor(KeyboardSensor, {
+    coordinateGetter: sortableKeyboardCoordinates,
+  });
 
   const { data, isPending, refetch } = useQuery({
-    ...getBannersForAdminQueryOptions()
+    ...getBannersForAdminQueryOptions(),
   });
 
   const [items, setItems] = useState<IAdminBannerBriefDto[]>([]);
 
-  useEffect(() => {
-    if (!isOpen)
-      return;
+  const { mutate: reoder, isPending: isReordering } = useReorderBannersMutation({
+    onSuccess: () => {
+      setIsOpen(false);
+      afterSuccess?.();
+    },
+    onError: (e) => toast.error(e.name, { description: e.message }),
+  });
 
-    void refetch();
+  useEffect(() => {
+    if (isOpen) void refetch();
   }, [isOpen]);
 
   useEffect(() => {
     setItems(data ?? []);
   }, [data]);
 
+  const handleSubmit = () => {
+    const bannerIds = items.map((item) => item.id);
+    reoder({ bannerIds });
+  };
+
+  const isBusy = isPending || isReordering;
+
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent className="sm:max-w-3xl">
         <AlertDialogHeader>
           <AlertDialogTitle>Reorder banners</AlertDialogTitle>
-          <AlertDialogDescription/>
+          <AlertDialogDescription />
         </AlertDialogHeader>
 
         <ScrollArea className="pr-4 mt-4" type="always">
           {isPending ? (
             <div className="max-h-96 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
-              <SkeletonList className='h-20' sizeConfig={{ xs: 6, sm: 8, md: 9 }}/>
+              <SkeletonList
+                className="h-28"
+                sizeConfig={{ xs: 6, sm: 8, md: 9 }}
+              />
             </div>
           ) : (
             <div className="max-h-96">
               <Sortable.Root
-                sensors={[mouseSensor, touchSensor, keyboardSensor]}
+                sensors={isBusy ? [] : [mouseSensor, touchSensor, keyboardSensor]}
                 value={items}
                 onValueChange={setItems}
                 getItemValue={(item) => item.id}
                 orientation="mixed"
               >
                 <Sortable.Content className="grid auto-rows-fr grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
-                  {items.map((item) => (<SortableCard key={item.id} item={item} asHandle/>))}
+                  {items.map((item) => (
+                    <SortableCard key={item.id} item={item} className={cn(isBusy && 'opacity-50')} asHandle />
+                  ))}
                 </Sortable.Content>
 
                 <Sortable.Overlay>
                   {(activeItem) => {
-                    const item = items.find((trick) => trick.id === activeItem.value);
-                    if (!item)
-                      return null;
+                    const item = items.find(
+                      (trick) => trick.id === activeItem.value
+                    );
+                    if (!item) return null;
 
-                    return <SortableCard item={item}/>;
+                    return <SortableCard item={item} />;
                   }}
                 </Sortable.Overlay>
               </Sortable.Root>
@@ -91,13 +116,23 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
         </ScrollArea>
 
         <AlertDialogFooter className="flex-row mt-6">
-          <AlertDialogCancel type="button" className="flex-1 sm:flex-none" disabled={isPending}>
-            <XIcon/>
+          <AlertDialogCancel
+            type="button"
+            className="flex-1 sm:flex-none"
+            disabled={isBusy}
+          >
+            <XIcon />
             <span>Cancel</span>
           </AlertDialogCancel>
 
-          <LoadingButton type="submit" disabled={isPending} className="flex-1 sm:flex-none">
-            <SendIcon/>
+          <LoadingButton
+            type="button"
+            onClick={handleSubmit}
+            disabled={isBusy}
+            loading={isReordering}
+            className="flex-1 sm:flex-none"
+          >
+            <SendIcon />
             <span>Submit</span>
           </LoadingButton>
         </AlertDialogFooter>
@@ -113,17 +148,24 @@ interface ISortableCardProps
 
 const SortableCard: FC<ISortableCardProps> = ({ item, ...props }) => {
   return (
-    <Sortable.Item value={item.id} className='touch-manipulation' asChild {...props}>
+    <Sortable.Item value={item.id} className="touch-manipulation" asChild {...props}>
       <div
-        className="flex size-full flex-col gap-1 rounded-md border bg-muted p-2 text-muted-foreground shadow-sm relative overflow-clip h-20">
+        className="flex size-full flex-col gap-1 rounded-md border bg-muted p-1 shadow-sm relative overflow-clip h-28">
         <img
           alt={item.title}
           src={item.desktopImage?.url ?? item.tabletImage?.url ?? item.mobileImage?.url}
-          className="absolute top-0 left-0 right-0 bottom-0 object-cover h-full w-full brightness-50 dark:brightness-35"
+          className="absolute top-0 left-0 right-0 bottom-0 object-cover h-full w-full brightness-85 dark:brightness-65"
         />
-        <div className="font-medium text-sm leading-tight sm:text-base z-10 my-auto mx-auto">
-          {item.title}
-        </div>
+
+        <Badge
+          variant="default"
+          className={cn(
+            'gap-2 py-0.5 px-1.5 m-0 bg-muted-foreground/50 dark:bg-muted-foreground/35',
+            'rounded-sm font-semibold mt-auto text-xs z-10 text-white'
+          )}
+        >
+          {item.order}. {item.title}
+        </Badge>
       </div>
     </Sortable.Item>
   );
