@@ -51,8 +51,11 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
   });
 
   useEffect(() => {
+    if (isOpen)
+      return;
+
     setItems(data ?? []);
-  }, [data]);
+  }, [data, isOpen]);
 
   const handleSubmit = () => {
     const ids = items.map((item) => item.id);
@@ -86,7 +89,7 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
                 getItemValue={(item) => item.id}
                 orientation="mixed"
               >
-                <Sortable.Content className="grid auto-rows-fr grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                <Sortable.Content className="grid auto-rows-fr grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
                   {items.map((item) => (
                     <SortableCard key={item.id} item={item} className={cn(isBusy && 'opacity-50')} asHandle/>
                   ))}

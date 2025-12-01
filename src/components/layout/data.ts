@@ -47,37 +47,6 @@ export const headerLinks: TLinkItem[] = [
   },
   {
     type: MenuItemType.Group,
-    title: 'Solutions',
-    items: [
-      {
-        label: 'Conference Room',
-        description: 'Display solutions for meeting and conference spaces.',
-        linkOpt: { to: '/' }
-      },
-      { label: 'Advertising', description: 'LED displays for marketing and promotion.', linkOpt: { to: '/' } },
-      { label: 'Race Stadium', description: 'High-visibility screens for sports venues.', linkOpt: { to: '/' } },
-      { label: 'Transportation', description: 'Signage and displays for transit hubs.', linkOpt: { to: '/' } },
-      {
-        label: 'Stage & Events',
-        description: 'Dynamic displays for live events and exhibitions.',
-        linkOpt: { to: '/' }
-      },
-      { label: 'Studio', description: 'Professional LED solutions for broadcast and studios.', linkOpt: { to: '/' } },
-      {
-        label: 'Scenic Spot & Public',
-        description: 'Outdoor displays for tourist and public areas.',
-        linkOpt: { to: '/' }
-      },
-      {
-        label: 'Control Room',
-        description: 'Visualization walls for monitoring and control centers.',
-        linkOpt: { to: '/' }
-      },
-      { label: 'Others', description: 'Flexible LED solutions for custom applications.', linkOpt: { to: '/' } }
-    ]
-  },
-  {
-    type: MenuItemType.Group,
     title: 'News',
     items: [
       { label: 'All news', description: 'Discover latest news', linkOpt: { to: '/news' } },
@@ -103,5 +72,9 @@ export const headerLinks: TLinkItem[] = [
   {
     type: MenuItemType.Single,
     item: { label: 'Contact', linkOpt: { to: '/' } }
+  },
+  {
+    type: MenuItemType.Single,
+    item: { label: 'Admin', linkOpt: { to: '/admin' } }
   }
 ];
