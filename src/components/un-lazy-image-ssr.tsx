@@ -46,7 +46,7 @@ const UnLazyImageSSR: FC<IProps> = (props) => {
       hashType: thumbhash ? 'thumbhash' : 'blurhash',
       placeholderSize,
       onImageLoad: () => {
-        target.current?.classList.remove('safari:blur-xs', 'safari:scale-105');
+        target.current?.classList.remove('safari:blur-md', 'safari:scale-105');
       }
     });
 
@@ -63,7 +63,7 @@ const UnLazyImageSSR: FC<IProps> = (props) => {
       data-srcset={srcSet}
       data-sizes={autoSizes ? 'auto' : undefined}
       loading={loading}
-      className={cn('safari:blur-xs safari:scale-105', className)}
+      className={cn('safari:blur-md safari:scale-105', className)}
       {...rest}
     />
   );

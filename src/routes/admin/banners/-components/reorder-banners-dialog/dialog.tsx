@@ -33,15 +33,13 @@ interface IReorderBannerDialogProps {
 export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSuccess }) => {
   const { isOpen, setIsOpen } = useReorderBannersDialogContext();
   const mouseSensor = useSensor(MouseSensor);
-  const touchSensor = useSensor(TouchSensor, {
-    activationConstraint: { delay: 300, tolerance: 8 },
-  });
-  const keyboardSensor = useSensor(KeyboardSensor, {
-    coordinateGetter: sortableKeyboardCoordinates,
-  });
+  const touchSensor = useSensor(TouchSensor, { activationConstraint: { delay: 300, tolerance: 8 } });
+  const keyboardSensor = useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates });
 
-  const { data, isPending, refetch } = useQuery({
+  const { data, isFetching } = useQuery({
     ...getBannersForAdminQueryOptions(),
+    enabled: isOpen,
+    staleTime: 0
   });
 
   const [items, setItems] = useState<IAdminBannerBriefDto[]>([]);
@@ -51,34 +49,30 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
       setIsOpen(false);
       afterSuccess?.();
     },
-    onError: (e) => toast.error(e.name, { description: e.message }),
+    onError: (e) => toast.error(e.name, { description: e.message })
   });
-
-  useEffect(() => {
-    if (isOpen) void refetch();
-  }, [isOpen]);
 
   useEffect(() => {
     setItems(data ?? []);
   }, [data]);
 
   const handleSubmit = () => {
-    const bannerIds = items.map((item) => item.id);
-    reoder({ bannerIds });
+    const ids = items.map((item) => item.id);
+    reoder({ bannerIds: ids });
   };
 
-  const isBusy = isPending || isReordering;
+  const isBusy = isFetching || isReordering;
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent className="sm:max-w-3xl">
         <AlertDialogHeader>
           <AlertDialogTitle>Reorder banners</AlertDialogTitle>
-          <AlertDialogDescription />
+          <AlertDialogDescription/>
         </AlertDialogHeader>
 
         <ScrollArea className="pr-4 mt-4" type="always">
-          {isPending ? (
+          {isFetching ? (
             <div className="max-h-96 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
               <SkeletonList
                 className="h-28"
@@ -94,9 +88,9 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
                 getItemValue={(item) => item.id}
                 orientation="mixed"
               >
-                <Sortable.Content className="grid auto-rows-fr grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
+                <Sortable.Content className="grid auto-rows-fr grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
                   {items.map((item) => (
-                    <SortableCard key={item.id} item={item} className={cn(isBusy && 'opacity-50')} asHandle />
+                    <SortableCard key={item.id} item={item} className={cn(isBusy && 'opacity-50')} asHandle/>
                   ))}
                 </Sortable.Content>
 
@@ -107,7 +101,7 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
                     );
                     if (!item) return null;
 
-                    return <SortableCard item={item} />;
+                    return <SortableCard item={item}/>;
                   }}
                 </Sortable.Overlay>
               </Sortable.Root>
@@ -121,7 +115,7 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
             className="flex-1 sm:flex-none"
             disabled={isBusy}
           >
-            <XIcon />
+            <XIcon/>
             <span>Cancel</span>
           </AlertDialogCancel>
 
@@ -132,7 +126,7 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
             loading={isReordering}
             className="flex-1 sm:flex-none"
           >
-            <SendIcon />
+            <SendIcon/>
             <span>Submit</span>
           </LoadingButton>
         </AlertDialogFooter>
@@ -149,8 +143,7 @@ interface ISortableCardProps
 const SortableCard: FC<ISortableCardProps> = ({ item, ...props }) => {
   return (
     <Sortable.Item value={item.id} className="touch-manipulation" asChild {...props}>
-      <div
-        className="flex size-full flex-col gap-1 rounded-md border bg-muted p-1 shadow-sm relative overflow-clip h-28">
+      <div className="flex size-full flex-col gap-1 rounded-md border bg-muted p-1 shadow-sm relative overflow-clip h-28 select-none">
         <img
           alt={item.title}
           src={item.desktopImage?.url ?? item.tabletImage?.url ?? item.mobileImage?.url}
