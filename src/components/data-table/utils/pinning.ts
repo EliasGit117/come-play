@@ -28,6 +28,7 @@ export function getCommonPinningStyles<TData>(params: IPinningStylesParams<TData
 
   return {
     position: isPinned ? 'sticky' : 'relative',
+    opacity: isPinned ? 0.97 : 1,
     zIndex: isPinned ? 1 : 0,
     background: isSelected ? 'var(--muted-generated-50)' : 'var(--background)',
     width: column.getSize(),

@@ -51,11 +51,11 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
   });
 
   useEffect(() => {
-    if (isOpen)
-      return;
+    if (isFetching)
+      setItems([]);
 
     setItems(data ?? []);
-  }, [data, isOpen]);
+  }, [data, isFetching]);
 
   const handleSubmit = () => {
     const ids = items.map((item) => item.id);
@@ -144,7 +144,8 @@ interface ISortableCardProps
 const SortableCard: FC<ISortableCardProps> = ({ item, ...props }) => {
   return (
     <Sortable.Item value={item.id} className="select-none" style={{ touchAction: 'manipulation' }} asChild {...props}>
-      <div className="flex size-full flex-col gap-1 rounded-md border bg-muted p-1 shadow-sm relative overflow-clip h-28">
+      <div
+        className="flex size-full flex-col gap-1 rounded-md border bg-muted p-1 shadow-sm relative overflow-clip h-28">
         <img
           alt={item.title}
           src={item.desktopImage?.url ?? item.tabletImage?.url ?? item.mobileImage?.url}
