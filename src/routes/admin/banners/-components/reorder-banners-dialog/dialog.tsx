@@ -74,11 +74,8 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
 
         <ScrollArea className="pr-4 mt-4" type="always">
           {isFetching ? (
-            <div className="max-h-96 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
-              <SkeletonList
-                className="h-28"
-                sizeConfig={{ xs: 6, sm: 8, md: 9 }}
-              />
+            <div className="max-h-[50svh] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
+              <SkeletonList sizeConfig={{ xs: 6, sm: 8, md: 9 }} className="h-28"/>
             </div>
           ) : (
             <div className="max-h-[50svh]">
