@@ -19,8 +19,7 @@ import { IAdminBannerBriefDto } from '@/features/banners/dtos/admin-banner-brief
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { KeyboardSensor, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
-import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
+import { MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
 import { Badge } from '@/components/ui/badge';
 import { useReorderBannersMutation } from '@/features/banners/server-functions/admin/reodred-banners';
 import { toast } from 'sonner';
@@ -34,7 +33,6 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
   const { isOpen, setIsOpen } = useReorderBannersDialogContext();
   const mouseSensor = useSensor(MouseSensor);
   const touchSensor = useSensor(TouchSensor, { activationConstraint: { delay: 300, tolerance: 8 } });
-  const keyboardSensor = useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates });
 
   const { data, isFetching } = useQuery({
     ...getBannersForAdminQueryOptions(),
@@ -80,9 +78,9 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
               />
             </div>
           ) : (
-            <div className="max-h-96">
+            <div className="max-h-[50svh]">
               <Sortable.Root
-                sensors={isBusy ? [] : [mouseSensor, touchSensor, keyboardSensor]}
+                sensors={isBusy ? [] : [mouseSensor, touchSensor]}
                 value={items}
                 onValueChange={setItems}
                 getItemValue={(item) => item.id}
@@ -142,8 +140,8 @@ interface ISortableCardProps
 
 const SortableCard: FC<ISortableCardProps> = ({ item, ...props }) => {
   return (
-    <Sortable.Item value={item.id} className="touch-manipulation" asChild {...props}>
-      <div className="flex size-full flex-col gap-1 rounded-md border bg-muted p-1 shadow-sm relative overflow-clip h-28 select-none">
+    <Sortable.Item value={item.id} className="select-none" style={{ touchAction: 'manipulation' }} asChild {...props}>
+      <div className="flex size-full flex-col gap-1 rounded-md border bg-muted p-1 shadow-sm relative overflow-clip h-28">
         <img
           alt={item.title}
           src={item.desktopImage?.url ?? item.tabletImage?.url ?? item.mobileImage?.url}
