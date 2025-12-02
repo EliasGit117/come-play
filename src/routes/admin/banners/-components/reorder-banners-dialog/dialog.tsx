@@ -146,7 +146,7 @@ const SortableCard: FC<ISortableCardProps> = ({ item, ...props }) => {
         <img
           alt={item.title}
           src={item.desktopImage?.url ?? item.tabletImage?.url ?? item.mobileImage?.url}
-          className="absolute top-0 left-0 right-0 bottom-0 object-cover h-full w-full brightness-85 dark:brightness-65"
+          className="absolute top-0 left-0 right-0 bottom-0 object-cover h-full w-full brightness-85 dark:brightness-65 pointer-events-none"
         />
 
         <Badge

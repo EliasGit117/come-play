@@ -17,6 +17,7 @@ import * as React from 'react';
 import { useAppSidebar } from './app-sidebar-provider';
 import { headerLinks, ILinkItem, MenuItemType } from '@/components/layout/data';
 import { FC } from 'react';
+import { cn } from '@/lib/utils';
 
 const AppSidebar = () => {
   const isOpen = useAppSidebar((s) => s.isOpen);
@@ -28,9 +29,12 @@ const AppSidebar = () => {
     <Sheet open={isOpen} onOpenChange={setOpen}>
       <SheetContent side="right">
         <SheetHeader>
-          <SheetTitle className="sr-only">Navigation Links</SheetTitle>
-          <SheetDescription className="sr-only">
-            Navigate through the site using accordion groups and individual links
+          <SheetTitle>
+            Navigation Links
+          </SheetTitle>
+
+          <SheetDescription>
+            Navigate through different sections of the website
           </SheetDescription>
         </SheetHeader>
 
@@ -54,7 +58,7 @@ const AppSidebar = () => {
                           item={item}
                           variant="ghost"
                           onClick={handleClick}
-                          size="sm" // Smaller links inside accordion
+                          size="sm"
                         />
                       ))}
                     </AccordionContent>
@@ -65,11 +69,12 @@ const AppSidebar = () => {
               if (link.type === MenuItemType.Single) {
                 return (
                   <SidebarLink
+                    className='py-4'
                     key={`single-${index}`}
                     item={link.item}
                     variant="link"
                     onClick={handleClick}
-                    size="md" // Normal sized link
+                    size="md"
                   />
                 );
               }
@@ -116,7 +121,9 @@ const SidebarLink: FC<ISidebarLinkProps> = (props) => {
       <Link to={item.linkOpt.to} className="flex flex-col items-start px-0">
         <span className={labelClass}>{item.label}</span>
         {item.description && (
-          <span className={`${descClass} text-muted-foreground`}>{item.description}</span>
+          <span className={cn(descClass, 'text-muted-foreground whitespace-pre-line')}>
+            {item.description}
+          </span>
         )}
       </Link>
     </Button>

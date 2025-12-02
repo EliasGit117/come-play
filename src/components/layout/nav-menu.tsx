@@ -39,13 +39,7 @@ const HeaderNavMenu: FC<IProps> = ({ transparent, ...props }) => {
             />
           ) : (
             <NavigationMenuItem key={idx}>
-              <NavigationMenuLink
-                asChild
-                className={cn(
-                  navigationMenuTriggerStyle(),
-                  triggerClassName,
-                )}
-              >
+              <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), triggerClassName)} asChild>
                 <Link {...menu.item.linkOpt}>{menu.item.label}</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
