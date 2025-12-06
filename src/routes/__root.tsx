@@ -1,14 +1,13 @@
 /// <reference types="vite/client" />
 /// <reference types="vite-plugin-svgr/client" />
 
-import { HeadContent, Outlet, Scripts, createRootRouteWithContext, useRouterState } from '@tanstack/react-router';
+import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from '@tanstack/react-router';
 import type { QueryClient } from '@tanstack/react-query';
 import { DefaultCatchBoundary } from '@/components/default-catch-boundary';
 import appCss from '@/styles/app.css?url';
 import { seo } from '@/utils/seo';
 import { Providers } from '@/providers';
 import { ThemeProvider } from '@/components/theme';
-import { useMountedEffect } from '@/hooks/use-mounted-effect';
 import { ReactNode } from 'react';
 
 interface IRootRouteProps {

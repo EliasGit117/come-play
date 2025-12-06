@@ -22,8 +22,10 @@ model News {
   status    NewsStatus @default(hidden)
   image     NewsImage?
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @default(now()) @updatedAt @map("updated_at")
+  Subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
+  subcategoryId Int?
 
   @@index(fields: [titleRo, titleRu, slug, status])
   @@map("news")
@@ -101,4 +103,53 @@ model BannerImage {
 
   @@index([desktopBannerId, tabletBannerId, mobileBannerId])
   @@map("banner_images")
+}
+
+model Category {
+  id     Int    @id @default(autoincrement())
+  nameRo String @map("name_ro")
+  nameRu String @map("name_ru")
+  slug   String @unique
+
+  subcategories Subcategory[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("categories")
+}
+
+model Subcategory {
+  id     Int    @id @default(autoincrement())
+  nameRo String @map("name_ro")
+  nameRu String @map("name_ru")
+  slug   String @unique
+
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  products Product[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  News      News[]
+
+  @@index([categoryId])
+  @@map("subcategories")
+}
+
+model Product {
+  id     Int    @id @default(autoincrement())
+  nameRo String @map("name_ro")
+  nameRu String @map("name_ru")
+  slug   String @unique
+
+  subcategoryId Int?
+  subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@index([subcategoryId])
+  @@map("products")
 }

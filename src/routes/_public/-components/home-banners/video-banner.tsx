@@ -1,3 +1,6 @@
+/// <reference types="vite/client" />
+/// <reference types="vite-plugin-svgr/client" />
+
 import { CarouselItem } from '@/components/ui/carousel';
 import videoBanner from '/videos/home/banners/video-banner.mp4';
 import videoPreview from '/images/home/banners/video-placeholder.webp';

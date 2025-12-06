@@ -12,16 +12,21 @@ import {
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { bannerColumns } from '@/routes/admin/banners/-components/banners-table/columns';
 import { TrashIcon } from 'lucide-react';
-import { CreateBannerDialogTrigger } from '@/routes/admin/banners/-components/create-banner-dialog/trigger';
-import { CreateBannerDialog } from '@/routes/admin/banners/-components/create-banner-dialog/dialog';
-import { CreateBannerDialogProvider } from '@/routes/admin/banners/-components/create-banner-dialog/provider';
+import {
+  CreateBannerDialogTrigger,
+  CreateBannerDialogProvider,
+  CreateBannerDialog
+} from '@/routes/admin/banners/-components/create-banner-dialog';
 import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
 import { useConfirm } from '@/components/ui/confirm-dialog';
 import { useDeleteBannersByIdsMutation } from '@/features/banners/server-functions/admin/delete-banner-by-ids';
-import { ReorderBannersDialogProvider } from '@/routes/admin/banners/-components/reorder-banners-dialog/provider';
-import { ReorderBannersDialogTrigger } from '@/routes/admin/banners/-components/reorder-banners-dialog/trigger';
-import { ReorderBannersDialog } from '@/routes/admin/banners/-components/reorder-banners-dialog/dialog';
+import {
+  ReorderBannersDialogProvider,
+  ReorderBannersDialog,
+  ReorderBannersDialogTrigger
+} from '@/routes/admin/banners/-components/reorder-banners-dialog';
+import { toast } from 'sonner';
+
 
 interface IProps extends ComponentProps<'div'> {
   search?: TGetBannersForAdminSchema;
@@ -105,8 +110,8 @@ export const BannerTable: FC<IProps> = (props) => {
                 </Button>
               )}
 
-              <ReorderBannersDialogTrigger variant="ghost" size="sm" disabled={isPending} shortText />
-              <CreateBannerDialogTrigger variant="ghost" size="sm" disabled={isPending} shortText />
+              <ReorderBannersDialogTrigger variant="ghost" size="sm" disabled={isPending} shortText/>
+              <CreateBannerDialogTrigger variant="ghost" size="sm" disabled={isPending} shortText/>
             </DataTableToolbar>
 
             <DataTable/>

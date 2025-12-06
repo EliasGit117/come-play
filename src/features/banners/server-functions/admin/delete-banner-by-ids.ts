@@ -87,7 +87,8 @@ export const deleteBannersByIds = createServerFn({ method: 'POST' })
     };
   });
 
-// ---------- React Hook ----------
+
+
 type TResult = Awaited<ReturnType<typeof deleteBannersByIds>>;
 type TParams = Parameters<typeof deleteBannersByIds>[0];
 type TOptions = Omit<
