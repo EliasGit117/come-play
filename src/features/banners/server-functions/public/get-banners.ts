@@ -22,6 +22,7 @@ export const getBanners = createServerFn({ method: 'GET' })
       where: { isActive: true }
     });
 
+    console.log(items)
     return BannerBriefDtoFactory.fromEntities(items);
   });
 

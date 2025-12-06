@@ -1,7 +1,12 @@
 import { z } from 'zod'
 
 export const bannerBaseSchema = z.object({
-  path: z.string().regex(/^[a-zA-Z0-9-/]+$/).max(1000).optional(),
+  path: z.string()
+    .max(1000)
+    .optional()
+    .refine(val => val === undefined || val === "" || /^[a-zA-Z0-9-/]+$/.test(val), {
+      message: "Invalid path",
+    }),
   title: z.string().min(3).max(128),
   titleRo: z.string().max(128).optional(),
   titleRu: z.string().max(128).optional(),

@@ -22,7 +22,7 @@ export const createBanner = createServerFn({ method: 'POST' })
           textRu: data.textRu || null,
           path: data.path || null,
           order: (maxOrder._max.order ?? 0) + 1,
-          isActive: false
+          isActive: data.isActive
         }
       });
     });

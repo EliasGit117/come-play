@@ -15,13 +15,12 @@ import { useSidebar } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
 import { BannerImageType } from '@prisma/client';
 import {
-  editBannerFormSchema,
-  EditBannerForm,
-  TEditBannerFormSchema
+  EditBannerForm
 } from '@/routes/admin/banners/$id/-components/edit-banner-form/form';
 import { IImagePickerValue } from '@/components/ui/cover-image-picker';
 import BannerImageUploader from '@/routes/admin/banners/$id/-components/edit-banner-form/banner-image-uploader';
 import { format } from 'date-fns';
+import { editBannerSchema, TEditBannerSchema } from '@/features/banners/schemas/edit-banner';
 
 
 export const Route = createFileRoute('/admin/banners/$id/edit')({
@@ -56,8 +55,8 @@ function RouteComponent() {
     mobile: false
   });
 
-  const form = useForm<TEditBannerFormSchema>({
-    resolver: zodResolver(editBannerFormSchema),
+  const form = useForm<TEditBannerSchema>({
+    resolver: zodResolver(editBannerSchema),
     defaultValues: { ...banner, path: banner.path ?? '' }
   });
 
@@ -126,7 +125,7 @@ function RouteComponent() {
 
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit((values: TEditBannerFormSchema) => mutate({ id: parseInt(id), ...values }))}
+          onSubmit={form.handleSubmit((values: TEditBannerSchema) => mutate({ ...values, id: parseInt(id) }))}
           className="flex flex-col gap-4"
         >
           <EditBannerForm disabled={isFetching || isUpdating || isImgPending}/>

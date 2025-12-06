@@ -40,7 +40,8 @@ export const CreateBannerDialog: FC<ICreateBannerDialogProps> = ({ afterSuccess 
       titleRo: '',
       titleRu: '',
       textRo: '',
-      textRu: ''
+      textRu: '',
+      isActive: false
     }
   });
 
@@ -68,6 +69,8 @@ export const CreateBannerDialog: FC<ICreateBannerDialogProps> = ({ afterSuccess 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent className="sm:max-w-2xl">
+        <pre>{JSON.stringify(form.formState.errors, null, 2)}</pre>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit((values) => mutate(values))}>
             <AlertDialogHeader>

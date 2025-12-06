@@ -10,8 +10,7 @@ import { cn } from '@/lib/utils';
 export const VideoBanner = () => {
 
   return (
-    <CarouselItem className="relative pl-0">
-
+    <CarouselItem className="relative">
       <VideoPlaceholder
         placeholder={
           <img
@@ -28,7 +27,7 @@ export const VideoBanner = () => {
           loop
           playsInline
           webkit-playsinline="true"
-          className="brightness-50 min-h-96 object-cover w-full max-h-svh"
+          className="min-h-[512px] h-full w-full max-h-svh object-cover brightness-50"
         >
           <source src={videoBanner} type="video/mp4"/>
         </video>

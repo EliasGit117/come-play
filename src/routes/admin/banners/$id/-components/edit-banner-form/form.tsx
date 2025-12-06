@@ -2,21 +2,10 @@ import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
-import { z } from 'zod'
 import { Field, FieldContent, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Textarea } from '@/components/ui/textarea';
+import { TEditBannerSchema } from '@/features/banners/schemas/edit-banner';
 
-export const editBannerFormSchema = z.object({
-  path: z.string().regex(/^[a-zA-Z0-9-/]+$/).max(1000).optional(),
-  title: z.string().min(3).max(128),
-  titleRo: z.string().max(128).optional(),
-  titleRu: z.string().max(128).optional(),
-  textRu: z.string().max(512).optional(),
-  textRo: z.string().max(512).optional(),
-  isActive: z.boolean()
-});
-
-export type TEditBannerFormSchema = z.infer<typeof editBannerFormSchema>;
 
 interface IEditBannerFormProps {
   disabled?: boolean;
@@ -24,7 +13,7 @@ interface IEditBannerFormProps {
 }
 
 export const EditBannerForm: FC<IEditBannerFormProps> = ({ className, disabled }) => {
-  const form = useFormContext<TEditBannerFormSchema>();
+  const form = useFormContext<TEditBannerSchema>();
 
   return (
     <fieldset disabled={disabled} className={className}>

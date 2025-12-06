@@ -3,12 +3,13 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
-  Field,
+  Field, FieldContent, FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel
 } from '@/components/ui/field';
 import { TCreateBannerSchema } from '@/features/banners/schemas/create-banner';
+import { Checkbox } from '@/components/ui/checkbox';
 
 interface IBannerFormProps {
   disabled?: boolean;
@@ -97,6 +98,29 @@ export const BannerForm: FC<IBannerFormProps> = ({ disabled, className }) => {
               <FieldLabel>Russian text</FieldLabel>
               <Textarea {...field} placeholder="Описание" />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+
+        <Controller
+          name="isActive"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field orientation="horizontal" data-invalid={fieldState.invalid}>
+              <Checkbox
+                id="is-active-checkbox"
+                checked={field.value ?? false}
+                onCheckedChange={(value) => field.onChange(value)}
+                aria-invalid={fieldState.invalid}
+              />
+              <FieldContent>
+                <FieldLabel htmlFor="is-active-checkbox">
+                  Is active
+                </FieldLabel>
+                <FieldDescription>
+                  Controls visibility of the banner
+                </FieldDescription>
+              </FieldContent>
             </Field>
           )}
         />

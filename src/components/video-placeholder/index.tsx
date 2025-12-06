@@ -9,7 +9,7 @@ export interface IVideoPlaceholderProps {
   children: ReactElement<VideoHTMLAttributes<HTMLVideoElement>>; // strictly <video>
   transitionDuration?: number; // in ms
   background?: string; // optional container background color
-};
+}
 
 const VideoPlaceholder: FC<IVideoPlaceholderProps> = (props) => {
   const {
@@ -32,7 +32,7 @@ const VideoPlaceholder: FC<IVideoPlaceholderProps> = (props) => {
 
   const videoWithHandlers = cloneElement(children, {
     className: cn(
-      'absolute inset-0 h-full w-full object-cover transition-opacity z-20',
+      'inset-0 h-full w-full object-cover transition-opacity z-20',
       loading && 'opacity-0',
       children.props.className
     ),

@@ -17,7 +17,8 @@ import { BannerImage } from '@/routes/_public/-components/home-banners/banner-im
 import { VideoBanner } from '@/routes/_public/-components/home-banners/video-banner';
 
 
-interface IProps extends ComponentProps<typeof Carousel> {}
+interface IProps extends ComponentProps<typeof Carousel> {
+}
 
 export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
   const [api, setApi] = useState<CarouselApi>();
@@ -36,7 +37,7 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
 
 
   if (isPending)
-    return (<Skeleton className="flex flex-col w-full aspect-[3/2] min-h-[512px]"/>);
+    return (<Skeleton className="flex flex-col w-full min-h-[512px]"/>);
 
   return (
     <Carousel
@@ -53,7 +54,7 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
 
             return (
               <CarouselItem key={index} className="relative pl-0">
-                <BannerImage banner={banner} className='min-h-[512px]'/>
+                <BannerImage banner={banner} className="min-h-[512px]"/>
                 {hasData && (<BannerOverlay banner={banner}/>)}
               </CarouselItem>
             );
@@ -63,8 +64,7 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
         )}
       </CarouselContent>
 
-      {!!api && (
-
+      {(!!api && data && data.length > 0) && (
         <div className="absolute bottom-1 left-0 right-0 flex z-10">
           <div className="flex justify-center gap-2 py-2 mx-auto items-center">
             <Button

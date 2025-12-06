@@ -9,7 +9,7 @@ import {
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
 import { LoadingButton } from '@/components/ui/loading-button';
-import { SendIcon, XIcon } from 'lucide-react';
+import { ImageOffIcon, SendIcon, XIcon } from 'lucide-react';
 import { useReorderBannersDialogContext } from './provider';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useQuery } from '@tanstack/react-query';
@@ -139,15 +139,25 @@ interface ISortableCardProps
 }
 
 const SortableCard: FC<ISortableCardProps> = ({ item, ...props }) => {
+  const img = item.desktopImage ?? item.tabletImage ?? item.mobileImage;
+
   return (
     <Sortable.Item value={item.id} className="select-none" style={{ touchAction: 'manipulation' }} asChild {...props}>
       <div
-        className="flex size-full flex-col gap-1 rounded-md border bg-muted p-1 shadow-sm relative overflow-clip h-28">
-        <img
-          alt={item.title}
-          src={item.desktopImage?.url ?? item.tabletImage?.url ?? item.mobileImage?.url}
-          className="absolute top-0 left-0 right-0 bottom-0 object-cover h-full w-full brightness-85 dark:brightness-65 pointer-events-none"
-        />
+        className="flex size-full flex-col gap-1 rounded-md border bg-muted p-1 shadow-sm relative overflow-clip h-28"
+      >
+
+        {!!img ? (
+          <img
+            alt={item.title}
+            src={img.url}
+            className="absolute top-0 left-0 right-0 bottom-0 object-cover h-full w-full brightness-85 dark:brightness-65 pointer-events-none"
+          />
+        ) : (
+          <ImageOffIcon
+            className="text-muted-foreground absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          />
+        )}
 
         <Badge
           variant="default"
