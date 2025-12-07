@@ -1,21 +1,12 @@
 import { createServerFn } from '@tanstack/react-start';
 import prisma from '@/lib/prisma';
-import { z } from 'zod';
 import { useMutation, UseMutationOptions, useQueryClient } from '@tanstack/react-query';
 import {
   AdminCategoryBriefDtoFactory,
   IAdminCategoryBriefDto
 } from '@/features/categories/dtos/admin-category-brief-dto';
+import { editCategorySchema } from '@/features/categories/schemas/edit-category';
 
-
-export const editCategorySchema = z.object({
-  id: z.number(),
-  nameRo: z.string().min(1, 'Name (RO) is required'),
-  nameRu: z.string().min(1, 'Name (RU) is required'),
-  slug: z.string().min(1, 'Slug is required')
-});
-
-export type TEditCategorySchema = z.infer<typeof editCategorySchema>;
 
 export const editCategory = createServerFn({ method: 'POST' })
   .inputValidator(editCategorySchema)
@@ -23,14 +14,27 @@ export const editCategory = createServerFn({ method: 'POST' })
     const { id, nameRo, nameRu, slug } = data;
 
     const existing = await prisma.category.findUnique({ where: { id } });
-    if (!existing) throw new Error('Category not found');
+    if (!existing)
+      throw new Error('Category not found');
+
+    const withSameSlug = await prisma.category.findUnique({
+      where: {
+        NOT: { id },
+        slug: slug
+      }
+    });
+
+    if (!withSameSlug)
+      throw new Error('There is another category with same slug');
 
     const category = await prisma.category.update({
       where: { id },
       data: {
-        nameRo,
-        nameRu,
-        slug
+        nameRo: nameRo,
+        nameRu: nameRu,
+        descriptionRo: data.descriptionRo || null,
+        descriptionRu: data.descriptionRu || null,
+        slug: slug
       }
     });
 

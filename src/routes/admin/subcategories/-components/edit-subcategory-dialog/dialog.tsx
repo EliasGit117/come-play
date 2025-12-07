@@ -11,86 +11,83 @@ import {
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
 import { Form } from '@/components/ui/form';
-import { LoadingButton } from '@/components/ui/loading-button';
-import { toast } from 'sonner';
 import { SendIcon, XIcon } from 'lucide-react';
+import { toast } from 'sonner';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import {
-  getCategoryByIdForAdminQueryOptions
-} from '@/features/categories/server-functions/admin/get-category-by-id-for-admin';
-import { useQuery } from '@tanstack/react-query';
-import { EditCategoryForm } from './form';
-import { editCategorySchema } from '@/features/categories/schemas/edit-category';
-import { useEditCategoryDialogContext } from '@/routes/admin/categories/-components/edit-category-dialog/provider';
-import { useEditCategoryMutation } from '@/features/categories/server-functions/admin/edit-category';
+import { LoadingButton } from '@/components/ui/loading-button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useEditSubcategoryDialogContext } from './provider';
+import { useQuery } from '@tanstack/react-query';
+import {
+  getSubcategoryByIdForAdminQueryOptions
+} from '@/features/subcategories/server-functions/admin/get-subcategory-by-id';
+import { useEditSubcategoryMutation } from '@/features/subcategories/server-functions/admin/edit-subcategory';
+import { SubcategoryForm } from '@/routes/admin/subcategories/-components/edit-subcategory-dialog/form';
+import { editSubcategorySchema } from '@/features/subcategories/schemas/edit-subcategory';
 import { z } from 'zod';
 
 
-export const editCategoryFormSchema = editCategorySchema.omit({ id: true });
-export type TEditCategoryFormSchema = z.infer<typeof editCategoryFormSchema>;
+export const editSubcategoryFormSchema = editSubcategorySchema.omit({ id: true });
+export type TEditSubcategoryFormSchema = z.infer<typeof editSubcategoryFormSchema>;
 
-export const EditCategoryDialog: FC = () => {
-  const { categoryId, setCategoryId } = useEditCategoryDialogContext();
+export const EditSubcategoryDialog: FC = () => {
+  const { subcategoryId, setSubcategoryId } = useEditSubcategoryDialogContext();
 
-  const form = useForm<TEditCategoryFormSchema>({
-    resolver: zodResolver(editCategoryFormSchema),
+  const form = useForm<TEditSubcategoryFormSchema>({
+    resolver: zodResolver(editSubcategoryFormSchema),
     defaultValues: {
       nameRo: '',
       nameRu: '',
-      slug: '',
       descriptionRo: '',
-      descriptionRu: ''
+      descriptionRu: '',
+      slug: '',
+      categoryId: undefined
     }
   });
 
-  const { data: category, isFetching } = useQuery({
-    ...getCategoryByIdForAdminQueryOptions(categoryId!),
-    enabled: !!categoryId,
+  const { data: subcategory, isFetching } = useQuery({
+    ...getSubcategoryByIdForAdminQueryOptions(subcategoryId!),
+    enabled: !!subcategoryId,
     staleTime: 0
   });
 
   useEffect(() => {
-    if (category) {
-      form.reset({
-        nameRo: category.nameRo,
-        nameRu: category.nameRu,
-        descriptionRu: category.descriptionRo,
-        descriptionRo: category.descriptionRu,
-        slug: category.slug
-      });
-    }
-  }, [category, form]);
+    if (!subcategory)
+      return;
 
-  const { mutate, isPending } = useEditCategoryMutation({
+    form.reset({ ...subcategory });
+  }, [subcategory, form]);
+
+  const { mutate, isPending } = useEditSubcategoryMutation({
     onError: (e) => toast.error('Failed to update', { description: e.message }),
     onSuccess: () => {
-      toast.success('Category updated successfully!');
-      setCategoryId(undefined);
+      toast.success('Subcategory updated successfully!');
+      setSubcategoryId(undefined);
     }
   });
 
-  const onOpenChange = (v: boolean) => {
-    if (v)
-      return;
-
-    setCategoryId(undefined);
-  };
-
   const isLoading = isFetching || isPending;
 
+  const onOpenChange = (open: boolean) => {
+    if (open)
+      return;
+
+    setSubcategoryId(undefined);
+  };
+
   return (
-    <AlertDialog open={!!categoryId} onOpenChange={onOpenChange}>
+    <AlertDialog open={!!subcategoryId} onOpenChange={onOpenChange}>
       <AlertDialogContent className="sm:max-w-2xl">
 
         <AlertDialogHeader>
-          <AlertDialogTitle>Edit Category</AlertDialogTitle>
+          <AlertDialogTitle>Edit Subcategory</AlertDialogTitle>
           <AlertDialogDescription>
-            Update the details below and save your changes.
+            Update the form below to modify the selected subcategory.
           </AlertDialogDescription>
         </AlertDialogHeader>
 
-        <ScrollArea className="pr-4 mt-4" type="always">
+
+        <ScrollArea className="mt-4 pr-4" type="always">
           {isFetching ? (
             <div className="max-h-96 grid md:grid-cols-2 gap-7">
               <div className="space-y-2 col-span-full">
@@ -108,6 +105,11 @@ export const EditCategoryDialog: FC = () => {
                 <Skeleton className="h-9 w-full"/>
               </div>
 
+              <div className="space-y-2 col-span-full">
+                <Skeleton className="h-4 w-12 rounded-sm"/>
+                <Skeleton className="h-9 w-full"/>
+              </div>
+
               <div className="space-y-1">
                 <Skeleton className="h-4 w-12 rounded-sm"/>
                 <Skeleton className="h-24 w-full"/>
@@ -121,10 +123,12 @@ export const EditCategoryDialog: FC = () => {
           ) : (
             <Form {...form}>
               <form
-                id="edit-category-form"
-                onSubmit={form.handleSubmit((values) => mutate({ ...values, id: categoryId! }))}
+                id="edit-subcategory-form"
+                onSubmit={form.handleSubmit((values) => {
+                  mutate({ ...values, id: subcategoryId! });
+                })}
               >
-                <EditCategoryForm className="max-h-96" disabled={isFetching}/>
+                <SubcategoryForm/>
               </form>
             </Form>
           )}
@@ -137,7 +141,7 @@ export const EditCategoryDialog: FC = () => {
           </AlertDialogCancel>
 
           <LoadingButton
-            form="edit-category-form"
+            form="edit-subcategory-form"
             type="submit"
             disabled={isLoading}
             loading={isPending}
@@ -147,7 +151,9 @@ export const EditCategoryDialog: FC = () => {
             <span>Save</span>
           </LoadingButton>
         </AlertDialogFooter>
+
       </AlertDialogContent>
     </AlertDialog>
-  );
+  )
+    ;
 };

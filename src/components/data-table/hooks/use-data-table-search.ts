@@ -22,9 +22,12 @@ export function useDataTableSearch<TData>({ columns, pageOnSearchChange = 1, rep
       const key = col.meta?.key ?? ('accessorKey' in col ? col.accessorKey : col.id);
 
       if ('accessorKey' in col && col.accessorKey) {
-        data[String(col.accessorKey)] = String(key);
+        const accessorKey = String(col.accessorKey);
+        data[accessorKey] = String(key);
+        data[accessorKey.replaceAll('.', '_')] = String(key);
       } else {
-        data[String(col.id)] = String(col.meta?.key ?? col.id);
+        const idKey = String(col.id);
+        data[idKey] = String(col.meta?.key ?? col.id);
       }
     });
 

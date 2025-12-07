@@ -122,7 +122,8 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
             );
 
           return (
-            <figure className={`${className} rounded-sm overflow-hidden border border-border/50 bg-muted`} title={label}>
+            <figure className={`${className} rounded-sm overflow-hidden border border-border/50 bg-muted`}
+                    title={label}>
               <UnLazyImageSSR
                 src={img.url}
                 thumbhash={img.thumbhash}

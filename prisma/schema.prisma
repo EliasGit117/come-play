@@ -106,34 +106,37 @@ model BannerImage {
 }
 
 model Category {
-  id     Int    @id @default(autoincrement())
-  nameRo String @map("name_ro")
-  nameRu String @map("name_ru")
-  slug   String @unique
+  id            Int     @id @default(autoincrement())
+  nameRo        String  @map("name_ro")
+  nameRu        String  @map("name_ru")
+  slug          String  @unique
+  descriptionRo String? @map("description_ro")
+  descriptionRu String? @map("description_ru")
 
   subcategories Subcategory[]
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @default(now()) @updatedAt @map("updated_at")
 
   @@map("categories")
 }
 
 model Subcategory {
-  id     Int    @id @default(autoincrement())
-  nameRo String @map("name_ro")
-  nameRu String @map("name_ru")
-  slug   String @unique
+  id            Int     @id @default(autoincrement())
+  nameRo        String  @map("name_ro")
+  nameRu        String  @map("name_ru")
+  slug          String
+  descriptionRo String? @map("description_ro")
+  descriptionRu String? @map("description_ru")
 
-  categoryId Int
-  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int? // Make optional
+  category   Category? @relation(fields: [categoryId], references: [id])
 
-  products Product[]
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  products  Product[]
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
   News      News[]
 
+  @@unique([categoryId, slug])
   @@index([categoryId])
   @@map("subcategories")
 }

@@ -32,7 +32,7 @@ export const CreateCategoryDialog: FC<ICreateCategoryDialogProps> = ({ afterSucc
     defaultValues: {
       nameRo: '',
       nameRu: '',
-      slug: '',
+      slug: ''
     }
   });
 
@@ -55,39 +55,47 @@ export const CreateCategoryDialog: FC<ICreateCategoryDialogProps> = ({ afterSucc
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent className="sm:max-w-2xl">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit((values) => mutate(values))}>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Create Banner</AlertDialogTitle>
-              <AlertDialogDescription>
-                Fill out the form below to create a new banner entry.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
 
-            <ScrollArea className="pr-4 mt-4" type='always'>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Create category</AlertDialogTitle>
+          <AlertDialogDescription>
+            Fill out the form below to create a new category entry.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+
+        <ScrollArea className="pr-4 mt-4" type="always">
+          <Form {...form}>
+            <form
+              id='create-category-form'
+              onSubmit={form.handleSubmit((values) => {
+                mutate(values)
+              })}
+            >
               <BannerForm className="max-h-96"/>
-            </ScrollArea>
+            </form>
+          </Form>
+        </ScrollArea>
 
-            <AlertDialogFooter className="flex-row mt-6">
-              <AlertDialogCancel
-                type="button"
-                className="flex-1 sm:flex-none"
-              >
-                <XIcon/>
-                <span>Cancel</span>
-              </AlertDialogCancel>
+        <AlertDialogFooter className="flex-row mt-6">
+          <AlertDialogCancel
+            type="button"
+            className="flex-1 sm:flex-none"
+          >
+            <XIcon/>
+            <span>Cancel</span>
+          </AlertDialogCancel>
 
-              <LoadingButton
-                type="submit"
-                loading={isPending}
-                className="flex-1 sm:flex-none"
-              >
-                <SendIcon/>
-                <span>Submit</span>
-              </LoadingButton>
-            </AlertDialogFooter>
-          </form>
-        </Form>
+          <LoadingButton
+            form='create-category-form'
+            type="submit"
+            loading={isPending}
+            className="flex-1 sm:flex-none"
+          >
+            <SendIcon/>
+            <span>Submit</span>
+          </LoadingButton>
+        </AlertDialogFooter>
+
       </AlertDialogContent>
     </AlertDialog>
   );

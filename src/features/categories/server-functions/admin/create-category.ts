@@ -14,6 +14,8 @@ export const createCategory = createServerFn({ method: 'POST' })
       data: {
         nameRo: data.nameRo,
         nameRu: data.nameRu,
+        descriptionRo: data.descriptionRo || null,
+        descriptionRu: data.descriptionRu || null,
         slug: data.slug,
       },
     });

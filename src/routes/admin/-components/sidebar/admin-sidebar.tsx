@@ -16,7 +16,7 @@ import {
   NewspaperIcon,
   ShoppingCartIcon,
   HomeIcon,
-  GalleryHorizontalIcon, TagsIcon
+  GalleryHorizontalIcon, TagsIcon, TagIcon
 } from 'lucide-react';
 import { INavItem } from '@/routes/admin/-components/sidebar/types/nav-item';
 import { Link } from '@tanstack/react-router';
@@ -82,6 +82,11 @@ const navMain: INavItem[] = [
   {
     title: 'Categories',
     linkOptions: { to: '/admin/categories' },
+    icon: TagIcon
+  },
+  {
+    title: 'Subcategories',
+    linkOptions: { to: '/admin/subcategories' },
     icon: TagsIcon
   },
   {

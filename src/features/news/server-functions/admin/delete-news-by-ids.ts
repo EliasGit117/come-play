@@ -19,8 +19,6 @@ export const deleteNewsByIds = createServerFn({ method: 'POST' })
       where: { newsId: { in: ids } }
     });
 
-    console.log('rel',relatedImages)
-
     for (const img of relatedImages) {
       try {
         await removeImageFromNews(img.newsId);

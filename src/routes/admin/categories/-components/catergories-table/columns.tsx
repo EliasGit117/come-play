@@ -9,7 +9,8 @@ import {
   CalendarClockIcon,
   ListIcon,
   EllipsisIcon,
-  PenIcon
+  PenIcon,
+  InfoIcon, TagsIcon
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -22,6 +23,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Checkbox } from '@/components/ui/checkbox';
 import { EditCategoryDialogTrigger } from '@/routes/admin/categories/-components/edit-category-dialog';
+import { Badge } from '@/components/ui/badge';
+import { Link } from '@tanstack/react-router';
 
 
 const columnHelper = createColumnHelper<IAdminCategoryBriefDto>();
@@ -39,6 +42,7 @@ export const categoryColumns = (options?: { disabled?: boolean }) => {
         <Checkbox
           disabled={disabled}
           aria-label="Select all"
+          className="translate-y-0.5"
           checked={
             table.getIsAllPageRowsSelected() ||
             (table.getIsSomePageRowsSelected() && 'indeterminate')
@@ -50,6 +54,7 @@ export const categoryColumns = (options?: { disabled?: boolean }) => {
         <Checkbox
           disabled={disabled}
           aria-label="Select row"
+          className="translate-y-0.5 mr-2"
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
         />
@@ -100,6 +105,36 @@ export const categoryColumns = (options?: { disabled?: boolean }) => {
       header: ({ column }) => <DataTableColumnHeader column={column}/>,
       cell: ctx => <span className="text-xs">{format(ctx.getValue(), 'dd.MM.yyyy - HH:mm')}</span>,
       meta: { label: 'Updated', icon: CalendarClockIcon, filter: { type: ColumnFilterType.DateRange } }
+    }),
+
+    columnHelper.accessor('subcategoriesCount', {
+      enableSorting: false,
+      header: ({ column }) => <DataTableColumnHeader column={column}/>,
+      cell: ({ getValue, row }) => {
+        const count = getValue();
+        const hasChildren = !!count && count > 0;
+        let text: string;
+
+        if (!hasChildren) {
+          text = 'None';
+        } else if (count === 1) {
+          text = '1 child';
+        } else {
+          text = `${count} children`;
+        }
+
+        return (<Link to="/admin/subcategories" disabled={!hasChildren} search={{ categoryName: row.original.nameRo }}>
+            <Badge variant='outline' className="gap-2 py-1 px-2 m-0">
+              {hasChildren && <TagsIcon/>}
+              <span>{text}</span>
+            </Badge>
+          </Link>
+        );
+      },
+      meta: {
+        label: 'Info',
+        icon: InfoIcon
+      }
     }),
 
     columnHelper.display({

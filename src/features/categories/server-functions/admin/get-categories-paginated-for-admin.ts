@@ -9,6 +9,7 @@ import { PaginationResultDtoFactory } from '@/features/common/pagination/paginat
 
 
 export const getCategoriesPaginatedForAdminSchema = paginatedSchema.extend({
+  limit: z.number().int().min(1).max(10000).optional().catch(10),
   order: z.enum(['id', 'createdAt', 'updatedAt', 'slug']).optional().catch(undefined),
   id: z.number().int().optional().catch(undefined),
   idRange: numberRangeSchema.optional().catch(undefined),
@@ -61,12 +62,17 @@ export const getCategoriesPaginatedForAdmin = createServerFn({ method: 'GET' })
       if (data.updatedAt.to) where.updatedAt.lte = data.updatedAt.to;
     }
 
-    console.log(where);
-
     const [items, meta] = await prisma.category
       .paginate({
         orderBy: { [data.order ?? 'id']: data.dir ?? 'desc' },
-        where
+        where: where,
+        include: {
+          _count: {
+            select: {
+              subcategories: true
+            }
+          }
+        }
       })
       .withPages({
         includePageCount: true,

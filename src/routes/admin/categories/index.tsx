@@ -9,12 +9,13 @@ import {
 
 export const Route = createFileRoute('/admin/categories/')({
   component: RouteComponent,
+  head: () => ({ meta: [{ title: 'Categories' }] }),
+  staticData: { breadcrumbs: [{ title: 'Categories' }] },
   validateSearch: zodValidator(getCategoriesPaginatedForAdminSchema),
   loaderDeps: (deps) => (deps),
   loader: async ({ context, deps: { search } }) => {
     return context.queryClient.prefetchQuery(getCategoriesPaginatedForAdminQueryOptions(search));
   },
-  head: () => ({ meta: [{ title: 'News' }] })
 });
 
 function RouteComponent() {

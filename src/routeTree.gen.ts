@@ -15,6 +15,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as AdminNewsRouteRouteImport } from './routes/admin/news/route'
 import { Route as AdminBannersRouteRouteImport } from './routes/admin/banners/route'
+import { Route as AdminSubcategoriesIndexRouteImport } from './routes/admin/subcategories/index'
 import { Route as AdminNewsIndexRouteImport } from './routes/admin/news/index'
 import { Route as AdminCategoriesIndexRouteImport } from './routes/admin/categories/index'
 import { Route as AdminBannersIndexRouteImport } from './routes/admin/banners/index'
@@ -51,6 +52,11 @@ const AdminNewsRouteRoute = AdminNewsRouteRouteImport.update({
 const AdminBannersRouteRoute = AdminBannersRouteRouteImport.update({
   id: '/banners',
   path: '/banners',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminSubcategoriesIndexRoute = AdminSubcategoriesIndexRouteImport.update({
+  id: '/subcategories/',
+  path: '/subcategories/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminNewsIndexRoute = AdminNewsIndexRouteImport.update({
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/admin/banners/': typeof AdminBannersIndexRoute
   '/admin/categories': typeof AdminCategoriesIndexRoute
   '/admin/news/': typeof AdminNewsIndexRoute
+  '/admin/subcategories': typeof AdminSubcategoriesIndexRoute
   '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
 }
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/admin/banners': typeof AdminBannersIndexRoute
   '/admin/categories': typeof AdminCategoriesIndexRoute
   '/admin/news': typeof AdminNewsIndexRoute
+  '/admin/subcategories': typeof AdminSubcategoriesIndexRoute
   '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
 }
@@ -135,6 +143,7 @@ export interface FileRoutesById {
   '/admin/banners/': typeof AdminBannersIndexRoute
   '/admin/categories/': typeof AdminCategoriesIndexRoute
   '/admin/news/': typeof AdminNewsIndexRoute
+  '/admin/subcategories/': typeof AdminSubcategoriesIndexRoute
   '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
 }
@@ -152,6 +161,7 @@ export interface FileRouteTypes {
     | '/admin/banners/'
     | '/admin/categories'
     | '/admin/news/'
+    | '/admin/subcategories'
     | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
   fileRoutesByTo: FileRoutesByTo
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
     | '/admin/banners'
     | '/admin/categories'
     | '/admin/news'
+    | '/admin/subcategories'
     | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
   id:
@@ -180,6 +191,7 @@ export interface FileRouteTypes {
     | '/admin/banners/'
     | '/admin/categories/'
     | '/admin/news/'
+    | '/admin/subcategories/'
     | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
   fileRoutesById: FileRoutesById
@@ -231,6 +243,13 @@ declare module '@tanstack/react-router' {
       path: '/banners'
       fullPath: '/admin/banners'
       preLoaderRoute: typeof AdminBannersRouteRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/subcategories/': {
+      id: '/admin/subcategories/'
+      path: '/subcategories'
+      fullPath: '/admin/subcategories'
+      preLoaderRoute: typeof AdminSubcategoriesIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/news/': {
@@ -342,6 +361,7 @@ interface AdminRouteRouteChildren {
   AdminNewsRouteRoute: typeof AdminNewsRouteRouteWithChildren
   AdminIndexRoute: typeof AdminIndexRoute
   AdminCategoriesIndexRoute: typeof AdminCategoriesIndexRoute
+  AdminSubcategoriesIndexRoute: typeof AdminSubcategoriesIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
@@ -349,6 +369,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminNewsRouteRoute: AdminNewsRouteRouteWithChildren,
   AdminIndexRoute: AdminIndexRoute,
   AdminCategoriesIndexRoute: AdminCategoriesIndexRoute,
+  AdminSubcategoriesIndexRoute: AdminSubcategoriesIndexRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(

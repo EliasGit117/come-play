@@ -3,6 +3,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { TCreateCategorySchema } from '@/features/categories/schemas/create-category';
+import { Textarea } from '@/components/ui/textarea';
 
 
 interface IBannerFormProps {
@@ -15,15 +16,15 @@ export const BannerForm: FC<IBannerFormProps> = ({ disabled, className }) => {
 
   return (
     <fieldset disabled={disabled} className={className}>
-      <FieldGroup className='grid md:grid-cols-2'>
+      <FieldGroup className="grid grid-cols-2">
         <Controller
           name="slug"
           control={form.control}
           render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid} className='col-span-full'>
+            <Field data-invalid={fieldState.invalid} className="col-span-full">
               <FieldLabel htmlFor="slug-input">Slug</FieldLabel>
-              <Input {...field} id="slug-input" placeholder="some-text-as-slug" />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              <Input {...field} id="slug-input" placeholder="some-text-as-slug"/>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
             </Field>
           )}
         />
@@ -32,13 +33,13 @@ export const BannerForm: FC<IBannerFormProps> = ({ disabled, className }) => {
           name="nameRo"
           control={form.control}
           render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
+            <Field data-invalid={fieldState.invalid} className="col-span-2 md:col-span-1">
               <FieldLabel htmlFor="name-ro-input">
-                Name RO
+                Romanian name
               </FieldLabel>
 
-              <Input {...field} id="name-ru-input" placeholder="Name RO" />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              <Input {...field} id="name-ru-input" placeholder="Nume"/>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
             </Field>
           )}
         />
@@ -47,13 +48,53 @@ export const BannerForm: FC<IBannerFormProps> = ({ disabled, className }) => {
           name="nameRu"
           control={form.control}
           render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
+            <Field data-invalid={fieldState.invalid} className="col-span-2 md:col-span-1">
               <FieldLabel htmlFor="name-ro-input">
-                Name RU
+                Russian name
               </FieldLabel>
 
-              <Input {...field} id="name-ru-input" placeholder="Name RU" />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              <Input {...field} id="name-ru-input" placeholder="Название"/>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+            </Field>
+          )}
+        />
+
+        <Controller
+          name="descriptionRo"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field className="col-span-2 sm:col-span-1" data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="text-ro-textarea">Romanian description</FieldLabel>
+              <Textarea
+                {...field}
+                value={field.value ?? ''}
+                id="description-ro-textarea"
+                aria-invalid={fieldState.invalid}
+                placeholder="Descriire"
+                className="min-h-24"
+                autoComplete="off"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+            </Field>
+          )}
+        />
+
+        <Controller
+          name="descriptionRu"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field className="col-span-2 sm:col-span-1" data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="text-ru-textarea">Russian description</FieldLabel>
+              <Textarea
+                {...field}
+                value={field.value ?? ''}
+                id="description-ru-textarea"
+                aria-invalid={fieldState.invalid}
+                placeholder="Описание"
+                className="min-h-24"
+                autoComplete="off"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
             </Field>
           )}
         />

@@ -28,7 +28,7 @@ export function Providers({ children }: { children: ReactNode }) {
       <ConfirmDialogProvider>
         <AppSidebarProvider>
           {children}
-          <Toaster/>
+          <Toaster richColors/>
         </AppSidebarProvider>
       </ConfirmDialogProvider>
     </ProgressProvider>
