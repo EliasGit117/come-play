@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { getBannerByIdQueryOptions } from '@/features/banners/server-functions/admin/get-banner-by-id';
+import { getBannerByIdForAdminQueryOptions } from '@/features/banners/server-functions/admin/get-banner-by-id-for-admin';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,7 +27,7 @@ export const Route = createFileRoute('/admin/banners/$id/edit')({
   component: RouteComponent,
   staticData: { breadcrumbs: { title: 'Edit banner' } },
   loader: async ({ params: { id }, context }) => {
-    const data = await context.queryClient.ensureQueryData(getBannerByIdQueryOptions(id));
+    const data = await context.queryClient.ensureQueryData(getBannerByIdForAdminQueryOptions(id));
     return {
       banner: data,
       breadcrumbs: { title: `Edit «${data.titleRo}»` }
@@ -48,7 +48,7 @@ interface IBannerUploaderItem {
 
 function RouteComponent() {
   const { id } = Route.useParams();
-  const { data: banner, isPending: isFetching } = useSuspenseQuery(getBannerByIdQueryOptions(id));
+  const { data: banner, isPending: isFetching } = useSuspenseQuery(getBannerByIdForAdminQueryOptions(id));
   const [pendingImages, setPendingImages] = useState<Record<BannerImageType, boolean>>({
     desktop: false,
     tablet: false,

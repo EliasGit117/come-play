@@ -18,7 +18,8 @@ export const deleteSubcategoriesByIds = createServerFn({ method: 'POST' })
       include: { products: true },
     });
 
-    if (!subcategories.length) throw new Error('No subcategories found.');
+    if (!subcategories.length)
+      throw new Error('No subcategories found.');
 
     const deletable = subcategories.filter((s) => s.products.length === 0).map((s) => s.id);
 

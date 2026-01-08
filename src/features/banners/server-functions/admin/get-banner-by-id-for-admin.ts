@@ -4,12 +4,12 @@ import prisma from '@/lib/prisma';
 import { queryOptions } from '@tanstack/react-query';
 import { IAdminBannerDtoFactory } from '@/features/banners/dtos/admin-banner-dto';
 
-export const getBannerByIdSchema = z.object({ id: z.number() });
+export const getBannerByIdForAdminSchema = z.object({ id: z.number() });
 
-export type TGetBannerByIdParams = z.infer<typeof getBannerByIdSchema>;
+export type TGetBannerByIdForAdminSchema = z.infer<typeof getBannerByIdForAdminSchema>;
 
-export const getBannerById = createServerFn({ method: 'GET' })
-  .inputValidator(getBannerByIdSchema)
+export const getBannerByIdForAdmin = createServerFn({ method: 'GET' })
+  .inputValidator(getBannerByIdForAdminSchema)
   .handler(async ({ data: { id } }) => {
     const banner = await prisma.banner.findUnique({
       where: { id },
@@ -26,12 +26,12 @@ export const getBannerById = createServerFn({ method: 'GET' })
     return IAdminBannerDtoFactory.fromEntity(banner);
   });
 
-export function getBannerByIdQueryOptions(id: number | string) {
+export function getBannerByIdForAdminQueryOptions(id: number | string) {
   const parsedId = typeof id === "string" ? z.coerce.number().parse(id) : id;
 
   return queryOptions({
     queryKey: ['banners', id],
-    queryFn: () => getBannerById({ data: { id: parsedId } }),
+    queryFn: () => getBannerByIdForAdmin({ data: { id: parsedId } }),
     staleTime: 10_000
   });
 }

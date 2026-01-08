@@ -12,7 +12,7 @@ import { LoadingButton } from '@/components/ui/loading-button';
 import { ImageOffIcon, SendIcon, XIcon } from 'lucide-react';
 import { useReorderBannersDialogContext } from './provider';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getBannersForAdminQueryOptions } from '@/features/banners/server-functions/admin/get-banners-for-admin';
 import * as Sortable from '@/components/ui/sortable';
 import { IAdminBannerBriefDto } from '@/features/banners/dtos/admin-banner-brief-dto';
@@ -36,6 +36,7 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
 
   const { data, isFetching } = useQuery({
     ...getBannersForAdminQueryOptions(),
+    queryKey: [],
     enabled: isOpen,
     staleTime: 0
   });

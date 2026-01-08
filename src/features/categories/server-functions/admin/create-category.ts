@@ -38,9 +38,7 @@ export const useCreateCategoryMutation = (options?: TOptions) => {
       void queryClient.invalidateQueries({
         predicate: (query) => query.queryKey[0] === 'admin' && query.queryKey[1] === 'categories',
       });
-      void queryClient.refetchQueries({
-        predicate: (query) => query.queryKey[0] === 'admin' && query.queryKey[1] === 'categories',
-      });
+
       options?.onSuccess?.(data, variables, onMutateResult, context);
     },
   });

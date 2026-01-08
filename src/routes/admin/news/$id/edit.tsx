@@ -5,7 +5,7 @@ import {
   EditNewsForm,
   editNewsFormSchema,
   TEditNewsFormSchema
-} from '@/routes/admin/news/-components/edit-news-form/form';
+} from '@/routes/admin/news/$id/-components/edit-news-form/form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
@@ -15,7 +15,7 @@ import { useEditNewsMutation } from '@/features/news/server-functions/admin/edit
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import NewsImageUploader from '@/routes/admin/news/-components/edit-news-form/news-image-uploader';
+import NewsImageUploader from '@/routes/admin/news/$id/-components/edit-news-form/news-image-uploader';
 import { FC, useState } from 'react';
 import { IImagePickerValue } from '@/components/ui/cover-image-picker';
 import { useSidebar } from '@/components/ui/sidebar';

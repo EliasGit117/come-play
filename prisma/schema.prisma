@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 enum NewsStatus {
@@ -141,11 +140,37 @@ model Subcategory {
   @@map("subcategories")
 }
 
+enum ProductState {
+  available
+  not_available
+  out_of_stock
+}
+
+enum ProductSticker {
+  new
+  sale
+}
+
 model Product {
   id     Int    @id @default(autoincrement())
   nameRo String @map("name_ro")
   nameRu String @map("name_ru")
   slug   String @unique
+
+  state         ProductState @default(available)
+  hidden        Boolean      @default(false)
+  richContentRo String?      @map("rich_content_ro")
+  richContentRu String?      @map("rich_content_ru")
+
+  price    Decimal  @map("price")
+  oldPrice Decimal? @map("old_price")
+
+  sticker ProductSticker? @map("sticker")
+
+  shortDescriptionRo String? @map("short_description_ro")
+  shortDescriptionRu String? @map("short_description_ru")
+
+  images ProductImage[]
 
   subcategoryId Int?
   subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
@@ -155,4 +180,25 @@ model Product {
 
   @@index([subcategoryId])
   @@map("products")
+}
+
+model ProductImage {
+  id           Int     @id @default(autoincrement())
+  url          String
+  thumbhash    Bytes?
+  type         String
+  size         Int
+  originalName String? @map("original_name")
+  width        Int?
+  height       Int?
+  order        Int
+
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@index([productId, order])
+  @@map("product_images")
 }

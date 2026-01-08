@@ -38,10 +38,7 @@ function getModulePath(moduleName: string) {
         .replace(/\/+$/, '') || ''
     );
   } catch (error) {
-    console.error(
-      `Module ${moduleName} resolution failed:`,
-      (error as Error).message
-    );
+    console.error(`Module ${moduleName} resolution failed:`, (error as Error).message);
     return '';
   }
 }

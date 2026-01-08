@@ -16,12 +16,14 @@ import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as AdminNewsRouteRouteImport } from './routes/admin/news/route'
 import { Route as AdminBannersRouteRouteImport } from './routes/admin/banners/route'
 import { Route as AdminSubcategoriesIndexRouteImport } from './routes/admin/subcategories/index'
+import { Route as AdminProductsIndexRouteImport } from './routes/admin/products/index'
 import { Route as AdminNewsIndexRouteImport } from './routes/admin/news/index'
 import { Route as AdminCategoriesIndexRouteImport } from './routes/admin/categories/index'
 import { Route as AdminBannersIndexRouteImport } from './routes/admin/banners/index'
 import { Route as PublicNewsIndexRouteImport } from './routes/_public/news/index'
 import { Route as PublicCalculatorIndexRouteImport } from './routes/_public/calculator/index'
 import { Route as PublicNewsSlugRouteImport } from './routes/_public/news/$slug'
+import { Route as AdminProductsIdEditRouteImport } from './routes/admin/products/$id/edit'
 import { Route as AdminNewsIdEditRouteImport } from './routes/admin/news/$id/edit'
 import { Route as AdminBannersIdEditRouteImport } from './routes/admin/banners/$id/edit'
 
@@ -59,6 +61,11 @@ const AdminSubcategoriesIndexRoute = AdminSubcategoriesIndexRouteImport.update({
   path: '/subcategories/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminProductsIndexRoute = AdminProductsIndexRouteImport.update({
+  id: '/products/',
+  path: '/products/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminNewsIndexRoute = AdminNewsIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -89,6 +96,11 @@ const PublicNewsSlugRoute = PublicNewsSlugRouteImport.update({
   path: '/news/$slug',
   getParentRoute: () => PublicRouteRoute,
 } as any)
+const AdminProductsIdEditRoute = AdminProductsIdEditRouteImport.update({
+  id: '/products/$id/edit',
+  path: '/products/$id/edit',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminNewsIdEditRoute = AdminNewsIdEditRouteImport.update({
   id: '/$id/edit',
   path: '/$id/edit',
@@ -112,9 +124,11 @@ export interface FileRoutesByFullPath {
   '/admin/banners/': typeof AdminBannersIndexRoute
   '/admin/categories': typeof AdminCategoriesIndexRoute
   '/admin/news/': typeof AdminNewsIndexRoute
+  '/admin/products': typeof AdminProductsIndexRoute
   '/admin/subcategories': typeof AdminSubcategoriesIndexRoute
   '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
+  '/admin/products/$id/edit': typeof AdminProductsIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
@@ -125,9 +139,11 @@ export interface FileRoutesByTo {
   '/admin/banners': typeof AdminBannersIndexRoute
   '/admin/categories': typeof AdminCategoriesIndexRoute
   '/admin/news': typeof AdminNewsIndexRoute
+  '/admin/products': typeof AdminProductsIndexRoute
   '/admin/subcategories': typeof AdminSubcategoriesIndexRoute
   '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
+  '/admin/products/$id/edit': typeof AdminProductsIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -143,9 +159,11 @@ export interface FileRoutesById {
   '/admin/banners/': typeof AdminBannersIndexRoute
   '/admin/categories/': typeof AdminCategoriesIndexRoute
   '/admin/news/': typeof AdminNewsIndexRoute
+  '/admin/products/': typeof AdminProductsIndexRoute
   '/admin/subcategories/': typeof AdminSubcategoriesIndexRoute
   '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
+  '/admin/products/$id/edit': typeof AdminProductsIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -161,9 +179,11 @@ export interface FileRouteTypes {
     | '/admin/banners/'
     | '/admin/categories'
     | '/admin/news/'
+    | '/admin/products'
     | '/admin/subcategories'
     | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
+    | '/admin/products/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -174,9 +194,11 @@ export interface FileRouteTypes {
     | '/admin/banners'
     | '/admin/categories'
     | '/admin/news'
+    | '/admin/products'
     | '/admin/subcategories'
     | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
+    | '/admin/products/$id/edit'
   id:
     | '__root__'
     | '/_public'
@@ -191,9 +213,11 @@ export interface FileRouteTypes {
     | '/admin/banners/'
     | '/admin/categories/'
     | '/admin/news/'
+    | '/admin/products/'
     | '/admin/subcategories/'
     | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
+    | '/admin/products/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -252,6 +276,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSubcategoriesIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/products/': {
+      id: '/admin/products/'
+      path: '/products'
+      fullPath: '/admin/products'
+      preLoaderRoute: typeof AdminProductsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/news/': {
       id: '/admin/news/'
       path: '/'
@@ -293,6 +324,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/news/$slug'
       preLoaderRoute: typeof PublicNewsSlugRouteImport
       parentRoute: typeof PublicRouteRoute
+    }
+    '/admin/products/$id/edit': {
+      id: '/admin/products/$id/edit'
+      path: '/products/$id/edit'
+      fullPath: '/admin/products/$id/edit'
+      preLoaderRoute: typeof AdminProductsIdEditRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/admin/news/$id/edit': {
       id: '/admin/news/$id/edit'
@@ -361,7 +399,9 @@ interface AdminRouteRouteChildren {
   AdminNewsRouteRoute: typeof AdminNewsRouteRouteWithChildren
   AdminIndexRoute: typeof AdminIndexRoute
   AdminCategoriesIndexRoute: typeof AdminCategoriesIndexRoute
+  AdminProductsIndexRoute: typeof AdminProductsIndexRoute
   AdminSubcategoriesIndexRoute: typeof AdminSubcategoriesIndexRoute
+  AdminProductsIdEditRoute: typeof AdminProductsIdEditRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
@@ -369,7 +409,9 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminNewsRouteRoute: AdminNewsRouteRouteWithChildren,
   AdminIndexRoute: AdminIndexRoute,
   AdminCategoriesIndexRoute: AdminCategoriesIndexRoute,
+  AdminProductsIndexRoute: AdminProductsIndexRoute,
   AdminSubcategoriesIndexRoute: AdminSubcategoriesIndexRoute,
+  AdminProductsIdEditRoute: AdminProductsIdEditRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(

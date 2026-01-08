@@ -1,27 +1,45 @@
-import { Product } from '@prisma/client';
+import { Product, Prisma } from '@prisma/client';
+import { IAdminProductImageDto, AdminProductImageDtoFactory } from './admin-product-image-dto';
+
+type TProductWithImages = Prisma.ProductGetPayload<{ include: { images: true } }>;
 
 export interface IAdminProductBriefDto {
   id: number;
-  name: string;
+  nameRo: string;
+  nameRu: string;
+  price: number;
+  oldPrice?: number;
   slug: string;
-  subcategoryId?: number;
+  hidden: boolean;
   createdAt: string;
   updatedAt: string;
+  images?: IAdminProductImageDto[];
 }
 
 export class AdminProductBriefDtoFactory {
-  static fromEntity(entity: Product): IAdminProductBriefDto {
+  private static baseFromEntity(pr: Product): Omit<IAdminProductBriefDto, 'images'> {
     return {
-      id: entity.id,
-      name: entity.nameRo,
-      slug: entity.slug,
-      subcategoryId: entity.subcategoryId || undefined,
-      createdAt: entity.createdAt.toISOString(),
-      updatedAt: entity.updatedAt.toISOString(),
+      id: pr.id,
+      nameRo: pr.nameRo,
+      nameRu: pr.nameRu,
+      price: pr.price.toNumber(),
+      oldPrice: pr.oldPrice?.toNumber(),
+      slug: pr.slug,
+      hidden: pr.hidden,
+      createdAt: pr.createdAt.toISOString(),
+      updatedAt: pr.updatedAt.toISOString()
     };
   }
 
-  static fromEntities(entities: Product[]): IAdminProductBriefDto[] {
-    return entities.map((entity) => this.fromEntity(entity));
+  static fromEntity<T extends Product | TProductWithImages>(entity: T): IAdminProductBriefDto {
+    const dto: IAdminProductBriefDto = this.baseFromEntity(entity);
+    if ('images' in entity && entity.images) {
+      dto.images = AdminProductImageDtoFactory.fromEntities(entity.images);
+    }
+    return dto;
+  }
+
+  static fromEntities<T extends Product | TProductWithImages>(entities: T[]): IAdminProductBriefDto[] {
+    return entities.map((e) => this.fromEntity(e));
   }
 }

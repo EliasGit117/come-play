@@ -19,6 +19,7 @@
     "@hookform/resolvers": "^5.1.1",
     "@igorkowalczyk/is-browser": "^5.1.0",
     "@n8tb1t/use-scroll-position": "^4.0.0",
+    "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^6.10.1",
     "@radix-ui/react-scroll-area": "^1.2.10",
     "@radix-ui/react-slot": "^1.2.3",
