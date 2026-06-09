@@ -4,7 +4,7 @@ import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { BreadcrumbsNavigation } from '@/routes/admin/-components/admin-header/breadcrumb-nav';
 import { cn } from '@/lib/utils';
-import { Bar, Progress } from '@bprogress/react';
+
 
 interface IAdminHeaderProps extends ComponentProps<'header'> {}
 
@@ -50,10 +50,6 @@ const AdminHeader: React.FC<IAdminHeaderProps> = ({ className, ...props }) => {
         <Separator orientation="vertical" className="max-h-4"/>
         <BreadcrumbsNavigation/>
       </div>
-
-      <Progress>
-        <Bar className="!fixed !top-auto !h-[2px] !bg-border"/>
-      </Progress>
     </header>
   );
 };

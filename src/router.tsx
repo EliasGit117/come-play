@@ -52,6 +52,5 @@ declare module '@tanstack/react-router' {
     headerOptions?: {
       type?: 'fixed' | 'sticky';
     };
-
   }
 }

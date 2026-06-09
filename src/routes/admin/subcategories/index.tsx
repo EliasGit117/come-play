@@ -5,6 +5,7 @@ import {
   getSubcategoriesPaginatedForAdminSchema
 } from '@/features/subcategories/server-functions/admin/get-subcategories-paginated';
 import { SubcategoriesTable } from '@/routes/admin/subcategories/-components/subcategories-table';
+import { awaitIfServer } from '@/lib/await-if-server';
 
 
 export const Route = createFileRoute('/admin/subcategories/')({
@@ -14,7 +15,7 @@ export const Route = createFileRoute('/admin/subcategories/')({
   validateSearch: zodValidator(getSubcategoriesPaginatedForAdminSchema),
   loaderDeps: (deps) => (deps),
   loader: async ({ context, deps: { search } }) => {
-    return context.queryClient.prefetchQuery(getSubcategoriesPaginatedForAdminQueryOptions(search));
+    await awaitIfServer(context.queryClient.prefetchQuery(getSubcategoriesPaginatedForAdminQueryOptions(search)));
   },
 });
 

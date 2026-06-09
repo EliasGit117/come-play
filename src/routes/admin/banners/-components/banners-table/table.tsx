@@ -37,6 +37,7 @@ export const BannerTable: FC<IProps> = (props) => {
   'use no memo';
   const { className, search = {}, ...restOfProps } = props;
   const confirm = useConfirm();
+
   const { data, isPending } = useQuery({
     ...getBannersForAdminQueryOptions(search),
     placeholderData: keepPreviousData
@@ -47,11 +48,11 @@ export const BannerTable: FC<IProps> = (props) => {
   const columns = useMemo(() => bannerColumns({ disabled: isLoading }), [isLoading]);
 
   const { table, selectedItems } = useDataTable({
-    data: data,
+    data: data ?? [],
     page: 1,
     limit: 10,
-    total: data?.length,
-    totalPages: 1,
+    totalCount: data?.length ?? 0,
+    pageCount: 1,
     columns: columns,
     pageOnSearchChange: 'none',
     initialState: {
@@ -95,7 +96,7 @@ export const BannerTable: FC<IProps> = (props) => {
     <CreateBannerDialogProvider>
       <ReorderBannersDialogProvider>
         <div className={cn('flex flex-col gap-2', className)} {...restOfProps}>
-          <DataTableProvider table={table} isPending={isPending}>
+          <DataTableProvider table={table} loading={isPending}>
             <DataTableToolbar>
               <div className="flex-1"/>
               {selectedItems.length > 0 && (

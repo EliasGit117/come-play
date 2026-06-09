@@ -49,8 +49,8 @@ export const NewsTable: FC<IProps> = (props) => {
     data: data?.items,
     page: data?.page,
     limit: search.limit,
-    total: data?.totalCount,
-    totalPages: data?.pageCount,
+    totalCount: data?.totalCount,
+    pageCount: data?.pageCount,
     columns: columns,
     initialState: { columnPinning: { left: ['select'], right: ['actions'] } }
   });
@@ -82,7 +82,7 @@ export const NewsTable: FC<IProps> = (props) => {
   return (
     <div className={cn('flex flex-col gap-2', className)} {...divProps}>
       <CreateNewsDialogProvider>
-        <DataTableProvider table={table} isPending={isPending}>
+        <DataTableProvider table={table} loading={isPending}>
           <DataTableToolbar>
             <div className="flex-1"/>
             {selectedItems.length > 0 && (

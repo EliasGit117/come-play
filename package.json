@@ -66,6 +66,7 @@
     "sharp": "^0.34.4",
     "sonner": "^2.0.5",
     "tailwind-merge": "^2.6.0",
+    "@tabler/icons-react": "^3.42.0",
     "thumbhash": "^0.1.1",
     "uploadthing": "^7.7.4",
     "use-debounce": "^10.0.5",

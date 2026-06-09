@@ -10,7 +10,6 @@ import LightLogo from '@/assets/icons/logo-white.svg?react';
 import DarkLogo from '@/assets/icons/logo.svg?react';
 import { ThemeDropdown } from '@/components/theme';
 import { useBodyScrollPosition } from '@n8tb1t/use-scroll-position';
-import { Bar, Progress } from '@bprogress/react';
 
 interface IAppHeader extends ComponentProps<'header'> {
 }
@@ -46,10 +45,6 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
 
   return (
     <>
-      <Progress>
-        <Bar className={cn('!h-[2px] !bg-border', type !== 'sticky' && isAtTop && '!bg-secondary')}/>
-      </Progress>
-
       <header
         className={cn(
           // Visibility stage

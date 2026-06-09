@@ -19,6 +19,8 @@ export const getSubcategoriesPaginatedForAdminSchema = paginatedSchema.extend({
   updatedAt: dateRangeSchema.optional().catch(undefined)
 });
 
+export type TGetSubcategoriesPaginatedForAdminSchema = z.infer<typeof getSubcategoriesPaginatedForAdminSchema>;
+
 export const getSubcategoriesPaginatedForAdmin = createServerFn({ method: 'GET' })
   .inputValidator(getSubcategoriesPaginatedForAdminSchema)
   .handler(async ({ data }) => {

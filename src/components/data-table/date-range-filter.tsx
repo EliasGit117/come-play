@@ -1,15 +1,16 @@
-import { ComponentProps, useMemo } from 'react';
+import { type ComponentProps, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
-import { Column } from '@tanstack/react-table';
+import { type Column } from '@tanstack/react-table';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
-import { CalendarRangeIcon, XCircleIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { ColumnFilterType } from '@/components/data-table/types/tanstack-table-meta';
 import { Separator } from '@/components/ui/separator';
 import { format } from 'date-fns';
 import { type DateRange } from 'react-day-picker';
-import { TDateRange } from '@/components/data-table/types/schemas';
+import { type TDateRange } from '@/components/data-table/types/schemas';
+import { IconCalendar, IconCircleX } from '@tabler/icons-react';
+
 
 
 interface IDataTableDateRangeFilterProps<TData, TValue>
@@ -46,7 +47,28 @@ export function DataTableDateRangeFilter<TData, TValue>(props: IDataTableDateRan
   const onReset = () => column.setFilterValue(undefined);
 
   const onSelect = (value: DateRange | undefined) => {
-    column.setFilterValue(!!value ? { from: value.from, to: value.to } : undefined);
+    if (!value) {
+      column.setFilterValue(undefined);
+      return;
+    }
+
+    // Expand dates to cover full days in local timezone
+    let from = value.from;
+    let to = value.to;
+
+    if (from) {
+      // Set to start of day (00:00:00.000)
+      from = new Date(from);
+      from.setHours(0, 0, 0, 0);
+    }
+
+    if (to) {
+      // Set to end of day (23:59:59.999)
+      to = new Date(to);
+      to.setHours(23, 59, 59, 999);
+    }
+
+    column.setFilterValue({ from, to });
   };
 
   const dateText = useMemo(() => {
@@ -73,7 +95,7 @@ export function DataTableDateRangeFilter<TData, TValue>(props: IDataTableDateRan
   return (
     <Popover>
       <PopoverTrigger className={className} asChild>
-        <Button variant="outline" size="sm" className="border-dashed !px-2.5">
+        <Button variant="outline" size="sm" className="border-dashed px-2.5!">
           {!!filterValue ? (
             <span
               role="button"
@@ -85,17 +107,17 @@ export function DataTableDateRangeFilter<TData, TValue>(props: IDataTableDateRan
               }}
               className="rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring p-0"
             >
-              <XCircleIcon/>
+              <IconCircleX/>
             </span>
           ) : (
-            <CalendarRangeIcon/>
+            <IconCalendar/>
           )}
 
           <span className="flex items-center gap-2">
             <span>{title}</span>
             {!!dateText && (
               <>
-                <Separator orientation="vertical" className="mx-0.5 data-[orientation=vertical]:h-4"/>
+                <Separator orientation="vertical" className="mx-0.5 my-auto data-[orientation=vertical]:h-4"/>
                 <span className="text-xs">{dateText}</span>
               </>
             )}
@@ -103,7 +125,7 @@ export function DataTableDateRangeFilter<TData, TValue>(props: IDataTableDateRan
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+      <PopoverContent className="w-auto overflow-hidden p-0 gap-0" align="start">
         <Calendar
           mode="range"
           selected={value}
@@ -113,9 +135,11 @@ export function DataTableDateRangeFilter<TData, TValue>(props: IDataTableDateRan
         />
 
         {!!filterValue && (
-          <div className="p-4 pt-0">
-            <Button size="sm" variant="outline" className="w-full" onClick={onReset}>
-              Clear filters
+          <div className="p-1 pt-0 space-y-1">
+            <Separator/>
+            <Button size="sm" variant="ghost" className="w-full" onClick={onReset}>
+              <IconCircleX/>
+              <span>Clear</span>
             </Button>
           </div>
         )}

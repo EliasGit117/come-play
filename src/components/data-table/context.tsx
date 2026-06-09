@@ -1,12 +1,13 @@
-import { createContext, ReactNode, useContext } from 'react';
-import { Table } from "@tanstack/react-table";
+import { createContext, type ReactNode, useContext } from 'react';
+import type { Table } from '@tanstack/react-table';
+
 
 export interface IDataTableContext<TData> {
   table: Table<TData>;
-  isPending?: boolean;
+  loading?: boolean;
 }
 
-export interface IDataTableProviderProps<TData> extends IDataTableContext<TData>{
+export interface IDataTableProviderProps<TData> extends IDataTableContext<TData> {
   children: ReactNode;
 }
 
@@ -21,10 +22,10 @@ export function DataTableProvider<TData>({ children, ...props }: IDataTableProvi
   );
 }
 
-export function useDataTableContext<TData>() {
+export function useDataTableContext<_>() {
   const context = useContext(DataTableContext);
   if (!context)
-    throw new Error("useDataTable must be used within a DataTableProvider");
+    throw new Error('useDataTable must be used within a DataTableProvider');
 
   return context;
 }

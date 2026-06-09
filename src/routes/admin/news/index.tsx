@@ -5,6 +5,7 @@ import {
   getNewsPaginatedForAdminSchema
 } from '@/features/news/server-functions/admin/get-news-paginated-for-admin';
 import { NewsTable } from './-components/news-table';
+import { awaitIfServer } from '@/lib/await-if-server';
 
 
 export const Route = createFileRoute('/admin/news/')({
@@ -12,7 +13,7 @@ export const Route = createFileRoute('/admin/news/')({
   validateSearch: zodValidator(getNewsPaginatedForAdminSchema),
   loaderDeps: (deps) => (deps),
   loader: async ({ context, deps: { search } }) => {
-    return context.queryClient.prefetchQuery(getNewsPaginatedForAdminQueryOptions(search));
+    await awaitIfServer(context.queryClient.prefetchQuery(getNewsPaginatedForAdminQueryOptions(search)));
   },
   head: () => ({ meta: [{ title: 'News' }] })
 });

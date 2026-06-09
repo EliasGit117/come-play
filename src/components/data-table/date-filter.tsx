@@ -1,13 +1,13 @@
-import { ComponentProps, useMemo, useState } from 'react';
+import { type ComponentProps, useMemo, useState } from 'react';
 import { Input } from '@/components/ui/input';
-import { Column } from '@tanstack/react-table';
+import { type Column } from '@tanstack/react-table';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
-import { Calendar1Icon, XCircleIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { ColumnFilterType } from '@/components/data-table/types/tanstack-table-meta';
 import { Separator } from '@/components/ui/separator';
 import { format } from 'date-fns';
+import { IconCalendar, IconCircleX, IconX } from '@tabler/icons-react';
 
 
 interface IDataTableDateFilterProps<TData, TValue>
@@ -59,7 +59,7 @@ export function DataTableDateFilter<TData, TValue>(props: IDataTableDateFilterPr
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger className={className} asChild>
-        <Button variant="outline" size="sm" className="border-dashed !px-2.5">
+        <Button variant="outline" size="sm" className="border-dashed px-2.5!">
           {!!filterValue ? (
             <span
               role="button"
@@ -71,17 +71,17 @@ export function DataTableDateFilter<TData, TValue>(props: IDataTableDateFilterPr
               }}
               className="rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring p-0"
             >
-              <XCircleIcon/>
+              <IconX/>
             </span>
           ) : (
-            <Calendar1Icon/>
+            <IconCalendar/>
           )}
 
           <span className="flex items-center gap-2">
             <span>{title}</span>
             {!!dateText && (
               <>
-                <Separator orientation="vertical" className="mx-0.5 data-[orientation=vertical]:h-4"/>
+                <Separator orientation="vertical" className="my-auto mx-0.5 data-[orientation=vertical]:h-4"/>
                 <span className='text-xs'>{dateText}</span>
               </>
             )}
@@ -99,9 +99,11 @@ export function DataTableDateFilter<TData, TValue>(props: IDataTableDateFilterPr
         />
 
         {!!filterValue && (
-          <div className="p-4 pt-0">
-            <Button size="sm" variant="outline" className="w-full" onClick={onReset}>
-              Clear filters
+          <div className="p-1 pt-0 space-y-1">
+            <Separator/>
+            <Button size="sm" variant="ghost" className="w-full" onClick={onReset}>
+              <IconCircleX/>
+              <span>Clear</span>
             </Button>
           </div>
         )}

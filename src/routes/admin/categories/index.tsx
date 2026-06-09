@@ -5,6 +5,7 @@ import {
   getCategoriesPaginatedForAdminQueryOptions,
   getCategoriesPaginatedForAdminSchema
 } from '@/features/categories/server-functions/admin/get-categories-paginated-for-admin';
+import { awaitIfServer } from '@/lib/await-if-server';
 
 
 export const Route = createFileRoute('/admin/categories/')({
@@ -14,7 +15,7 @@ export const Route = createFileRoute('/admin/categories/')({
   validateSearch: zodValidator(getCategoriesPaginatedForAdminSchema),
   loaderDeps: (deps) => (deps),
   loader: async ({ context, deps: { search } }) => {
-    return context.queryClient.prefetchQuery(getCategoriesPaginatedForAdminQueryOptions(search));
+    await awaitIfServer(context.queryClient.prefetchQuery(getCategoriesPaginatedForAdminQueryOptions(search)));
   },
 });
 

@@ -5,6 +5,7 @@ import {
   getBannersForAdminSchema
 } from '@/features/banners/server-functions/admin/get-banners-for-admin';
 import { BannerTable } from '@/routes/admin/banners/-components/banners-table';
+import { awaitIfServer } from '@/lib/await-if-server';
 
 
 export const Route = createFileRoute('/admin/banners/')({
@@ -12,7 +13,7 @@ export const Route = createFileRoute('/admin/banners/')({
   validateSearch: zodValidator(getBannersForAdminSchema),
   loaderDeps: (deps) => deps,
   loader: async ({ context, deps: { search } }) => {
-    return context.queryClient.prefetchQuery(getBannersForAdminQueryOptions(search));
+    await awaitIfServer(context.queryClient.prefetchQuery(getBannersForAdminQueryOptions(search)));
   },
   head: () => {
     return { meta: [{ title: 'Banners' }] };

@@ -1,10 +1,10 @@
-import { ChangeEvent, ComponentProps, useEffect, useRef } from 'react';
-import { Column } from '@tanstack/react-table';
+import { type ChangeEvent, type ComponentProps, useEffect, useRef } from 'react';
+import { type Column } from '@tanstack/react-table';
 import { ColumnFilterType } from '@/components/data-table/types/tanstack-table-meta';
-import { XIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useDebouncedCallback } from 'use-debounce';
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group';
+import { IconX } from '@tabler/icons-react';
 
 interface IDataTableTextFilterProps<TData, TValue>
   extends ComponentProps<typeof Input> {
@@ -51,21 +51,22 @@ export function DataTableTextFilter<TData, TValue>(props: IDataTableTextFilterPr
     throw new Error('Filter must be a type Text');
 
   return (
-    <InputGroup className="h-8 w-40 lg:w-56">
+    <InputGroup className="h-8 w-full max-w-42 sm:max-w-56">
       <InputGroupInput
         ref={inputRef}
         {...restOfProps}
-        id={`${title}-filter`}
         type={type}
+        id={`${title}-filter`}
         placeholder={meta?.filter?.placeholder ?? title}
         defaultValue={filterValue ?? ''}
+        className='text-xs sm:text-sm'
         onChange={handleChange}
       />
 
       {filterValue && (
         <InputGroupAddon align="inline-end">
           <InputGroupButton onClick={reset} size="icon-xs">
-            <XIcon/>
+            <IconX/>
           </InputGroupButton>
         </InputGroupAddon>
       )}

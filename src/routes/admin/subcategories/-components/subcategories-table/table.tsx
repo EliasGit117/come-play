@@ -1,8 +1,5 @@
 import { ComponentProps, FC, useCallback, useMemo } from 'react';
 import { cn } from '@/lib/utils';
-import {
-  TGetCategoriesPaginatedParamsForAdmin
-} from '@/features/categories/server-functions/admin/get-categories-paginated-for-admin';
 import { useConfirm } from '@/components/ui/confirm-dialog';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import {
@@ -16,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import { TrashIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import {
-  getSubcategoriesPaginatedForAdminQueryOptions
+  getSubcategoriesPaginatedForAdminQueryOptions, TGetSubcategoriesPaginatedForAdminSchema
 } from '@/features/subcategories/server-functions/admin/get-subcategories-paginated';
 import {
   useDeleteSubcategoriesByIdsMutation
@@ -34,7 +31,7 @@ import {
 
 
 interface ISubcategoriesTableProps extends ComponentProps<'div'> {
-  search?: TGetCategoriesPaginatedParamsForAdmin;
+  search?: TGetSubcategoriesPaginatedForAdminSchema;
 }
 
 export const SubcategoriesTable: FC<ISubcategoriesTableProps> = (props) => {
@@ -58,8 +55,8 @@ export const SubcategoriesTable: FC<ISubcategoriesTableProps> = (props) => {
     data: data?.items,
     page: data?.page,
     limit: search.limit,
-    total: data?.totalCount,
-    totalPages: data?.pageCount,
+    totalCount: data?.totalCount,
+    pageCount: data?.pageCount,
     columns,
     initialState: { columnPinning: { left: ['select'], right: ['actions'] } }
   });
@@ -100,7 +97,7 @@ export const SubcategoriesTable: FC<ISubcategoriesTableProps> = (props) => {
       <CreateSubcategoryDialogProvider>
         <EditSubcategoryDialogProvider>
 
-          <DataTableProvider table={table} isPending={isPending}>
+          <DataTableProvider table={table} loading={isPending}>
             <DataTableToolbar>
               <div className="flex-1"/>
               {selectedItems.length > 0 && (

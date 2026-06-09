@@ -1,11 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDataTableSearch } from '@/components/data-table/hooks/use-data-table-search';
-import {
-  useReactTable,
-  getCoreRowModel,
-  TableOptions,
-  VisibilityState, ColumnPinningState, RowSelectionState
-} from '@tanstack/react-table';
+import type { TableOptions, VisibilityState, ColumnPinningState, RowSelectionState } from '@tanstack/react-table';
+import { useReactTable, getCoreRowModel, } from '@tanstack/react-table';
+
 
 interface IUseDataTableProps<TData> extends Omit<TableOptions<TData>,
   | 'state'
@@ -20,10 +17,11 @@ interface IUseDataTableProps<TData> extends Omit<TableOptions<TData>,
   data?: TData[];
   page?: number;
   limit?: number;
-  total?: number;
-  totalPages?: number;
+  totalCount?: number;
+  pageCount?: number;
   history?: 'push' | 'replace';
   pageOnSearchChange?: number | 'none';
+  dataCompareStrategy?: 'ref' | 'stringify';
 }
 
 
@@ -36,8 +34,8 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
     columns: columns = [],
     initialState,
     page = 1,
-    total = 1,
-    totalPages = 1,
+    totalCount = 1,
+    pageCount = 1,
     limit = 10,
     history = 'replace',
     pageOnSearchChange,
@@ -46,7 +44,8 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
 
   const { columnFiltersState, setColumnFiltersState, sortingState, setSortingState } = useDataTableSearch({
     columns: columns,
-    pageOnSearchChange: pageOnSearchChange
+    pageOnSearchChange: pageOnSearchChange,
+    replace: history === 'replace'
   });
 
   const [columnPinning, setColumnPinning] = useState<ColumnPinningState>(initialState?.columnPinning ?? {
@@ -57,10 +56,11 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(initialState?.columnVisibility ?? {});
 
   const [rowSelection, setRowSelection] = useState<RowSelectionState>(initialState?.rowSelection ?? {});
+  const dataKey = useMemo(() => JSON.stringify(data ?? []), [data]);
 
   useEffect(() => {
     setRowSelection({});
-  }, [data, page, limit, columnFiltersState, sortingState]);
+  }, [dataKey]);
 
   const table = useReactTable({
     ...tableProps,
@@ -82,8 +82,8 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
     onColumnFiltersChange: setColumnFiltersState,
     onColumnPinningChange: setColumnPinning,
 
-    rowCount: total,
-    pageCount: totalPages,
+    rowCount: totalCount,
+    pageCount: pageCount,
     state: {
       rowSelection: rowSelection,
       columnPinning: columnPinning,

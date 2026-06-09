@@ -5,15 +5,14 @@ import {
   getProductsForAdminSchema
 } from '@/features/products/server-functions/admin/get-products-for-admin';
 import { ProductTable } from './-components/products-table';
+import { awaitIfServer } from '@/lib/await-if-server';
 
 export const Route = createFileRoute('/admin/products/')({
   component: RouteComponent,
   validateSearch: zodValidator(getProductsForAdminSchema),
   loaderDeps: (deps) => deps,
   loader: async ({ context, deps: { search } }) => {
-    return context.queryClient.prefetchQuery(
-      getProductsForAdminQueryOptions(search)
-    );
+    await awaitIfServer(context.queryClient.prefetchQuery(getProductsForAdminQueryOptions(search)));
   },
   head: () => {
     return { meta: [{ title: 'Products' }] };

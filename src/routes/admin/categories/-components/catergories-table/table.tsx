@@ -56,8 +56,8 @@ export const CategoriesTable: FC<ICategoriesTableProps> = (props) => {
     data: data?.items,
     page: data?.page,
     limit: search.limit,
-    total: data?.totalCount,
-    totalPages: data?.pageCount,
+    totalCount: data?.totalCount,
+    pageCount: data?.pageCount,
     columns,
     initialState: { columnPinning: { left: ['select'], right: ['actions'] } }
   });
@@ -105,7 +105,7 @@ export const CategoriesTable: FC<ICategoriesTableProps> = (props) => {
     <div className={cn('flex flex-col gap-2', className)} {...restOfProps}>
       <CreateCategoryDialogProvider>
         <EditCategoryDialogProvider>
-          <DataTableProvider table={table} isPending={isPending}>
+          <DataTableProvider table={table} loading={isPending}>
             <DataTableToolbar>
               <div className="flex-1"/>
               {selectedItems.length > 0 && (

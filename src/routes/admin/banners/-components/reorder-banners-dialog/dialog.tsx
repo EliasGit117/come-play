@@ -81,11 +81,16 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
           ) : (
             <div className="max-h-[50svh]">
               <Sortable.Root
-                sensors={isBusy ? [] : [mouseSensor, touchSensor]}
+                sensors={[mouseSensor, touchSensor]}
                 value={items}
-                onValueChange={setItems}
                 getItemValue={(item) => item.id}
                 orientation="mixed"
+                onValueChange={(next) => {
+                  if (isBusy)
+                    return;
+
+                  setItems(next);
+                }}
               >
                 <Sortable.Content className="grid auto-rows-fr grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
                   {items.map((item) => (

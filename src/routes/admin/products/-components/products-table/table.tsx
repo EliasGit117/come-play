@@ -45,8 +45,8 @@ export const ProductTable: FC<IProps> = (props) => {
     data: data,
     page: 1,
     limit: 10,
-    total: data?.length,
-    totalPages: 1,
+    totalCount: data?.length,
+    pageCount: 1,
     columns: columns,
     pageOnSearchChange: 'none',
     initialState: {
@@ -90,7 +90,7 @@ export const ProductTable: FC<IProps> = (props) => {
   return (
     <CreateProductDialogProvider>
       <div className={cn('flex flex-col gap-2', className)} {...restOfProps}>
-        <DataTableProvider table={table} isPending={isPending}>
+        <DataTableProvider table={table} loading={isPending}>
           <DataTableToolbar>
             <div className="flex-1" />
             {selectedItems.length > 0 && (

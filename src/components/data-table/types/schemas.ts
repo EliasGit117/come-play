@@ -1,11 +1,13 @@
 import { z } from 'zod';
 
+
 export const dateRangeSchema = z.object({
   from: z.union([z.date(), z.string().datetime().transform(val => new Date(val))]).optional(),
   to: z.union([z.date(), z.string().datetime().transform(val => new Date(val))]).optional(),
 });
 
 export type TDateRange = z.infer<typeof dateRangeSchema>;
+
 
 export const numberRangeSchema = z
   .tuple([z.number().nullable(), z.number().nullable()])

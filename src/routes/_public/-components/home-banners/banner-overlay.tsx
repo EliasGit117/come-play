@@ -2,13 +2,14 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Link } from '@tanstack/react-router';
 import { IBannerBriefDto } from '@/features/banners/dtos/banner-brief-dto';
+import { FC } from 'react';
 
 interface BannerOverlayProps {
   banner: IBannerBriefDto;
   className?: string;
 }
 
-export const BannerOverlay: React.FC<BannerOverlayProps> = ({ banner, className }) => {
+export const BannerOverlay: FC<BannerOverlayProps> = ({ banner, className }) => {
   const { title, text, path } = banner;
 
   return (
