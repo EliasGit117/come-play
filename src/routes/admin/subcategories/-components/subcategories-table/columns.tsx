@@ -5,15 +5,15 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { format } from 'date-fns';
 import {
-  CalendarClockIcon,
-  CalendarPlusIcon,
-  EllipsisIcon,
-  HashIcon,
-  HeadingIcon,
-  ListIcon,
-  PenIcon,
-  Layers3Icon
-} from 'lucide-react';
+  IconCalendarClock,
+  IconCalendarPlus,
+  IconDots,
+  IconHash,
+  IconHeading,
+  IconList,
+  IconPencil,
+  IconStack2
+} from '@tabler/icons-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -62,7 +62,7 @@ export const subcategoryColumns = (options?: { disabled?: boolean }) => {
       cell: (ctx) => ctx.getValue(),
       meta: {
         label: 'Id',
-        icon: HashIcon,
+        icon: IconHash,
         filter: { type: ColumnFilterType.NumberRange },
       },
     }),
@@ -73,7 +73,7 @@ export const subcategoryColumns = (options?: { disabled?: boolean }) => {
       meta: {
         key: 'name',
         label: 'Name',
-        icon: HeadingIcon,
+        icon: IconHeading,
         filter: { type: ColumnFilterType.Text },
       },
     }),
@@ -83,7 +83,7 @@ export const subcategoryColumns = (options?: { disabled?: boolean }) => {
       cell: (ctx) => ctx.getValue(),
       meta: {
         label: 'Slug',
-        icon: ListIcon,
+        icon: IconList,
         filter: { type: ColumnFilterType.Text },
       },
     }),
@@ -95,7 +95,7 @@ export const subcategoryColumns = (options?: { disabled?: boolean }) => {
       enableSorting: false,
       meta: {
         label: 'Category',
-        icon: Layers3Icon,
+        icon: IconStack2,
         filter: { type: ColumnFilterType.Text, placeholder: 'Category name' },
       },
     }),
@@ -103,13 +103,13 @@ export const subcategoryColumns = (options?: { disabled?: boolean }) => {
     columnHelper.accessor('createdAt', {
       header: ({ column }) => <DataTableColumnHeader column={column} />,
       cell: (ctx) => <span>{format(ctx.getValue(), 'dd.MM.yyyy - HH:mm')}</span>,
-      meta: { label: 'Created', icon: CalendarPlusIcon },
+      meta: { label: 'Created', icon: IconCalendarPlus },
     }),
 
     columnHelper.accessor('updatedAt', {
       header: ({ column }) => <DataTableColumnHeader column={column} />,
       cell: (ctx) => <span>{format(ctx.getValue(), 'dd.MM.yyyy - HH:mm')}</span>,
-      meta: { label: 'Updated', icon: CalendarClockIcon },
+      meta: { label: 'Updated', icon: IconCalendarClock },
     }),
 
     columnHelper.display({
@@ -121,7 +121,7 @@ export const subcategoryColumns = (options?: { disabled?: boolean }) => {
           <DropdownMenu>
             <DropdownMenuTrigger disabled={disabled} asChild>
               <Button variant="ghost" size="icon-xs">
-                <EllipsisIcon />
+                <IconDots />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -130,7 +130,7 @@ export const subcategoryColumns = (options?: { disabled?: boolean }) => {
               <EditSubcategoryDialogTrigger subcategoryId={id} withoutStyles asChild>
                 <DropdownMenuItem>
                   <span>Edit</span>
-                  <PenIcon className="ml-auto size-4" />
+                  <IconPencil className="ml-auto size-4" />
                 </DropdownMenuItem>
               </EditSubcategoryDialogTrigger>
             </DropdownMenuContent>

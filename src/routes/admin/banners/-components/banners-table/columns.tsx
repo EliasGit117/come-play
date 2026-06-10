@@ -2,22 +2,22 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { IAdminBannerBriefDto } from '@/features/banners/dtos/admin-banner-brief-dto';
 import { format } from 'date-fns';
 import {
-  CalendarClockIcon,
-  CalendarPlusIcon,
-  CheckIcon,
-  EllipsisIcon,
-  HashIcon,
-  HeadingIcon,
-  ImageIcon,
-  ImageOffIcon,
-  LinkIcon,
-  ListOrderedIcon,
-  MonitorIcon,
-  PenIcon,
-  SmartphoneIcon,
-  TabletIcon,
-  XIcon
-} from 'lucide-react';
+  IconCalendarClock,
+  IconCalendarPlus,
+  IconCheck,
+  IconDots,
+  IconHash,
+  IconHeading,
+  IconPhoto,
+  IconPhotoOff,
+  IconLink,
+  IconListNumbers,
+  IconDeviceDesktop,
+  IconPencil,
+  IconDeviceMobile,
+  IconDeviceTablet,
+  IconX
+} from '@tabler/icons-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -86,7 +86,7 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
       meta: {
         label: 'Id',
         key: 'idRange',
-        icon: HashIcon,
+        icon: IconHash,
         skeletonClassName: 'h-6 w-8',
         filter: {
           type: ColumnFilterType.NumberRange,
@@ -100,7 +100,7 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
       cell: (ctx) => ctx.getValue(),
       meta: {
         label: 'Order',
-        icon: ListOrderedIcon,
+        icon: IconListNumbers,
         skeletonClassName: 'h-6 w-8'
       }
     }),
@@ -117,7 +117,7 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
                 className={`${className} rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex`}
                 title={`${label} — No image`}
               >
-                <ImageOffIcon className="size-5"/>
+                <IconPhotoOff className="size-5"/>
               </div>
             );
 
@@ -144,14 +144,14 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
       },
       meta: {
         label: 'Images',
-        icon: ImageIcon,
+        icon: IconPhoto,
         key: 'images',
         filter: {
           type: ColumnFilterType.MultiSelect,
           options: [
-            { title: 'Has desktop', value: 'desktop', icon: MonitorIcon },
-            { title: 'Has tablet', value: 'tablet', icon: TabletIcon },
-            { title: 'Has mobile', value: 'mobile', icon: SmartphoneIcon }
+            { title: 'Has desktop', value: 'desktop', icon: IconDeviceDesktop },
+            { title: 'Has tablet', value: 'tablet', icon: IconDeviceTablet },
+            { title: 'Has mobile', value: 'mobile', icon: IconDeviceMobile }
           ]
         },
         skeletonItem:
@@ -169,7 +169,7 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
       ),
       meta: {
         label: 'Path',
-        icon: LinkIcon,
+        icon: IconLink,
         skeletonClassName: 'h-6 w-32',
         filter: {
           type: ColumnFilterType.Text,
@@ -182,7 +182,7 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
       cell: (ctx) => <p className="text-xs">{ctx.getValue()}</p>,
       meta: {
         label: 'Title',
-        icon: HeadingIcon,
+        icon: IconHeading,
         skeletonClassName: 'h-6 w-32',
         filter: {
           type: ColumnFilterType.Text,
@@ -195,22 +195,22 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
       cell: ({ getValue }) => (
         <Badge variant="outline" className="gap-2 py-1 px-2 m-0">
           {getValue() ? (
-            <CheckIcon className="size-3.5"/>
+            <IconCheck className="size-3.5"/>
           ) : (
-            <XIcon className="size-3.5"/>
+            <IconX className="size-3.5"/>
           )}
           <span>{getValue() ? 'Active' : 'Inactive'}</span>
         </Badge>
       ),
       meta: {
         label: 'Is active',
-        icon: CheckIcon,
+        icon: IconCheck,
         skeletonClassName: 'h-6 w-20',
         filter: {
           type: ColumnFilterType.Select,
           options: [
-            { title: 'Active', value: true, icon: CheckIcon },
-            { title: 'Inactive', value: false, icon: XIcon }
+            { title: 'Active', value: true, icon: IconCheck },
+            { title: 'Inactive', value: false, icon: IconX }
           ]
         }
       }
@@ -224,7 +224,7 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
       ),
       meta: {
         label: 'Created',
-        icon: CalendarPlusIcon,
+        icon: IconCalendarPlus,
         skeletonClassName: 'h-6 w-26',
         filter: {
           type: ColumnFilterType.DateRange
@@ -240,7 +240,7 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
       ),
       meta: {
         label: 'Updated',
-        icon: CalendarClockIcon,
+        icon: IconCalendarClock,
         skeletonClassName: 'h-6 w-26',
         filter: {
           type: ColumnFilterType.DateRange
@@ -264,7 +264,7 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
             <DropdownMenu>
               <DropdownMenuTrigger className="" asChild>
                 <Button size="icon-xs" variant="ghost">
-                  <EllipsisIcon/>
+                  <IconDots/>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-40" align="end">
@@ -280,14 +280,14 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
                       onClick={() => navigate({ to: path })}
                     >
                       <span>Go to page</span>
-                      <LinkIcon className="ml-auto size-4"/>
+                      <IconLink className="ml-auto size-4"/>
                     </DropdownMenuItem>
                   )}
 
                   <DropdownMenuItem asChild>
                     <Link to="/admin/banners/$id/edit" params={{ id: `${id}` }}>
                       <span>Edit</span>
-                      <PenIcon className="ml-auto size-4"/>
+                      <IconPencil className="ml-auto size-4"/>
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>

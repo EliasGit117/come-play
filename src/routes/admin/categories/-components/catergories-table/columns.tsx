@@ -3,15 +3,15 @@ import { IAdminCategoryBriefDto } from '@/features/categories/dtos/admin-categor
 import { DataTableColumnHeader, ColumnFilterType } from '@/components/data-table';
 import { format } from 'date-fns';
 import {
-  HashIcon,
-  HeadingIcon,
-  CalendarPlusIcon,
-  CalendarClockIcon,
-  ListIcon,
-  EllipsisIcon,
-  PenIcon,
-  InfoIcon, TagsIcon
-} from 'lucide-react';
+  IconHash,
+  IconHeading,
+  IconCalendarPlus,
+  IconCalendarClock,
+  IconList,
+  IconDots,
+  IconPencil,
+  IconInfoCircle, IconTags
+} from '@tabler/icons-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -68,7 +68,7 @@ export const categoryColumns = (options?: { disabled?: boolean }) => {
       meta: {
         label: 'Id',
         key: 'idRange',
-        icon: HashIcon,
+        icon: IconHash,
         filter: { type: ColumnFilterType.NumberRange, min: 1, max: 9999 }
       }
     }),
@@ -80,7 +80,7 @@ export const categoryColumns = (options?: { disabled?: boolean }) => {
       meta: {
         key: 'name',
         label: 'Name',
-        icon: HeadingIcon,
+        icon: IconHeading,
         filter: { type: ColumnFilterType.Text, placeholder: 'Search by name' }
       }
     }),
@@ -90,7 +90,7 @@ export const categoryColumns = (options?: { disabled?: boolean }) => {
       cell: ctx => ctx.getValue(),
       meta: {
         label: 'Slug',
-        icon: ListIcon,
+        icon: IconList,
         filter: { type: ColumnFilterType.Text, placeholder: 'Search by slug' }
       }
     }),
@@ -98,13 +98,13 @@ export const categoryColumns = (options?: { disabled?: boolean }) => {
     columnHelper.accessor('createdAt', {
       header: ({ column }) => <DataTableColumnHeader column={column}/>,
       cell: ctx => <span className="text-xs">{format(ctx.getValue(), 'dd.MM.yyyy - HH:mm')}</span>,
-      meta: { label: 'Created', icon: CalendarPlusIcon, filter: { type: ColumnFilterType.DateRange } }
+      meta: { label: 'Created', icon: IconCalendarPlus, filter: { type: ColumnFilterType.DateRange } }
     }),
 
     columnHelper.accessor('updatedAt', {
       header: ({ column }) => <DataTableColumnHeader column={column}/>,
       cell: ctx => <span className="text-xs">{format(ctx.getValue(), 'dd.MM.yyyy - HH:mm')}</span>,
-      meta: { label: 'Updated', icon: CalendarClockIcon, filter: { type: ColumnFilterType.DateRange } }
+      meta: { label: 'Updated', icon: IconCalendarClock, filter: { type: ColumnFilterType.DateRange } }
     }),
 
     columnHelper.accessor('subcategoriesCount', {
@@ -125,7 +125,7 @@ export const categoryColumns = (options?: { disabled?: boolean }) => {
 
         return (<Link to="/admin/subcategories" disabled={!hasChildren} search={{ categoryName: row.original.nameRo }}>
             <Badge variant='outline' className="gap-2 py-1 px-2 m-0">
-              {hasChildren && <TagsIcon/>}
+              {hasChildren && <IconTags/>}
               <span>{text}</span>
             </Badge>
           </Link>
@@ -133,7 +133,7 @@ export const categoryColumns = (options?: { disabled?: boolean }) => {
       },
       meta: {
         label: 'Info',
-        icon: InfoIcon
+        icon: IconInfoCircle
       }
     }),
 
@@ -148,7 +148,7 @@ export const categoryColumns = (options?: { disabled?: boolean }) => {
           <DropdownMenu>
             <DropdownMenuTrigger disabled={disabled} asChild>
               <Button size="icon-xs" variant="ghost">
-                <EllipsisIcon/>
+                <IconDots/>
               </Button>
             </DropdownMenuTrigger>
 
@@ -158,7 +158,7 @@ export const categoryColumns = (options?: { disabled?: boolean }) => {
               <EditCategoryDialogTrigger categoryId={id} withoutStyles asChild>
                 <DropdownMenuItem>
                   <span>Edit</span>
-                  <PenIcon className="ml-auto size-4"/>
+                  <IconPencil className="ml-auto size-4"/>
                 </DropdownMenuItem>
               </EditCategoryDialogTrigger>
             </DropdownMenuContent>

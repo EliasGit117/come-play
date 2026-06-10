@@ -2,20 +2,18 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { IAdminProductBriefDto } from '@/features/products/dtos/admin-product-brief-dto';
 import { format } from 'date-fns';
 import {
-  CalendarClockIcon,
-  CalendarPlusIcon,
-  CheckIcon,
-  EllipsisIcon,
-  EyeOffIcon,
-  HashIcon,
-  HeadingIcon,
-  ImageIcon,
-  ImageOffIcon,
-  LinkIcon,
-  PenIcon,
-  TagIcon,
-  XIcon
-} from 'lucide-react';
+  IconCalendarClock,
+  IconCalendarPlus,
+  IconCheck,
+  IconDots,
+  IconEyeOff,
+  IconHash,
+  IconHeading,
+  IconPhoto,
+  IconPhotoOff,
+  IconLink,
+  IconPencil,
+} from '@tabler/icons-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -85,7 +83,7 @@ export const productColumns = (options?: IProductColumnsOptions) => {
       meta: {
         label: 'Id',
         key: 'idRange',
-        icon: HashIcon,
+        icon: IconHash,
         skeletonClassName: 'h-6 w-8',
         filter: {
           type: ColumnFilterType.NumberRange,
@@ -107,7 +105,7 @@ export const productColumns = (options?: IProductColumnsOptions) => {
               className="w-20 h-16 rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex"
               title="No image"
             >
-              <ImageOffIcon className="size-5" />
+              <IconPhotoOff className="size-5" />
             </div>
           );
         }
@@ -128,7 +126,7 @@ export const productColumns = (options?: IProductColumnsOptions) => {
       },
       meta: {
         label: 'Image',
-        icon: ImageIcon,
+        icon: IconPhoto,
         skeletonItem: <Skeleton className="w-20 h-16" />
       }
     }),
@@ -137,7 +135,7 @@ export const productColumns = (options?: IProductColumnsOptions) => {
       cell: (ctx) => <p className="text-xs font-medium">{ctx.getValue()}</p>,
       meta: {
         label: 'Name',
-        icon: HeadingIcon,
+        icon: IconHeading,
         skeletonClassName: 'h-6 w-32',
         filter: {
           type: ColumnFilterType.Text,
@@ -150,7 +148,7 @@ export const productColumns = (options?: IProductColumnsOptions) => {
       cell: (ctx) => <p className="text-xs italic">{ctx.getValue()}</p>,
       meta: {
         label: 'Slug',
-        icon: LinkIcon,
+        icon: IconLink,
         skeletonClassName: 'h-6 w-32',
         filter: {
           type: ColumnFilterType.Text,
@@ -163,22 +161,22 @@ export const productColumns = (options?: IProductColumnsOptions) => {
       cell: ({ getValue }) => (
         <Badge variant="outline" className="gap-2 py-1 px-2 m-0">
           {getValue() ? (
-            <EyeOffIcon className="size-3.5" />
+            <IconEyeOff className="size-3.5" />
           ) : (
-            <CheckIcon className="size-3.5" />
+            <IconCheck className="size-3.5" />
           )}
           <span>{getValue() ? 'Hidden' : 'Visible'}</span>
         </Badge>
       ),
       meta: {
         label: 'Visibility',
-        icon: EyeOffIcon,
+        icon: IconEyeOff,
         skeletonClassName: 'h-6 w-20',
         filter: {
           type: ColumnFilterType.Select,
           options: [
-            { title: 'Visible', value: false, icon: CheckIcon },
-            { title: 'Hidden', value: true, icon: EyeOffIcon }
+            { title: 'Visible', value: false, icon: IconCheck },
+            { title: 'Hidden', value: true, icon: IconEyeOff }
           ]
         }
       }
@@ -192,7 +190,7 @@ export const productColumns = (options?: IProductColumnsOptions) => {
       ),
       meta: {
         label: 'Created',
-        icon: CalendarPlusIcon,
+        icon: IconCalendarPlus,
         skeletonClassName: 'h-6 w-26',
         filter: {
           type: ColumnFilterType.DateRange
@@ -208,7 +206,7 @@ export const productColumns = (options?: IProductColumnsOptions) => {
       ),
       meta: {
         label: 'Updated',
-        icon: CalendarClockIcon,
+        icon: IconCalendarClock,
         skeletonClassName: 'h-6 w-26',
         filter: {
           type: ColumnFilterType.DateRange
@@ -232,7 +230,7 @@ export const productColumns = (options?: IProductColumnsOptions) => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button size="icon-xs" variant="ghost">
-                  <EllipsisIcon />
+                  <IconDots />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-40" align="end">
@@ -243,12 +241,12 @@ export const productColumns = (options?: IProductColumnsOptions) => {
                     onClick={() => navigate({ to: `/products/${slug}` })}
                   >
                     <span>View product</span>
-                    <LinkIcon className="ml-auto size-4" />
+                    <IconLink className="ml-auto size-4" />
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link to="/admin/products/$id/edit" params={{ id: `${id}` }}>
                       <span>Edit</span>
-                      <PenIcon className="ml-auto size-4" />
+                      <IconPencil className="ml-auto size-4" />
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>

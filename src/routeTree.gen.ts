@@ -113,19 +113,19 @@ const AdminBannersIdEditRoute = AdminBannersIdEditRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof PublicIndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/admin/banners': typeof AdminBannersRouteRouteWithChildren
   '/admin/news': typeof AdminNewsRouteRouteWithChildren
-  '/': typeof PublicIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/news/$slug': typeof PublicNewsSlugRoute
-  '/calculator': typeof PublicCalculatorIndexRoute
-  '/news': typeof PublicNewsIndexRoute
+  '/calculator/': typeof PublicCalculatorIndexRoute
+  '/news/': typeof PublicNewsIndexRoute
   '/admin/banners/': typeof AdminBannersIndexRoute
-  '/admin/categories': typeof AdminCategoriesIndexRoute
+  '/admin/categories/': typeof AdminCategoriesIndexRoute
   '/admin/news/': typeof AdminNewsIndexRoute
-  '/admin/products': typeof AdminProductsIndexRoute
-  '/admin/subcategories': typeof AdminSubcategoriesIndexRoute
+  '/admin/products/': typeof AdminProductsIndexRoute
+  '/admin/subcategories/': typeof AdminSubcategoriesIndexRoute
   '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
   '/admin/products/$id/edit': typeof AdminProductsIdEditRoute
@@ -168,19 +168,19 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/admin'
     | '/admin/banners'
     | '/admin/news'
-    | '/'
     | '/admin/'
     | '/news/$slug'
-    | '/calculator'
-    | '/news'
+    | '/calculator/'
+    | '/news/'
     | '/admin/banners/'
-    | '/admin/categories'
+    | '/admin/categories/'
     | '/admin/news/'
-    | '/admin/products'
-    | '/admin/subcategories'
+    | '/admin/products/'
+    | '/admin/subcategories/'
     | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
     | '/admin/products/$id/edit'
@@ -237,7 +237,7 @@ declare module '@tanstack/react-router' {
     '/_public': {
       id: '/_public'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof PublicRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -272,14 +272,14 @@ declare module '@tanstack/react-router' {
     '/admin/subcategories/': {
       id: '/admin/subcategories/'
       path: '/subcategories'
-      fullPath: '/admin/subcategories'
+      fullPath: '/admin/subcategories/'
       preLoaderRoute: typeof AdminSubcategoriesIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/products/': {
       id: '/admin/products/'
       path: '/products'
-      fullPath: '/admin/products'
+      fullPath: '/admin/products/'
       preLoaderRoute: typeof AdminProductsIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
@@ -293,7 +293,7 @@ declare module '@tanstack/react-router' {
     '/admin/categories/': {
       id: '/admin/categories/'
       path: '/categories'
-      fullPath: '/admin/categories'
+      fullPath: '/admin/categories/'
       preLoaderRoute: typeof AdminCategoriesIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
@@ -307,14 +307,14 @@ declare module '@tanstack/react-router' {
     '/_public/news/': {
       id: '/_public/news/'
       path: '/news'
-      fullPath: '/news'
+      fullPath: '/news/'
       preLoaderRoute: typeof PublicNewsIndexRouteImport
       parentRoute: typeof PublicRouteRoute
     }
     '/_public/calculator/': {
       id: '/_public/calculator/'
       path: '/calculator'
-      fullPath: '/calculator'
+      fullPath: '/calculator/'
       preLoaderRoute: typeof PublicCalculatorIndexRouteImport
       parentRoute: typeof PublicRouteRoute
     }
