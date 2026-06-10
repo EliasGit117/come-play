@@ -24,7 +24,7 @@ const triggerAltClassName = cn(
 
 
 const HeaderNavMenu: FC<IProps> = ({ transparent, ...props }) => {
-  const triggerClassName = cn('uppercase bg-transparent duration-0 [&_svg]:duration-0 [&_svg]:transition-none', transparent ? triggerAltClassName : '');
+  const triggerClassName = cn('uppercase font-medium bg-transparent duration-0 [&_svg]:duration-0 [&_svg]:transition-none', transparent ? triggerAltClassName : '');
 
   return (
     <NavigationMenu viewport={false} {...props}>

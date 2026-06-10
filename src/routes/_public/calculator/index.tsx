@@ -85,9 +85,9 @@ function RouteComponent() {
             <Label>Vertical count</Label>
             <div className="flex justify-center">
               <Button
-                size="icon-sm"
+                size="icon"
                 variant="secondary"
-                className="rounded-r-none border"
+                className="rounded-r-none border border-border"
                 disabled={tilesYCount <= 1}
                 onClick={() => setTilesYCount(pv => pv > 0 ? pv - 1 : pv)}
               >
@@ -99,9 +99,9 @@ function RouteComponent() {
                 readOnly
               />
               <Button
-                size="icon-sm"
+                size="icon"
                 variant="secondary"
-                className='rounded-l-none border'
+                className="rounded-l-none border border-border"
                 disabled={tilesYCount >= 100}
                 onClick={() => setTilesYCount(pv => pv <= 100 ? pv + 1 : pv)}
               >
@@ -115,9 +115,9 @@ function RouteComponent() {
             <Label>Horizontal count</Label>
             <div className="flex justify-center">
               <Button
-                size="icon-sm"
+                size="icon"
                 variant="secondary"
-                className="rounded-r-none border"
+                className="rounded-r-none border border-border"
                 disabled={tilesXCount <= 1}
                 onClick={() => setTilesXCount(pv => pv > 0 ? pv - 1 : pv)}
               >
@@ -129,9 +129,9 @@ function RouteComponent() {
                 readOnly
               />
               <Button
-                size="icon-sm"
+                size="icon"
                 variant="secondary"
-                className='rounded-l-none border'
+                className="rounded-l-none border border-border"
                 disabled={tilesXCount >= 100}
                 onClick={() => setTilesXCount(pv => pv <= 100 ? pv + 1 : pv)}
               >
@@ -163,7 +163,7 @@ function RouteComponent() {
               <div
                 key={line.id}
                 style={{ left: `${line.left}%` }}
-                className="absolute top-0 bottom-0 w-[1px] bg-white/50"
+                className="absolute top-0 bottom-0 w-px bg-white/50"
               />
             ))}
 
@@ -172,12 +172,12 @@ function RouteComponent() {
               <div
                 key={line.id}
                 style={{ top: `${line.top}%` }}
-                className="absolute left-0 right-0 h-[1px] bg-white/50"
+                className="absolute left-0 right-0 h-px bg-white/50"
               />
             ))}
 
             {/* Total height label (on left, centered vertically) */}
-            <div className="absolute -left-14 top-1/2 -translate-y-1/2  text-sm rotate-[-90deg]">
+            <div className="absolute -left-14 top-1/2 -translate-y-1/2  text-sm -rotate-90">
               {height} mm
             </div>
 

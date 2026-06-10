@@ -16,7 +16,7 @@ const OpenPanelSettingsButton: FC<IProps> = ({ ...props }) => {
       onClick={() => setOpen(true)}
       {...props}
     >
-      <IconSettings/>
+      <IconSettings className='size-6'/>
     </Button>
   );
 };

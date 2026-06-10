@@ -7,8 +7,7 @@ import { cn } from '@/lib/utils';
 import HeaderNavMenu from '@/components/layout/nav-menu';
 import LanguageDropdown from '@/components/layout/language-dropdown';
 import { useAppSidebar } from '@/components/layout/app-sidebar-provider';
-import LightLogo from '@/assets/icons/logo-white.svg?react';
-import DarkLogo from '@/assets/icons/logo.svg?react';
+import LogoFull from '@/assets/icons/logo/full.svg?react';
 import { ThemeDropdown } from '@/components/theme';
 import { useBodyScrollPosition } from '@n8tb1t/use-scroll-position';
 
@@ -66,16 +65,13 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
         {...props}
       >
         <div className="container mx-auto px-4 flex gap-2 items-center">
-          <Button variant="light-ghost" size="dense" className="-ml-1" asChild>
+          <Button size="lg" variant="link" className="-ml-1" asChild>
             <Link to="/">
-              {isAtTop && type === 'fixed' ? (
-                <LightLogo className="size-8 xl:size-10"/>
-              ) : (
-                <>
-                  <LightLogo className="size-8 xl:size-10 hidden dark:block"/>
-                  <DarkLogo className="size-8 xl:size-10 dark:hidden"/>
-                </>
-              )}
+              <LogoFull
+                className={cn(
+                  'h-8! w-fit! text-foreground -ml-3.5',
+                  (isAtTop && type === 'fixed') && 'invert')}
+              />
             </Link>
           </Button>
 
@@ -85,7 +81,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
           />
 
           <div className="flex gap-2 items-center ml-auto">
-            <LanguageDropdown buttonVariant="ghost" align='end'/>
+            <LanguageDropdown buttonVariant="ghost" align="end"/>
             <ThemeDropdown
               variant="ghost"
               className="ml-auto"

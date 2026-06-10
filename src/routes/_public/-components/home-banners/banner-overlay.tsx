@@ -17,13 +17,13 @@ export const BannerOverlay: FC<BannerOverlayProps> = ({ banner, className }) => 
       <div
         className="container mx-auto py-4 px-8 space-y-3 sm:space-y-4 lg:space-y-5 xl:space-y-6 text-white whitespace-pre-line">
         {title && (
-          <p className="text-xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl font-semibold leading-tight max-w-3xl">
+          <p className="text-4xl lg:text-5xl xl:text-6xl font-semibold leading-tight max-w-3xl">
             {title}
           </p>
         )}
 
         {text && (
-          <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl max-w-2xl">
+          <p className="text-sm md:text-base lg:text-lg xl:text-xl max-w-2xl">
             {text}
           </p>
         )}

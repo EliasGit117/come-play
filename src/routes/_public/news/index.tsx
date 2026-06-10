@@ -3,13 +3,13 @@ import { createFileRoute } from '@tanstack/react-router';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger
-} from '@/components/ui/select';
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 import { BasicPagination } from '@/components/ui/pagination';
 import {
   getNewsPaginatedQueryOptions,
@@ -20,6 +20,7 @@ import { cn } from '@/lib/utils';
 import { useDebouncedCallback } from 'use-debounce';
 import NewsPreviewLink from '@/components/news-preview-link';
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group';
+import { Button } from "@/components/ui/button";
 
 
 export const Route = createFileRoute('/_public/news/')({
@@ -116,28 +117,28 @@ const SearchPanel: FC<ComponentProps<'div'>> = ({ className, ...props }) => {
         )}
       </InputGroup>
 
-      <Select value={dir} onValueChange={onDirSelectValueChange}>
-        <SelectTrigger className="justify-start" asChild>
-          <button type="button">
-            <span className="capitalize">{dir ?? 'desc'}</span>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button type="button" variant="outline">
             {dir === 'asc' ? <IconSortAscending/> : <IconSortDescending/>}
-          </button>
-        </SelectTrigger>
+            <span className="capitalize">{dir ?? 'desc'}</span>
+          </Button>
+        </DropdownMenuTrigger>
 
-        <SelectContent align="end">
-          <SelectGroup>
-            <SelectLabel>Order direction</SelectLabel>
-            <SelectItem value="asc">
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Order direction</DropdownMenuLabel>
+          <DropdownMenuRadioGroup value={dir ?? 'desc'} onValueChange={onDirSelectValueChange}>
+            <DropdownMenuRadioItem value="asc">
               <IconSortAscending/>
               <span>Asc</span>
-            </SelectItem>
-            <SelectItem value="desc">
+            </DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="desc">
               <IconSortDescending/>
               <span>Desc</span>
-            </SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+            </DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 };
