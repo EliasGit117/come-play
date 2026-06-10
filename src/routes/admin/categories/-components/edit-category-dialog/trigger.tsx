@@ -1,6 +1,7 @@
+import { IconPencil } from '@tabler/icons-react';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { ComponentProps, FC } from 'react';
-import { PenIcon } from 'lucide-react';
+
 import { useEditCategoryDialogContext } from './provider';
 import { Slot as SlotPrimitive } from 'radix-ui';
 import { cn } from '@/lib/utils';
@@ -42,7 +43,7 @@ export const EditCategoryDialogTrigger: FC<IEditCategoryDialogTriggerProps> = (p
     >
       {children ?? (
         <>
-          <PenIcon />
+          <IconPencil />
           <span className="sr-only sm:not-sr-only">{text}</span>
         </>
       )}

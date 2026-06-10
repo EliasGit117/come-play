@@ -1,7 +1,8 @@
+import { IconEye, IconEyeOff } from '@tabler/icons-react';
 'use client';
 
 import { ComponentProps, forwardRef, useState } from 'react';
-import { EyeIcon, EyeOffIcon } from 'lucide-react';
+
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -28,12 +29,12 @@ const PasswordInput = forwardRef<HTMLInputElement, ComponentProps<'input'>>(
           disabled={disabled}
         >
           {showPassword && !disabled ? (
-            <EyeIcon
+            <IconEye
               className="h-4 w-4"
               aria-hidden="true"
             />
           ) : (
-            <EyeOffIcon
+            <IconEyeOff
               className="h-4 w-4"
               aria-hidden="true"
             />

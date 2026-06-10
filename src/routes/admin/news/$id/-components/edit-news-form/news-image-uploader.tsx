@@ -2,7 +2,7 @@ import { ComponentProps, FC, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { useSetNewsImageMutation } from '@/features/news/server-functions/admin/set-news-image';
 import { useRemoveImageFromNews } from '@/features/news/server-functions/admin/remove-image-from-news';
-import { LoaderCircleIcon } from 'lucide-react';
+
 import { cn } from '@/lib/utils';
 import CoverImagePicker, { IImagePickerValue } from '@/components/ui/cover-image-picker';
 import { Spinner } from '@/components/ui/spinner';

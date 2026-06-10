@@ -54,6 +54,7 @@ const AppSidebar = () => {
                     <AccordionContent className="flex flex-col gap-4 pt-2">
                       {link.items.map((item, subIndex) => (
                         <SidebarLink
+                          className='no-underline!'
                           key={`group-item-${index}-${subIndex}`}
                           item={item}
                           variant="ghost"

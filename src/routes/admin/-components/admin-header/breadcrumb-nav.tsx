@@ -1,3 +1,4 @@
+import { IconHome } from '@tabler/icons-react';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,7 +12,7 @@ import { ComponentProps, FC, Fragment } from 'react';
 import { cn } from '@/lib/utils';
 import { z } from 'zod'
 import { Button } from '@/components/ui/button';
-import { HomeIcon } from 'lucide-react';
+
 
 const breadcrumbDataSchema = z.object({
   title: z.string(),
@@ -96,13 +97,13 @@ export const BreadcrumbsNavigation: FC<IProps> = ({ className, ...props }) => {
         <Breadcrumb>
           <BreadcrumbList>
             <Button
-              size="icon-xs"
+              size="icon-sm"
               variant="ghost"
               className={responsiveClassName}
               asChild
             >
               <Link to="/">
-                <HomeIcon />
+                <IconHome />
               </Link>
             </Button>
 

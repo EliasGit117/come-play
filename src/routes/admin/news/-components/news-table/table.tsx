@@ -1,3 +1,4 @@
+import { IconTrash } from '@tabler/icons-react';
 import { ComponentProps, FC, useCallback, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import {
@@ -20,7 +21,7 @@ import { CreateNewsDialog } from '@/routes/admin/news/-components/create-news-di
 import { CreateNewsDialogTrigger } from '@/routes/admin/news/-components/create-news-dialog/trigger';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import { TrashIcon } from 'lucide-react';
+
 import { useDeleteNewsByIdsMutation } from '@/features/news/server-functions/admin/delete-news-by-ids';
 import { useConfirm } from '@/components/ui/confirm-dialog';
 import * as React from 'react';
@@ -87,7 +88,7 @@ export const NewsTable: FC<IProps> = (props) => {
             <div className="flex-1"/>
             {selectedItems.length > 0 && (
               <Button size="sm" variant="ghost-destructive" onClick={deleteNews} disabled={isLoading}>
-                <TrashIcon/>
+                <IconTrash/>
                 <span className="sr-only sm:not-sr-only">Delete</span>
               </Button>
             )}

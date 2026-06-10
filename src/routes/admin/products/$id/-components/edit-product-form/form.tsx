@@ -1,3 +1,4 @@
+import { IconSelector } from '@tabler/icons-react';
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
@@ -27,7 +28,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { ChevronsUpDownIcon } from 'lucide-react';
+
 
 
 interface IEditProductFormProps {
@@ -182,7 +183,7 @@ export const EditProductForm: FC<IEditProductFormProps> = ({ className, disabled
                       className={cn('justify-start', !field.value && 'text-muted-foreground')}
                     >
                       <span>{field.value ? (foundSticker ? foundSticker.label : `Sticker: ${field.value}`) : 'None'}</span>
-                      <ChevronsUpDownIcon className="text-muted-foreground ml-auto" />
+                      <IconSelector className="text-muted-foreground ml-auto" />
                     </Button>
                   </DropdownMenuTrigger>
 

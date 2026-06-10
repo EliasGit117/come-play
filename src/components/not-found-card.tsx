@@ -1,6 +1,7 @@
+import { IconArrowLeft, IconHome } from '@tabler/icons-react';
 import { Link } from '@tanstack/react-router';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { ArrowLeftIcon, HomeIcon } from 'lucide-react';
+
 import type { VariantProps } from 'class-variance-authority';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { ComponentProps, FC } from 'react';
@@ -29,13 +30,13 @@ export const NotFoundCard: FC<INotFoundedCardProps> = ({ children, className, ..
             onClick={() => window.history.back()}
             className="flex-1"
           >
-            <ArrowLeftIcon/>
+            <IconArrowLeft/>
             <span>Go back</span>
           </Button>
 
           <Button size={buttonSize} variant='outline' className="flex-1" asChild>
             <Link to="/">
-              <HomeIcon/>
+              <IconHome/>
               <span>Start Over</span>
             </Link>
           </Button>

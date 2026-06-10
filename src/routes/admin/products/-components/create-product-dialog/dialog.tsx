@@ -1,3 +1,4 @@
+import { IconSend, IconX } from '@tabler/icons-react';
 import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -15,7 +16,7 @@ import { ProductForm } from './form';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { toast } from 'sonner';
 import { useNavigate } from '@tanstack/react-router';
-import { SendIcon, XIcon } from 'lucide-react';
+
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
@@ -107,7 +108,7 @@ export const CreateProductDialog: FC<ICreateProductDialogProps> = ({ afterSucces
 
             <AlertDialogFooter className="flex-row mt-6">
               <AlertDialogCancel type="button" className="flex-1 sm:flex-none">
-                <XIcon />
+                <IconX />
                 <span>Cancel</span>
               </AlertDialogCancel>
 
@@ -116,7 +117,7 @@ export const CreateProductDialog: FC<ICreateProductDialogProps> = ({ afterSucces
                 loading={isPending}
                 className="flex-1 sm:flex-none"
               >
-                <SendIcon />
+                <IconSend />
                 <span>Submit</span>
               </LoadingButton>
             </AlertDialogFooter>

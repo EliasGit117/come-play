@@ -1,3 +1,4 @@
+import { IconLanguage, IconSelector } from '@tabler/icons-react';
 import { ComponentProps, FC, useState } from 'react';
 import {
   DropdownMenu,
@@ -10,7 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button, buttonVariants } from '@/components/ui/button';
 import type { VariantProps } from 'class-variance-authority';
-import { ChevronsUpDownIcon, LanguagesIcon } from 'lucide-react';
+
 
 
 interface IProps extends ComponentProps<typeof DropdownMenuTrigger> {
@@ -37,11 +38,11 @@ const LanguageDropdown: FC<IProps> = ({ buttonVariant, align, ...props }) => {
         <Button variant={buttonVariant} size='sm' {...props}>
           <span className='uppercase sm:hidden'>{lang}</span>
 
-          <LanguagesIcon className='hidden sm:block opacity-65'/>
+          <IconLanguage className='hidden sm:block opacity-65'/>
           <span className='hidden sm:block'>
             {langs.find(item => item.value === lang)?.title}
           </span>
-          <ChevronsUpDownIcon className='hidden sm:block opacity-65'/>
+          <IconSelector className='hidden sm:block opacity-65'/>
 
           <span className="sr-only">Language dropdown</span>
         </Button>
@@ -49,7 +50,7 @@ const LanguageDropdown: FC<IProps> = ({ buttonVariant, align, ...props }) => {
 
       <DropdownMenuContent className="min-w-36" align={align}>
         <DropdownMenuLabel className="flex items-center gap-2">
-          <LanguagesIcon className="size-4"/>
+          <IconLanguage className="size-4"/>
           <span>Language</span>
         </DropdownMenuLabel>
 
@@ -60,13 +61,12 @@ const LanguageDropdown: FC<IProps> = ({ buttonVariant, align, ...props }) => {
             <DropdownMenuRadioItem
               key={value}
               value={value}
-              className="justify-between gap-4"
               onClick={() => setLang(value)}
             >
-              <span>{title}</span>
               <span className="text-xs uppercase text-muted-foreground">
                 {value}
               </span>
+              <span>{title}</span>
             </DropdownMenuRadioItem>
           )}
         </DropdownMenuRadioGroup>

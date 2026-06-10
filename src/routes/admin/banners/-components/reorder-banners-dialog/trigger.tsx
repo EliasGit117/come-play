@@ -1,6 +1,7 @@
+import { IconArrowBarToUp } from '@tabler/icons-react';
 import { Button } from '@/components/ui/button';
 import { ComponentProps, FC } from 'react';
-import { ListStartIcon } from 'lucide-react';
+
 import { useReorderBannersDialogContext } from './provider';
 
 interface IReorderBannersDialogTriggerProps extends Omit<ComponentProps<typeof Button>, 'onClick'> {
@@ -17,7 +18,7 @@ export const ReorderBannersDialogTrigger: FC<IReorderBannersDialogTriggerProps> 
     <Button onClick={open} asChild={asChild} {...btnProps}>
       {(asChild && children) ?? (
         <>
-          <ListStartIcon />
+          <IconArrowBarToUp />
           <span className="sr-only sm:not-sr-only">{text}</span>
         </>
       )}

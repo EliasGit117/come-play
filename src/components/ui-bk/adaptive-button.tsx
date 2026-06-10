@@ -1,15 +1,16 @@
+import { TablerIcon } from '@tabler/icons-react';
 'use client';
 
 import { ComponentProps, FC } from 'react';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { Button } from '@/components/ui/button';
-import { LucideIcon } from 'lucide-react';
+
 import { cn } from '@/lib/utils';
 
 interface ButtonWithTooltipProps extends Omit<ComponentProps<typeof Button>, 'size' | 'children'> {
   tooltip?: string;
   tooltipDelay?: number;
-  icon: LucideIcon;
+  icon: TablerIcon;
   text: string;
   size?: 'sm' | 'default';
   breakpoint?: 'sm' | 'md' | 'lg' | 'xl';

@@ -1,3 +1,4 @@
+import { IconArrowBackUp, IconDeviceDesktop, IconDeviceFloppy, IconDeviceMobile, IconDeviceTablet, TablerIcon } from '@tabler/icons-react';
 import { createFileRoute } from '@tanstack/react-router';
 import { getBannerByIdForAdminQueryOptions } from '@/features/banners/server-functions/admin/get-banner-by-id-for-admin';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -5,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { LoadingButton } from '@/components/ui/loading-button';
-import { LucideIcon, MonitorIcon, SaveIcon, SmartphoneIcon, TabletIcon, UndoIcon } from 'lucide-react';
+
 import { useEditBannerMutation } from '@/features/banners/server-functions/admin/edit-banner';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -40,7 +41,7 @@ export const Route = createFileRoute('/admin/banners/$id/edit')({
 interface IBannerUploaderItem {
   type: 'desktop' | 'tablet' | 'mobile';
   label: string;
-  icon: LucideIcon;
+  icon: TablerIcon;
   className: string;
   image?: IImagePickerValue;
 }
@@ -84,9 +85,9 @@ function RouteComponent() {
     : undefined;
 
   const bannerUploaders: IBannerUploaderItem[] = [
-    { type: 'desktop', label: 'Desktop', icon: MonitorIcon, className: 'max-w-[30rem]', image: desktopImage },
-    { type: 'tablet', label: 'Tablet', icon: TabletIcon, className: 'max-w-[20rem]', image: tabletImage },
-    { type: 'mobile', label: 'Phone', icon: SmartphoneIcon, className: 'max-w-[15rem]', image: mobileImage }
+    { type: 'desktop', label: 'Desktop', icon: IconDeviceDesktop, className: 'max-w-[30rem]', image: desktopImage },
+    { type: 'tablet', label: 'Tablet', icon: IconDeviceTablet, className: 'max-w-[20rem]', image: tabletImage },
+    { type: 'mobile', label: 'Phone', icon: IconDeviceMobile, className: 'max-w-[15rem]', image: mobileImage }
   ];
 
   return (
@@ -170,14 +171,14 @@ const BottomButtons: FC<IBottomButtons> = (props) => {
             onClick={onResetClick}
             className="border"
           >
-            <UndoIcon/>
+            <IconArrowBackUp/>
             <span className="sr-only sm:not-sr-only">Reset</span>
           </Button>
         </div>
 
         <div className="bg-background shadow-md rounded-md">
           <LoadingButton hideTextOnMobile onClick={onSubmitClick} disabled={disabled} loading={isLoading} type="submit">
-            <SaveIcon/>
+            <IconDeviceFloppy/>
             <span className="sr-only sm:not-sr-only">Save</span>
           </LoadingButton>
         </div>

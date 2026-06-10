@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { CategoriesTable } from '@/routes/admin/categories/-components/catergories-table';
-import { zodValidator } from '@tanstack/zod-adapter';
 import {
   getCategoriesPaginatedForAdminQueryOptions,
   getCategoriesPaginatedForAdminSchema
@@ -12,7 +11,7 @@ export const Route = createFileRoute('/admin/categories/')({
   component: RouteComponent,
   head: () => ({ meta: [{ title: 'Categories' }] }),
   staticData: { breadcrumbs: [{ title: 'Categories' }] },
-  validateSearch: zodValidator(getCategoriesPaginatedForAdminSchema),
+  validateSearch: getCategoriesPaginatedForAdminSchema,
   loaderDeps: (deps) => (deps),
   loader: async ({ context, deps: { search } }) => {
     await awaitIfServer(context.queryClient.prefetchQuery(getCategoriesPaginatedForAdminQueryOptions(search)));

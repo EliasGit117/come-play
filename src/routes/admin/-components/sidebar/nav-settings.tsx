@@ -1,3 +1,4 @@
+import { IconDeviceDesktop, IconLanguage, IconMoon, IconSun, IconSunMoon } from '@tabler/icons-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +17,7 @@ import {
 } from '@/components/ui/sidebar';
 import { ComponentPropsWithoutRef } from 'react';
 import { useTheme } from '@/components/theme';
-import { LanguagesIcon, MonitorIcon, MoonIcon, SunIcon, SunMoonIcon } from 'lucide-react';
+
 import { cn } from '@/lib/utils';
 
 
@@ -45,8 +46,8 @@ export function NavSettings({ ...props }: IProps & ComponentPropsWithoutRef<type
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
                   <span>Theme</span>
-                  <SunIcon className='ml-auto text-muted-foreground dark:hidden'/>
-                  <MoonIcon className='ml-auto text-muted-foreground hidden dark:block'/>
+                  <IconSun className='ml-auto text-muted-foreground dark:hidden'/>
+                  <IconMoon className='ml-auto text-muted-foreground hidden dark:block'/>
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent
@@ -57,7 +58,7 @@ export function NavSettings({ ...props }: IProps & ComponentPropsWithoutRef<type
               >
                 <DropdownMenuRadioGroup value={theme}>
                   <DropdownMenuLabel className="flex gap-2 items-center">
-                    <SunMoonIcon className="size-4"/>
+                    <IconSunMoon className="size-4"/>
                     <span>Theme</span>
                   </DropdownMenuLabel>
 
@@ -65,17 +66,17 @@ export function NavSettings({ ...props }: IProps & ComponentPropsWithoutRef<type
 
                   <DropdownMenuRadioItem value="light" onClick={() => setTheme('light')}>
                     <span>Light</span>
-                    <SunIcon className="ml-auto text-muted-foreground"/>
+                    <IconSun className="ml-auto text-muted-foreground"/>
                   </DropdownMenuRadioItem>
 
                   <DropdownMenuRadioItem value="dark" onClick={() => setTheme('dark')}>
                     <span>Dark</span>
-                    <MoonIcon className="ml-auto text-muted-foreground"/>
+                    <IconMoon className="ml-auto text-muted-foreground"/>
                   </DropdownMenuRadioItem>
 
                   <DropdownMenuRadioItem value="system" onClick={() => setTheme('system')}>
                     <span>System</span>
-                    <MonitorIcon className="ml-auto text-muted-foreground"/>
+                    <IconDeviceDesktop className="ml-auto text-muted-foreground"/>
                   </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
@@ -101,7 +102,7 @@ export function NavSettings({ ...props }: IProps & ComponentPropsWithoutRef<type
               >
                 <DropdownMenuRadioGroup value={locale}>
                   <DropdownMenuLabel className="flex items-center gap-2">
-                    <LanguagesIcon className="size-4"/>
+                    <IconLanguage className="size-4"/>
                     <span>Language</span>
                   </DropdownMenuLabel>
 

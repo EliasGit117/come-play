@@ -1,3 +1,4 @@
+import { IconMinus, IconPlus } from '@tabler/icons-react';
 import { createFileRoute } from '@tanstack/react-router';
 import { useState, useEffect } from 'react';
 import {
@@ -7,7 +8,7 @@ import {
 import PanelSettingsSheet from './-components/panel-settings-sheet';
 import OpenPanelSettingsButton from './-components/open-panel-settings-button';
 import { Button } from '@/components/ui/button';
-import { MinusIcon, PlusIcon } from 'lucide-react';
+
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
@@ -90,7 +91,7 @@ function RouteComponent() {
                 disabled={tilesYCount <= 1}
                 onClick={() => setTilesYCount(pv => pv > 0 ? pv - 1 : pv)}
               >
-                <MinusIcon/>
+                <IconMinus/>
               </Button>
               <Input
                 className="h-8 w-12 text-center rounded-none border-x-0"
@@ -104,7 +105,7 @@ function RouteComponent() {
                 disabled={tilesYCount >= 100}
                 onClick={() => setTilesYCount(pv => pv <= 100 ? pv + 1 : pv)}
               >
-                <PlusIcon/>
+                <IconPlus/>
               </Button>
             </div>
           </div>
@@ -120,7 +121,7 @@ function RouteComponent() {
                 disabled={tilesXCount <= 1}
                 onClick={() => setTilesXCount(pv => pv > 0 ? pv - 1 : pv)}
               >
-                <MinusIcon/>
+                <IconMinus/>
               </Button>
               <Input
                 className="h-8 w-12 text-center rounded-none border-x-0"
@@ -134,7 +135,7 @@ function RouteComponent() {
                 disabled={tilesXCount >= 100}
                 onClick={() => setTilesXCount(pv => pv <= 100 ? pv + 1 : pv)}
               >
-                <PlusIcon/>
+                <IconPlus/>
               </Button>
             </div>
           </div>

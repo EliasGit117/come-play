@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { zodValidator } from '@tanstack/zod-adapter';
 import {
   getSubcategoriesPaginatedForAdminQueryOptions,
   getSubcategoriesPaginatedForAdminSchema
@@ -12,7 +11,7 @@ export const Route = createFileRoute('/admin/subcategories/')({
   component: RouteComponent,
   head: () => ({ meta: [{ title: 'Subcategories' }] }),
   staticData: { breadcrumbs: [{ title: 'Subcategories' }] },
-  validateSearch: zodValidator(getSubcategoriesPaginatedForAdminSchema),
+  validateSearch: getSubcategoriesPaginatedForAdminSchema,
   loaderDeps: (deps) => (deps),
   loader: async ({ context, deps: { search } }) => {
     await awaitIfServer(context.queryClient.prefetchQuery(getSubcategoriesPaginatedForAdminQueryOptions(search)));

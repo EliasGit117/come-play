@@ -1,3 +1,4 @@
+import { IconSelector } from '@tabler/icons-react';
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
@@ -15,7 +16,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { ChevronsUpDownIcon } from 'lucide-react';
+
 import { cn } from '@/lib/utils';
 
 export const SubcategoryForm: FC = () => {
@@ -79,7 +80,7 @@ export const SubcategoryForm: FC = () => {
                     <span>
                       {field.value ? (foundCategory ? foundCategory.nameRo : `Category id: ${field.value}`) : 'None'}
                     </span>
-                    <ChevronsUpDownIcon className="text-muted-foreground ml-auto"/>
+                    <IconSelector className="text-muted-foreground ml-auto"/>
                   </Button>
                 </DropdownMenuTrigger>
 

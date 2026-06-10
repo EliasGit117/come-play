@@ -4,6 +4,7 @@ import { AppSidebarProvider } from '@/components/layout';
 import { ProgressProvider } from '@bprogress/react';
 import { ConfirmDialogProvider } from '@/components/ui/confirm-dialog';
 import { RouteProgressController, RouteProgressProvider } from '@/components/layout/route-progress';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 
 export function Providers({ children }: { children: ReactNode }) {
@@ -13,9 +14,11 @@ export function Providers({ children }: { children: ReactNode }) {
       <RouteProgressProvider>
         <ConfirmDialogProvider>
           <AppSidebarProvider>
-            <RouteProgressController/>
-            {children}
-            <Toaster richColors/>
+            <TooltipProvider>
+              <RouteProgressController/>
+              {children}
+              <Toaster richColors/>
+            </TooltipProvider>
           </AppSidebarProvider>
         </ConfirmDialogProvider>
       </RouteProgressProvider>

@@ -1,3 +1,4 @@
+import { IconSend, IconX } from '@tabler/icons-react';
 'use client';
 
 import { FC, useEffect, useState } from 'react';
@@ -17,7 +18,7 @@ import { NewsForm } from './form';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { toast } from 'sonner';
 import { useNavigate } from '@tanstack/react-router';
-import { SendIcon, XIcon } from 'lucide-react';
+
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { createNewsSchema, TCreateNewsSchema } from '@/features/news/schemas/create-news';
@@ -99,12 +100,12 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ afterSuccess }) =>
 
             <AlertDialogFooter className="flex-row mt-6">
               <AlertDialogCancel type="button" className='flex-1 sm:flex-none'>
-                <XIcon/>
+                <IconX/>
                 <span>Cancel</span>
               </AlertDialogCancel>
 
               <LoadingButton type="submit" loading={isPending} className='flex-1 sm:flex-none'>
-                <SendIcon/>
+                <IconSend/>
                 <span>Submit</span>
               </LoadingButton>
             </AlertDialogFooter>

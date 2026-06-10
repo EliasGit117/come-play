@@ -1,3 +1,4 @@
+import { IconTrash } from '@tabler/icons-react';
 import { ComponentProps, FC, useCallback, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import {
@@ -11,7 +12,7 @@ import {
 } from '@/features/banners/server-functions/admin/get-banners-for-admin';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { bannerColumns } from '@/routes/admin/banners/-components/banners-table/columns';
-import { TrashIcon } from 'lucide-react';
+
 import {
   CreateBannerDialogTrigger,
   CreateBannerDialogProvider,
@@ -106,7 +107,7 @@ export const BannerTable: FC<IProps> = (props) => {
                   disabled={isLoading}
                   onClick={deleteBanners}
                 >
-                  <TrashIcon/>
+                  <IconTrash/>
                   <span className="sr-only lg:not-sr-only">Delete</span>
                 </Button>
               )}

@@ -1,8 +1,9 @@
+import { IconMail, IconMessageCircle, IconPhone } from '@tabler/icons-react';
 import { ComponentProps, FC } from 'react';
 import { cn } from '@/lib/utils';
 import Form from './form';
 import { Button } from '@/components/ui/button';
-import { MailIcon, MessageCircleIcon, PhoneIcon } from 'lucide-react';
+
 
 
 interface IProps extends ComponentProps<'section'> {
@@ -33,21 +34,21 @@ const WriteAMessageSection: FC<IProps> = ({ className, ...props }) => {
         <div className="flex flex-col gap-1 -ml-2.5 mt-4">
           <Button variant="link" className="gap-4 w-fit" asChild>
             <a href="mailto:some@email.com">
-              <MailIcon/>
+              <IconMail/>
               some@email.com
             </a>
           </Button>
 
           <Button variant="link" className="gap-4 w-fit" asChild>
             <a href="tel:+37360900001">
-              <PhoneIcon/>
+              <IconPhone/>
               +37360900001
             </a>
           </Button>
 
           <Button variant="link" className="gap-4 w-fit" asChild>
             <a>
-              <MessageCircleIcon/>
+              <IconMessageCircle/>
               Chat with us
             </a>
           </Button>

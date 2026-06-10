@@ -1,4 +1,4 @@
-
+import { IconDotsVertical, IconUser, IconUserCircle } from '@tabler/icons-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -15,7 +15,7 @@ import {
   SidebarMenuItem,
   useSidebar
 } from '@/components/ui/sidebar';
-import { CircleUserIcon, EllipsisVerticalIcon, UserIcon } from 'lucide-react';
+
 import React from 'react';
 import { Link } from '@tanstack/react-router';
 
@@ -41,7 +41,7 @@ export function NavUser() {
               <Avatar className="h-8 w-8 rounded-lg grayscale border">
                 {/*<AvatarImage src={user.avatar} alt={user.name} />*/}
                 <AvatarFallback className="rounded-lg">
-                  <UserIcon className="size-4 text-muted-foreground"/>
+                  <IconUser className="size-4 text-muted-foreground"/>
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -50,7 +50,7 @@ export function NavUser() {
                   {user.email}
                 </span>
               </div>
-              <EllipsisVerticalIcon className="ml-auto size-4"/>
+              <IconDotsVertical className="ml-auto size-4"/>
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -79,7 +79,7 @@ export function NavUser() {
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
                 <Link to='.'>
-                  <CircleUserIcon/>
+                  <IconUserCircle/>
                   <span>Account</span>
                 </Link>
               </DropdownMenuItem>

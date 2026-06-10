@@ -1,7 +1,18 @@
-import { PrismaClient } from '@prisma/client';
-import { pagination } from 'prisma-extension-pagination';
+import { createPrismaClient } from '@/lib/create-client';
 
-const prisma = new PrismaClient().$extends(pagination());
 
+export type TPrismaExtendedClient = ReturnType<typeof createPrismaClient>;
+export type TxClient = Omit<TPrismaExtendedClient, '$connect' | '$disconnect' | '$transaction' | '$extends'>;
+
+declare global {
+  var __prisma: TPrismaExtendedClient | undefined;
+}
+
+const prisma =
+  globalThis.__prisma ?? createPrismaClient();
+
+if (process.env.NODE_ENV !== 'production') {
+  globalThis.__prisma = prisma;
+}
 
 export default prisma;

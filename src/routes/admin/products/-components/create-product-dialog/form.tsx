@@ -1,3 +1,4 @@
+import { IconSelector } from '@tabler/icons-react';
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
@@ -25,7 +26,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { ChevronsUpDownIcon } from 'lucide-react';
+
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
@@ -201,7 +202,7 @@ export const ProductForm: FC<IProductFormProps> = ({ disabled, className }) => {
                       className={cn('justify-start', !field.value && 'text-muted-foreground')}
                     >
                       <span>{field.value ? (foundSticker ? foundSticker.label : `Sticker: ${field.value}`) : 'None'}</span>
-                      <ChevronsUpDownIcon className="text-muted-foreground ml-auto" />
+                      <IconSelector className="text-muted-foreground ml-auto" />
                     </Button>
                   </DropdownMenuTrigger>
 

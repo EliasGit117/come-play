@@ -1,6 +1,7 @@
+import { IconFilePlus } from '@tabler/icons-react';
 import { Button } from '@/components/ui/button';
 import { ComponentProps, FC } from 'react';
-import { FilePlus2Icon } from 'lucide-react';
+
 import { useCreateBannerDialogContext } from './provider';
 
 interface ICreateBannerDialogTriggerProps extends Omit<ComponentProps<typeof Button>, 'onClick'> {
@@ -22,7 +23,7 @@ export const CreateBannerDialogTrigger: FC<ICreateBannerDialogTriggerProps> = (p
     <Button onClick={open} asChild={asChild} {...btnProps}>
       {(asChild && children) ?? (
         <>
-          <FilePlus2Icon />
+          <IconFilePlus />
           <span className="sr-only sm:not-sr-only">{text}</span>
         </>
       )}

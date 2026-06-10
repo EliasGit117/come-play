@@ -1,10 +1,7 @@
+import { IconSortAscending, IconSortDescending, IconX } from '@tabler/icons-react';
 import { createFileRoute } from '@tanstack/react-router';
-import { zodValidator } from '@tanstack/zod-adapter';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import {
-  ArrowDownWideNarrowIcon,
-  ArrowUpWideNarrowIcon, XIcon
-} from 'lucide-react';
+
 import {
   Select,
   SelectContent,
@@ -27,7 +24,7 @@ import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '
 
 export const Route = createFileRoute('/_public/news/')({
   component: RouteComponent,
-  validateSearch: zodValidator(getNewsPaginatedSchema),
+  validateSearch: getNewsPaginatedSchema,
   loaderDeps: ({ search }) => (search),
   loader: async ({ context: { queryClient }, deps }) => {
     const res = await queryClient.prefetchQuery(getNewsPaginatedQueryOptions(deps));
@@ -113,7 +110,7 @@ const SearchPanel: FC<ComponentProps<'div'>> = ({ className, ...props }) => {
         {_title && (
           <InputGroupAddon align="inline-end">
             <InputGroupButton onClick={clearText} size="icon-xs">
-              <XIcon/>
+              <IconX/>
             </InputGroupButton>
           </InputGroupAddon>
         )}
@@ -123,7 +120,7 @@ const SearchPanel: FC<ComponentProps<'div'>> = ({ className, ...props }) => {
         <SelectTrigger className="justify-start" asChild>
           <button type="button">
             <span className="capitalize">{dir ?? 'desc'}</span>
-            {dir === 'asc' ? <ArrowUpWideNarrowIcon/> : <ArrowDownWideNarrowIcon/>}
+            {dir === 'asc' ? <IconSortAscending/> : <IconSortDescending/>}
           </button>
         </SelectTrigger>
 
@@ -131,11 +128,11 @@ const SearchPanel: FC<ComponentProps<'div'>> = ({ className, ...props }) => {
           <SelectGroup>
             <SelectLabel>Order direction</SelectLabel>
             <SelectItem value="asc">
-              <ArrowUpWideNarrowIcon/>
+              <IconSortAscending/>
               <span>Asc</span>
             </SelectItem>
             <SelectItem value="desc">
-              <ArrowDownWideNarrowIcon/>
+              <IconSortDescending/>
               <span>Desc</span>
             </SelectItem>
           </SelectGroup>

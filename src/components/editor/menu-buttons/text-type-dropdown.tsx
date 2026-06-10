@@ -1,3 +1,4 @@
+import { IconChevronDown } from '@tabler/icons-react';
 import { useCurrentEditor } from '@tiptap/react';
 import {
   DropdownMenu,
@@ -6,7 +7,7 @@ import {
   DropdownMenuItem
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { ChevronDownIcon } from 'lucide-react';
+
 import React from 'react';
 import { getShortcutKey } from '@/components/editor/utils/get-shortcut-key';
 import { Level } from '@tiptap/extension-heading';
@@ -63,7 +64,7 @@ const TextStyleDropdown = () => {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm" className="flex items-center gap-1 font-normal">
           {getCurrentLabel()}
-          <ChevronDownIcon className="w-4 h-4"/>
+          <IconChevronDown className="w-4 h-4"/>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">

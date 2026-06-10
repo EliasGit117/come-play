@@ -1,6 +1,7 @@
+import { IconFilePlus } from '@tabler/icons-react';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { ComponentProps, FC } from 'react';
-import { ArrowUpDownIcon, FilePlus2Icon } from 'lucide-react';
+
 import { useReorderProductImagesDialogContext } from './provider';
 import { Slot as SlotPrimitive } from 'radix-ui';
 import { cn } from '@/lib/utils';
@@ -30,7 +31,7 @@ export const ReorderProductImagesDialogTrigger: FC<
     >
       {children ?? (
         <>
-          <FilePlus2Icon />
+          <IconFilePlus />
           <span className="sr-only sm:not-sr-only">{text}</span>
         </>
       )}

@@ -1,6 +1,7 @@
+import { IconFilePlus } from '@tabler/icons-react';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { ComponentProps, FC } from 'react';
-import { FilePlus2Icon } from 'lucide-react';
+
 import { Slot as SlotPrimitive } from 'radix-ui';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
@@ -38,7 +39,7 @@ export const CreateSubcategoryTrigger: FC<ICreateSubcategoryDialogTriggerProps> 
     >
       {children ?? (
         <>
-          <FilePlus2Icon />
+          <IconFilePlus />
           <span className="sr-only sm:not-sr-only">{text}</span>
         </>
       )}

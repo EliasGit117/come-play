@@ -1,7 +1,8 @@
+import { IconUnderline } from '@tabler/icons-react';
 import { Button } from '@/components/ui/button';
 import React, { ComponentProps } from 'react';
 import { useCurrentEditor, useEditorState } from '@tiptap/react';
-import { UnderlineIcon } from 'lucide-react';
+
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { tooltipDefaultDelay } from '@/components/editor/consts/menu-item-options';
 import { getShortcutKey } from '@/components/editor/utils/get-shortcut-key';
@@ -33,7 +34,7 @@ const UnderlineButton = ({ ...props }: IProps) => {
           className="transition-none"
           {...props}
         >
-          <UnderlineIcon />
+          <IconUnderline />
         </Button>
       </TooltipTrigger>
 

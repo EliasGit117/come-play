@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { zodValidator } from '@tanstack/zod-adapter';
 import {
   getProductsForAdminQueryOptions,
   getProductsForAdminSchema
@@ -9,7 +8,7 @@ import { awaitIfServer } from '@/lib/await-if-server';
 
 export const Route = createFileRoute('/admin/products/')({
   component: RouteComponent,
-  validateSearch: zodValidator(getProductsForAdminSchema),
+  validateSearch: getProductsForAdminSchema,
   loaderDeps: (deps) => deps,
   loader: async ({ context, deps: { search } }) => {
     await awaitIfServer(context.queryClient.prefetchQuery(getProductsForAdminQueryOptions(search)));

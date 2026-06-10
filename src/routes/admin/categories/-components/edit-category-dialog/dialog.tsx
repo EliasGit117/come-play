@@ -1,3 +1,4 @@
+import { IconSend, IconX } from '@tabler/icons-react';
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,7 +14,7 @@ import {
 import { Form } from '@/components/ui/form';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { toast } from 'sonner';
-import { SendIcon, XIcon } from 'lucide-react';
+
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   getCategoryByIdForAdminQueryOptions
@@ -132,7 +133,7 @@ export const EditCategoryDialog: FC = () => {
 
         <AlertDialogFooter className="flex-row mt-6">
           <AlertDialogCancel type="button" className="flex-1 sm:flex-none">
-            <XIcon/>
+            <IconX/>
             <span>Cancel</span>
           </AlertDialogCancel>
 
@@ -143,7 +144,7 @@ export const EditCategoryDialog: FC = () => {
             loading={isPending}
             className="flex-1 sm:flex-none"
           >
-            <SendIcon/>
+            <IconSend/>
             <span>Save</span>
           </LoadingButton>
         </AlertDialogFooter>

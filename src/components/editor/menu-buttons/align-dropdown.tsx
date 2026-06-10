@@ -1,3 +1,4 @@
+import { IconAlignCenter, IconAlignJustified, IconAlignLeft, IconAlignRight } from '@tabler/icons-react';
 'use client';
 
 import {
@@ -7,19 +8,14 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import {
-  AlignLeftIcon,
-  AlignCenterIcon,
-  AlignRightIcon,
-  AlignJustifyIcon
-} from 'lucide-react';
+
 import { useCurrentEditor } from '@tiptap/react';
 
 const alignOptions = [
-  { label: 'Left', value: 'left', icon: AlignLeftIcon, shortcut: '⌘⇧L' },
-  { label: 'Center', value: 'center', icon: AlignCenterIcon, shortcut: '⌘⇧E' },
-  { label: 'Right', value: 'right', icon: AlignRightIcon, shortcut: '⌘⇧R' },
-  { label: 'Justify', value: 'justify', icon: AlignJustifyIcon, shortcut: '⌘⇧J' }
+  { label: 'Left', value: 'left', icon: IconAlignLeft, shortcut: '⌘⇧L' },
+  { label: 'Center', value: 'center', icon: IconAlignCenter, shortcut: '⌘⇧E' },
+  { label: 'Right', value: 'right', icon: IconAlignRight, shortcut: '⌘⇧R' },
+  { label: 'Justify', value: 'justify', icon: IconAlignJustified, shortcut: '⌘⇧J' }
 ];
 
 const AlignDropdown = () => {
@@ -31,7 +27,7 @@ const AlignDropdown = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon-sm">
-          <AlignLeftIcon className="w-4 h-4"/>
+          <IconAlignLeft className="w-4 h-4"/>
         </Button>
       </DropdownMenuTrigger>
 

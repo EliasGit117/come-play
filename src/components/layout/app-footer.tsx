@@ -15,7 +15,7 @@ const AppFooter: FC<IProps> = ({ className, ...props }) => {
   return (
     <footer
       className={cn(
-        'bg-primary dark:bg-muted text-primary-foreground dark:text-foreground space-y-8',
+        'bg-secondary-foreground dark:bg-muted text-secondary dark:text-foreground space-y-8',
         className)
       }
       {...props}

@@ -1,3 +1,4 @@
+import { IconArrowBackUp, IconDeviceFloppy } from '@tabler/icons-react';
 import { createFileRoute } from '@tanstack/react-router';
 import { getProductByIdForAdminQueryOptions } from '@/features/products/server-functions/admin/get-product-by-id-for-admin';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -5,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { LoadingButton } from '@/components/ui/loading-button';
-import { SaveIcon, UndoIcon } from 'lucide-react';
+
 import { useEditProductMutation } from '@/features/products/server-functions/admin/edit-product';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -123,7 +124,7 @@ const BottomButtons: FC<IBottomButtons> = (props) => {
             onClick={onResetClick}
             className="border"
           >
-            <UndoIcon/>
+            <IconArrowBackUp/>
             <span className="sr-only sm:not-sr-only">Reset</span>
           </Button>
         </div>
@@ -136,7 +137,7 @@ const BottomButtons: FC<IBottomButtons> = (props) => {
             loading={isLoading}
             type="submit"
           >
-            <SaveIcon/>
+            <IconDeviceFloppy/>
             <span className="sr-only sm:not-sr-only">Save</span>
           </LoadingButton>
         </div>

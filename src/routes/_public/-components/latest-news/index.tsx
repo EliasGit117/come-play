@@ -1,3 +1,4 @@
+import { IconNews } from '@tabler/icons-react';
 import { ComponentProps, FC } from 'react';
 import { getLatestNewsQueryOptions } from '@/features/news/server-functions/public/get-latest-news';
 import { useQuery } from '@tanstack/react-query';
@@ -5,7 +6,7 @@ import NewsPreviewLink from '@/components/news-preview-link';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Link } from '@tanstack/react-router';
-import { NewspaperIcon } from 'lucide-react';
+
 
 
 interface ILatestNewsProps extends ComponentProps<'section'> {
@@ -29,7 +30,7 @@ const LatestNews: FC<ILatestNewsProps> = ({ className, ...props }) => {
 
         <Button variant="link" className='ml-auto' asChild>
           <Link to="/news">
-            <NewspaperIcon/>
+            <IconNews/>
             <span>See all</span>
           </Link>
         </Button>

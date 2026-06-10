@@ -1,3 +1,4 @@
+import { IconTrash } from '@tabler/icons-react';
 import { ComponentProps, FC, useCallback, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import {
@@ -12,7 +13,7 @@ import {
 } from '@/features/products/server-functions/admin/get-products-for-admin';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { productColumns } from './columns';
-import { TrashIcon } from 'lucide-react';
+
 import {
   CreateProductDialogTrigger,
   CreateProductDialogProvider,
@@ -100,7 +101,7 @@ export const ProductTable: FC<IProps> = (props) => {
                 disabled={isLoading}
                 onClick={deleteProducts}
               >
-                <TrashIcon />
+                <IconTrash />
                 <span className="sr-only lg:not-sr-only">Delete</span>
               </Button>
             )}

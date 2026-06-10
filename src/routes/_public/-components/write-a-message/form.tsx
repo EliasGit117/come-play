@@ -1,3 +1,4 @@
+import { IconSend } from '@tabler/icons-react';
 import React, { ComponentProps, FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -7,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Form } from '@/components/ui/form';
 import { LoadingButton } from '@/components/ui/loading-button';
-import { SendIcon } from 'lucide-react';
+
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 
 const contactSchema = z.object({
@@ -138,7 +139,7 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
 
           <Field orientation='horizontal' className='col-span-full'>
             <LoadingButton className="w-full md:w-fit md:ml-auto" loading={false} disabled={false}>
-              <SendIcon/>
+              <IconSend/>
               <span>Submit</span>
             </LoadingButton>
           </Field>

@@ -1,11 +1,21 @@
 import {
-  ErrorComponent,
   Link,
   rootRouteId,
   useMatch,
   useRouter,
 } from '@tanstack/react-router'
 import type { ErrorComponentProps } from '@tanstack/react-router'
+import { IconAlertTriangle, IconArrowLeft, IconHome, IconRefresh } from '@tabler/icons-react'
+
+import { Button } from '@/components/ui/button'
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/components/ui/empty'
 
 export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
   const router = useRouter()
@@ -17,37 +27,50 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
   console.error(error)
 
   return (
-    <div className="min-w-0 flex-1 p-4 flex flex-col items-center justify-center gap-6">
-      <ErrorComponent error={error} />
-      <div className="flex gap-2 items-center flex-wrap">
-        <button
-          onClick={() => {
-            router.invalidate()
-          }}
-          className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white uppercase font-extrabold`}
+    <Empty className="min-w-0 flex-1">
+      <EmptyHeader>
+        <EmptyMedia
+          variant="icon"
+          className="bg-destructive/10 text-destructive"
         >
-          Try Again
-        </button>
-        {isRoot ? (
-          <Link
-            to="/"
-            className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white uppercase font-extrabold`}
-          >
-            Home
-          </Link>
-        ) : (
-          <Link
-            to="/"
-            className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white uppercase font-extrabold`}
-            onClick={(e) => {
-              e.preventDefault()
-              window.history.back()
-            }}
-          >
-            Go Back
-          </Link>
-        )}
-      </div>
-    </div>
+          <IconAlertTriangle />
+        </EmptyMedia>
+        <EmptyTitle>Something went wrong</EmptyTitle>
+        <EmptyDescription>
+          {error.message || 'An unexpected error occurred. Please try again.'}
+        </EmptyDescription>
+      </EmptyHeader>
+
+      <EmptyContent>
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <Button onClick={() => router.invalidate()}>
+            <IconRefresh data-icon="inline-start" />
+            Try again
+          </Button>
+
+          {isRoot ? (
+            <Button asChild variant="outline">
+              <Link to="/">
+                <IconHome data-icon="inline-start" />
+                Home
+              </Link>
+            </Button>
+          ) : (
+            <Button asChild variant="outline">
+              <Link
+                to="/"
+                onClick={(e) => {
+                  e.preventDefault()
+                  window.history.back()
+                }}
+              >
+                <IconArrowLeft data-icon="inline-start" />
+                Go back
+              </Link>
+            </Button>
+          )}
+        </div>
+      </EmptyContent>
+    </Empty>
   )
 }

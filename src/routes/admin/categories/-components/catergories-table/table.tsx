@@ -1,3 +1,4 @@
+import { IconTrash } from '@tabler/icons-react';
 import { ComponentProps, FC, useCallback, useMemo } from 'react';
 import {
   CreateCategoryDialogProvider,
@@ -20,7 +21,7 @@ import {
 } from '@/components/data-table';
 import { categoryColumns } from '@/routes/admin/categories/-components/catergories-table/columns';
 import { Button } from '@/components/ui/button';
-import { TrashIcon } from 'lucide-react';
+
 import {
   EditCategoryDialog,
   EditCategoryDialogProvider
@@ -110,7 +111,7 @@ export const CategoriesTable: FC<ICategoriesTableProps> = (props) => {
               <div className="flex-1"/>
               {selectedItems.length > 0 && (
                 <Button size="sm" variant="ghost-destructive" onClick={deleteCategories} disabled={isLoading}>
-                  <TrashIcon/>
+                  <IconTrash/>
                   <span className="sr-only sm:not-sr-only">Delete</span>
                 </Button>
               )}

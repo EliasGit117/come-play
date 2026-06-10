@@ -29,7 +29,7 @@ export const BannerOverlay: FC<BannerOverlayProps> = ({ banner, className }) => 
         )}
 
         {path && (
-          <Button className="text-xs sm:text-sm md:text-base h-fit lg:h-10 xl:h-12 !bg-white !text-black" asChild>
+          <Button className="text-xs sm:text-sm md:text-base h-fit lg:h-10 xl:h-12 bg-white! text-black!" asChild>
             <Link to={path}>
               Show details
             </Link>

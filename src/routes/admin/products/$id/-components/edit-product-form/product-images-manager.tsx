@@ -1,9 +1,10 @@
+import { IconPhotoPlus, IconTrash } from '@tabler/icons-react';
 // @/routes/admin/products/$id/-components/edit-product-form/product-images-manager.tsx
 import { FC, useState } from 'react';
 import { IAdminProductImageDto } from '@/features/products/dtos/admin-product-image-dto';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { ImagePlusIcon, TrashIcon } from 'lucide-react';
+
 import { toast } from 'sonner';
 import { useAddProductImageMutation } from '@/features/products/server-functions/admin/add-product-image';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
@@ -53,7 +54,7 @@ export const ProductImagesManager: FC<IProductImagesManagerProps> = ({
       try {
         await addAsync({ productId, file });
       } catch (error) {
-        console.error('Upload failed:', error);
+        console.error('IconUpload failed:', error);
       }
     }
 
@@ -95,7 +96,7 @@ export const ProductImagesManager: FC<IProductImagesManagerProps> = ({
                 document.getElementById('product-image-input')?.click()
               }
             >
-              <ImagePlusIcon />
+              <IconPhotoPlus />
               <span className="sr-only sm:not-sr-only">Add Image</span>
             </Button>
           </div>
@@ -183,7 +184,7 @@ const ProductImageCard: FC<IProductImageCardProps> = ({
           }}
           disabled={disabled}
         >
-          <TrashIcon className="size-3" />
+          <IconTrash className="size-3" />
         </Button>
       )}
     </div>

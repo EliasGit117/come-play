@@ -1,3 +1,4 @@
+import { IconTrash } from '@tabler/icons-react';
 import { ComponentProps, FC, useCallback, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import { useConfirm } from '@/components/ui/confirm-dialog';
@@ -10,7 +11,7 @@ import {
   useDataTable
 } from '@/components/data-table';
 import { Button } from '@/components/ui/button';
-import { TrashIcon } from 'lucide-react';
+
 import { toast } from 'sonner';
 import {
   getSubcategoriesPaginatedForAdminQueryOptions, TGetSubcategoriesPaginatedForAdminSchema
@@ -102,7 +103,7 @@ export const SubcategoriesTable: FC<ISubcategoriesTableProps> = (props) => {
               <div className="flex-1"/>
               {selectedItems.length > 0 && (
                 <Button size="sm" variant="ghost-destructive" onClick={deleteCategories} disabled={isLoading}>
-                  <TrashIcon/>
+                  <IconTrash/>
                   <span className="sr-only sm:not-sr-only">Delete</span>
                 </Button>
               )}

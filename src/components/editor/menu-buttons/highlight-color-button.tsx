@@ -1,3 +1,4 @@
+import { IconHighlight } from '@tabler/icons-react';
 import React from 'react';
 import { useCurrentEditor } from '@tiptap/react';
 import { Button } from '@/components/ui/button';
@@ -7,7 +8,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem
 } from '@/components/ui/dropdown-menu';
-import { HighlighterIcon } from 'lucide-react';
+
 
 const highlights = ['#fef08a', '#fde68a', '#a7f3d0', '#e0e7ff', '#fcd34d', '#fca5a5'];
 
@@ -25,7 +26,7 @@ const HighlightButton = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon-sm" type="button">
-          <HighlighterIcon />
+          <IconHighlight />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="grid grid-cols-4 gap-2 p-2 w-auto">

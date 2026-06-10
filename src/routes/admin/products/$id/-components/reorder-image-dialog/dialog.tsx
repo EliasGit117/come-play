@@ -1,3 +1,4 @@
+import { IconPhotoOff, IconSend, IconX } from '@tabler/icons-react';
 import { ComponentProps, FC, useEffect, useState } from 'react';
 import {
   AlertDialog,
@@ -9,7 +10,7 @@ import {
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
 import { LoadingButton } from '@/components/ui/loading-button';
-import { ImageOffIcon, SendIcon, XIcon } from 'lucide-react';
+
 import { useReorderProductImagesDialogContext } from './provider';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import * as Sortable from '@/components/ui/sortable';
@@ -20,7 +21,6 @@ import { useMediaQuery } from '@/hooks/use-media-query';
 import { MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
 import { useReorderProductImagesMutation } from '@/features/products/server-functions/admin/reorder-product-images';
 import { toast } from 'sonner';
-import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
 
 interface IReorderProductImagesDialogProps {
   productId: number;
@@ -114,7 +114,7 @@ export const ReorderProductImagesDialog: FC<
             className="flex-1 sm:flex-none"
             disabled={isReordering}
           >
-            <XIcon />
+            <IconX />
             <span>Cancel</span>
           </AlertDialogCancel>
 
@@ -125,7 +125,7 @@ export const ReorderProductImagesDialog: FC<
             loading={isReordering}
             className="flex-1 sm:flex-none"
           >
-            <SendIcon />
+            <IconSend />
             <span>Submit</span>
           </LoadingButton>
         </AlertDialogFooter>
@@ -161,7 +161,7 @@ const SortableImageCard: FC<ISortableImageCardProps> = ({
             className="absolute top-0 left-0 right-0 bottom-0 object-cover h-full w-full brightness-85 dark:brightness-65 pointer-events-none"
           />
         ) : (
-          <ImageOffIcon className="text-muted-foreground absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+          <IconPhotoOff className="text-muted-foreground absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
         )}
 
         <div

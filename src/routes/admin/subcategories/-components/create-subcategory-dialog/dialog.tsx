@@ -1,3 +1,4 @@
+import { IconSend, IconX } from '@tabler/icons-react';
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,7 +12,7 @@ import {
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
 import { Form } from '@/components/ui/form';
-import { SendIcon, XIcon } from 'lucide-react';
+
 import { toast } from 'sonner';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { LoadingButton } from '@/components/ui/loading-button';
@@ -73,7 +74,7 @@ export const CreateSubcategoryDialog: FC = () => {
 
         <AlertDialogFooter className="mt-6 flex-row">
           <AlertDialogCancel type="button" className="flex-1 sm:flex-none">
-            <XIcon/>
+            <IconX/>
             <span>Cancel</span>
           </AlertDialogCancel>
           <LoadingButton
@@ -82,7 +83,7 @@ export const CreateSubcategoryDialog: FC = () => {
             loading={isPending}
             className="flex-1 sm:flex-none"
           >
-            <SendIcon/>
+            <IconSend/>
             <span>Submit</span>
           </LoadingButton>
         </AlertDialogFooter>

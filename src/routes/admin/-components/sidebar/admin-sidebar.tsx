@@ -1,3 +1,4 @@
+import { IconCarouselHorizontal, IconHome, IconLayoutDashboard, IconNews, IconSettings, IconShoppingBag, IconShoppingCart, IconTag, IconTags } from '@tabler/icons-react';
 import { ComponentProps } from 'react';
 import { NavLinkGroup } from './nav-link-group';
 import { NavUser } from './nav-user';
@@ -10,14 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '@/components/ui/sidebar';
-import {
-  SettingsIcon,
-  LayoutDashboardIcon,
-  NewspaperIcon,
-  ShoppingCartIcon,
-  HomeIcon,
-  GalleryHorizontalIcon, TagsIcon, TagIcon, ShoppingBasketIcon
-} from 'lucide-react';
+
 import { INavItem } from '@/routes/admin/-components/sidebar/types/nav-item';
 import { Link } from '@tanstack/react-router';
 import { NavSettings } from '@/routes/admin/-components/sidebar/nav-settings';
@@ -37,7 +31,7 @@ export function AdminSidebar({ ...props }: IAdminSidebarProps) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <Link to="/admin">
-                <ShoppingCartIcon className="!size-5" strokeWidth={2.5}/>
+                <IconShoppingCart className="!size-5" strokeWidth={2.5}/>
                 <span className="text-base font-semibold">
                   {import.meta.env.VITE_APP_NAME ?? 'Website Name'}
                 </span>
@@ -62,41 +56,41 @@ const navMain: INavItem[] = [
   {
     title: 'Home',
     linkOptions: { to: '/',  activeOptions: { exact: true } },
-    icon: HomeIcon
+    icon: IconHome
   },
   {
     title: 'Dashboard',
     linkOptions: { to: '/admin', activeOptions: { exact: true } },
-    icon: LayoutDashboardIcon
+    icon: IconLayoutDashboard
   },
   {
     title: 'Banners',
     linkOptions: { to: '/admin/banners' },
-    icon: GalleryHorizontalIcon,
+    icon: IconCarouselHorizontal,
   },
   {
     title: 'News',
     linkOptions: { to: '/admin/news' },
-    icon: NewspaperIcon
+    icon: IconNews
   },
   {
     title: 'Products',
     linkOptions: { to: '/admin/products' },
-    icon: ShoppingBasketIcon
+    icon: IconShoppingBag
   },
   {
     title: 'Categories',
     linkOptions: { to: '/admin/categories' },
-    icon: TagIcon
+    icon: IconTag
   },
   {
     title: 'Subcategories',
     linkOptions: { to: '/admin/subcategories' },
-    icon: TagsIcon
+    icon: IconTags
   },
   {
     title: 'Settings',
     linkOptions: { to: '/' },
-    icon: SettingsIcon
+    icon: IconSettings
   }
 ];

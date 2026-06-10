@@ -1,3 +1,4 @@
+import { IconSend, IconX } from '@tabler/icons-react';
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -14,7 +15,7 @@ import { Form } from '@/components/ui/form';
 import { BannerForm } from './form';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { toast } from 'sonner';
-import { SendIcon, XIcon } from 'lucide-react';
+
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useCreateCategoryDialogContext } from './provider';
 import { useCreateCategoryMutation } from '@/features/categories/server-functions/admin/create-category';
@@ -81,7 +82,7 @@ export const CreateCategoryDialog: FC<ICreateCategoryDialogProps> = ({ afterSucc
             type="button"
             className="flex-1 sm:flex-none"
           >
-            <XIcon/>
+            <IconX/>
             <span>Cancel</span>
           </AlertDialogCancel>
 
@@ -91,7 +92,7 @@ export const CreateCategoryDialog: FC<ICreateCategoryDialogProps> = ({ afterSucc
             loading={isPending}
             className="flex-1 sm:flex-none"
           >
-            <SendIcon/>
+            <IconSend/>
             <span>Submit</span>
           </LoadingButton>
         </AlertDialogFooter>

@@ -39,15 +39,15 @@ const AdminHeader: React.FC<IAdminHeaderProps> = ({ className, ...props }) => {
       data-scrolled='false'
       className={cn(
         'sticky top-0 data-[scrolled=true]:border-b z-20',
-        'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90',
-        'dark:supports-[backdrop-filter]:bg-background/75',
+        'bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/90',
+        'dark:supports-backdrop-filter:bg-background/75',
         className
       )}
       {...props}
     >
       <div className="container mx-auto px-4 sm:py-0 flex gap-2 items-center h-12">
         <SidebarTrigger className="-ml-1"/>
-        <Separator orientation="vertical" className="max-h-4"/>
+        <Separator orientation="vertical" className='h-4 my-auto'/>
         <BreadcrumbsNavigation/>
       </div>
     </header>

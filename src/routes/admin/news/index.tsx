@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { zodValidator } from '@tanstack/zod-adapter';
 import {
   getNewsPaginatedForAdminQueryOptions,
   getNewsPaginatedForAdminSchema
@@ -10,7 +9,7 @@ import { awaitIfServer } from '@/lib/await-if-server';
 
 export const Route = createFileRoute('/admin/news/')({
   component: Component,
-  validateSearch: zodValidator(getNewsPaginatedForAdminSchema),
+  validateSearch: getNewsPaginatedForAdminSchema,
   loaderDeps: (deps) => (deps),
   loader: async ({ context, deps: { search } }) => {
     await awaitIfServer(context.queryClient.prefetchQuery(getNewsPaginatedForAdminQueryOptions(search)));

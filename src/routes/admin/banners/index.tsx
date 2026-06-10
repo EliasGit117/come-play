@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { zodValidator } from '@tanstack/zod-adapter';
 import {
   getBannersForAdminQueryOptions,
   getBannersForAdminSchema
@@ -10,7 +9,7 @@ import { awaitIfServer } from '@/lib/await-if-server';
 
 export const Route = createFileRoute('/admin/banners/')({
   component: RouteComponent,
-  validateSearch: zodValidator(getBannersForAdminSchema),
+  validateSearch: getBannersForAdminSchema,
   loaderDeps: (deps) => deps,
   loader: async ({ context, deps: { search } }) => {
     await awaitIfServer(context.queryClient.prefetchQuery(getBannersForAdminQueryOptions(search)));
