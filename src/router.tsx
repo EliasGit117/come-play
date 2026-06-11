@@ -5,6 +5,7 @@ import { NotFoundCard } from './components/not-found-card';
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query';
 import { createRouter } from '@tanstack/react-router';
 import { TBreadcrumbData } from '@/routes/admin/-components/admin-header/breadcrumb-nav';
+import { deLocalizeUrl, localizeUrl } from '@/paraglide/runtime';
 
 
 export function getRouter() {
@@ -18,6 +19,10 @@ export function getRouter() {
   });
 
   const router = createRouter({
+    rewrite: {
+      input: ({ url }) => deLocalizeUrl(url),
+      output: ({ url }) => localizeUrl(url)
+    },
     routeTree,
     context: { queryClient },
     defaultPreload: 'intent',

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "example_message": "Привет, {username}!",
+  "common": {
+    "home": "Главная",
+    "unauthorized": "Неавторизован",
+    "loading": "Загрузка",
+    "forbidden": "Запрещено",
+    "error": "Ошибка",
+    "success": "Успешно",
+    "submit": "Отправить",
+    "cancel": "Отмена"
+  },
+  "pages": {
+    "public": {
+      "calculator": {
+        "title": "Кальулятор"
+      }
+    },
+    "admin": {
+      "dashboard": {
+        "title": "Дэшборд"
+      }
+    }
+  }
+}

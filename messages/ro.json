@@ -1,0 +1,26 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "example_message": "Salut, {username}!",
+  "common": {
+    "home": "Acasă",
+    "unauthorized": "Neautorizat",
+    "loading": "Încărcare",
+    "forbidden": "Interzis",
+    "error": "Eroare",
+    "success": "Succes",
+    "submit": "Trimite",
+    "cancel": "Anulare"
+  },
+  "pages": {
+    "public": {
+      "calculator": {
+        "title": "Calculator"
+      }
+    },
+    "admin": {
+      "dashboard": {
+        "title": "Dashboard"
+      }
+    }
+  }
+}

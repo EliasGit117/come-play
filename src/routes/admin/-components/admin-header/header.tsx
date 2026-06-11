@@ -1,5 +1,4 @@
-import { ComponentProps, useEffect, useRef } from 'react';
-import * as React from 'react';
+import { ComponentProps, FC, useEffect, useRef } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { BreadcrumbsNavigation } from '@/routes/admin/-components/admin-header/breadcrumb-nav';
@@ -8,7 +7,7 @@ import { cn } from '@/lib/utils';
 
 interface IAdminHeaderProps extends ComponentProps<'header'> {}
 
-const AdminHeader: React.FC<IAdminHeaderProps> = ({ className, ...props }) => {
+const AdminHeader: FC<IAdminHeaderProps> = ({ className, ...props }) => {
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 
 import { cn } from '@/lib/utils';
 import HeaderNavMenu from '@/components/layout/nav-menu';
-import LanguageDropdown from '@/components/layout/language-dropdown';
+import LocaleDropdown from '@/components/layout/locale-dropdown';
 import { useAppSidebar } from '@/components/layout/app-sidebar-provider';
 import LogoFull from '@/assets/icons/logo/full.svg?react';
 import { ThemeDropdown } from '@/components/theme';
@@ -70,7 +70,8 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
               <LogoFull
                 className={cn(
                   'h-8! w-fit! text-foreground -ml-3.5',
-                  (isAtTop && type === 'fixed') && 'invert')}
+                  (isAtTop && type === 'fixed') && 'text-white'
+                )}
               />
             </Link>
           </Button>
@@ -81,7 +82,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
           />
 
           <div className="flex gap-2 items-center ml-auto">
-            <LanguageDropdown buttonVariant="ghost" align="end"/>
+            <LocaleDropdown buttonVariant="ghost" align="end"/>
             <ThemeDropdown
               variant="ghost"
               className="ml-auto"
