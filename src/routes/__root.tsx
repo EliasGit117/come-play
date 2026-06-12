@@ -9,12 +9,20 @@ import { seo } from '@/utils/seo';
 import { Providers } from '@/providers';
 import { ThemeProvider } from '@/components/theme';
 import { ReactNode } from 'react';
+import { orpc } from '@/lib/orpc';
+import type { TSession, TUser } from '@/lib/auth/server';
 
 interface IRootRouteProps {
   queryClient: QueryClient;
+  session?: TSession | null;
+  user?: TUser | null;
 }
 
 export const Route = createRootRouteWithContext<IRootRouteProps>()({
+  beforeLoad: async ({ context: { queryClient } }) => {
+    const res = await queryClient.ensureQueryData(orpc.sessions.current.queryOptions());
+    return { session: res?.session, user: res?.user };
+  },
   head: () => ({
     meta: [
       { charSet: 'utf-8' },

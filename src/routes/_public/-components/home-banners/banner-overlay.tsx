@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from '@tanstack/react-router';
 import { IBannerBriefDto } from '@/features/banners/dtos/banner-brief-dto';
 import { FC } from 'react';
+import { m } from '@/paraglide/messages';
 
 interface BannerOverlayProps {
   banner: IBannerBriefDto;
@@ -31,7 +32,7 @@ export const BannerOverlay: FC<BannerOverlayProps> = ({ banner, className }) => 
         {path && (
           <Button className="text-xs sm:text-sm md:text-base h-fit lg:h-10 xl:h-12 bg-white! text-black!" asChild>
             <Link to={path}>
-              Show details
+              {m['pages.public.home.banner.showDetails']()}
             </Link>
           </Button>
         )}

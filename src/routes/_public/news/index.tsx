@@ -11,10 +11,8 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { BasicPagination } from '@/components/ui/pagination';
-import {
-  getNewsPaginatedQueryOptions,
-  getNewsPaginatedSchema
-} from '@/features/news/server-functions/public/get-news-paginated';
+import { getNewsPaginatedSchema } from '@/features/news/schemas/search-news';
+import { orpc } from '@/lib/orpc';
 import { ComponentProps, FC, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useDebouncedCallback } from 'use-debounce';
@@ -28,7 +26,7 @@ export const Route = createFileRoute('/_public/news/')({
   validateSearch: getNewsPaginatedSchema,
   loaderDeps: ({ search }) => (search),
   loader: async ({ context: { queryClient }, deps }) => {
-    const res = await queryClient.prefetchQuery(getNewsPaginatedQueryOptions(deps));
+    const res = await queryClient.prefetchQuery(orpc.news.search.queryOptions({ input: deps }));
     return { news: res };
   }
 });
@@ -36,7 +34,7 @@ export const Route = createFileRoute('/_public/news/')({
 function RouteComponent() {
   const searchParams = Route.useLoaderDeps();
   const { data } = useQuery({
-    ...getNewsPaginatedQueryOptions(searchParams),
+    ...orpc.news.search.queryOptions({ input: searchParams }),
     placeholderData: keepPreviousData,
   });
 

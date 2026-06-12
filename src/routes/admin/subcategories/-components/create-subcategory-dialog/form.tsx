@@ -5,9 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Field, FieldGroup, FieldLabel, FieldError } from '@/components/ui/field';
 import { TCreateSubcategorySchema } from '@/features/subcategories/schemas/create-subcategory';
 import { useQuery } from '@tanstack/react-query';
-import {
-  getCategoriesPaginatedForAdminQueryOptions
-} from '@/features/categories/server-functions/admin/get-categories-paginated-for-admin';
+import { orpc } from '@/lib/orpc';
 import { Textarea } from '@/components/ui/textarea';
 import {
   DropdownMenu,
@@ -23,7 +21,7 @@ export const SubcategoryForm: FC = () => {
   const form = useFormContext<TCreateSubcategorySchema>();
 
   const { data } = useQuery(
-    getCategoriesPaginatedForAdminQueryOptions({ limit: 10000, page: 1 })
+    orpc.admin.categories.search.queryOptions({ input: { limit: 10000, page: 1 } })
   );
 
   return (

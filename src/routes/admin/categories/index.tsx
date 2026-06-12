@@ -1,9 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { CategoriesTable } from '@/routes/admin/categories/-components/catergories-table';
-import {
-  getCategoriesPaginatedForAdminQueryOptions,
-  getCategoriesPaginatedForAdminSchema
-} from '@/features/categories/server-functions/admin/get-categories-paginated-for-admin';
+import { getCategoriesPaginatedForAdminSchema } from '@/features/categories/schemas/search-categories';
+import { orpc } from '@/lib/orpc';
 import { awaitIfServer } from '@/lib/await-if-server';
 
 
@@ -14,7 +12,7 @@ export const Route = createFileRoute('/admin/categories/')({
   validateSearch: getCategoriesPaginatedForAdminSchema,
   loaderDeps: (deps) => (deps),
   loader: async ({ context, deps: { search } }) => {
-    await awaitIfServer(context.queryClient.prefetchQuery(getCategoriesPaginatedForAdminQueryOptions(search)));
+    await awaitIfServer(context.queryClient.prefetchQuery(orpc.admin.categories.search.queryOptions({ input: search })));
   },
 });
 

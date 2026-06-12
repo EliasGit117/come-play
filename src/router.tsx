@@ -20,8 +20,8 @@ export function getRouter() {
 
   const router = createRouter({
     rewrite: {
-      input: ({ url }) => deLocalizeUrl(url),
-      output: ({ url }) => localizeUrl(url)
+      input: ({ url }) => url.pathname.startsWith('/api') ? url : deLocalizeUrl(url),
+      output: ({ url }) => url.pathname.startsWith('/api') ? url : localizeUrl(url)
     },
     routeTree,
     context: { queryClient },

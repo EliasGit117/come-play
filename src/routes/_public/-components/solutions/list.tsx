@@ -1,98 +1,139 @@
-import { ComponentProps, FC } from 'react';
+import { ComponentProps, FC, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Link, LinkOptions } from '@tanstack/react-router';
+import { IconChevronDown } from '@tabler/icons-react';
 import conferenceRoomImg from '/images/home/solutions/conference-room.jpg';
 import stadiumImg from '/images/home/solutions/stadium.jpg';
 import advertisingImg from '/images/home/solutions/advertising.png';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
+import { m } from '@/paraglide/messages';
 
 
 interface IProps extends ComponentProps<'section'> {
 }
 
 const SolutionList: FC<IProps> = ({ className, ...props }) => {
+  const imageLinks: IImageLinkProps[] = [
+    {
+      id: 'conferenceRoom',
+      title: m['pages.public.home.solutions.conferenceRoom'](),
+      img: conferenceRoomImg,
+      className: 'md:row-span-2 max-h-32 md:max-h-none rounded-t-md md:rounded-t-none md:rounded-l-md',
+      linkOptions: { to: '/' },
+      thumbhash: '2PcRDYBId5iPhod7iIeHiPaAeA5n'
+    },
+    {
+      id: 'stadium',
+      title: m['pages.public.home.solutions.stadium'](),
+      img: stadiumImg,
+      className: 'max-h-32 md:max-h-none md:rounded-tr-md',
+      linkOptions: { to: '/' },
+      thumbhash: 'o8YNFYR3eIh5d3efd5d5iFiFn/an'
+    },
+    {
+      id: 'advertising',
+      title: m['pages.public.home.solutions.advertising'](),
+      img: advertisingImg,
+      className: 'md:col-start-2 max-h-32 md:max-h-none rounded-b-md md:rounded-b-none md:rounded-br-md',
+      linkOptions: { to: '/' },
+      thumbhash: 'DQgKBYJ5V2h/iIZ1eEd4eASVngiq'
+    }
+  ];
+
+  const descriptions = [
+    {
+      id: 'stageEvents',
+      title: m['pages.public.home.solutions.stageEvents.title'](),
+      text: m['pages.public.home.solutions.stageEvents.text']()
+    },
+    {
+      id: 'controlRoom',
+      title: m['pages.public.home.solutions.controlRoom.title'](),
+      text: m['pages.public.home.solutions.controlRoom.text']()
+    },
+    {
+      id: 'scenicPublic',
+      title: m['pages.public.home.solutions.scenicPublic.title'](),
+      text: m['pages.public.home.solutions.scenicPublic.text']()
+    },
+    {
+      id: 'transportation',
+      title: m['pages.public.home.solutions.transportation.title'](),
+      text: m['pages.public.home.solutions.transportation.text']()
+    },
+    {
+      id: 'studio',
+      title: m['pages.public.home.solutions.studio.title'](),
+      text: m['pages.public.home.solutions.studio.text']()
+    }
+  ];
+
+  const [selectedId, setSelectedId] = useState(descriptions[0].id);
+  const selected = descriptions.find((d) => d.id === selectedId) ?? descriptions[0];
 
   return (
     <section className={cn('space-y-8', className)} {...props}>
       <div>
         <h2 className="text-3xl font-bold">
-          SOLUTIONS
+          {m['pages.public.home.solutions.title']()}
         </h2>
         <p className="text-muted-foreground mt-2">
-          Global success LED screen display cases of over 1.5 million
+          {m['pages.public.home.solutions.subtitle']()}
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-1 sm:gap-2 md:max-h-96">
         {imageLinks.map((linkProps) =>
-          <ImageLink key={linkProps.title} {...linkProps}/>
+          <ImageLink key={linkProps.id} {...linkProps}/>
         )}
       </div>
 
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        {descriptions.map((desc, i) => (
-          <div
-            key={desc.title}
-            className={cn(
-              'relative group p-2 md:p-4 overflow-hidden cursor-pointer rounded-md',
-              i === descriptions.length - 1 && 'col-span-1 md:col-span-2 lg:col-span-1'
-            )}
-          >
-            {/* Hidden red bar that slides in on hover */}
-            <div
-              className="absolute left-0 top-0 h-full w-0 bg-primary transition-all duration-400 group-hover:w-full z-0"></div>
+      <div className="space-y-4">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="w-full sm:w-80 justify-between font-semibold uppercase">
+              {selected.title}
+              <IconChevronDown className="opacity-50"/>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-(--radix-dropdown-menu-trigger-width)">
+            {descriptions.map((desc) => (
+              <DropdownMenuItem
+                key={desc.id}
+                onSelect={() => setSelectedId(desc.id)}
+                className="uppercase font-medium"
+              >
+                {desc.title}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-            {/* Text content */}
-            <h3
-              className="font-bold uppercase mb-2 text-lg relative z-10 transition-colors duration-300 group-hover:text-primary-foreground">
-              {desc.title}
-            </h3>
-            <p
-              className="text-sm text-muted-foreground relative z-10 transition-colors duration-300 group-hover:text-primary-foreground">
-              {desc.text}
-            </p>
-          </div>
-        ))}
+        <p className="text-sm text-muted-foreground max-w-2xl">
+          {selected.text}
+        </p>
       </div>
     </section>
   );
 };
 
 
-
-
 interface IImageLinkProps {
+  id: string;
   title: string;
   img: string;
   linkOptions: LinkOptions;
   className?: string;
   thumbhash?: string;
 }
-
-const imageLinks: IImageLinkProps[] = [
-  {
-    title: 'Conference Room',
-    img: conferenceRoomImg,
-    className: 'md:row-span-2 max-h-32 md:max-h-none rounded-t-md md:rounded-t-none md:rounded-l-md',
-    linkOptions: { to: '/' },
-    thumbhash: '2PcRDYBId5iPhod7iIeHiPaAeA5n'
-  },
-  {
-    title: 'Races Stadium',
-    img: stadiumImg,
-    className: 'max-h-32 md:max-h-none md:rounded-tr-md',
-    linkOptions: { to: '/' },
-    thumbhash: 'o8YNFYR3eIh5d3efd5d5iFiFn/an'
-  },
-  {
-    title: 'Advertising',
-    img: advertisingImg,
-    className: 'md:col-start-2 max-h-32 md:max-h-none rounded-b-md md:rounded-b-none md:rounded-br-md',
-    linkOptions: { to: '/' },
-    thumbhash: 'DQgKBYJ5V2h/iIZ1eEd4eASVngiq'
-  }
-];
 
 const ImageLink: FC<IImageLinkProps> = ({ linkOptions, img, title, className, thumbhash }) => {
   return (
@@ -122,28 +163,5 @@ const ImageLink: FC<IImageLinkProps> = ({ linkOptions, img, title, className, th
     </Link>
   );
 };
-
-const descriptions = [
-  {
-    title: 'Transportation',
-    text: 'Transportation hubs have the challenge of needing to communicate with their travelers around the clock. itc provides advanced LED displays to convey traffic guidance information timely to travelers, ensuring their exciting and smooth journey.'
-  },
-  {
-    title: 'Stage & Events',
-    text: 'Based on cutting-edge core technologies and extensive experiences working with global clients, itc products realize various requirements for a huge show or event. We aim to create a memorable and engaging experience for the audience with itc LED screen.'
-  },
-  {
-    title: 'Studio',
-    text: 'As for the studio solution, our premium products bring your broadcasting stories to life by conveying vivid and dynamic visual performance to the audience.'
-  },
-  {
-    title: 'Scenic Spot & Public',
-    text: 'Dynamic LED displays for public spaces: High-brightness, weather-resistant screens delivering vibrant visuals and real-time information at tourist hubs.'
-  },
-  {
-    title: 'Control Room',
-    text: 'In terms of the control room solution, LED display technology enables users to interface with diverse information sources, and simultaneously process with mass of data efficiently. To help monitor multiple information flows effectively in a control room.'
-  }
-];
 
 export default SolutionList;

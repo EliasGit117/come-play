@@ -15,6 +15,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as AdminNewsRouteRouteImport } from './routes/admin/news/route'
 import { Route as AdminBannersRouteRouteImport } from './routes/admin/banners/route'
+import { Route as AuthSignInIndexRouteImport } from './routes/auth/sign-in/index'
 import { Route as AdminSubcategoriesIndexRouteImport } from './routes/admin/subcategories/index'
 import { Route as AdminProductsIndexRouteImport } from './routes/admin/products/index'
 import { Route as AdminNewsIndexRouteImport } from './routes/admin/news/index'
@@ -22,6 +23,8 @@ import { Route as AdminCategoriesIndexRouteImport } from './routes/admin/categor
 import { Route as AdminBannersIndexRouteImport } from './routes/admin/banners/index'
 import { Route as PublicNewsIndexRouteImport } from './routes/_public/news/index'
 import { Route as PublicCalculatorIndexRouteImport } from './routes/_public/calculator/index'
+import { Route as ApiRpcSplatRouteImport } from './routes/api/rpc.$'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 import { Route as PublicNewsSlugRouteImport } from './routes/_public/news/$slug'
 import { Route as AdminProductsIdEditRouteImport } from './routes/admin/products/$id/edit'
 import { Route as AdminNewsIdEditRouteImport } from './routes/admin/news/$id/edit'
@@ -55,6 +58,11 @@ const AdminBannersRouteRoute = AdminBannersRouteRouteImport.update({
   id: '/banners',
   path: '/banners',
   getParentRoute: () => AdminRouteRoute,
+} as any)
+const AuthSignInIndexRoute = AuthSignInIndexRouteImport.update({
+  id: '/auth/sign-in/',
+  path: '/auth/sign-in/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminSubcategoriesIndexRoute = AdminSubcategoriesIndexRouteImport.update({
   id: '/subcategories/',
@@ -91,6 +99,16 @@ const PublicCalculatorIndexRoute = PublicCalculatorIndexRouteImport.update({
   path: '/calculator/',
   getParentRoute: () => PublicRouteRoute,
 } as any)
+const ApiRpcSplatRoute = ApiRpcSplatRouteImport.update({
+  id: '/api/rpc/$',
+  path: '/api/rpc/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PublicNewsSlugRoute = PublicNewsSlugRouteImport.update({
   id: '/news/$slug',
   path: '/news/$slug',
@@ -119,6 +137,8 @@ export interface FileRoutesByFullPath {
   '/admin/news': typeof AdminNewsRouteRouteWithChildren
   '/admin/': typeof AdminIndexRoute
   '/news/$slug': typeof PublicNewsSlugRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/rpc/$': typeof ApiRpcSplatRoute
   '/calculator/': typeof PublicCalculatorIndexRoute
   '/news/': typeof PublicNewsIndexRoute
   '/admin/banners/': typeof AdminBannersIndexRoute
@@ -126,6 +146,7 @@ export interface FileRoutesByFullPath {
   '/admin/news/': typeof AdminNewsIndexRoute
   '/admin/products/': typeof AdminProductsIndexRoute
   '/admin/subcategories/': typeof AdminSubcategoriesIndexRoute
+  '/auth/sign-in/': typeof AuthSignInIndexRoute
   '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
   '/admin/products/$id/edit': typeof AdminProductsIdEditRoute
@@ -134,6 +155,8 @@ export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
   '/admin': typeof AdminIndexRoute
   '/news/$slug': typeof PublicNewsSlugRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/rpc/$': typeof ApiRpcSplatRoute
   '/calculator': typeof PublicCalculatorIndexRoute
   '/news': typeof PublicNewsIndexRoute
   '/admin/banners': typeof AdminBannersIndexRoute
@@ -141,6 +164,7 @@ export interface FileRoutesByTo {
   '/admin/news': typeof AdminNewsIndexRoute
   '/admin/products': typeof AdminProductsIndexRoute
   '/admin/subcategories': typeof AdminSubcategoriesIndexRoute
+  '/auth/sign-in': typeof AuthSignInIndexRoute
   '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
   '/admin/products/$id/edit': typeof AdminProductsIdEditRoute
@@ -154,6 +178,8 @@ export interface FileRoutesById {
   '/_public/': typeof PublicIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/_public/news/$slug': typeof PublicNewsSlugRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/rpc/$': typeof ApiRpcSplatRoute
   '/_public/calculator/': typeof PublicCalculatorIndexRoute
   '/_public/news/': typeof PublicNewsIndexRoute
   '/admin/banners/': typeof AdminBannersIndexRoute
@@ -161,6 +187,7 @@ export interface FileRoutesById {
   '/admin/news/': typeof AdminNewsIndexRoute
   '/admin/products/': typeof AdminProductsIndexRoute
   '/admin/subcategories/': typeof AdminSubcategoriesIndexRoute
+  '/auth/sign-in/': typeof AuthSignInIndexRoute
   '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
   '/admin/products/$id/edit': typeof AdminProductsIdEditRoute
@@ -174,6 +201,8 @@ export interface FileRouteTypes {
     | '/admin/news'
     | '/admin/'
     | '/news/$slug'
+    | '/api/auth/$'
+    | '/api/rpc/$'
     | '/calculator/'
     | '/news/'
     | '/admin/banners/'
@@ -181,6 +210,7 @@ export interface FileRouteTypes {
     | '/admin/news/'
     | '/admin/products/'
     | '/admin/subcategories/'
+    | '/auth/sign-in/'
     | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
     | '/admin/products/$id/edit'
@@ -189,6 +219,8 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/news/$slug'
+    | '/api/auth/$'
+    | '/api/rpc/$'
     | '/calculator'
     | '/news'
     | '/admin/banners'
@@ -196,6 +228,7 @@ export interface FileRouteTypes {
     | '/admin/news'
     | '/admin/products'
     | '/admin/subcategories'
+    | '/auth/sign-in'
     | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
     | '/admin/products/$id/edit'
@@ -208,6 +241,8 @@ export interface FileRouteTypes {
     | '/_public/'
     | '/admin/'
     | '/_public/news/$slug'
+    | '/api/auth/$'
+    | '/api/rpc/$'
     | '/_public/calculator/'
     | '/_public/news/'
     | '/admin/banners/'
@@ -215,6 +250,7 @@ export interface FileRouteTypes {
     | '/admin/news/'
     | '/admin/products/'
     | '/admin/subcategories/'
+    | '/auth/sign-in/'
     | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
     | '/admin/products/$id/edit'
@@ -223,6 +259,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   PublicRouteRoute: typeof PublicRouteRouteWithChildren
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiRpcSplatRoute: typeof ApiRpcSplatRoute
+  AuthSignInIndexRoute: typeof AuthSignInIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -268,6 +307,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/banners'
       preLoaderRoute: typeof AdminBannersRouteRouteImport
       parentRoute: typeof AdminRouteRoute
+    }
+    '/auth/sign-in/': {
+      id: '/auth/sign-in/'
+      path: '/auth/sign-in'
+      fullPath: '/auth/sign-in/'
+      preLoaderRoute: typeof AuthSignInIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/admin/subcategories/': {
       id: '/admin/subcategories/'
@@ -317,6 +363,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/calculator/'
       preLoaderRoute: typeof PublicCalculatorIndexRouteImport
       parentRoute: typeof PublicRouteRoute
+    }
+    '/api/rpc/$': {
+      id: '/api/rpc/$'
+      path: '/api/rpc/$'
+      fullPath: '/api/rpc/$'
+      preLoaderRoute: typeof ApiRpcSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_public/news/$slug': {
       id: '/_public/news/$slug'
@@ -421,6 +481,9 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   PublicRouteRoute: PublicRouteRouteWithChildren,
   AdminRouteRoute: AdminRouteRouteWithChildren,
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiRpcSplatRoute: ApiRpcSplatRoute,
+  AuthSignInIndexRoute: AuthSignInIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

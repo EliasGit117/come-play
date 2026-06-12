@@ -2,7 +2,8 @@ import { IconTrash } from '@tabler/icons-react';
 import { ComponentProps, FC, useCallback, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import { useConfirm } from '@/components/ui/confirm-dialog';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { orpc } from '@/lib/orpc';
 import {
   DataTable,
   DataTablePagination,
@@ -13,12 +14,7 @@ import {
 import { Button } from '@/components/ui/button';
 
 import { toast } from 'sonner';
-import {
-  getSubcategoriesPaginatedForAdminQueryOptions, TGetSubcategoriesPaginatedForAdminSchema
-} from '@/features/subcategories/server-functions/admin/get-subcategories-paginated';
-import {
-  useDeleteSubcategoriesByIdsMutation
-} from '@/features/subcategories/server-functions/admin/delete-subcategories';
+import { TGetSubcategoriesPaginatedForAdminSchema } from '@/features/subcategories/schemas/search-subcategories';
 import { subcategoryColumns } from '@/routes/admin/subcategories/-components/subcategories-table/columns';
 import {
   CreateSubcategoryDialog,
@@ -41,13 +37,19 @@ export const SubcategoriesTable: FC<ISubcategoriesTableProps> = (props) => {
 
   const { className, search = {}, ...restOfProps } = props;
   const confirm = useConfirm();
+  const queryClient = useQueryClient();
 
   const { data, isPending } = useQuery({
-    ...getSubcategoriesPaginatedForAdminQueryOptions(search),
+    ...orpc.admin.subcategories.search.queryOptions({ input: search }),
     placeholderData: keepPreviousData
   });
 
-  const { isPending: isDeleting, mutateAsync: deleteAsync } = useDeleteSubcategoriesByIdsMutation();
+  const { isPending: isDeleting, mutateAsync: deleteAsync } = useMutation({
+    ...orpc.admin.subcategories.delete.mutationOptions(),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.subcategories.key() });
+    }
+  });
 
   const isLoading = isPending || isDeleting;
   const columns = useMemo(() => subcategoryColumns({ disabled: isLoading }), [isLoading]);
@@ -77,9 +79,7 @@ export const SubcategoriesTable: FC<ISubcategoriesTableProps> = (props) => {
       return;
 
     toast.promise(
-      deleteAsync({
-        data: { ids: selectedItems.map((i) => i.id) }
-      }),
+      deleteAsync({ ids: selectedItems.map((i) => i.id) }),
       {
         loading: 'Deleting categories...',
         success: (result) => {

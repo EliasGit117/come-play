@@ -1,13 +1,12 @@
 import { IconArrowBackUp, IconDeviceFloppy } from '@tabler/icons-react';
 import { createFileRoute } from '@tanstack/react-router';
-import { getProductByIdForAdminQueryOptions } from '@/features/products/server-functions/admin/get-product-by-id-for-admin';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { LoadingButton } from '@/components/ui/loading-button';
 
-import { useEditProductMutation } from '@/features/products/server-functions/admin/edit-product';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { FC, useState } from 'react';
@@ -26,7 +25,7 @@ export const Route = createFileRoute('/admin/products/$id/edit')({
   staticData: { breadcrumbs: { title: 'Edit product' } },
   loader: async ({ params: { id }, context }) => {
     const data = await context.queryClient.ensureQueryData(
-      getProductByIdForAdminQueryOptions(id)
+      orpc.admin.products.getById.queryOptions({ input: { id: Number(id) } })
     );
     return {
       product: data,
@@ -38,8 +37,9 @@ export const Route = createFileRoute('/admin/products/$id/edit')({
 
 function RouteComponent() {
   const { id } = Route.useParams();
+  const queryClient = useQueryClient();
   const { data: product, isPending: isFetching } = useSuspenseQuery(
-    getProductByIdForAdminQueryOptions(id)
+    orpc.admin.products.getById.queryOptions({ input: { id: Number(id) } })
   );
   const [imagesLoading, setImagesLoading] = useState(false);
 
@@ -48,10 +48,13 @@ function RouteComponent() {
     defaultValues: { ...product }
   });
 
-  const { mutate, isPending: isUpdating } = useEditProductMutation({
+  const { mutate, isPending: isUpdating } = useMutation({
+    ...orpc.admin.products.update.mutationOptions(),
     onError: (error) => toast.error(error.name, { description: error.message }),
-    onSuccess: (data) =>
-      form.reset({ ...data, })
+    onSuccess: (data) => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.products.key() });
+      form.reset({ ...data });
+    }
   });
 
   const isBusy = isFetching || isUpdating || imagesLoading;

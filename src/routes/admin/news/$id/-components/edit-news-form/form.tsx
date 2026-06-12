@@ -62,12 +62,9 @@ export const EditNewsForm: FC<IEditNewsFormProps> = ({ className, disabled }) =>
               <FieldLabel htmlFor="status-select">Status</FieldLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger className="w-full justify-start" asChild>
-                    <button type="button">
-                      {field.value === NewsStatus.hidden ? <IconEyeOff/> : <IconEye/>}
-                      <span className="capitalize">{field.value}</span>
-                      <IconChevronDown className="ml-auto"/>
-                    </button>
+                  <SelectTrigger id="status-select" className="w-full justify-start">
+                    {field.value === NewsStatus.hidden ? <IconEyeOff/> : <IconEye/>}
+                    <span className="capitalize">{field.value}</span>
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>

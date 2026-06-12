@@ -9,27 +9,36 @@ import softLedScreenImg from '/images/home/products/soft-led-screen.webp';
 import floorLedDisplay from '/images/home/products/floor-led-display.webp';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
 import { Card } from '@/components/ui/card';
+import { m } from '@/paraglide/messages';
 
 
 interface IProps extends ComponentProps<'section'> {
 }
 
 const ProductList: FC<IProps> = ({ className, ...props }) => {
+  const products = [
+    { id: 'indoor', title: m['pages.public.home.products.indoor'](), image: indoorDisplayImg, thumbhash: 'F7aFDQJFMK54hthreL+H+GyHWFh5d3BpmA==' },
+    { id: 'outdoor', title: m['pages.public.home.products.outdoor'](), image: outdoorDisplayImg, thumbhash: 'ZNiFBQAkyAeHZ3tiFuaYD43ICXaGeHCcZg==' },
+    { id: 'rental', title: m['pages.public.home.products.rental'](), image: rentalLedDisplayImg, thumbhash: 'KsaBDQIzeJZ4h4E9+HdngAcVB8iId4R7aA==' },
+    { id: 'transparent', title: m['pages.public.home.products.transparent'](), image: transparentLedScreenImg, thumbhash: 'LviBBQAVE4m3nJL7Vmav4+/KKhiJh3GYCA==' },
+    { id: 'soft', title: m['pages.public.home.products.soft'](), image: softLedScreenImg, thumbhash: 'oMWFDQQ1KPiHeXeLl0BiCCN2N1iIeIBqdw==' },
+    { id: 'floor', title: m['pages.public.home.products.floor'](), image: floorLedDisplay, thumbhash: 'z/eBBQA0hE+HeIeHiF93CHpICKeId3WKWA==' }
+  ];
 
   return (
     <section className={cn('space-y-8', className)} {...props}>
       <div>
         <h2 className="text-3xl font-bold">
-          PRODUCTS
+          {m['pages.public.home.products.title']()}
         </h2>
         <p className="text-muted-foreground mt-2">
-          Discover the line of our products
+          {m['pages.public.home.products.subtitle']()}
         </p>
       </div>
 
       <div className={cn('grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-4 md:gap-6')}>
         {products.map((product) => (
-          <article key={product.title}>
+          <article key={product.id}>
             <Link to="/">
               <Card
                 className={cn(
@@ -55,18 +64,5 @@ const ProductList: FC<IProps> = ({ className, ...props }) => {
     </section>
   );
 };
-
-const products = [
-  { title: 'Indoor LED Display', image: indoorDisplayImg, thumbhash: 'F7aFDQJFMK54hthreL+H+GyHWFh5d3BpmA==' },
-  { title: 'Outdoor LED Display', image: outdoorDisplayImg, thumbhash: 'ZNiFBQAkyAeHZ3tiFuaYD43ICXaGeHCcZg==' },
-  { title: 'Rental LED Display', image: rentalLedDisplayImg, thumbhash: 'KsaBDQIzeJZ4h4E9+HdngAcVB8iId4R7aA==' },
-  {
-    title: 'Transparent LED Screen',
-    image: transparentLedScreenImg,
-    thumbhash: 'LviBBQAVE4m3nJL7Vmav4+/KKhiJh3GYCA=='
-  },
-  { title: 'Soft LED Screen', image: softLedScreenImg, thumbhash: 'oMWFDQQ1KPiHeXeLl0BiCCN2N1iIeIBqdw==' },
-  { title: 'Floor LED Screen', image: floorLedDisplay, thumbhash: 'z/eBBQA0hE+HeIeHiF93CHpICKeId3WKWA==' }
-];
 
 export default ProductList;

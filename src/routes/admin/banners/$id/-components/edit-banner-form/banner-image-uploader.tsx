@@ -1,7 +1,7 @@
 import { ComponentProps, FC, useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { useSetBannerImageMutation } from '@/features/banners/server-functions/admin/set-banner-image';
-import { useRemoveBannerImage } from '@/features/banners/server-functions/admin/remove-banner-image';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
 import CoverImagePicker, { IImagePickerValue } from '@/components/ui/cover-image-picker';
 import { Spinner } from '@/components/ui/spinner';
@@ -30,19 +30,31 @@ export const BannerImageUploader: FC<IBannerImageUploaderProps> = (props) => {
 
   const numBannerId = typeof bannerId === 'number' ? bannerId : parseInt(bannerId);
   const [imageData, setImageData] = useState<IImagePickerValue | undefined>(defaultImage);
+  const queryClient = useQueryClient();
   let lastFile: File;
 
-  const { mutate: upload, isPending: isUploading } = useSetBannerImageMutation({
+  const invalidate = () =>
+    queryClient.invalidateQueries({ queryKey: orpc.admin.banners.key() });
+
+  const { mutate: upload, isPending: isUploading } = useMutation({
+    ...orpc.admin.banners.setImage.mutationOptions(),
     onError: (e) => {
       setImageData(undefined);
       toast.error(e.name, { description: e.message });
     },
-    onSuccess: (res) => setImageData({ thumbhash: res.thumbhash, src: res.url })
+    onSuccess: (res) => {
+      void invalidate();
+      setImageData({ thumbhash: res.thumbhash, src: res.url });
+    }
   });
 
-  const { mutateAsync: removeAsync, isPending: isRemoving } = useRemoveBannerImage({
+  const { mutateAsync: removeAsync, isPending: isRemoving } = useMutation({
+    ...orpc.admin.banners.removeImage.mutationOptions(),
     onError: (e) => toast.error(e.name, { description: e.message }),
-    onSuccess: () => setImageData(undefined)
+    onSuccess: () => {
+      void invalidate();
+      setImageData(undefined);
+    }
   });
 
   const isPending = isUploading || isRemoving;
@@ -53,7 +65,7 @@ export const BannerImageUploader: FC<IBannerImageUploaderProps> = (props) => {
       return;
 
     if (!file) {
-      await removeAsync({ data: { bannerId: numBannerId, imageType } });
+      await removeAsync({ bannerId: numBannerId, imageType });
       return;
     }
 

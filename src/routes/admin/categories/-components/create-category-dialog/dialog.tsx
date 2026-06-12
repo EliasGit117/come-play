@@ -18,7 +18,8 @@ import { toast } from 'sonner';
 
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useCreateCategoryDialogContext } from './provider';
-import { useCreateCategoryMutation } from '@/features/categories/server-functions/admin/create-category';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createCategorySchema, TCreateCategorySchema } from '@/features/categories/schemas/create-category';
 
 interface ICreateCategoryDialogProps {
@@ -27,6 +28,7 @@ interface ICreateCategoryDialogProps {
 
 export const CreateCategoryDialog: FC<ICreateCategoryDialogProps> = ({ afterSuccess }) => {
   const { isOpen, setIsOpen } = useCreateCategoryDialogContext();
+  const queryClient = useQueryClient();
 
   const form = useForm<TCreateCategorySchema>({
     resolver: zodResolver(createCategorySchema),
@@ -37,9 +39,11 @@ export const CreateCategoryDialog: FC<ICreateCategoryDialogProps> = ({ afterSucc
     }
   });
 
-  const { mutate, isPending } = useCreateCategoryMutation({
+  const { mutate, isPending } = useMutation({
+    ...orpc.admin.categories.create.mutationOptions(),
     onError: (e) => toast.error(e.name, { description: e.message }),
-    onSuccess: (res) => {
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.categories.key() });
       setIsOpen(false);
       toast.success('Category has been successfully created');
       afterSuccess?.();

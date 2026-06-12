@@ -18,11 +18,8 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useEditSubcategoryDialogContext } from './provider';
-import { useQuery } from '@tanstack/react-query';
-import {
-  getSubcategoryByIdForAdminQueryOptions
-} from '@/features/subcategories/server-functions/admin/get-subcategory-by-id';
-import { useEditSubcategoryMutation } from '@/features/subcategories/server-functions/admin/edit-subcategory';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { orpc } from '@/lib/orpc';
 import { SubcategoryForm } from '@/routes/admin/subcategories/-components/edit-subcategory-dialog/form';
 import { editSubcategorySchema } from '@/features/subcategories/schemas/edit-subcategory';
 import { z } from 'zod';
@@ -33,6 +30,7 @@ export type TEditSubcategoryFormSchema = z.infer<typeof editSubcategoryFormSchem
 
 export const EditSubcategoryDialog: FC = () => {
   const { subcategoryId, setSubcategoryId } = useEditSubcategoryDialogContext();
+  const queryClient = useQueryClient();
 
   const form = useForm<TEditSubcategoryFormSchema>({
     resolver: zodResolver(editSubcategoryFormSchema),
@@ -47,7 +45,7 @@ export const EditSubcategoryDialog: FC = () => {
   });
 
   const { data: subcategory, isFetching } = useQuery({
-    ...getSubcategoryByIdForAdminQueryOptions(subcategoryId!),
+    ...orpc.admin.subcategories.getById.queryOptions({ input: { id: subcategoryId! } }),
     enabled: !!subcategoryId,
     staleTime: 0
   });
@@ -59,9 +57,11 @@ export const EditSubcategoryDialog: FC = () => {
     form.reset({ ...subcategory });
   }, [subcategory, form]);
 
-  const { mutate, isPending } = useEditSubcategoryMutation({
+  const { mutate, isPending } = useMutation({
+    ...orpc.admin.subcategories.update.mutationOptions(),
     onError: (e) => toast.error('Failed to update', { description: e.message }),
     onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.subcategories.key() });
       toast.success('Subcategory updated successfully!');
       setSubcategoryId(undefined);
     }

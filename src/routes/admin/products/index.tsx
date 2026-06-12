@@ -1,8 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import {
-  getProductsForAdminQueryOptions,
-  getProductsForAdminSchema
-} from '@/features/products/server-functions/admin/get-products-for-admin';
+import { getProductsForAdminSchema } from '@/features/products/schemas/search-products';
+import { orpc } from '@/lib/orpc';
 import { ProductTable } from './-components/products-table';
 import { awaitIfServer } from '@/lib/await-if-server';
 
@@ -11,7 +9,7 @@ export const Route = createFileRoute('/admin/products/')({
   validateSearch: getProductsForAdminSchema,
   loaderDeps: (deps) => deps,
   loader: async ({ context, deps: { search } }) => {
-    await awaitIfServer(context.queryClient.prefetchQuery(getProductsForAdminQueryOptions(search)));
+    await awaitIfServer(context.queryClient.prefetchQuery(orpc.admin.products.search.queryOptions({ input: search })));
   },
   head: () => {
     return { meta: [{ title: 'Products' }] };

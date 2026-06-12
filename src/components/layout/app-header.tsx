@@ -11,8 +11,8 @@ import LogoFull from '@/assets/icons/logo/full.svg?react';
 import { ThemeDropdown } from '@/components/theme';
 import { useBodyScrollPosition } from '@n8tb1t/use-scroll-position';
 
-interface IAppHeader extends ComponentProps<'header'> {
-}
+
+interface IAppHeader extends ComponentProps<'header'> {}
 
 const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
   const setOpenSidebar = useAppSidebar((s) => s.setOpen);

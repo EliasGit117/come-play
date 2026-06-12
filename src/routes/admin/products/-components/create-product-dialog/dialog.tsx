@@ -24,7 +24,8 @@ import {
   createProductSchema,
   TCreateProductSchema
 } from '@/features/products/schemas/create-product';
-import { useCreateProductMutation } from '@/features/products/server-functions/admin/create-product';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCreateProductDialogContext } from './provider';
 
 
@@ -35,6 +36,7 @@ interface ICreateProductDialogProps {
 export const CreateProductDialog: FC<ICreateProductDialogProps> = ({ afterSuccess }) => {
   const { isOpen, setIsOpen } = useCreateProductDialogContext();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [editAfterCreation, setEditAfterCreation] = useState(true);
 
   const form = useForm<TCreateProductSchema>({
@@ -54,9 +56,11 @@ export const CreateProductDialog: FC<ICreateProductDialogProps> = ({ afterSucces
     }
   });
 
-  const { mutate, isPending } = useCreateProductMutation({
+  const { mutate, isPending } = useMutation({
+    ...orpc.admin.products.create.mutationOptions(),
     onError: (e) => toast.error(e.name, { description: e.message }),
     onSuccess: (res) => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.products.key() });
       setIsOpen(false);
       toast.success('Product has been successfully created');
       afterSuccess?.();

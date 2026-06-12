@@ -6,12 +6,10 @@ import {
   CreateCategoryDialog
 } from '@/routes/admin/categories/-components/create-category-dialog';
 import { cn } from '@/lib/utils';
-import {
-  getCategoriesPaginatedForAdminQueryOptions,
-  TGetCategoriesPaginatedParamsForAdmin
-} from '@/features/categories/server-functions/admin/get-categories-paginated-for-admin';
+import { TGetCategoriesPaginatedParamsForAdmin } from '@/features/categories/schemas/search-categories';
+import { orpc } from '@/lib/orpc';
 import { useConfirm } from '@/components/ui/confirm-dialog';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   DataTable,
   DataTablePagination,
@@ -26,9 +24,6 @@ import {
   EditCategoryDialog,
   EditCategoryDialogProvider
 } from '@/routes/admin/categories/-components/edit-category-dialog';
-import {
-  useDeleteCategoriesByIdsMutation
-} from '@/features/categories/server-functions/admin/delete-categories-by-ids';
 import { toast } from 'sonner';
 
 
@@ -42,13 +37,19 @@ export const CategoriesTable: FC<ICategoriesTableProps> = (props) => {
 
   const { className, search = {}, ...restOfProps } = props;
   const confirm = useConfirm();
+  const queryClient = useQueryClient();
 
   const { data, isPending } = useQuery({
-    ...getCategoriesPaginatedForAdminQueryOptions(search),
+    ...orpc.admin.categories.search.queryOptions({ input: search }),
     placeholderData: keepPreviousData
   });
 
-  const { isPending: isDeleting, mutateAsync: deleteAsync } = useDeleteCategoriesByIdsMutation();
+  const { isPending: isDeleting, mutateAsync: deleteAsync } = useMutation({
+    ...orpc.admin.categories.delete.mutationOptions(),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.categories.key() });
+    }
+  });
 
   const isLoading = isPending || isDeleting;
   const columns = useMemo(() => categoryColumns({ disabled: isLoading }), [isLoading]);
@@ -78,9 +79,7 @@ export const CategoriesTable: FC<ICategoriesTableProps> = (props) => {
       return;
 
     toast.promise(
-      deleteAsync({
-        data: { ids: selectedItems.map((i) => i.id) }
-      }),
+      deleteAsync({ ids: selectedItems.map((i) => i.id) }),
       {
         loading: 'Deleting categories...',
         success: (result) => {

@@ -16,14 +16,11 @@ import { LoadingButton } from '@/components/ui/loading-button';
 import { toast } from 'sonner';
 
 import { ScrollArea } from '@/components/ui/scroll-area';
-import {
-  getCategoryByIdForAdminQueryOptions
-} from '@/features/categories/server-functions/admin/get-category-by-id-for-admin';
-import { useQuery } from '@tanstack/react-query';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { EditCategoryForm } from './form';
 import { editCategorySchema } from '@/features/categories/schemas/edit-category';
 import { useEditCategoryDialogContext } from '@/routes/admin/categories/-components/edit-category-dialog/provider';
-import { useEditCategoryMutation } from '@/features/categories/server-functions/admin/edit-category';
 import { Skeleton } from '@/components/ui/skeleton';
 import { z } from 'zod';
 
@@ -33,6 +30,7 @@ export type TEditCategoryFormSchema = z.infer<typeof editCategoryFormSchema>;
 
 export const EditCategoryDialog: FC = () => {
   const { categoryId, setCategoryId } = useEditCategoryDialogContext();
+  const queryClient = useQueryClient();
 
   const form = useForm<TEditCategoryFormSchema>({
     resolver: zodResolver(editCategoryFormSchema),
@@ -46,7 +44,7 @@ export const EditCategoryDialog: FC = () => {
   });
 
   const { data: category, isFetching } = useQuery({
-    ...getCategoryByIdForAdminQueryOptions(categoryId!),
+    ...orpc.admin.categories.getById.queryOptions({ input: { id: categoryId! } }),
     enabled: !!categoryId,
     staleTime: 0
   });
@@ -63,9 +61,11 @@ export const EditCategoryDialog: FC = () => {
     }
   }, [category, form]);
 
-  const { mutate, isPending } = useEditCategoryMutation({
+  const { mutate, isPending } = useMutation({
+    ...orpc.admin.categories.update.mutationOptions(),
     onError: (e) => toast.error('Failed to update', { description: e.message }),
     onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.categories.key() });
       toast.success('Category updated successfully!');
       setCategoryId(undefined);
     }
@@ -82,7 +82,7 @@ export const EditCategoryDialog: FC = () => {
 
   return (
     <AlertDialog open={!!categoryId} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="sm:max-w-2xl">
+      <AlertDialogContent className="sm:max-w-2xl!">
 
         <AlertDialogHeader>
           <AlertDialogTitle>Edit Category</AlertDialogTitle>

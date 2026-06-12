@@ -6,11 +6,11 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
 import { toast } from 'sonner';
-import { useAddProductImageMutation } from '@/features/products/server-functions/admin/add-product-image';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
 import { cn } from '@/lib/utils';
 import { Spinner } from '@/components/ui/spinner';
-import { usedeleteProductImage } from '@/features/products/server-functions/admin/delete-product-image';
 import {
   ReorderProductImagesDialog,
   ReorderProductImagesDialogProvider,
@@ -32,14 +32,22 @@ export const ProductImagesManager: FC<IProductImagesManagerProps> = ({
                                                                        onPendingChange
                                                                      }) => {
   const [uploadingCount, setUploadingCount] = useState(0);
+  const queryClient = useQueryClient();
 
-  const { mutateAsync: addAsync, isPending: isAdding } =
-    useAddProductImageMutation({
-      onError: (e) => toast.error(e.name, { description: e.message })
-    });
+  const invalidate = () =>
+    queryClient.invalidateQueries({ queryKey: orpc.admin.products.key() });
 
-  const { mutateAsync: removeAsync, isPending: isRemoving } =
-    usedeleteProductImage({ onError: (e) => toast.error(e.name, { description: e.message }) });
+  const { mutateAsync: addAsync, isPending: isAdding } = useMutation({
+    ...orpc.admin.products.addImage.mutationOptions(),
+    onError: (e) => toast.error(e.name, { description: e.message }),
+    onSuccess: () => void invalidate()
+  });
+
+  const { mutateAsync: removeAsync, isPending: isRemoving } = useMutation({
+    ...orpc.admin.products.deleteImage.mutationOptions(),
+    onError: (e) => toast.error(e.name, { description: e.message }),
+    onSuccess: () => void invalidate()
+  });
 
   const isBusy = isAdding || isRemoving || uploadingCount > 0;
 
@@ -64,7 +72,7 @@ export const ProductImagesManager: FC<IProductImagesManagerProps> = ({
   };
 
   const handleRemove = async (imageId: number) => {
-    await removeAsync({ data: { productId, imageId } });
+    await removeAsync({ productId, imageId });
   };
 
   // Sort images by their order field

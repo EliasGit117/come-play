@@ -1,8 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import {
-  getSubcategoriesPaginatedForAdminQueryOptions,
-  getSubcategoriesPaginatedForAdminSchema
-} from '@/features/subcategories/server-functions/admin/get-subcategories-paginated';
+import { getSubcategoriesPaginatedForAdminSchema } from '@/features/subcategories/schemas/search-subcategories';
+import { orpc } from '@/lib/orpc';
 import { SubcategoriesTable } from '@/routes/admin/subcategories/-components/subcategories-table';
 import { awaitIfServer } from '@/lib/await-if-server';
 
@@ -14,7 +12,7 @@ export const Route = createFileRoute('/admin/subcategories/')({
   validateSearch: getSubcategoriesPaginatedForAdminSchema,
   loaderDeps: (deps) => (deps),
   loader: async ({ context, deps: { search } }) => {
-    await awaitIfServer(context.queryClient.prefetchQuery(getSubcategoriesPaginatedForAdminQueryOptions(search)));
+    await awaitIfServer(context.queryClient.prefetchQuery(orpc.admin.subcategories.search.queryOptions({ input: search })));
   },
 });
 

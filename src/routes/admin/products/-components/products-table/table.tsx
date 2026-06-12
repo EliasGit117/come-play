@@ -7,11 +7,9 @@ import {
   DataTable,
   useDataTable
 } from '@/components/data-table';
-import {
-  getProductsForAdminQueryOptions,
-  TGetProductsForAdminSchema
-} from '@/features/products/server-functions/admin/get-products-for-admin';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { TGetProductsForAdminSchema } from '@/features/products/schemas/search-products';
+import { orpc } from '@/lib/orpc';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { productColumns } from './columns';
 
 import {
@@ -21,7 +19,6 @@ import {
 } from '@/routes/admin/products/-components/create-product-dialog';
 import { Button } from '@/components/ui/button';
 import { useConfirm } from '@/components/ui/confirm-dialog';
-import { useDeleteProductsByIdsMutation } from '@/features/products/server-functions/admin/delete-products-by-ids';
 import { toast } from 'sonner';
 
 interface IProps extends ComponentProps<'div'> {
@@ -32,13 +29,18 @@ export const ProductTable: FC<IProps> = (props) => {
   'use no memo';
   const { className, search = {}, ...restOfProps } = props;
   const confirm = useConfirm();
+  const queryClient = useQueryClient();
   const { data, isPending } = useQuery({
-    ...getProductsForAdminQueryOptions(search),
+    ...orpc.admin.products.search.queryOptions({ input: search }),
     placeholderData: keepPreviousData
   });
 
-  const { isPending: isDeleting, mutateAsync: deleteAsync } =
-    useDeleteProductsByIdsMutation();
+  const { isPending: isDeleting, mutateAsync: deleteAsync } = useMutation({
+    ...orpc.admin.products.delete.mutationOptions(),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.products.key() });
+    }
+  });
   const isLoading = isPending || isDeleting;
   const columns = useMemo(() => productColumns({ disabled: isLoading }), [isLoading]);
 
@@ -76,9 +78,7 @@ export const ProductTable: FC<IProps> = (props) => {
     if (!isConfirmed) return;
 
     toast.promise(
-      deleteAsync({
-        data: { ids: selectedItems.map((i) => i.id) }
-      }),
+      deleteAsync({ ids: selectedItems.map((i) => i.id) }),
       {
         loading: 'Deleting products...',
         success: 'Products deleted successfully!',

@@ -94,7 +94,7 @@ function RouteComponent() {
                 <IconMinus/>
               </Button>
               <Input
-                className="h-8 w-12 text-center rounded-none border-x-0"
+                className="h-8 w-12 text-center rounded-none dark:border-secondary border-x-0"
                 value={tilesYCount}
                 readOnly
               />
@@ -124,7 +124,7 @@ function RouteComponent() {
                 <IconMinus/>
               </Button>
               <Input
-                className="h-8 w-12 text-center rounded-none border-x-0"
+                className="h-8 w-12 text-center rounded-none dark:border-secondary border-x-0"
                 value={tilesXCount}
                 readOnly
               />

@@ -11,7 +11,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '@/components/ui/sidebar';
-
+import LogoIcon from '@/assets/icons/logo/icon.svg?react';
+import LogoText from '@/assets/icons/logo/text.svg?react';
 import { INavItem } from '@/routes/admin/-components/sidebar/types/nav-item';
 import { Link } from '@tanstack/react-router';
 import { NavSettings } from '@/routes/admin/-components/sidebar/nav-settings';
@@ -28,12 +29,15 @@ export function AdminSidebar({ ...props }: IAdminSidebarProps) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className="data-[slot=sidebar-menu-button]:p-1.5! h-10"
             >
-              <Link to="/admin">
-                <IconShoppingCart className="!size-5" strokeWidth={2.5}/>
-                <span className="text-base font-semibold">
-                  {import.meta.env.VITE_APP_NAME ?? 'Website Name'}
+              <Link to="/admin" className='flex gap-2'>
+                <LogoIcon className='size-7.5! text-foreground'/>
+                <span className='flex flex-col'>
+                  <LogoText className='h-3.5! w-fit! text-foreground'/>
+                  <span className='text-xs text-muted-foreground'>
+                    Admin
+                  </span>
                 </span>
               </Link>
             </SidebarMenuButton>

@@ -10,13 +10,14 @@ import { Form } from '@/components/ui/form';
 import { LoadingButton } from '@/components/ui/loading-button';
 
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
+import { m } from '@/paraglide/messages';
 
 const contactSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  email: z.string().email('Invalid email address'),
-  phone: z.string().min(1, 'Phone is required'),
-  message: z.string().min(1, 'Message is required')
+  firstName: z.string().min(1),
+  lastName: z.string().min(1),
+  email: z.string().email(),
+  phone: z.string().min(1),
+  message: z.string().min(1)
 });
 
 type TContactForm = z.infer<typeof contactSchema>;
@@ -25,8 +26,16 @@ interface IProps extends ComponentProps<'form'> {
 }
 
 const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
+  const localizedSchema = z.object({
+    firstName: z.string().min(1, m['pages.public.home.contact.validation.firstNameRequired']()),
+    lastName: z.string().min(1, m['pages.public.home.contact.validation.lastNameRequired']()),
+    email: z.string().email(m['pages.public.home.contact.validation.emailInvalid']()),
+    phone: z.string().min(1, m['pages.public.home.contact.validation.phoneRequired']()),
+    message: z.string().min(1, m['pages.public.home.contact.validation.messageRequired']())
+  });
+
   const form = useForm<TContactForm>({
-    resolver: zodResolver(contactSchema),
+    resolver: zodResolver(localizedSchema),
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -55,7 +64,7 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="first-name-input">First name</FieldLabel>
+                <FieldLabel htmlFor="first-name-input">{m['pages.public.home.contact.firstName']()}</FieldLabel>
                 <Input
                   {...field}
                   id="first-name-input"
@@ -72,7 +81,7 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="last-name-input">Last name</FieldLabel>
+                <FieldLabel htmlFor="last-name-input">{m['pages.public.home.contact.lastName']()}</FieldLabel>
                 <Input
                   {...field}
                   id="last-name-input"
@@ -89,7 +98,7 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="email-input">Email</FieldLabel>
+                <FieldLabel htmlFor="email-input">{m['pages.public.home.contact.email']()}</FieldLabel>
                 <Input
                   {...field}
                   id="email-input"
@@ -102,11 +111,11 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
           />
 
           <Controller
-            name="email"
+            name="phone"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="phone-input">Email</FieldLabel>
+                <FieldLabel htmlFor="phone-input">{m['pages.public.home.contact.phone']()}</FieldLabel>
                 <Input
                   {...field}
                   id="phone-input"
@@ -123,12 +132,12 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field className="col-span-full" data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="message-text-area">Message</FieldLabel>
+                <FieldLabel htmlFor="message-text-area">{m['pages.public.home.contact.message']()}</FieldLabel>
                 <Textarea
                   {...field}
                   id="message-text-area"
                   aria-invalid={fieldState.invalid}
-                  placeholder="Here you can write a message for us"
+                  placeholder={m['pages.public.home.contact.messagePlaceholder']()}
                   className='min-h-40'
                   autoComplete="off"
                 />
@@ -140,7 +149,7 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
           <Field orientation='horizontal' className='col-span-full'>
             <LoadingButton className="w-full md:w-fit md:ml-auto" loading={false} disabled={false}>
               <IconSend/>
-              <span>Submit</span>
+              <span>{m['pages.public.home.contact.submit']()}</span>
             </LoadingButton>
           </Field>
         </FieldGroup>

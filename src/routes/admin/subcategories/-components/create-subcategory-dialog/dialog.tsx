@@ -24,11 +24,13 @@ import { SubcategoryForm } from './form';
 import {
   useCreateSubcategoryDialogContext
 } from '@/routes/admin/subcategories/-components/create-subcategory-dialog/provider';
-import { useCreateSubcategoryMutation } from '@/features/subcategories/server-functions/admin/create-subcategory';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 
 export const CreateSubcategoryDialog: FC = () => {
   const { isOpen, setIsOpen } = useCreateSubcategoryDialogContext();
+  const queryClient = useQueryClient();
 
   const form = useForm<TCreateSubcategorySchema>({
     resolver: zodResolver(createSubcategorySchema),
@@ -42,9 +44,11 @@ export const CreateSubcategoryDialog: FC = () => {
     }
   });
 
-  const { mutate, isPending } = useCreateSubcategoryMutation({
+  const { mutate, isPending } = useMutation({
+    ...orpc.admin.subcategories.create.mutationOptions(),
     onError: (e) => toast.error('Failed to create', { description: e.message }),
     onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.subcategories.key() });
       toast.success('Subcategory created successfully!');
       setIsOpen(false);
     }

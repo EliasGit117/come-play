@@ -22,7 +22,8 @@ import { useNavigate } from '@tanstack/react-router';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { createNewsSchema, TCreateNewsSchema } from '@/features/news/schemas/create-news';
-import { useCreateNewsMutation } from '@/features/news/server-functions/admin/create-news';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useCreateNewsDialogContext } from '@/routes/admin/news/-components/create-news-dialog/provider';
 
@@ -34,6 +35,7 @@ interface CreateNewsDialogProps {
 export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ afterSuccess }) => {
   const { isOpen, setIsOpen } = useCreateNewsDialogContext();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [editAfterCreation, setEditAfterCreation] = useState(true);
   const form = useForm<TCreateNewsSchema>({
     resolver: zodResolver(createNewsSchema),
@@ -44,9 +46,11 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ afterSuccess }) =>
     }
   });
 
-  const { mutate, isPending } = useCreateNewsMutation({
+  const { mutate, isPending } = useMutation({
+    ...orpc.admin.news.create.mutationOptions(),
     onError: (e) => toast.error(e.name, { description: e.message }),
     onSuccess: (res) => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.news.key() });
       setIsOpen(false);
       toast.success('News has been successfully created');
       afterSuccess?.();

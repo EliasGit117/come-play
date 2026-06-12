@@ -4,9 +4,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Field, FieldGroup, FieldLabel, FieldError } from '@/components/ui/field';
 import { useQuery } from '@tanstack/react-query';
-import {
-  getCategoriesPaginatedForAdminQueryOptions
-} from '@/features/categories/server-functions/admin/get-categories-paginated-for-admin';
+import { orpc } from '@/lib/orpc';
 import { Textarea } from '@/components/ui/textarea';
 import { TEditSubcategoryFormSchema } from '@/routes/admin/subcategories/-components/edit-subcategory-dialog/dialog';
 import {
@@ -22,7 +20,7 @@ import { cn } from '@/lib/utils';
 export const SubcategoryForm: FC = () => {
   const form = useFormContext<TEditSubcategoryFormSchema>();
 
-  const { data } = useQuery(getCategoriesPaginatedForAdminQueryOptions({ limit: 10000, page: 1 }));
+  const { data } = useQuery(orpc.admin.categories.search.queryOptions({ input: { limit: 10000, page: 1 } }));
 
   return (
     <FieldGroup className="grid md:grid-cols-2 gap-4">

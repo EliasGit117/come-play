@@ -1,5 +1,5 @@
 import { createFileRoute, notFound } from '@tanstack/react-router';
-import { getNewsBySlugQueryOptions } from '@/features/news/server-functions/public/get-news-by-slug';
+import { orpc } from '@/lib/orpc';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { ro } from 'date-fns/locale';
@@ -16,7 +16,7 @@ export const Route = createFileRoute('/_public/news/$slug')({
   },
   loader: async ({ context: { queryClient }, params: { slug } }) => {
     const res = await queryClient
-      .ensureQueryData(getNewsBySlugQueryOptions(slug))
+      .ensureQueryData(orpc.news.getBySlug.queryOptions({ input: { slug } }))
       .catch(e => {
         console.error(e);
         throw notFound();
@@ -58,7 +58,7 @@ export const Route = createFileRoute('/_public/news/$slug')({
 
 function RouteComponent() {
   const { slug } = Route.useParams();
-  const { data } = useSuspenseQuery({ ...getNewsBySlugQueryOptions(slug) });
+  const { data } = useSuspenseQuery({ ...orpc.news.getBySlug.queryOptions({ input: { slug } }) });
 
   return (
     <main className="space-y-4 md:space-y-6 lg:space-y-8 pb-16">

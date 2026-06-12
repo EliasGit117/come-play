@@ -13,8 +13,8 @@ import { LoadingButton } from '@/components/ui/loading-button';
 
 import { useReorderBannersDialogContext } from './provider';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useQuery } from '@tanstack/react-query';
-import { getBannersForAdminQueryOptions } from '@/features/banners/server-functions/admin/get-banners-for-admin';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { orpc } from '@/lib/orpc';
 import * as Sortable from '@/components/ui/sortable';
 import { IAdminBannerBriefDto } from '@/features/banners/dtos/admin-banner-brief-dto';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -22,7 +22,6 @@ import { cn } from '@/lib/utils';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
 import { Badge } from '@/components/ui/badge';
-import { useReorderBannersMutation } from '@/features/banners/server-functions/admin/reodred-banners';
 import { toast } from 'sonner';
 
 
@@ -35,17 +34,19 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
   const mouseSensor = useSensor(MouseSensor);
   const touchSensor = useSensor(TouchSensor, { activationConstraint: { delay: 300, tolerance: 8 } });
 
+  const queryClient = useQueryClient();
   const { data, isFetching } = useQuery({
-    ...getBannersForAdminQueryOptions(),
-    queryKey: [],
+    ...orpc.admin.banners.search.queryOptions({ input: {} }),
     enabled: isOpen,
     staleTime: 0
   });
 
   const [items, setItems] = useState<IAdminBannerBriefDto[]>([]);
 
-  const { mutate: reoder, isPending: isReordering } = useReorderBannersMutation({
+  const { mutate: reoder, isPending: isReordering } = useMutation({
+    ...orpc.admin.banners.reorder.mutationOptions(),
     onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.banners.key() });
       setIsOpen(false);
       afterSuccess?.();
     },

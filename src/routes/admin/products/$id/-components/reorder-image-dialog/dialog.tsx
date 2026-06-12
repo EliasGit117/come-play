@@ -19,7 +19,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
-import { useReorderProductImagesMutation } from '@/features/products/server-functions/admin/reorder-product-images';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 interface IReorderProductImagesDialogProps {
@@ -38,15 +39,17 @@ export const ReorderProductImagesDialog: FC<
   });
 
   const [items, setItems] = useState<IAdminProductImageDto[]>([]);
+  const queryClient = useQueryClient();
 
-  const { mutate: reorder, isPending: isReordering } =
-    useReorderProductImagesMutation({
-      onSuccess: () => {
-        setIsOpen(false);
-        afterSuccess?.();
-      },
-      onError: (e) => toast.error(e.name, { description: e.message })
-    });
+  const { mutate: reorder, isPending: isReordering } = useMutation({
+    ...orpc.admin.products.reorderImages.mutationOptions(),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.products.key() });
+      setIsOpen(false);
+      afterSuccess?.();
+    },
+    onError: (e) => toast.error(e.name, { description: e.message })
+  });
 
   useEffect(() => {
     if (isOpen) {

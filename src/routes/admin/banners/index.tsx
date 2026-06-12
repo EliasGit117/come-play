@@ -1,8 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import {
-  getBannersForAdminQueryOptions,
-  getBannersForAdminSchema
-} from '@/features/banners/server-functions/admin/get-banners-for-admin';
+import { getBannersForAdminSchema } from '@/features/banners/schemas/search-banners';
+import { orpc } from '@/lib/orpc';
 import { BannerTable } from '@/routes/admin/banners/-components/banners-table';
 import { awaitIfServer } from '@/lib/await-if-server';
 
@@ -12,7 +10,7 @@ export const Route = createFileRoute('/admin/banners/')({
   validateSearch: getBannersForAdminSchema,
   loaderDeps: (deps) => deps,
   loader: async ({ context, deps: { search } }) => {
-    await awaitIfServer(context.queryClient.prefetchQuery(getBannersForAdminQueryOptions(search)));
+    await awaitIfServer(context.queryClient.prefetchQuery(orpc.admin.banners.search.queryOptions({ input: search })));
   },
   head: () => {
     return { meta: [{ title: 'Banners' }] };

@@ -1,13 +1,12 @@
 import { IconArrowBackUp, IconDeviceDesktop, IconDeviceFloppy, IconDeviceMobile, IconDeviceTablet, TablerIcon } from '@tabler/icons-react';
 import { createFileRoute } from '@tanstack/react-router';
-import { getBannerByIdForAdminQueryOptions } from '@/features/banners/server-functions/admin/get-banner-by-id-for-admin';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { LoadingButton } from '@/components/ui/loading-button';
 
-import { useEditBannerMutation } from '@/features/banners/server-functions/admin/edit-banner';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -28,7 +27,7 @@ export const Route = createFileRoute('/admin/banners/$id/edit')({
   component: RouteComponent,
   staticData: { breadcrumbs: { title: 'Edit banner' } },
   loader: async ({ params: { id }, context }) => {
-    const data = await context.queryClient.ensureQueryData(getBannerByIdForAdminQueryOptions(id));
+    const data = await context.queryClient.ensureQueryData(orpc.admin.banners.getById.queryOptions({ input: { id: Number(id) } }));
     return {
       banner: data,
       breadcrumbs: { title: `Edit «${data.titleRo}»` }
@@ -49,7 +48,8 @@ interface IBannerUploaderItem {
 
 function RouteComponent() {
   const { id } = Route.useParams();
-  const { data: banner, isPending: isFetching } = useSuspenseQuery(getBannerByIdForAdminQueryOptions(id));
+  const queryClient = useQueryClient();
+  const { data: banner, isPending: isFetching } = useSuspenseQuery(orpc.admin.banners.getById.queryOptions({ input: { id: Number(id) } }));
   const [pendingImages, setPendingImages] = useState<Record<BannerImageType, boolean>>({
     desktop: false,
     tablet: false,
@@ -61,9 +61,14 @@ function RouteComponent() {
     defaultValues: { ...banner, path: banner.path ?? '' }
   });
 
-  const { mutate, isPending: isUpdating } = useEditBannerMutation({
+  const { mutate, isPending: isUpdating } = useMutation({
+    ...orpc.admin.banners.update.mutationOptions(),
     onError: (error) => toast.error(error.name, { description: error.message }),
-    onSuccess: data => form.reset({ ...data, path: data.path ?? '' })
+    onSuccess: data => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.banners.key() });
+      void queryClient.invalidateQueries({ queryKey: orpc.banners.key() });
+      form.reset({ ...data, path: data.path ?? '' });
+    }
   });
 
   const handleImagePending = (imageType: BannerImageType) => (value: boolean) => {
