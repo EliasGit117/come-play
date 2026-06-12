@@ -6,6 +6,7 @@ import LinkedInLogo from '@/assets/icons/socials/linkedin.svg?react';
 import TwitterLogo from '@/assets/icons/socials/twitter.svg?react';
 import LogoFull from '@/assets/icons/logo/full.svg?react';
 import { Button } from '@/components/ui/button';
+import { m } from '@/paraglide/messages';
 
 
 interface IProps extends ComponentProps<'footer'> {}
@@ -23,13 +24,13 @@ const AppFooter: FC<IProps> = ({ className, ...props }) => {
       <div className="container mx-auto p-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-4 order-last md:order-first">
           <p className="text-xs md:text-sm text-center md:text-start">
-            <b>itc Headquater:</b> Building NO. A13-1, Yiku Industrial Park, The Hills, Dongyi Road, Panyu District,
+            <b>{m['layout.footer.headquarters_label']()}:</b> Building NO. A13-1, Yiku Industrial Park, The Hills, Dongyi Road, Panyu District,
             Guangzhou,
             China 511492
           </p>
 
           <p className="text-xs md:text-sm text-center md:text-start">
-            <b>Email:</b> info@itc-pa.com, <b>Phone:</b> +86-020-3567 2981
+            <b>{m['layout.footer.email_label']()}:</b> info@itc-pa.com, <b>{m['layout.footer.phone_label']()}:</b> +86-020-3567 2981
           </p>
         </div>
 
@@ -39,22 +40,22 @@ const AppFooter: FC<IProps> = ({ className, ...props }) => {
           <div className="flex gap-2 items-center">
             <Button variant='ghost' size='icon-sm' className={iconLinkClassName}>
               <LinkedInLogo/>
-              <span className='sr-only'>Linkedin link</span>
+              <span className='sr-only'>{m['layout.footer.social.linkedin']()}</span>
             </Button>
 
             <Button variant='ghost' size='icon-sm' className={iconLinkClassName}>
               <YoutubeLogo/>
-              <span className='sr-only'>Youtube link</span>
+              <span className='sr-only'>{m['layout.footer.social.youtube']()}</span>
             </Button>
 
             <Button variant='ghost' size='icon-sm' className={iconLinkClassName}>
               <FacebookLogo/>
-              <span className='sr-only'>Facebook link</span>
+              <span className='sr-only'>{m['layout.footer.social.facebook']()}</span>
             </Button>
 
             <Button variant='ghost' size='icon-sm' className={iconLinkClassName}>
               <TwitterLogo/>
-              <span className='sr-only'>Twitter link</span>
+              <span className='sr-only'>{m['layout.footer.social.twitter']()}</span>
             </Button>
           </div>
         </div>

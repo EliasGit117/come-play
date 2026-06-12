@@ -1,4 +1,4 @@
-import { IconCarouselHorizontal, IconHome, IconLayoutDashboard, IconNews, IconSettings, IconShoppingBag, IconShoppingCart, IconTag, IconTags } from '@tabler/icons-react';
+import { IconCarouselHorizontal, IconInbox, IconLayoutDashboard, IconNews } from '@tabler/icons-react';
 import { ComponentProps } from 'react';
 import { NavLinkGroup } from './nav-link-group';
 import { NavUser } from './nav-user';
@@ -23,15 +23,12 @@ interface IAdminSidebarProps extends ComponentProps<typeof Sidebar> {}
 export function AdminSidebar({ ...props }: IAdminSidebarProps) {
 
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
+    <Sidebar variant='floating' collapsible="offcanvas" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              className="data-[slot=sidebar-menu-button]:p-1.5! h-10"
-            >
-              <Link to="/admin" className='flex gap-2'>
+            <SidebarMenuButton className="data-[slot=sidebar-menu-button]:p-1.5! h-10" asChild>
+              <Link to="/" className='flex gap-2'>
                 <LogoIcon className='size-7.5! text-foreground'/>
                 <span className='flex flex-col'>
                   <LogoText className='h-3.5! w-fit! text-foreground'/>
@@ -58,11 +55,6 @@ export function AdminSidebar({ ...props }: IAdminSidebarProps) {
 
 const navMain: INavItem[] = [
   {
-    title: 'Home',
-    linkOptions: { to: '/',  activeOptions: { exact: true } },
-    icon: IconHome
-  },
-  {
     title: 'Dashboard',
     linkOptions: { to: '/admin', activeOptions: { exact: true } },
     icon: IconLayoutDashboard
@@ -73,28 +65,13 @@ const navMain: INavItem[] = [
     icon: IconCarouselHorizontal,
   },
   {
+    title: 'Requests',
+    linkOptions: { to: '/admin/customer-requests' },
+    icon: IconInbox
+  },
+  {
     title: 'News',
     linkOptions: { to: '/admin/news' },
     icon: IconNews
-  },
-  {
-    title: 'Products',
-    linkOptions: { to: '/admin/products' },
-    icon: IconShoppingBag
-  },
-  {
-    title: 'Categories',
-    linkOptions: { to: '/admin/categories' },
-    icon: IconTag
-  },
-  {
-    title: 'Subcategories',
-    linkOptions: { to: '/admin/subcategories' },
-    icon: IconTags
-  },
-  {
-    title: 'Settings',
-    linkOptions: { to: '/' },
-    icon: IconSettings
   }
 ];

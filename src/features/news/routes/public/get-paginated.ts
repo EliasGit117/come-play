@@ -6,6 +6,8 @@ import { getNewsPaginatedSchema } from '@/features/news/schemas/search-news';
 import { NewsBriefDtoFactory } from '@/features/news/dtos/news-brief-dto';
 import { INewsDto } from '@/features/news/dtos/news-dto';
 import { IPaginationResultWithCountDto, PaginationResultDtoFactory } from '@/features/common/pagination/pagination-result-dto';
+import { getLocale } from '@/paraglide/runtime';
+
 
 export const getNewsPaginated = newsPublicBase
   .route({
@@ -18,9 +20,8 @@ export const getNewsPaginated = newsPublicBase
   .input(getNewsPaginatedSchema)
   .output(type<IPaginationResultWithCountDto<INewsDto>>())
   .handler(async ({ input: data }) => {
-    const where: Prisma.NewsWhereInput = {
-      status: { equals: NewsStatus.published },
-    };
+    const locale = getLocale();
+    const where: Prisma.NewsWhereInput = { status: { equals: NewsStatus.published } };
 
     if (!!data.title)
       where.OR = [
@@ -40,5 +41,5 @@ export const getNewsPaginated = newsPublicBase
         page: data.page ?? 1,
       });
 
-    return PaginationResultDtoFactory.getWithCount(NewsBriefDtoFactory.fromEntities(items), meta);
+    return PaginationResultDtoFactory.getWithCount(NewsBriefDtoFactory.fromEntities(items, locale), meta);
   });

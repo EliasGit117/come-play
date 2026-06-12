@@ -70,7 +70,7 @@ const AppSidebar = () => {
               if (link.type === MenuItemType.Single) {
                 return (
                   <SidebarLink
-                    className='py-4'
+                    className='py-3'
                     key={`single-${index}`}
                     item={link.item}
                     variant="link"

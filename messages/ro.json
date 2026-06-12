@@ -11,6 +11,19 @@
     "submit": "Trimite",
     "cancel": "Anulare"
   },
+  "layout": {
+    "footer": {
+      "headquarters_label": "Sediu",
+      "email_label": "Email",
+      "phone_label": "Telefon",
+      "social": {
+        "linkedin": "Link LinkedIn",
+        "youtube": "Link Youtube",
+        "facebook": "Link Facebook",
+        "twitter": "Link Twitter"
+      }
+    }
+  },
   "pages": {
     "public": {
       "calculator": {
@@ -66,6 +79,7 @@
           "message": "Mesaj",
           "messagePlaceholder": "Aici poți scrie un mesaj pentru noi",
           "submit": "Trimite",
+          "success": "Mesajul a fost trimis cu succes!",
           "validation": {
             "firstNameRequired": "Prenumele este obligatoriu",
             "lastNameRequired": "Numele este obligatoriu",

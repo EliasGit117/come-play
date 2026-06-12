@@ -11,6 +11,19 @@
     "submit": "Отправить",
     "cancel": "Отмена"
   },
+  "layout": {
+    "footer": {
+      "headquarters_label": "Штаб-квартира",
+      "email_label": "Email",
+      "phone_label": "Телефон",
+      "social": {
+        "linkedin": "Ссылка на LinkedIn",
+        "youtube": "Ссылка на Youtube",
+        "facebook": "Ссылка на Facebook",
+        "twitter": "Ссылка на Twitter"
+      }
+    }
+  },
   "pages": {
     "public": {
       "calculator": {
@@ -66,6 +79,7 @@
           "message": "Сообщение",
           "messagePlaceholder": "Здесь вы можете написать нам сообщение",
           "submit": "Отправить",
+          "success": "Сообщение успешно отправлено!",
           "validation": {
             "firstNameRequired": "Имя обязательно",
             "lastNameRequired": "Фамилия обязательна",

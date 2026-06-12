@@ -66,18 +66,20 @@ export function DataTableColumnHeader<TData, TValue>(props: DataTableColumnHeade
           <DropdownMenuGroup>
             <DropdownMenuRadioGroup value={`${isSorted}`}>
               <DropdownMenuRadioItem value="asc" onClick={() => toggleSorting(false)}>
-                <span>ASC</span>
+                <IconChevronUp className='text-muted-foreground'/>
+                <span>Asc</span>
               </DropdownMenuRadioItem>
 
               <DropdownMenuRadioItem value="desc" onClick={() => toggleSorting(true)}>
-                <span>DESC</span>
+                <IconChevronDown className='text-muted-foreground'/>
+                <span>Desc</span>
               </DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuGroup>
 
           {isSorted && (
             <DropdownMenuItem onClick={clearSorting}>
-              <IconEraser/>
+              <IconEraser className='text-muted-foreground'/>
               <span>Clear</span>
             </DropdownMenuItem>
           )}
@@ -85,7 +87,7 @@ export function DataTableColumnHeader<TData, TValue>(props: DataTableColumnHeade
           <DropdownMenuSeparator/>
 
           <DropdownMenuItem onClick={hide}>
-            <IconEyeOff/>
+            <IconEyeOff className='text-muted-foreground'/>
             <span>Hide</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

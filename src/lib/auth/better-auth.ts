@@ -14,12 +14,12 @@ export const auth = betterAuth({
   secret: serverEnvConfig.betterAuthSecret,
   emailAndPassword: { enabled: true },
   plugins: [
-    tanstackStartCookies(),
     admin({
       defaultRole: 'user',
       ac: accessControl,
       roles: roles,
     }),
+    tanstackStartCookies(),
   ],
 });
 

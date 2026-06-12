@@ -4,6 +4,7 @@ import { NewsStatus } from '@prisma/client';
 import prisma from '@/lib/prisma';
 import { newsPublicBase, newsPublicPath } from './base';
 import { INewsDto, NewsDtoFactory } from '@/features/news/dtos/news-dto';
+import { getLocale } from '@/paraglide/runtime';
 
 export const getNewsBySlug = newsPublicBase
   .route({
@@ -17,6 +18,7 @@ export const getNewsBySlug = newsPublicBase
   .input(z.object({ slug: z.string() }))
   .output(type<INewsDto>())
   .handler(async ({ input: { slug }, errors }) => {
+    const locale = getLocale();
     const news = await prisma.news.findUnique({
       where: { slug: slug, status: NewsStatus.published },
       include: { image: true },
@@ -25,5 +27,5 @@ export const getNewsBySlug = newsPublicBase
     if (!news)
       throw errors.NOT_FOUND();
 
-    return NewsDtoFactory.fromEntity(news);
+    return NewsDtoFactory.fromEntity(news, locale);
   });

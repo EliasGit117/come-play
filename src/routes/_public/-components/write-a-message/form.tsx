@@ -11,6 +11,8 @@ import { LoadingButton } from '@/components/ui/loading-button';
 
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { m } from '@/paraglide/messages';
+import { orpc } from '@/lib/orpc';
+import { useMutation } from '@tanstack/react-query';
 
 const contactSchema = z.object({
   firstName: z.string().min(1),
@@ -45,14 +47,17 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
     }
   });
 
+  const { mutate, isPending } = useMutation({
+    ...orpc.customerRequests.create.mutationOptions(),
+    onError: (e) => toast.error(e.name, { description: e.message }),
+    onSuccess: () => {
+      form.reset();
+      toast.success(m['pages.public.home.contact.success']());
+    }
+  });
+
   function onSubmit(data: TContactForm) {
-    toast('You submitted the following values', {
-      description: (
-        <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      )
-    });
+    mutate(data);
   }
 
   return (
@@ -147,7 +152,7 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
           />
 
           <Field orientation='horizontal' className='col-span-full'>
-            <LoadingButton className="w-full md:w-fit md:ml-auto" loading={false} disabled={false}>
+            <LoadingButton type="submit" className="w-full md:w-fit md:ml-auto" loading={isPending} disabled={isPending}>
               <IconSend/>
               <span>{m['pages.public.home.contact.submit']()}</span>
             </LoadingButton>

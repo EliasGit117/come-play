@@ -14,19 +14,17 @@ import { Route as PublicRouteRouteImport } from './routes/_public/route'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as AdminNewsRouteRouteImport } from './routes/admin/news/route'
+import { Route as AdminCustomerRequestsRouteRouteImport } from './routes/admin/customer-requests/route'
 import { Route as AdminBannersRouteRouteImport } from './routes/admin/banners/route'
 import { Route as AuthSignInIndexRouteImport } from './routes/auth/sign-in/index'
-import { Route as AdminSubcategoriesIndexRouteImport } from './routes/admin/subcategories/index'
-import { Route as AdminProductsIndexRouteImport } from './routes/admin/products/index'
 import { Route as AdminNewsIndexRouteImport } from './routes/admin/news/index'
-import { Route as AdminCategoriesIndexRouteImport } from './routes/admin/categories/index'
+import { Route as AdminCustomerRequestsIndexRouteImport } from './routes/admin/customer-requests/index'
 import { Route as AdminBannersIndexRouteImport } from './routes/admin/banners/index'
 import { Route as PublicNewsIndexRouteImport } from './routes/_public/news/index'
 import { Route as PublicCalculatorIndexRouteImport } from './routes/_public/calculator/index'
 import { Route as ApiRpcSplatRouteImport } from './routes/api/rpc.$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 import { Route as PublicNewsSlugRouteImport } from './routes/_public/news/$slug'
-import { Route as AdminProductsIdEditRouteImport } from './routes/admin/products/$id/edit'
 import { Route as AdminNewsIdEditRouteImport } from './routes/admin/news/$id/edit'
 import { Route as AdminBannersIdEditRouteImport } from './routes/admin/banners/$id/edit'
 
@@ -54,6 +52,12 @@ const AdminNewsRouteRoute = AdminNewsRouteRouteImport.update({
   path: '/news',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminCustomerRequestsRouteRoute =
+  AdminCustomerRequestsRouteRouteImport.update({
+    id: '/customer-requests',
+    path: '/customer-requests',
+    getParentRoute: () => AdminRouteRoute,
+  } as any)
 const AdminBannersRouteRoute = AdminBannersRouteRouteImport.update({
   id: '/banners',
   path: '/banners',
@@ -64,26 +68,17 @@ const AuthSignInIndexRoute = AuthSignInIndexRouteImport.update({
   path: '/auth/sign-in/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminSubcategoriesIndexRoute = AdminSubcategoriesIndexRouteImport.update({
-  id: '/subcategories/',
-  path: '/subcategories/',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminProductsIndexRoute = AdminProductsIndexRouteImport.update({
-  id: '/products/',
-  path: '/products/',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
 const AdminNewsIndexRoute = AdminNewsIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminNewsRouteRoute,
 } as any)
-const AdminCategoriesIndexRoute = AdminCategoriesIndexRouteImport.update({
-  id: '/categories/',
-  path: '/categories/',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
+const AdminCustomerRequestsIndexRoute =
+  AdminCustomerRequestsIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AdminCustomerRequestsRouteRoute,
+  } as any)
 const AdminBannersIndexRoute = AdminBannersIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -114,11 +109,6 @@ const PublicNewsSlugRoute = PublicNewsSlugRouteImport.update({
   path: '/news/$slug',
   getParentRoute: () => PublicRouteRoute,
 } as any)
-const AdminProductsIdEditRoute = AdminProductsIdEditRouteImport.update({
-  id: '/products/$id/edit',
-  path: '/products/$id/edit',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
 const AdminNewsIdEditRoute = AdminNewsIdEditRouteImport.update({
   id: '/$id/edit',
   path: '/$id/edit',
@@ -134,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/admin/banners': typeof AdminBannersRouteRouteWithChildren
+  '/admin/customer-requests': typeof AdminCustomerRequestsRouteRouteWithChildren
   '/admin/news': typeof AdminNewsRouteRouteWithChildren
   '/admin/': typeof AdminIndexRoute
   '/news/$slug': typeof PublicNewsSlugRoute
@@ -142,14 +133,11 @@ export interface FileRoutesByFullPath {
   '/calculator/': typeof PublicCalculatorIndexRoute
   '/news/': typeof PublicNewsIndexRoute
   '/admin/banners/': typeof AdminBannersIndexRoute
-  '/admin/categories/': typeof AdminCategoriesIndexRoute
+  '/admin/customer-requests/': typeof AdminCustomerRequestsIndexRoute
   '/admin/news/': typeof AdminNewsIndexRoute
-  '/admin/products/': typeof AdminProductsIndexRoute
-  '/admin/subcategories/': typeof AdminSubcategoriesIndexRoute
   '/auth/sign-in/': typeof AuthSignInIndexRoute
   '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
-  '/admin/products/$id/edit': typeof AdminProductsIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
@@ -160,20 +148,18 @@ export interface FileRoutesByTo {
   '/calculator': typeof PublicCalculatorIndexRoute
   '/news': typeof PublicNewsIndexRoute
   '/admin/banners': typeof AdminBannersIndexRoute
-  '/admin/categories': typeof AdminCategoriesIndexRoute
+  '/admin/customer-requests': typeof AdminCustomerRequestsIndexRoute
   '/admin/news': typeof AdminNewsIndexRoute
-  '/admin/products': typeof AdminProductsIndexRoute
-  '/admin/subcategories': typeof AdminSubcategoriesIndexRoute
   '/auth/sign-in': typeof AuthSignInIndexRoute
   '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
-  '/admin/products/$id/edit': typeof AdminProductsIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_public': typeof PublicRouteRouteWithChildren
   '/admin': typeof AdminRouteRouteWithChildren
   '/admin/banners': typeof AdminBannersRouteRouteWithChildren
+  '/admin/customer-requests': typeof AdminCustomerRequestsRouteRouteWithChildren
   '/admin/news': typeof AdminNewsRouteRouteWithChildren
   '/_public/': typeof PublicIndexRoute
   '/admin/': typeof AdminIndexRoute
@@ -183,14 +169,11 @@ export interface FileRoutesById {
   '/_public/calculator/': typeof PublicCalculatorIndexRoute
   '/_public/news/': typeof PublicNewsIndexRoute
   '/admin/banners/': typeof AdminBannersIndexRoute
-  '/admin/categories/': typeof AdminCategoriesIndexRoute
+  '/admin/customer-requests/': typeof AdminCustomerRequestsIndexRoute
   '/admin/news/': typeof AdminNewsIndexRoute
-  '/admin/products/': typeof AdminProductsIndexRoute
-  '/admin/subcategories/': typeof AdminSubcategoriesIndexRoute
   '/auth/sign-in/': typeof AuthSignInIndexRoute
   '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
-  '/admin/products/$id/edit': typeof AdminProductsIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -198,6 +181,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/admin/banners'
+    | '/admin/customer-requests'
     | '/admin/news'
     | '/admin/'
     | '/news/$slug'
@@ -206,14 +190,11 @@ export interface FileRouteTypes {
     | '/calculator/'
     | '/news/'
     | '/admin/banners/'
-    | '/admin/categories/'
+    | '/admin/customer-requests/'
     | '/admin/news/'
-    | '/admin/products/'
-    | '/admin/subcategories/'
     | '/auth/sign-in/'
     | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
-    | '/admin/products/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -224,19 +205,17 @@ export interface FileRouteTypes {
     | '/calculator'
     | '/news'
     | '/admin/banners'
-    | '/admin/categories'
+    | '/admin/customer-requests'
     | '/admin/news'
-    | '/admin/products'
-    | '/admin/subcategories'
     | '/auth/sign-in'
     | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
-    | '/admin/products/$id/edit'
   id:
     | '__root__'
     | '/_public'
     | '/admin'
     | '/admin/banners'
+    | '/admin/customer-requests'
     | '/admin/news'
     | '/_public/'
     | '/admin/'
@@ -246,14 +225,11 @@ export interface FileRouteTypes {
     | '/_public/calculator/'
     | '/_public/news/'
     | '/admin/banners/'
-    | '/admin/categories/'
+    | '/admin/customer-requests/'
     | '/admin/news/'
-    | '/admin/products/'
-    | '/admin/subcategories/'
     | '/auth/sign-in/'
     | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
-    | '/admin/products/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -301,6 +277,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminNewsRouteRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/customer-requests': {
+      id: '/admin/customer-requests'
+      path: '/customer-requests'
+      fullPath: '/admin/customer-requests'
+      preLoaderRoute: typeof AdminCustomerRequestsRouteRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/banners': {
       id: '/admin/banners'
       path: '/banners'
@@ -315,20 +298,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignInIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/subcategories/': {
-      id: '/admin/subcategories/'
-      path: '/subcategories'
-      fullPath: '/admin/subcategories/'
-      preLoaderRoute: typeof AdminSubcategoriesIndexRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/products/': {
-      id: '/admin/products/'
-      path: '/products'
-      fullPath: '/admin/products/'
-      preLoaderRoute: typeof AdminProductsIndexRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
     '/admin/news/': {
       id: '/admin/news/'
       path: '/'
@@ -336,12 +305,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminNewsIndexRouteImport
       parentRoute: typeof AdminNewsRouteRoute
     }
-    '/admin/categories/': {
-      id: '/admin/categories/'
-      path: '/categories'
-      fullPath: '/admin/categories/'
-      preLoaderRoute: typeof AdminCategoriesIndexRouteImport
-      parentRoute: typeof AdminRouteRoute
+    '/admin/customer-requests/': {
+      id: '/admin/customer-requests/'
+      path: '/'
+      fullPath: '/admin/customer-requests/'
+      preLoaderRoute: typeof AdminCustomerRequestsIndexRouteImport
+      parentRoute: typeof AdminCustomerRequestsRouteRoute
     }
     '/admin/banners/': {
       id: '/admin/banners/'
@@ -384,13 +353,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/news/$slug'
       preLoaderRoute: typeof PublicNewsSlugRouteImport
       parentRoute: typeof PublicRouteRoute
-    }
-    '/admin/products/$id/edit': {
-      id: '/admin/products/$id/edit'
-      path: '/products/$id/edit'
-      fullPath: '/admin/products/$id/edit'
-      preLoaderRoute: typeof AdminProductsIdEditRouteImport
-      parentRoute: typeof AdminRouteRoute
     }
     '/admin/news/$id/edit': {
       id: '/admin/news/$id/edit'
@@ -440,6 +402,20 @@ const AdminBannersRouteRouteChildren: AdminBannersRouteRouteChildren = {
 const AdminBannersRouteRouteWithChildren =
   AdminBannersRouteRoute._addFileChildren(AdminBannersRouteRouteChildren)
 
+interface AdminCustomerRequestsRouteRouteChildren {
+  AdminCustomerRequestsIndexRoute: typeof AdminCustomerRequestsIndexRoute
+}
+
+const AdminCustomerRequestsRouteRouteChildren: AdminCustomerRequestsRouteRouteChildren =
+  {
+    AdminCustomerRequestsIndexRoute: AdminCustomerRequestsIndexRoute,
+  }
+
+const AdminCustomerRequestsRouteRouteWithChildren =
+  AdminCustomerRequestsRouteRoute._addFileChildren(
+    AdminCustomerRequestsRouteRouteChildren,
+  )
+
 interface AdminNewsRouteRouteChildren {
   AdminNewsIndexRoute: typeof AdminNewsIndexRoute
   AdminNewsIdEditRoute: typeof AdminNewsIdEditRoute
@@ -456,22 +432,16 @@ const AdminNewsRouteRouteWithChildren = AdminNewsRouteRoute._addFileChildren(
 
 interface AdminRouteRouteChildren {
   AdminBannersRouteRoute: typeof AdminBannersRouteRouteWithChildren
+  AdminCustomerRequestsRouteRoute: typeof AdminCustomerRequestsRouteRouteWithChildren
   AdminNewsRouteRoute: typeof AdminNewsRouteRouteWithChildren
   AdminIndexRoute: typeof AdminIndexRoute
-  AdminCategoriesIndexRoute: typeof AdminCategoriesIndexRoute
-  AdminProductsIndexRoute: typeof AdminProductsIndexRoute
-  AdminSubcategoriesIndexRoute: typeof AdminSubcategoriesIndexRoute
-  AdminProductsIdEditRoute: typeof AdminProductsIdEditRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminBannersRouteRoute: AdminBannersRouteRouteWithChildren,
+  AdminCustomerRequestsRouteRoute: AdminCustomerRequestsRouteRouteWithChildren,
   AdminNewsRouteRoute: AdminNewsRouteRouteWithChildren,
   AdminIndexRoute: AdminIndexRoute,
-  AdminCategoriesIndexRoute: AdminCategoriesIndexRoute,
-  AdminProductsIndexRoute: AdminProductsIndexRoute,
-  AdminSubcategoriesIndexRoute: AdminSubcategoriesIndexRoute,
-  AdminProductsIdEditRoute: AdminProductsIdEditRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(

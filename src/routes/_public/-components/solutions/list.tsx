@@ -1,18 +1,10 @@
-import { ComponentProps, FC, useState } from 'react';
+import { ComponentProps, FC } from 'react';
 import { cn } from '@/lib/utils';
 import { Link, LinkOptions } from '@tanstack/react-router';
-import { IconChevronDown } from '@tabler/icons-react';
 import conferenceRoomImg from '/images/home/solutions/conference-room.jpg';
 import stadiumImg from '/images/home/solutions/stadium.jpg';
 import advertisingImg from '/images/home/solutions/advertising.png';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
 import { m } from '@/paraglide/messages';
 
 
@@ -75,9 +67,6 @@ const SolutionList: FC<IProps> = ({ className, ...props }) => {
     }
   ];
 
-  const [selectedId, setSelectedId] = useState(descriptions[0].id);
-  const selected = descriptions.find((d) => d.id === selectedId) ?? descriptions[0];
-
   return (
     <section className={cn('space-y-8', className)} {...props}>
       <div>
@@ -96,30 +85,17 @@ const SolutionList: FC<IProps> = ({ className, ...props }) => {
       </div>
 
 
-      <div className="space-y-4">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="w-full sm:w-80 justify-between font-semibold uppercase">
-              {selected.title}
-              <IconChevronDown className="opacity-50"/>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="w-(--radix-dropdown-menu-trigger-width)">
-            {descriptions.map((desc) => (
-              <DropdownMenuItem
-                key={desc.id}
-                onSelect={() => setSelectedId(desc.id)}
-                className="uppercase font-medium"
-              >
-                {desc.title}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        <p className="text-sm text-muted-foreground max-w-2xl">
-          {selected.text}
-        </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+        {descriptions.map((desc) => (
+          <div key={desc.id} className="space-y-2">
+            <h3 className="font-semibold uppercase">
+              {desc.title}
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              {desc.text}
+            </p>
+          </div>
+        ))}
       </div>
     </section>
   );

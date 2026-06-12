@@ -1,4 +1,4 @@
-import { IconDotsVertical, IconUser, IconUserCircle } from '@tabler/icons-react';
+import { IconDotsVertical, IconLogout, IconUserCircle } from '@tabler/icons-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -15,19 +15,22 @@ import {
   SidebarMenuItem,
   useSidebar
 } from '@/components/ui/sidebar';
-
-import React from 'react';
 import { Link } from '@tanstack/react-router';
-
-
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { authClient } from '@/lib/auth';
+import { orpc } from '@/lib/orpc';
+import { Spinner } from '@/components/ui/spinner';
+import { pickFirstLetters } from '@/utils/text';
+import { useAuth } from '@/hooks/use-auth';
 
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  const user = {
-    email: 'test@gmail.com',
-    name: 'Test User',
-  }
+  const { user } = useAuth();
+
+  if (!user)
+    return null;
 
   return (
     <SidebarMenu>
@@ -38,10 +41,9 @@ export function NavUser() {
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg grayscale border">
-                {/*<AvatarImage src={user.avatar} alt={user.name} />*/}
-                <AvatarFallback className="rounded-lg">
-                  <IconUser className="size-4 text-muted-foreground"/>
+              <Avatar className="size-8 after:rounded-md">
+                <AvatarFallback className="rounded-lg uppercase">
+                  {pickFirstLetters(user.name, 2, 'uppercase')}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -61,14 +63,15 @@ export function NavUser() {
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
-                  {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
+                <Avatar className="size-8 after:rounded-md">
                   <AvatarFallback className="rounded-lg uppercase">
-                    {user.name.slice(0, 2)}
+                    {pickFirstLetters(user.name, 2, 'uppercase')}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
+                  <span className="truncate font-medium text-foreground">
+                    {user.name}
+                  </span>
                   <span className="text-muted-foreground truncate text-xs">
                     {user.email}
                   </span>
@@ -78,54 +81,54 @@ export function NavUser() {
             <DropdownMenuSeparator/>
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
-                <Link to='.'>
+                <Link to=".">
                   <IconUserCircle/>
                   <span>Account</span>
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator/>
-            {/*<LogoutButton/>*/}
+            <LogoutButton/>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
   );
 }
-//
-// const LogoutButton = () => {
-//
-//   const router = useRouter();
-//
-//   const { mutate, isPending } = useMutation({
-//     mutationFn: () => authClient.signOut(),
-//     onError: (error) => {
-//       toast.error(error.name, { description: error.message });
-//     },
-//     onSuccess: async (data) => {
-//       if (data.error) {
-//         toast.error('Error', { description: data.error.message });
-//         return;
-//       }
-//
-//       router.replace('/');
-//     }
-//   });
-//
-//   return (
-//     <DropdownMenuItem onClick={() => mutate()} disabled={isPending}>
-//       {
-//         isPending ?
-//           <>
-//             <LoaderCircle className="animate-spin"/>
-//             <span>Logging out</span>
-//           </> :
-//           <>
-//             <LogOutIcon/>
-//             <span>Logout</span>
-//           </>
-//       }
-//     </DropdownMenuItem>
-//   );
-//
-// };
+
+
+const LogoutButton = () => {
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: () => authClient.signOut(),
+    onError: (error) => {
+      toast.error(error.name, { description: error.message });
+    },
+    onSuccess: async (data) => {
+      if (data.error) {
+        toast.error('Error', { description: data.error.message });
+        return;
+      }
+
+      await queryClient.invalidateQueries({ queryKey: orpc.sessions.current.queryKey() });
+    }
+  });
+
+  return (
+    <DropdownMenuItem variant="destructive" onClick={() => mutate()} disabled={isPending}>
+      {
+        isPending ?
+          <>
+            <Spinner/>
+            <span>Logging out</span>
+          </> :
+          <>
+            <IconLogout/>
+            <span>Logout</span>
+          </>
+      }
+    </DropdownMenuItem>
+  );
+
+};
