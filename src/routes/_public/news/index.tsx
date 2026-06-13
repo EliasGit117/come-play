@@ -19,6 +19,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import NewsPreviewLink from '@/components/news-preview-link';
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group';
 import { Button } from "@/components/ui/button";
+import { m } from '@/paraglide/messages';
 
 
 export const Route = createFileRoute('/_public/news/')({
@@ -42,8 +43,8 @@ function RouteComponent() {
     <main className="container mx-auto flex flex-col flex-1 gap-8 p-4">
       <header className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">News</h1>
-          <p className="text-muted-foreground mt-2">Stay updated with the most recent articles</p>
+          <h1 className="text-3xl font-bold tracking-tight">{m['pages.public.news.list.title']()}</h1>
+          <p className="text-muted-foreground mt-2">{m['pages.public.news.list.subtitle']()}</p>
         </div>
         <SearchPanel className='mt-auto'/>
       </header>
@@ -100,7 +101,7 @@ const SearchPanel: FC<ComponentProps<'div'>> = ({ className, ...props }) => {
       <InputGroup className="md:max-w-xs">
         <InputGroupInput
           value={_title}
-          placeholder="Search by title"
+          placeholder={m['pages.public.news.list.searchPlaceholder']()}
           onChange={(e) => {
             setTitle(e.target.value);
             debouncedInputChange(e.target.value);
@@ -119,20 +120,20 @@ const SearchPanel: FC<ComponentProps<'div'>> = ({ className, ...props }) => {
         <DropdownMenuTrigger asChild>
           <Button type="button" variant="outline">
             {dir === 'asc' ? <IconSortAscending/> : <IconSortDescending/>}
-            <span className="capitalize">{dir ?? 'desc'}</span>
+            <span>{dir === 'asc' ? m['pages.public.news.list.asc']() : m['pages.public.news.list.desc']()}</span>
           </Button>
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Order direction</DropdownMenuLabel>
+          <DropdownMenuLabel>{m['pages.public.news.list.orderDirection']()}</DropdownMenuLabel>
           <DropdownMenuRadioGroup value={dir ?? 'desc'} onValueChange={onDirSelectValueChange}>
             <DropdownMenuRadioItem value="asc">
               <IconSortAscending/>
-              <span>Asc</span>
+              <span>{m['pages.public.news.list.asc']()}</span>
             </DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="desc">
               <IconSortDescending/>
-              <span>Desc</span>
+              <span>{m['pages.public.news.list.desc']()}</span>
             </DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>

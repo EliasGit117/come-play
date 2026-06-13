@@ -2,18 +2,19 @@ import { createFileRoute, notFound } from '@tanstack/react-router';
 import { orpc } from '@/lib/orpc';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import { ro } from 'date-fns/locale';
+import { ro, ru } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
 import imgPlaceholder from '/images/news/placeholder.webp';
 import { NotFoundCard } from '@/components/not-found-card';
+import { m } from '@/paraglide/messages';
+import { getLocale } from '@/paraglide/runtime';
+
+const dateLocales = { ro, ru } as const;
 
 
 export const Route = createFileRoute('/_public/news/$slug')({
   component: RouteComponent,
-  staticData: {
-    headerOptions: { type: 'fixed' }
-  },
   loader: async ({ context: { queryClient }, params: { slug } }) => {
     const res = await queryClient
       .ensureQueryData(orpc.news.getBySlug.queryOptions({ input: { slug } }))
@@ -27,31 +28,32 @@ export const Route = createFileRoute('/_public/news/$slug')({
   notFoundComponent: () => {
 
     return (
-      <>
-        <div className="relative w-full h-64 sm:h-80 md:h-96">
-          <UnLazyImageSSR
-            className="absolute inset-0 h-full w-full object-cover brightness-50"
-            src={imgPlaceholder}
-            thumbhash={'WecNFYR5dmZiiHegiJiIqptRfxf2'}
-          />
+      <main className="space-y-4 md:space-y-6 lg:space-y-8 pb-16 pt-6">
+        <header className="container mx-auto px-4 max-w-4xl">
+          <div className="relative overflow-hidden rounded-xl border border-border/50">
+            <UnLazyImageSSR
+              className="w-full h-[280px] md:h-[420px] object-cover"
+              src={imgPlaceholder}
+              thumbhash={'WecNFYR5dmZiiHegiJiIqptRfxf2'}
+            />
 
-          <div className="absolute inset-0 bg-black/20 backdrop-blur"/>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10"/>
 
-          <div
-            className="absolute inset-0 space-y-2 flex flex-col items-center justify-center text-center text-white p-4 pt-8"
-          >
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
-              Oops...
-            </h1>
-            <p className="text-xs sm:text-sm md:text-base text-white/80">
-              News has not been found
-            </p>
+            <div className="absolute inset-0 flex flex-col justify-end gap-3 md:gap-4 p-6 md:p-10 text-white">
+              <h1 className="text-3xl md:text-5xl font-bold max-w-3xl leading-tight">
+                {m['pages.public.news.notFound.title']()}
+              </h1>
+              <p className="text-sm md:text-lg text-white/85">
+                {m['pages.public.news.notFound.text']()}
+              </p>
+            </div>
           </div>
-        </div>
-        <main className="container mx-auto p-4">
+        </header>
+
+        <div className="container mx-auto p-4 max-w-4xl">
           <NotFoundCard className="mx-auto"/>
-        </main>
-      </>
+        </div>
+      </main>
     );
   }
 });
@@ -61,25 +63,25 @@ function RouteComponent() {
   const { data } = useSuspenseQuery({ ...orpc.news.getBySlug.queryOptions({ input: { slug } }) });
 
   return (
-    <main className="space-y-4 md:space-y-6 lg:space-y-8 pb-16">
-      <header className="relative w-full h-64 sm:h-80 md:h-96">
-        <UnLazyImageSSR
-          className="absolute inset-0 h-full w-full object-cover brightness-50"
-          src={data.image?.url ?? imgPlaceholder}
-          thumbhash={!!data.image ? data.image.thumbhash : 'qPcFDIDImA3ulpqUfjRHaF/Ahw=='}
-        />
+    <main className="space-y-4 md:space-y-6 lg:space-y-8 pb-16 pt-6">
+      <header className="container mx-auto px-4 max-w-4xl">
+        <div className="relative overflow-hidden rounded-xl border border-border/50">
+          <UnLazyImageSSR
+            className="w-full h-[280px] md:h-[420px] object-cover"
+            src={data.image?.url ?? imgPlaceholder}
+            thumbhash={!!data.image ? data.image.thumbhash : 'qPcFDIDImA3ulpqUfjRHaF/Ahw=='}
+          />
 
-        <div className="absolute inset-0 bg-black/20 backdrop-blur"/>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10"/>
 
-        <div
-          className="absolute inset-0 space-y-2 flex flex-col items-center justify-center text-center text-white p-4 pt-8"
-        >
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
-            {data?.title}
-          </h1>
-          <p className="text-xs sm:text-sm md:text-base text-white/80">
-            Published {data && format(data.createdAt, 'd MMMM yyyy', { locale: ro })}
-          </p>
+          <div className="absolute inset-0 flex flex-col justify-end gap-3 md:gap-4 p-6 md:p-10 text-white">
+            <h1 className="text-3xl md:text-5xl font-bold max-w-3xl leading-tight">
+              {data?.title}
+            </h1>
+            <p className="text-sm md:text-lg text-white/85">
+              {m['pages.public.news.detail.published']()} {data && format(data.createdAt, 'd MMMM yyyy', { locale: dateLocales[getLocale()] })}
+            </p>
+          </div>
         </div>
       </header>
 

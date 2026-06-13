@@ -10,6 +10,7 @@ import { useAppSidebar } from '@/components/layout/app-sidebar-provider';
 import LogoFull from '@/assets/icons/logo/full.svg?react';
 import { ThemeDropdown } from '@/components/theme';
 import { useBodyScrollPosition } from '@n8tb1t/use-scroll-position';
+import { m } from '@/paraglide/messages';
 
 
 interface IAppHeader extends ComponentProps<'header'> {}
@@ -92,7 +93,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
             <Button variant="ghost" size="icon" className="transition-none" asChild>
               <Link to="/calculator">
                 <IconCalculator/>
-                <span className="sr-only">Calculation page</span>
+                <span className="sr-only">{m['layout.header.sr.calculator']()}</span>
               </Link>
             </Button>
             <Button
@@ -102,7 +103,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
               onClick={() => setOpenSidebar(true)}
             >
               <IconMenu2/>
-              <span className="sr-only">Sidebar button</span>
+              <span className="sr-only">{m['layout.header.sr.menu']()}</span>
             </Button>
           </div>
         </div>

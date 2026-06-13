@@ -10,21 +10,22 @@ import {
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 import { ComponentProps, FC } from 'react';
-import { headerLinks, ILinkItem, MenuItemType } from '@/components/layout/data';
+import { getHeaderLinks, ILinkItem, MenuItemType } from '@/components/layout/data';
 
 interface IProps extends ComponentProps<typeof NavigationMenu> {
   transparent?: boolean;
 }
 
 const triggerAltClassName = cn(
-  'bg-transparent !text-inherit',
+  'bg-transparent data-open:focus:bg-muted/25 !text-inherit',
   'hover:bg-accent/15 focus:bg-accent/15 data-[state=open]:hover:bg-accent/25 data-[state=open]:focus:bg-accent-15 data-[state=open]:bg-accent/15',
   'hover:text-accent-foreground focus:text-accent-foreground data-[state=open]:text-accent-foreground  focus-visible:ring-ring/50'
 );
 
 
 const HeaderNavMenu: FC<IProps> = ({ transparent, ...props }) => {
-  const triggerClassName = cn('uppercase font-medium bg-transparent duration-0 [&_svg]:duration-0 [&_svg]:transition-none', transparent ? triggerAltClassName : '');
+  const headerLinks = getHeaderLinks();
+  const triggerClassName = cn('uppercase font-medium bg-transparent duration-0 [&_svg]:duration-0 [&_svg]:transition-none', transparent && triggerAltClassName);
 
   return (
     <NavigationMenu viewport={false} {...props}>

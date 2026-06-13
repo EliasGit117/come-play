@@ -25,8 +25,10 @@ import { Route as PublicCalculatorIndexRouteImport } from './routes/_public/calc
 import { Route as ApiRpcSplatRouteImport } from './routes/api/rpc.$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 import { Route as PublicNewsSlugRouteImport } from './routes/_public/news/$slug'
+import { Route as PublicProductsCategoryIndexRouteImport } from './routes/_public/products/$category/index'
 import { Route as AdminNewsIdEditRouteImport } from './routes/admin/news/$id/edit'
 import { Route as AdminBannersIdEditRouteImport } from './routes/admin/banners/$id/edit'
+import { Route as PublicProductsCategorySubcategoryRouteImport } from './routes/_public/products/$category/$subcategory'
 
 const AdminRouteRoute = AdminRouteRouteImport.update({
   id: '/admin',
@@ -109,6 +111,12 @@ const PublicNewsSlugRoute = PublicNewsSlugRouteImport.update({
   path: '/news/$slug',
   getParentRoute: () => PublicRouteRoute,
 } as any)
+const PublicProductsCategoryIndexRoute =
+  PublicProductsCategoryIndexRouteImport.update({
+    id: '/products/$category/',
+    path: '/products/$category/',
+    getParentRoute: () => PublicRouteRoute,
+  } as any)
 const AdminNewsIdEditRoute = AdminNewsIdEditRouteImport.update({
   id: '/$id/edit',
   path: '/$id/edit',
@@ -119,6 +127,12 @@ const AdminBannersIdEditRoute = AdminBannersIdEditRouteImport.update({
   path: '/$id/edit',
   getParentRoute: () => AdminBannersRouteRoute,
 } as any)
+const PublicProductsCategorySubcategoryRoute =
+  PublicProductsCategorySubcategoryRouteImport.update({
+    id: '/products/$category/$subcategory',
+    path: '/products/$category/$subcategory',
+    getParentRoute: () => PublicRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
@@ -136,8 +150,10 @@ export interface FileRoutesByFullPath {
   '/admin/customer-requests/': typeof AdminCustomerRequestsIndexRoute
   '/admin/news/': typeof AdminNewsIndexRoute
   '/auth/sign-in/': typeof AuthSignInIndexRoute
+  '/products/$category/$subcategory': typeof PublicProductsCategorySubcategoryRoute
   '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
+  '/products/$category/': typeof PublicProductsCategoryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
@@ -151,8 +167,10 @@ export interface FileRoutesByTo {
   '/admin/customer-requests': typeof AdminCustomerRequestsIndexRoute
   '/admin/news': typeof AdminNewsIndexRoute
   '/auth/sign-in': typeof AuthSignInIndexRoute
+  '/products/$category/$subcategory': typeof PublicProductsCategorySubcategoryRoute
   '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
+  '/products/$category': typeof PublicProductsCategoryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -172,8 +190,10 @@ export interface FileRoutesById {
   '/admin/customer-requests/': typeof AdminCustomerRequestsIndexRoute
   '/admin/news/': typeof AdminNewsIndexRoute
   '/auth/sign-in/': typeof AuthSignInIndexRoute
+  '/_public/products/$category/$subcategory': typeof PublicProductsCategorySubcategoryRoute
   '/admin/banners/$id/edit': typeof AdminBannersIdEditRoute
   '/admin/news/$id/edit': typeof AdminNewsIdEditRoute
+  '/_public/products/$category/': typeof PublicProductsCategoryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -193,8 +213,10 @@ export interface FileRouteTypes {
     | '/admin/customer-requests/'
     | '/admin/news/'
     | '/auth/sign-in/'
+    | '/products/$category/$subcategory'
     | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
+    | '/products/$category/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -208,8 +230,10 @@ export interface FileRouteTypes {
     | '/admin/customer-requests'
     | '/admin/news'
     | '/auth/sign-in'
+    | '/products/$category/$subcategory'
     | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
+    | '/products/$category'
   id:
     | '__root__'
     | '/_public'
@@ -228,8 +252,10 @@ export interface FileRouteTypes {
     | '/admin/customer-requests/'
     | '/admin/news/'
     | '/auth/sign-in/'
+    | '/_public/products/$category/$subcategory'
     | '/admin/banners/$id/edit'
     | '/admin/news/$id/edit'
+    | '/_public/products/$category/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -354,6 +380,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicNewsSlugRouteImport
       parentRoute: typeof PublicRouteRoute
     }
+    '/_public/products/$category/': {
+      id: '/_public/products/$category/'
+      path: '/products/$category'
+      fullPath: '/products/$category/'
+      preLoaderRoute: typeof PublicProductsCategoryIndexRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
     '/admin/news/$id/edit': {
       id: '/admin/news/$id/edit'
       path: '/$id/edit'
@@ -368,6 +401,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBannersIdEditRouteImport
       parentRoute: typeof AdminBannersRouteRoute
     }
+    '/_public/products/$category/$subcategory': {
+      id: '/_public/products/$category/$subcategory'
+      path: '/products/$category/$subcategory'
+      fullPath: '/products/$category/$subcategory'
+      preLoaderRoute: typeof PublicProductsCategorySubcategoryRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
   }
 }
 
@@ -376,6 +416,8 @@ interface PublicRouteRouteChildren {
   PublicNewsSlugRoute: typeof PublicNewsSlugRoute
   PublicCalculatorIndexRoute: typeof PublicCalculatorIndexRoute
   PublicNewsIndexRoute: typeof PublicNewsIndexRoute
+  PublicProductsCategorySubcategoryRoute: typeof PublicProductsCategorySubcategoryRoute
+  PublicProductsCategoryIndexRoute: typeof PublicProductsCategoryIndexRoute
 }
 
 const PublicRouteRouteChildren: PublicRouteRouteChildren = {
@@ -383,6 +425,9 @@ const PublicRouteRouteChildren: PublicRouteRouteChildren = {
   PublicNewsSlugRoute: PublicNewsSlugRoute,
   PublicCalculatorIndexRoute: PublicCalculatorIndexRoute,
   PublicNewsIndexRoute: PublicNewsIndexRoute,
+  PublicProductsCategorySubcategoryRoute:
+    PublicProductsCategorySubcategoryRoute,
+  PublicProductsCategoryIndexRoute: PublicProductsCategoryIndexRoute,
 }
 
 const PublicRouteRouteWithChildren = PublicRouteRoute._addFileChildren(
