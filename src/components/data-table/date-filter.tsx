@@ -8,6 +8,7 @@ import { ColumnFilterType } from '@/components/data-table/types/tanstack-table-m
 import { Separator } from '@/components/ui/separator';
 import { format } from 'date-fns';
 import { IconCalendar, IconCircleX, IconX } from '@tabler/icons-react';
+import { m } from '@/paraglide/messages';
 
 
 interface IDataTableDateFilterProps<TData, TValue>
@@ -103,7 +104,7 @@ export function DataTableDateFilter<TData, TValue>(props: IDataTableDateFilterPr
             <Separator/>
             <Button size="sm" variant="ghost" className="w-full" onClick={onReset}>
               <IconCircleX/>
-              <span>Clear</span>
+              <span>{m['dataTable.clear']()}</span>
             </Button>
           </div>
         )}

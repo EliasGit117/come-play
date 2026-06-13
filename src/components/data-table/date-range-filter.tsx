@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import { type DateRange } from 'react-day-picker';
 import { type TDateRange } from '@/components/data-table/types/schemas';
 import { IconCalendar, IconCircleX } from '@tabler/icons-react';
+import { m } from '@/paraglide/messages';
 
 
 
@@ -139,7 +140,7 @@ export function DataTableDateRangeFilter<TData, TValue>(props: IDataTableDateRan
             <Separator/>
             <Button size="sm" variant="ghost" className="w-full" onClick={onReset}>
               <IconCircleX/>
-              <span>Clear</span>
+              <span>{m['dataTable.clear']()}</span>
             </Button>
           </div>
         )}

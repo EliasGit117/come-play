@@ -16,6 +16,7 @@ import {
   IconPencil,
   IconDeviceMobile,
   IconDeviceTablet,
+  IconTrash,
   IconX
 } from '@tabler/icons-react';
 import { Badge } from '@/components/ui/badge';
@@ -37,6 +38,11 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useConfirm } from '@/components/ui/confirm-dialog';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { m } from '@/paraglide/messages';
 
 
 const columnHelper = createColumnHelper<IAdminBannerBriefDto>();
@@ -76,7 +82,7 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
         />
       ),
       meta: {
-        label: 'Select',
+        label: m['pages.admin.shared.table.select'](),
         skeletonClassName: 'w-6 h-6'
       }
     }),
@@ -84,7 +90,7 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
       header: ({ column }) => <DataTableColumnHeader column={column}/>,
       cell: (ctx) => ctx.getValue(),
       meta: {
-        label: 'Id',
+        label: m['pages.admin.shared.table.id'](),
         key: 'idRange',
         icon: IconHash,
         skeletonClassName: 'h-6 w-8',
@@ -99,7 +105,7 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
       header: ({ column }) => <DataTableColumnHeader column={column}/>,
       cell: (ctx) => ctx.getValue(),
       meta: {
-        label: 'Order',
+        label: m['pages.admin.banners.table.columns.order'](),
         icon: IconListNumbers,
         skeletonClassName: 'h-6 w-8'
       }
@@ -143,15 +149,15 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
         );
       },
       meta: {
-        label: 'Images',
+        label: m['pages.admin.banners.table.columns.images'](),
         icon: IconPhoto,
         key: 'images',
         filter: {
           type: ColumnFilterType.MultiSelect,
           options: [
-            { title: 'Has desktop', value: 'desktop', icon: IconDeviceDesktop },
-            { title: 'Has tablet', value: 'tablet', icon: IconDeviceTablet },
-            { title: 'Has mobile', value: 'mobile', icon: IconDeviceMobile }
+            { title: m['pages.admin.banners.table.filters.hasDesktop'](), value: 'desktop', icon: IconDeviceDesktop },
+            { title: m['pages.admin.banners.table.filters.hasTablet'](), value: 'tablet', icon: IconDeviceTablet },
+            { title: m['pages.admin.banners.table.filters.hasMobile'](), value: 'mobile', icon: IconDeviceMobile }
           ]
         },
         skeletonItem:
@@ -168,12 +174,12 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
         <p className="text-xs italic">{ctx.getValue() || '-'}</p>
       ),
       meta: {
-        label: 'Path',
+        label: m['pages.admin.banners.table.columns.path'](),
         icon: IconLink,
         skeletonClassName: 'h-6 w-32',
         filter: {
           type: ColumnFilterType.Text,
-          placeholder: 'Search by path'
+          placeholder: m['pages.admin.banners.table.filters.searchByPath']()
         }
       }
     }),
@@ -181,12 +187,12 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
       header: ({ column }) => <DataTableColumnHeader column={column}/>,
       cell: (ctx) => <p className="text-xs">{ctx.getValue()}</p>,
       meta: {
-        label: 'Title',
+        label: m['pages.admin.shared.table.title'](),
         icon: IconHeading,
         skeletonClassName: 'h-6 w-32',
         filter: {
           type: ColumnFilterType.Text,
-          placeholder: 'Search by title'
+          placeholder: m['pages.admin.shared.table.searchByTitle']()
         }
       }
     }),
@@ -199,18 +205,18 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
           ) : (
             <IconX className="size-3.5"/>
           )}
-          <span>{getValue() ? 'Active' : 'Inactive'}</span>
+          <span>{getValue() ? m['pages.admin.banners.table.status.active']() : m['pages.admin.banners.table.status.inactive']()}</span>
         </Badge>
       ),
       meta: {
-        label: 'Is active',
+        label: m['pages.admin.banners.table.columns.isActive'](),
         icon: IconCheck,
         skeletonClassName: 'h-6 w-20',
         filter: {
           type: ColumnFilterType.Select,
           options: [
-            { title: 'Active', value: true, icon: IconCheck },
-            { title: 'Inactive', value: false, icon: IconX }
+            { title: m['pages.admin.banners.table.status.active'](), value: true, icon: IconCheck },
+            { title: m['pages.admin.banners.table.status.inactive'](), value: false, icon: IconX }
           ]
         }
       }
@@ -223,7 +229,7 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
         </span>
       ),
       meta: {
-        label: 'Created',
+        label: m['pages.admin.shared.table.created'](),
         icon: IconCalendarPlus,
         skeletonClassName: 'h-6 w-26',
         filter: {
@@ -239,7 +245,7 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
         </span>
       ),
       meta: {
-        label: 'Updated',
+        label: m['pages.admin.shared.table.updated'](),
         icon: IconCalendarClock,
         skeletonClassName: 'h-6 w-26',
         filter: {
@@ -251,25 +257,52 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
       id: 'actions',
       size: 44,
       meta: {
-        label: 'Actions',
+        label: m['pages.admin.shared.actions.actions'](),
         skeletonClassName: 'h-7 w-7 ml-auto'
       },
       cell: (ctx) => {
         const navigate = useNavigate();
+        const confirm = useConfirm();
+        const queryClient = useQueryClient();
         const id = ctx.row.getValue<number>('id');
         const path = ctx.row.getValue<string | null>('path');
+
+        const { isPending: isDeleting, mutateAsync: deleteAsync } = useMutation({
+          ...orpc.admin.banners.delete.mutationOptions(),
+          onSuccess: () => {
+            void queryClient.invalidateQueries({ queryKey: orpc.admin.banners.key() });
+          }
+        });
+
+        const handleDelete = async () => {
+          const isConfirmed = await confirm({
+            title: m['pages.admin.banners.delete.confirmTitleSingle'](),
+            description: m['pages.admin.banners.delete.confirmDescriptionSingle'](),
+            confirmText: m['pages.admin.shared.actions.delete'](),
+            cancelText: m['common.cancel']()
+          });
+
+          if (!isConfirmed)
+            return;
+
+          toast.promise(deleteAsync({ id }), {
+            loading: m['pages.admin.banners.delete.loadingToastSingle'](),
+            success: m['pages.admin.banners.delete.successToastSingle'](),
+            error: (err) => err instanceof Error ? err.message : m['pages.admin.banners.delete.errorToastSingle']()
+          });
+        };
 
         return (
           <div className="text-right">
             <DropdownMenu>
-              <DropdownMenuTrigger className="" asChild>
+              <DropdownMenuTrigger className="" disabled={disabled || isDeleting} asChild>
                 <Button size="icon-xs" variant="ghost">
                   <IconDots/>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-40" align="end">
                 <DropdownMenuLabel>
-                  Actions
+                  {m['pages.admin.shared.actions.actions']()}
                 </DropdownMenuLabel>
 
                 <DropdownMenuSeparator/>
@@ -279,16 +312,25 @@ export const bannerColumns = (options?: IBannerColumnsOptions) => {
                     <DropdownMenuItem
                       onClick={() => navigate({ to: path })}
                     >
-                      <span>Go to page</span>
+                      <span>{m['pages.admin.shared.actions.goToPage']()}</span>
                       <IconLink className="ml-auto size-4"/>
                     </DropdownMenuItem>
                   )}
 
                   <DropdownMenuItem asChild>
                     <Link to="/admin/banners/$id/edit" params={{ id: `${id}` }}>
-                      <span>Edit</span>
+                      <span>{m['pages.admin.shared.actions.edit']()}</span>
                       <IconPencil className="ml-auto size-4"/>
                     </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+
+                <DropdownMenuSeparator/>
+
+                <DropdownMenuGroup>
+                  <DropdownMenuItem variant="destructive" onClick={handleDelete}>
+                    <span>{m['pages.admin.shared.actions.delete']()}</span>
+                    <IconTrash className="ml-auto size-4"/>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
               </DropdownMenuContent>

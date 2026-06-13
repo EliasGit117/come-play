@@ -3,6 +3,7 @@ import { getBannersForAdminSchema } from '@/features/banners/schemas/search-bann
 import { orpc } from '@/lib/orpc';
 import { BannerTable } from '@/routes/admin/banners/-components/banners-table';
 import { awaitIfServer } from '@/lib/await-if-server';
+import { m } from '@/paraglide/messages';
 
 
 export const Route = createFileRoute('/admin/banners/')({
@@ -13,7 +14,7 @@ export const Route = createFileRoute('/admin/banners/')({
     await awaitIfServer(context.queryClient.prefetchQuery(orpc.admin.banners.search.queryOptions({ input: search })));
   },
   head: () => {
-    return { meta: [{ title: 'Banners' }] };
+    return { meta: [{ title: m['pages.admin.banners.head.list']() }] };
   }
 });
 

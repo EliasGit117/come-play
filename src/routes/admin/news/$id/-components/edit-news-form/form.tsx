@@ -10,6 +10,7 @@ import { NewsStatus } from '@prisma/client';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
 
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
+import { m } from '@/paraglide/messages';
 
 
 export const editNewsFormSchema = z.object({
@@ -39,12 +40,12 @@ export const EditNewsForm: FC<IEditNewsFormProps> = ({ className, disabled }) =>
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="slug-input">Slug</FieldLabel>
+              <FieldLabel htmlFor="slug-input">{m['pages.admin.shared.fields.slug']()}</FieldLabel>
               <Input
                 {...field}
                 id="slug-input"
                 aria-invalid={fieldState.invalid}
-                placeholder="some-slug-for-product"
+                placeholder={m['pages.admin.shared.fields.slugPlaceholder']()}
                 autoComplete="off"
               />
               {fieldState.invalid && (
@@ -59,22 +60,24 @@ export const EditNewsForm: FC<IEditNewsFormProps> = ({ className, disabled }) =>
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="status-select">Status</FieldLabel>
+              <FieldLabel htmlFor="status-select">{m['pages.admin.shared.fields.status']()}</FieldLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger id="status-select" className="w-full justify-start">
                     {field.value === NewsStatus.hidden ? <IconEyeOff/> : <IconEye/>}
-                    <span className="capitalize">{field.value}</span>
+                    <span className="capitalize">
+                      {field.value === NewsStatus.hidden ? m['pages.admin.shared.status.hidden']() : m['pages.admin.shared.status.published']()}
+                    </span>
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
                   <SelectItem value={NewsStatus.published}>
                     <IconEye/>
-                    <span>Published</span>
+                    <span>{m['pages.admin.shared.status.published']()}</span>
                   </SelectItem>
                   <SelectItem value={NewsStatus.hidden}>
                     <IconEyeOff/>
-                    <span>Hidden</span>
+                    <span>{m['pages.admin.shared.status.hidden']()}</span>
                   </SelectItem>
                 </SelectContent>
               </Select>
@@ -87,12 +90,12 @@ export const EditNewsForm: FC<IEditNewsFormProps> = ({ className, disabled }) =>
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="title-ro-input">Romanian title</FieldLabel>
+              <FieldLabel htmlFor="title-ro-input">{m['pages.admin.shared.fields.titleRo']()}</FieldLabel>
               <Input
                 {...field}
                 id="title-ro-input"
                 aria-invalid={fieldState.invalid}
-                placeholder="Denumirea produsului"
+                placeholder={m['pages.admin.news.form.titleRoPlaceholder']()}
                 autoComplete="off"
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
@@ -105,12 +108,12 @@ export const EditNewsForm: FC<IEditNewsFormProps> = ({ className, disabled }) =>
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="title-ru-input">Russian title</FieldLabel>
+              <FieldLabel htmlFor="title-ru-input">{m['pages.admin.shared.fields.titleRu']()}</FieldLabel>
               <Input
                 {...field}
                 id="title-ru-input"
                 aria-invalid={fieldState.invalid}
-                placeholder="Название продукта"
+                placeholder={m['pages.admin.news.form.titleRuPlaceholder']()}
                 autoComplete="off"
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
@@ -120,8 +123,8 @@ export const EditNewsForm: FC<IEditNewsFormProps> = ({ className, disabled }) =>
 
         <Tabs defaultValue="RO" className="col-span-full">
           <TabsList>
-            <TabsTrigger value="RO">Romanian</TabsTrigger>
-            <TabsTrigger value="RU">Russian</TabsTrigger>
+            <TabsTrigger value="RO">{m['pages.admin.shared.tabs.romanian']()}</TabsTrigger>
+            <TabsTrigger value="RU">{m['pages.admin.shared.tabs.russian']()}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="RO">

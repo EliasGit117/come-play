@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { IconChevronDown, IconSelector, IconChevronUp, IconEraser, IconEyeOff } from '@tabler/icons-react';
+import { m } from '@/paraglide/messages';
 
 
 interface DataTableColumnHeaderProps<TData, TValue>
@@ -67,12 +68,12 @@ export function DataTableColumnHeader<TData, TValue>(props: DataTableColumnHeade
             <DropdownMenuRadioGroup value={`${isSorted}`}>
               <DropdownMenuRadioItem value="asc" onClick={() => toggleSorting(false)}>
                 <IconChevronUp className='text-muted-foreground'/>
-                <span>Asc</span>
+                <span>{m['dataTable.sort.asc']()}</span>
               </DropdownMenuRadioItem>
 
               <DropdownMenuRadioItem value="desc" onClick={() => toggleSorting(true)}>
                 <IconChevronDown className='text-muted-foreground'/>
-                <span>Desc</span>
+                <span>{m['dataTable.sort.desc']()}</span>
               </DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuGroup>
@@ -80,7 +81,7 @@ export function DataTableColumnHeader<TData, TValue>(props: DataTableColumnHeade
           {isSorted && (
             <DropdownMenuItem onClick={clearSorting}>
               <IconEraser className='text-muted-foreground'/>
-              <span>Clear</span>
+              <span>{m['dataTable.clear']()}</span>
             </DropdownMenuItem>
           )}
 
@@ -88,7 +89,7 @@ export function DataTableColumnHeader<TData, TValue>(props: DataTableColumnHeade
 
           <DropdownMenuItem onClick={hide}>
             <IconEyeOff className='text-muted-foreground'/>
-            <span>Hide</span>
+            <span>{m['dataTable.hide']()}</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

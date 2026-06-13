@@ -21,19 +21,20 @@ import { IImagePickerValue } from '@/components/ui/cover-image-picker';
 import BannerImageUploader from '@/routes/admin/banners/$id/-components/edit-banner-form/banner-image-uploader';
 import { format } from 'date-fns';
 import { editBannerSchema, TEditBannerSchema } from '@/features/banners/schemas/edit-banner';
+import { m } from '@/paraglide/messages';
 
 
 export const Route = createFileRoute('/admin/banners/$id/edit')({
   component: RouteComponent,
-  staticData: { breadcrumbs: { title: 'Edit banner' } },
+  staticData: { breadcrumbs: { title: m['pages.admin.banners.breadcrumbs.edit']() } },
   loader: async ({ params: { id }, context }) => {
     const data = await context.queryClient.ensureQueryData(orpc.admin.banners.getById.queryOptions({ input: { id: Number(id) } }));
     return {
       banner: data,
-      breadcrumbs: { title: `Edit «${data.titleRo}»` }
+      breadcrumbs: { title: m['pages.admin.banners.breadcrumbs.editWithTitle']({ title: data.titleRo ?? '' }) }
     };
   },
-  head: () => ({ meta: [{ title: `Edit banner` }] })
+  head: () => ({ meta: [{ title: m['pages.admin.banners.head.edit']() }] })
 });
 
 
@@ -90,20 +91,20 @@ function RouteComponent() {
     : undefined;
 
   const bannerUploaders: IBannerUploaderItem[] = [
-    { type: 'desktop', label: 'Desktop', icon: IconDeviceDesktop, className: 'max-w-[30rem]', image: desktopImage },
-    { type: 'tablet', label: 'Tablet', icon: IconDeviceTablet, className: 'max-w-[20rem]', image: tabletImage },
-    { type: 'mobile', label: 'Phone', icon: IconDeviceMobile, className: 'max-w-[15rem]', image: mobileImage }
+    { type: 'desktop', label: m['pages.admin.banners.images.desktop'](), icon: IconDeviceDesktop, className: 'max-w-[30rem]', image: desktopImage },
+    { type: 'tablet', label: m['pages.admin.banners.images.tablet'](), icon: IconDeviceTablet, className: 'max-w-[20rem]', image: tabletImage },
+    { type: 'mobile', label: m['pages.admin.banners.images.phone'](), icon: IconDeviceMobile, className: 'max-w-[15rem]', image: mobileImage }
   ];
 
   return (
     <main className="container mx-auto p-4 pb-16 space-y-4 flex-1 relative">
       <p className="text-muted-foreground text-xs">
-        Created: {format(banner.createdAt, 'dd.MM.yyyy - HH:mm')},
-        Updated: {format(banner.updatedAt, 'dd.MM.yyyy - HH:mm')}
+        {m['pages.admin.shared.meta.created']()}: {format(banner.createdAt, 'dd.MM.yyyy - HH:mm')},
+        {m['pages.admin.shared.meta.updated']()}: {format(banner.updatedAt, 'dd.MM.yyyy - HH:mm')}
       </p>
 
       <div className="space-y-4">
-        <Label>Images</Label>
+        <Label>{m['pages.admin.banners.images.label']()}</Label>
 
         <div className="flex flex-col lg:flex-row gap-4">
           {bannerUploaders.map(({ icon: Icon, label, type, className, image }) => (
@@ -177,14 +178,14 @@ const BottomButtons: FC<IBottomButtons> = (props) => {
             className="border"
           >
             <IconArrowBackUp/>
-            <span className="sr-only sm:not-sr-only">Reset</span>
+            <span className="sr-only sm:not-sr-only">{m['pages.admin.shared.actions.reset']()}</span>
           </Button>
         </div>
 
         <div className="bg-background shadow-md rounded-md">
           <LoadingButton hideTextOnMobile onClick={onSubmitClick} disabled={disabled} loading={isLoading} type="submit">
             <IconDeviceFloppy/>
-            <span className="sr-only sm:not-sr-only">Save</span>
+            <span className="sr-only sm:not-sr-only">{m['pages.admin.shared.actions.save']()}</span>
           </LoadingButton>
         </div>
       </div>

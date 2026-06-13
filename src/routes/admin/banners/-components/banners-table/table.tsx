@@ -24,6 +24,7 @@ import {
   ReorderBannersDialogTrigger
 } from '@/routes/admin/banners/-components/reorder-banners-dialog';
 import { toast } from 'sonner';
+import { m } from '@/paraglide/messages';
 
 
 interface IProps extends ComponentProps<'div'> {
@@ -77,19 +78,19 @@ export const BannerTable: FC<IProps> = (props) => {
       return;
 
     const isConfirmed = await confirm({
-      title: 'Delete banners',
-      description: 'Are you sure you want to delete selected banners?',
-      confirmText: 'Delete',
-      cancelText: 'Cancel'
+      title: m['pages.admin.banners.delete.confirmTitleBulk'](),
+      description: m['pages.admin.banners.delete.confirmDescriptionBulk'](),
+      confirmText: m['pages.admin.shared.actions.delete'](),
+      cancelText: m['common.cancel']()
     });
 
     if (!isConfirmed)
       return;
 
     toast.promise(deleteAsync({ ids: selectedItems.map((i) => i.id) }), {
-      loading: 'Deleting banners...',
-      success: 'Banners deleted successfully!',
-      error: (err) => err instanceof Error ? err.message : 'Failed to delete banners.'
+      loading: m['pages.admin.banners.delete.loadingToastBulk'](),
+      success: m['pages.admin.banners.delete.successToastBulk'](),
+      error: (err) => err instanceof Error ? err.message : m['pages.admin.banners.delete.errorToastBulk']()
     });
   }, [deleteAsync, selectedItems]);
 
@@ -109,7 +110,7 @@ export const BannerTable: FC<IProps> = (props) => {
                   onClick={deleteBanners}
                 >
                   <IconTrash/>
-                  <span className="sr-only lg:not-sr-only">Delete</span>
+                  <span className="sr-only lg:not-sr-only">{m['pages.admin.shared.actions.delete']()}</span>
                 </Button>
               )}
 

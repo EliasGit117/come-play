@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { ComponentProps, FC } from 'react';
 
 import { useReorderBannersDialogContext } from './provider';
+import { m } from '@/paraglide/messages';
 
 interface IReorderBannersDialogTriggerProps extends Omit<ComponentProps<typeof Button>, 'onClick'> {
   shortText?: boolean;
@@ -12,7 +13,7 @@ export const ReorderBannersDialogTrigger: FC<IReorderBannersDialogTriggerProps> 
   const { asChild, children, shortText, ...btnProps } = props;
   const { open } = useReorderBannersDialogContext();
 
-  const text = shortText ? 'Reorder' : 'Reorder banners';
+  const text = shortText ? m['pages.admin.banners.reorder.trigger.short']() : m['pages.admin.banners.reorder.trigger.full']();
 
   return (
     <Button onClick={open} asChild={asChild} {...btnProps}>

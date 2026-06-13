@@ -23,6 +23,7 @@ import {
 } from '@/components/data-table/types/tanstack-table-meta';
 import { ButtonGroup } from '@/components/ui/button-group';
 import { IconCirclePlus, IconCircleX } from '@tabler/icons-react';
+import { m } from '@/paraglide/messages';
 
 
 interface IDataTableMultiSelectFilter<TData, TValue> {
@@ -92,7 +93,7 @@ export function DataTableMultiSelectFilter<TData, TValue>({ column }: IDataTable
           size="icon-sm"
           variant="outline"
           className="border-dashed"
-          aria-label={`Clear ${title} filter`}
+          aria-label={m['dataTable.clearFilter']({ title })}
           onClick={onClearClick}
         >
           <IconCircleX className="text-muted-foreground"/>
@@ -116,7 +117,7 @@ export function DataTableMultiSelectFilter<TData, TValue>({ column }: IDataTable
                 <div className="hidden items-center gap-1 lg:flex">
                   {filterValue.length > 2 ? (
                     <Badge variant="secondary" className="border border-border rounded-sm px-1 font-normal">
-                      {filterValue.length} selected
+                      {m['dataTable.selectedCount']({ count: `${filterValue.length}` })}
                     </Badge>
                   ) : (
                     selectedOptions.map((option) => (
@@ -148,7 +149,7 @@ export function DataTableMultiSelectFilter<TData, TValue>({ column }: IDataTable
 
             <CommandList className="max-h-72">
               <CommandEmpty>
-                No results found
+                {m['dataTable.noResultsFound']()}
               </CommandEmpty>
 
               <CommandGroup  className="p-0" heading={title}>
@@ -186,7 +187,7 @@ export function DataTableMultiSelectFilter<TData, TValue>({ column }: IDataTable
                       className="flex justify-center"
                     >
                       <IconCircleX/>
-                      <span>Clear</span>
+                      <span>{m['dataTable.clear']()}</span>
                     </CommandItem>
                   </CommandGroup>
                 </>

@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/popover';
 import { IconTableOptions } from '@tabler/icons-react';
 import { Button } from '@/components/ui/button';
+import { m } from '@/paraglide/messages';
 
 
 interface IDataTableColumnsOptionsProps<_> extends ComponentProps<typeof PopoverTrigger> {}
@@ -34,7 +35,7 @@ export function DataTableColumnsOptions<TData>({ ...props }: IDataTableColumnsOp
     <Popover>
       <PopoverTrigger {...props} asChild>
         <Button
-          aria-label="Toggle columns"
+          aria-label={m['dataTable.toggleColumns']()}
           role="combobox"
           variant="outline"
           className='w-7 sm:w-fit'
@@ -42,7 +43,7 @@ export function DataTableColumnsOptions<TData>({ ...props }: IDataTableColumnsOp
         >
           <IconTableOptions/>
           <span className='sr-only sm:not-sr-only'>
-            Columns
+            {m['dataTable.columns']()}
           </span>
         </Button>
       </PopoverTrigger>
@@ -50,16 +51,16 @@ export function DataTableColumnsOptions<TData>({ ...props }: IDataTableColumnsOp
       <PopoverContent align="start" className="min-w-48 w-fit p-0 gap-1">
         <Command className='space-y-1'>
           <CommandInput
-            placeholder='Search columns...'
+            placeholder={m['dataTable.searchColumns']()}
             // wrapperClassName='p-0'
             // groupClassName='rounded-sm!'
           />
 
           <CommandList className="max-h-full">
             <CommandEmpty>
-              No columns found
+              {m['dataTable.noColumnsFound']()}
             </CommandEmpty>
-            <CommandGroup className='p-0' heading='Columns'>
+            <CommandGroup className='p-0' heading={m['dataTable.columns']()}>
               {columns.map((column) => {
                 const Icon = column.columnDef.meta?.icon;
 

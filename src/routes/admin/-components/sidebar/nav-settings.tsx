@@ -19,6 +19,7 @@ import { ComponentPropsWithoutRef } from 'react';
 import { useTheme } from '@/components/theme';
 
 import { cn } from '@/lib/utils';
+import { m } from '@/paraglide/messages';
 
 
 const localeOptions = [
@@ -37,7 +38,7 @@ export function NavSettings({ ...props }: IProps & ComponentPropsWithoutRef<type
   return (
     <SidebarGroup {...props}>
       <SidebarGroupLabel>
-        Settings
+        {m['pages.admin.nav.settings']()}
       </SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
@@ -45,7 +46,7 @@ export function NavSettings({ ...props }: IProps & ComponentPropsWithoutRef<type
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  <span>Theme</span>
+                  <span>{m['pages.admin.theme.label']()}</span>
                   <IconSun className='ml-auto text-muted-foreground dark:hidden'/>
                   <IconMoon className='ml-auto text-muted-foreground hidden dark:block'/>
                 </SidebarMenuButton>
@@ -59,24 +60,24 @@ export function NavSettings({ ...props }: IProps & ComponentPropsWithoutRef<type
                 <DropdownMenuRadioGroup value={theme}>
                   <DropdownMenuLabel className="flex gap-2 items-center">
                     <IconSunMoon className="size-4"/>
-                    <span>Theme</span>
+                    <span>{m['pages.admin.theme.label']()}</span>
                   </DropdownMenuLabel>
 
                   <DropdownMenuSeparator/>
 
                   <DropdownMenuRadioItem value="light" onClick={() => setTheme('light')}>
-                    <span>Light</span>
-                    <IconSun className="ml-auto text-muted-foreground"/>
+                    <IconSun className='text-muted-foreground'/>
+                    <span>{m['pages.admin.theme.light']()}</span>
                   </DropdownMenuRadioItem>
 
                   <DropdownMenuRadioItem value="dark" onClick={() => setTheme('dark')}>
-                    <span>Dark</span>
-                    <IconMoon className="ml-auto text-muted-foreground"/>
+                    <IconMoon className="text-muted-foreground"/>
+                    <span>{m['pages.admin.theme.dark']()}</span>
                   </DropdownMenuRadioItem>
 
                   <DropdownMenuRadioItem value="system" onClick={() => setTheme('system')}>
-                    <span>System</span>
-                    <IconDeviceDesktop className="ml-auto text-muted-foreground"/>
+                    <IconDeviceDesktop className='text-muted-foreground'/>
+                    <span>{m['pages.admin.theme.system']()}</span>
                   </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
@@ -87,7 +88,7 @@ export function NavSettings({ ...props }: IProps & ComponentPropsWithoutRef<type
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  <span>Language</span>
+                  <span>{m['pages.admin.language.label']()}</span>
                   <span className="ml-auto text-muted-foreground uppercase text-xs">
                     {locale}
                   </span>
@@ -103,21 +104,17 @@ export function NavSettings({ ...props }: IProps & ComponentPropsWithoutRef<type
                 <DropdownMenuRadioGroup value={locale}>
                   <DropdownMenuLabel className="flex items-center gap-2">
                     <IconLanguage className="size-4"/>
-                    <span>Language</span>
+                    <span>{m['pages.admin.language.label']()}</span>
                   </DropdownMenuLabel>
 
                   <DropdownMenuSeparator/>
 
                   {localeOptions.map(({ value, title }) =>
-                    <DropdownMenuRadioItem
-                      key={value}
-                      value={value}
-                      className="justify-between gap-4"
-                    >
-                      <span>{title}</span>
+                    <DropdownMenuRadioItem key={value} value={value}>
                       <span className="text-xs uppercase text-muted-foreground">
                         {value}
                       </span>
+                      <span>{title}</span>
                     </DropdownMenuRadioItem>
                   )}
 

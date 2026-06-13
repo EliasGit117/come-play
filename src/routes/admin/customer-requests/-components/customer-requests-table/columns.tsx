@@ -13,6 +13,7 @@ import {
   IconMailCheck,
   IconMailX,
   IconPhone,
+  IconTrash,
   IconUser
 } from '@tabler/icons-react';
 import { Badge } from '@/components/ui/badge';
@@ -30,14 +31,19 @@ import { ColumnFilterType, DataTableColumnHeader } from '@/components/data-table
 import { Checkbox } from '@/components/ui/checkbox';
 import { IAdminCustomerRequestDto } from '@/features/customer-requests/dtos/admin-customer-request-dto';
 import { ViewRequestDialog } from '@/routes/admin/customer-requests/-components/view-request-dialog';
+import { useConfirm } from '@/components/ui/confirm-dialog';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { m } from '@/paraglide/messages';
 
 
 const columnHelper = createColumnHelper<IAdminCustomerRequestDto>();
 
 const statusMeta: Record<EmailNotificationStatus, { label: string; icon: typeof IconClock }> = {
-  [EmailNotificationStatus.pending]: { label: 'Pending', icon: IconClock },
-  [EmailNotificationStatus.sent]: { label: 'Sent', icon: IconMailCheck },
-  [EmailNotificationStatus.failed]: { label: 'Failed', icon: IconMailX },
+  [EmailNotificationStatus.pending]: { label: m['pages.admin.customerRequests.table.status.pending'](), icon: IconClock },
+  [EmailNotificationStatus.sent]: { label: m['pages.admin.customerRequests.table.status.sent'](), icon: IconMailCheck },
+  [EmailNotificationStatus.failed]: { label: m['pages.admin.customerRequests.table.status.failed'](), icon: IconMailX },
 };
 
 interface ICustomerRequestsColumnsOptions {
@@ -75,7 +81,7 @@ export const customerRequestsColumns = (options?: ICustomerRequestsColumnsOption
         />
       ),
       meta: {
-        label: 'Select',
+        label: m['pages.admin.shared.table.select'](),
         skeletonClassName: 'w-6 h-6'
       }
     }),
@@ -83,7 +89,7 @@ export const customerRequestsColumns = (options?: ICustomerRequestsColumnsOption
       header: ({ column }) => <DataTableColumnHeader column={column}/>,
       cell: ctx => ctx.getValue(),
       meta: {
-        label: 'Id',
+        label: m['pages.admin.shared.table.id'](),
         key: 'idRange',
         icon: IconHash,
         skeletonClassName: 'w-10 h-6',
@@ -99,13 +105,13 @@ export const customerRequestsColumns = (options?: ICustomerRequestsColumnsOption
       header: ({ column }) => <DataTableColumnHeader column={column}/>,
       cell: ctx => <span>{ctx.row.original.firstName} {ctx.row.original.lastName}</span>,
       meta: {
-        label: 'Name',
+        label: m['pages.admin.customerRequests.table.columns.name'](),
         key: 'name',
         icon: IconUser,
         skeletonClassName: 'h-6 w-40',
         filter: {
           type: ColumnFilterType.Text,
-          placeholder: 'Search by name'
+          placeholder: m['pages.admin.customerRequests.table.filters.searchByName']()
         }
       }
     }),
@@ -113,20 +119,20 @@ export const customerRequestsColumns = (options?: ICustomerRequestsColumnsOption
       header: ({ column }) => <DataTableColumnHeader column={column}/>,
       cell: ctx => ctx.getValue(),
       meta: {
-        label: 'Email',
+        label: m['pages.admin.customerRequests.table.columns.email'](),
         icon: IconMail,
         skeletonClassName: 'h-6 w-44',
-        filter: { type: ColumnFilterType.Text, placeholder: 'Search by email' }
+        filter: { type: ColumnFilterType.Text, placeholder: m['pages.admin.customerRequests.table.filters.searchByEmail']() }
       }
     }),
     columnHelper.accessor('phone', {
       header: ({ column }) => <DataTableColumnHeader column={column}/>,
       cell: ctx => ctx.getValue(),
       meta: {
-        label: 'Phone',
+        label: m['pages.admin.customerRequests.table.columns.phone'](),
         icon: IconPhone,
         skeletonClassName: 'h-6 w-32',
-        filter: { type: ColumnFilterType.Text, placeholder: 'Search by phone' }
+        filter: { type: ColumnFilterType.Text, placeholder: m['pages.admin.customerRequests.table.filters.searchByPhone']() }
       }
     }),
     columnHelper.accessor('emailNotificationStatus', {
@@ -143,7 +149,7 @@ export const customerRequestsColumns = (options?: ICustomerRequestsColumnsOption
         );
       },
       meta: {
-        label: 'Notification',
+        label: m['pages.admin.customerRequests.table.columns.notification'](),
         icon: IconMailbox,
         skeletonClassName: 'h-6 w-24',
         filter: {
@@ -160,7 +166,7 @@ export const customerRequestsColumns = (options?: ICustomerRequestsColumnsOption
       header: ({ column }) => <DataTableColumnHeader column={column}/>,
       cell: ctx => <span className="text-xs">{format(ctx.getValue(), 'dd.MM.yyyy - HH:mm')}</span>,
       meta: {
-        label: 'Created',
+        label: m['pages.admin.shared.table.created'](),
         icon: IconCalendarPlus,
         skeletonClassName: 'h-6 w-30',
         filter: {
@@ -172,17 +178,44 @@ export const customerRequestsColumns = (options?: ICustomerRequestsColumnsOption
       id: 'actions',
       size: 44,
       meta: {
-        label: 'Actions',
+        label: m['pages.admin.shared.actions.actions'](),
         skeletonClassName: 'ml-auto h-7 w-7'
       },
       cell: (ctx) => {
         const [open, setOpen] = useState(false);
+        const confirm = useConfirm();
+        const queryClient = useQueryClient();
         const request = ctx.row.original;
+
+        const { isPending: isDeleting, mutateAsync: deleteAsync } = useMutation({
+          ...orpc.admin.customerRequests.delete.mutationOptions(),
+          onSuccess: () => {
+            void queryClient.invalidateQueries({ queryKey: orpc.admin.customerRequests.key() });
+          }
+        });
+
+        const handleDelete = async () => {
+          const isConfirmed = await confirm({
+            title: m['pages.admin.customerRequests.delete.confirmTitleSingle'](),
+            description: m['pages.admin.customerRequests.delete.confirmDescriptionSingle'](),
+            confirmText: m['pages.admin.shared.actions.delete'](),
+            cancelText: m['common.cancel']()
+          });
+
+          if (!isConfirmed)
+            return;
+
+          toast.promise(deleteAsync({ id: request.id }), {
+            loading: m['pages.admin.customerRequests.delete.loadingToastSingle'](),
+            success: m['pages.admin.customerRequests.delete.successToastSingle'](),
+            error: (err) => err instanceof Error ? err.message : m['pages.admin.customerRequests.delete.errorToastSingle']()
+          });
+        };
 
         return (
           <div className="text-right">
             <DropdownMenu>
-              <DropdownMenuTrigger disabled={disabled} asChild>
+              <DropdownMenuTrigger disabled={disabled || isDeleting} asChild>
                 <Button size="icon-xs" variant="ghost">
                   <IconDots/>
                 </Button>
@@ -190,15 +223,24 @@ export const customerRequestsColumns = (options?: ICustomerRequestsColumnsOption
 
               <DropdownMenuContent className="w-40" align="end">
                 <DropdownMenuLabel>
-                  Actions
+                  {m['pages.admin.shared.actions.actions']()}
                 </DropdownMenuLabel>
 
                 <DropdownMenuSeparator/>
 
                 <DropdownMenuGroup>
                   <DropdownMenuItem onSelect={() => setOpen(true)}>
-                    <span>View</span>
+                    <span>{m['pages.admin.shared.actions.view']()}</span>
                     <IconEye className="ml-auto size-4"/>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+
+                <DropdownMenuSeparator/>
+
+                <DropdownMenuGroup>
+                  <DropdownMenuItem variant="destructive" onClick={handleDelete}>
+                    <span>{m['pages.admin.shared.actions.delete']()}</span>
+                    <IconTrash className="ml-auto size-4"/>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
               </DropdownMenuContent>

@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/dialog';
 import { IAdminCustomerRequestDto } from '@/features/customer-requests/dtos/admin-customer-request-dto';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { m } from '@/paraglide/messages';
 
 
 interface IProps {
@@ -29,21 +30,21 @@ export const ViewRequestDialog: FC<IProps> = ({ request, open, onOpenChange }) =
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Customer Request #{request?.id}</DialogTitle>
+          <DialogTitle>{m['pages.admin.customerRequests.view.title']({ id: `${request?.id}` })}</DialogTitle>
           <DialogDescription>
-            Submitted request details.
+            {m['pages.admin.customerRequests.view.description']()}
           </DialogDescription>
         </DialogHeader>
 
         {request && (
           <ScrollArea className="max-h-[60vh] pr-4">
-            <Row label="First name" value={request.firstName}/>
-            <Row label="Last name" value={request.lastName}/>
-            <Row label="Phone" value={request.phone}/>
-            <Row label="Email" value={request.email}/>
-            <Row label="Notification" value={request.emailNotificationStatus}/>
-            <Row label="Created" value={format(request.createdAt, 'dd.MM.yyyy - HH:mm')}/>
-            <Row label="Message" value={request.message}/>
+            <Row label={m['pages.admin.customerRequests.view.fields.firstName']()} value={request.firstName}/>
+            <Row label={m['pages.admin.customerRequests.view.fields.lastName']()} value={request.lastName}/>
+            <Row label={m['pages.admin.customerRequests.view.fields.phone']()} value={request.phone}/>
+            <Row label={m['pages.admin.customerRequests.view.fields.email']()} value={request.email}/>
+            <Row label={m['pages.admin.customerRequests.view.fields.notification']()} value={request.emailNotificationStatus}/>
+            <Row label={m['pages.admin.customerRequests.view.fields.created']()} value={format(request.createdAt, 'dd.MM.yyyy - HH:mm')}/>
+            <Row label={m['pages.admin.customerRequests.view.fields.message']()} value={request.message}/>
           </ScrollArea>
         )}
       </DialogContent>

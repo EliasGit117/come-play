@@ -16,6 +16,7 @@ import LogoText from '@/assets/icons/logo/text.svg?react';
 import { INavItem } from '@/routes/admin/-components/sidebar/types/nav-item';
 import { Link } from '@tanstack/react-router';
 import { NavSettings } from '@/routes/admin/-components/sidebar/nav-settings';
+import { m } from '@/paraglide/messages';
 
 
 interface IAdminSidebarProps extends ComponentProps<typeof Sidebar> {}
@@ -33,7 +34,7 @@ export function AdminSidebar({ ...props }: IAdminSidebarProps) {
                 <span className='flex flex-col'>
                   <LogoText className='h-3.5! w-fit! text-foreground'/>
                   <span className='text-xs text-muted-foreground'>
-                    Admin
+                    {m['pages.admin.badge']()}
                   </span>
                 </span>
               </Link>
@@ -42,7 +43,7 @@ export function AdminSidebar({ ...props }: IAdminSidebarProps) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavLinkGroup label="Main" items={navMain}/>
+        <NavLinkGroup label={m['pages.admin.nav.main']()} items={getNavMain()}/>
         <div className="flex-1"/>
         <NavSettings/>
       </SidebarContent>
@@ -53,24 +54,24 @@ export function AdminSidebar({ ...props }: IAdminSidebarProps) {
   );
 }
 
-const navMain: INavItem[] = [
+const getNavMain = (): INavItem[] => [
   {
-    title: 'Dashboard',
+    title: m['pages.admin.nav.dashboard'](),
     linkOptions: { to: '/admin', activeOptions: { exact: true } },
     icon: IconLayoutDashboard
   },
   {
-    title: 'Banners',
+    title: m['pages.admin.nav.banners'](),
     linkOptions: { to: '/admin/banners' },
     icon: IconCarouselHorizontal,
   },
   {
-    title: 'Requests',
+    title: m['pages.admin.nav.requests'](),
     linkOptions: { to: '/admin/customer-requests' },
     icon: IconInbox
   },
   {
-    title: 'News',
+    title: m['pages.admin.nav.news'](),
     linkOptions: { to: '/admin/news' },
     icon: IconNews
   }

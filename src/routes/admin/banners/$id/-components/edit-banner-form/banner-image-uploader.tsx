@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import CoverImagePicker, { IImagePickerValue } from '@/components/ui/cover-image-picker';
 import { Spinner } from '@/components/ui/spinner';
 import { BannerImageType } from '@prisma/client';
+import { m } from '@/paraglide/messages';
 
 interface IBannerImageUploaderProps extends ComponentProps<typeof CoverImagePicker> {
   bannerId: number | string;
@@ -99,8 +100,8 @@ export const BannerImageUploader: FC<IBannerImageUploaderProps> = (props) => {
         <div className="absolute inset-0 flex gap-1 items-center justify-center bg-black/40 text-white z-10">
           <Spinner/>
           <span className="text-sm font-medium">
-            {isUploading && 'Uploading...'}
-            {isRemoving && 'Removing...'}
+            {isUploading && m['pages.admin.shared.uploader.uploading']()}
+            {isRemoving && m['pages.admin.shared.uploader.removing']()}
           </span>
         </div>
       )}

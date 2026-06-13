@@ -13,6 +13,7 @@ import { DataTableDateFilter } from '@/components/data-table/date-filter';
 import { DataTableDateRangeFilter } from '@/components/data-table/date-range-filter';
 import { DataTableNumberRangeFilter } from '@/components/data-table/number-range-filter';
 import { IconFilterOff } from '@tabler/icons-react';
+import { m } from '@/paraglide/messages';
 import { DataTableColumnsOptions } from '@/components/data-table/columns-options';
 
 
@@ -48,14 +49,14 @@ export function DataTableToolbar<TData>(props: IDataTableToolbarProps<TData>) {
         ))}
         {isFiltered && (
           <Button
-            aria-label="Reset filters"
+            aria-label={m['dataTable.toolbar.resetFilters']()}
             variant="outline"
             size="sm"
             className="border-dashed"
             onClick={onReset}
           >
             <IconFilterOff className='text-muted-foreground'/>
-            <span>Clear</span>
+            <span>{m['dataTable.clear']()}</span>
           </Button>
         )}
       </div>

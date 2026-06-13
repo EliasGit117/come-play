@@ -26,6 +26,7 @@ import { orpc } from '@/lib/orpc';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useCreateNewsDialogContext } from '@/routes/admin/news/-components/create-news-dialog/provider';
+import { m } from '@/paraglide/messages';
 
 
 interface CreateNewsDialogProps {
@@ -52,7 +53,7 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ afterSuccess }) =>
     onSuccess: (res) => {
       void queryClient.invalidateQueries({ queryKey: orpc.admin.news.key() });
       setIsOpen(false);
-      toast.success('News has been successfully created');
+      toast.success(m['pages.admin.news.create.successToast']());
       afterSuccess?.();
 
       if (editAfterCreation)
@@ -75,9 +76,9 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ afterSuccess }) =>
         <Form {...form}>
           <form onSubmit={form.handleSubmit((values: TCreateNewsSchema) => mutate(values))}>
             <AlertDialogHeader>
-              <AlertDialogTitle>Create News</AlertDialogTitle>
+              <AlertDialogTitle>{m['pages.admin.news.create.title']()}</AlertDialogTitle>
               <AlertDialogDescription>
-                Fill out the form below to create a new news entry.
+                {m['pages.admin.news.create.description']()}
               </AlertDialogDescription>
             </AlertDialogHeader>
 
@@ -93,10 +94,10 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ afterSuccess }) =>
                 />
                 <div className="grid gap-2">
                   <Label htmlFor="edit-after-creation-checkbox">
-                    Edit after creation
+                    {m['pages.admin.shared.editAfterCreation.label']()}
                   </Label>
                   <p className="text-muted-foreground text-sm">
-                    Redirect to created product page to edit it
+                    {m['pages.admin.news.create.editAfterCreationHint']()}
                   </p>
                 </div>
               </div>
@@ -105,12 +106,12 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ afterSuccess }) =>
             <AlertDialogFooter className="flex-row mt-6">
               <AlertDialogCancel type="button" className='flex-1 sm:flex-none'>
                 <IconX/>
-                <span>Cancel</span>
+                <span>{m['common.cancel']()}</span>
               </AlertDialogCancel>
 
               <LoadingButton type="submit" loading={isPending} className='flex-1 sm:flex-none'>
                 <IconSend/>
-                <span>Submit</span>
+                <span>{m['common.submit']()}</span>
               </LoadingButton>
             </AlertDialogFooter>
           </form>

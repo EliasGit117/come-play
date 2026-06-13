@@ -21,22 +21,23 @@ import { IImagePickerValue } from '@/components/ui/cover-image-picker';
 import { useSidebar } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
+import { m } from '@/paraglide/messages';
 
 
 export const Route = createFileRoute('/admin/news/$id/edit')({
   component: RouteComponent,
-  staticData: { breadcrumbs: { title: 'Edit news' } },
+  staticData: { breadcrumbs: { title: m['pages.admin.news.breadcrumbs.edit']() } },
   loader: async ({ params: { id }, context }) => {
     const data = await context.queryClient.ensureQueryData(orpc.admin.news.getById.queryOptions({ input: { id: Number(id) } }));
     return {
       post: data,
-      breadcrumbs: { title: `Edit «${data.titleRo}»` }
+      breadcrumbs: { title: m['pages.admin.news.breadcrumbs.editWithTitle']({ title: data.titleRo }) }
     };
   },
   head: ({ loaderData }) => {
     const post = loaderData?.post;
 
-    return { meta: [{ title: post ? `Edit news «${post.titleRo}»` : 'Edit news' }] };
+    return { meta: [{ title: post ? m['pages.admin.news.head.editWithTitle']({ title: post.titleRo }) : m['pages.admin.news.breadcrumbs.edit']() }] };
   }
 });
 
@@ -82,11 +83,11 @@ function RouteComponent() {
   return (
     <main className="container mx-auto p-4 pb-16 space-y-4 flex-1 relative">
       <p className="text-muted-foreground text-xs">
-        Created: {format(news.createdAt, 'dd.MM.yyyy - HH:mm')},
-        Updated: {format(news.updatedAt, 'dd.MM.yyyy - HH:mm')}
+        {m['pages.admin.shared.meta.created']()}: {format(news.createdAt, 'dd.MM.yyyy - HH:mm')},
+        {m['pages.admin.shared.meta.updated']()}: {format(news.updatedAt, 'dd.MM.yyyy - HH:mm')}
       </p>
 
-      <Label>Image</Label>
+      <Label>{m['pages.admin.shared.fields.image']()}</Label>
       <NewsImageUploader newsId={id} defaultImage={imageData} onPendingChange={onImagePending}/>
 
       <Form {...form}>
@@ -139,14 +140,14 @@ const BottomButtons: FC<IBottomButtons> = (props) => {
             className="border"
           >
             <IconArrowBackUp/>
-            <span className="sr-only sm:not-sr-only">Reset</span>
+            <span className="sr-only sm:not-sr-only">{m['pages.admin.shared.actions.reset']()}</span>
           </Button>
         </div>
 
         <div className="bg-background shadow-md rounded-md">
           <LoadingButton type="submit" hideTextOnMobile onClick={onSubmitClick} disabled={disabled} loading={isLoading}>
             <IconDeviceFloppy/>
-            <span className="sr-only sm:not-sr-only">Save</span>
+            <span className="sr-only sm:not-sr-only">{m['pages.admin.shared.actions.save']()}</span>
           </LoadingButton>
         </div>
       </div>

@@ -13,7 +13,8 @@ import {
   IconPhoto, IconPhotoOff,
   IconLink,
   IconListCheck,
-  IconPencil
+  IconPencil,
+  IconTrash
 } from '@tabler/icons-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -29,6 +30,11 @@ import { ColumnFilterType, DataTableColumnHeader } from '@/components/data-table
 import { Link, useNavigate } from '@tanstack/react-router';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useConfirm } from '@/components/ui/confirm-dialog';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { m } from '@/paraglide/messages';
 
 
 const columnHelper = createColumnHelper<IAdminNewsBriefDto>();
@@ -68,7 +74,7 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
         />
       ),
       meta: {
-        label: 'Select',
+        label: m['pages.admin.shared.table.select'](),
         skeletonClassName: 'w-6 h-6'
       }
     }),
@@ -76,7 +82,7 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
       header: ({ column }) => <DataTableColumnHeader column={column}/>,
       cell: ctx => ctx.getValue(),
       meta: {
-        label: 'Id',
+        label: m['pages.admin.shared.table.id'](),
         key: 'idRange',
         icon: IconHash,
         skeletonClassName: 'w-10 h-6',
@@ -113,15 +119,15 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
         );
       },
       meta: {
-        label: 'Image',
+        label: m['pages.admin.news.table.columns.image'](),
         key: 'hasImage',
         icon: IconPhoto,
         skeletonClassName: 'h-10 w-18',
         filter: {
           type: ColumnFilterType.Select,
           options: [
-            { title: 'Yes', value: true, icon: IconPhoto },
-            { title: 'No', value: false, icon: IconPhotoOff }
+            { title: m['pages.admin.shared.table.yes'](), value: true, icon: IconPhoto },
+            { title: m['pages.admin.shared.table.no'](), value: false, icon: IconPhotoOff }
           ]
         }
       }
@@ -131,12 +137,12 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
       header: ({ column }) => <DataTableColumnHeader column={column}/>,
       cell: ctx => ctx.getValue(),
       meta: {
-        label: 'Title',
+        label: m['pages.admin.shared.table.title'](),
         icon: IconHeading,
         skeletonClassName: 'h-6 w-40',
         filter: {
           type: ColumnFilterType.Text,
-          placeholder: 'Search by title'
+          placeholder: m['pages.admin.shared.table.searchByTitle']()
         }
       }
     }),
@@ -144,10 +150,10 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
       header: ({ column }) => <DataTableColumnHeader column={column}/>,
       cell: ctx => ctx.getValue(),
       meta: {
-        label: 'Slug',
+        label: m['pages.admin.shared.table.slug'](),
         icon: IconLink,
         skeletonClassName: 'h-6 w-36',
-        filter: { type: ColumnFilterType.Text, placeholder: 'Search by slug' }
+        filter: { type: ColumnFilterType.Text, placeholder: m['pages.admin.shared.table.searchBySlug']() }
       }
     }),
     columnHelper.accessor('status', {
@@ -159,17 +165,19 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
           ) : (
             <IconEye className="size-3.5 text-muted-foreground"/>
           )}
-          <span className="capitalize">{getValue()}</span>
+          <span className="capitalize">
+            {getValue() === NewsStatus.hidden ? m['pages.admin.shared.status.hidden']() : m['pages.admin.shared.status.published']()}
+          </span>
         </Badge>,
       meta: {
-        label: 'Status',
+        label: m['pages.admin.news.table.columns.status'](),
         icon: IconListCheck,
         skeletonClassName: 'h-6 w-20',
         filter: {
           type: ColumnFilterType.MultiSelect,
           options: [
-            { title: 'Hidden', value: NewsStatus.hidden, icon: IconEyeOff },
-            { title: 'Published', value: NewsStatus.published, icon: IconEye }
+            { title: m['pages.admin.shared.status.hidden'](), value: NewsStatus.hidden, icon: IconEyeOff },
+            { title: m['pages.admin.shared.status.published'](), value: NewsStatus.published, icon: IconEye }
           ]
         }
       }
@@ -178,7 +186,7 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
       header: ({ column }) => <DataTableColumnHeader column={column}/>,
       cell: ctx => <span className="text-xs">{format(ctx.getValue(), 'dd.MM.yyyy - HH:mm')}</span>,
       meta: {
-        label: 'Created',
+        label: m['pages.admin.shared.table.created'](),
         icon: IconCalendarPlus,
         skeletonClassName: 'h-6 w-30',
         filter: {
@@ -190,7 +198,7 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
       header: ({ column }) => <DataTableColumnHeader column={column}/>,
       cell: ctx => <span className="text-xs">{format(ctx.getValue(), 'dd.MM.yyyy - HH:mm')}</span>,
       meta: {
-        label: 'Updated',
+        label: m['pages.admin.shared.table.updated'](),
         icon: IconCalendarClock,
         skeletonClassName: 'h-6 w-30',
         filter: {
@@ -202,18 +210,45 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
       id: 'actions',
       size: 44,
       meta: {
-        label: 'Actions',
+        label: m['pages.admin.shared.actions.actions'](),
         skeletonClassName: 'ml-auto h-7 w-7'
       },
       cell: (ctx) => {
         const navigate = useNavigate();
+        const confirm = useConfirm();
+        const queryClient = useQueryClient();
         const id = ctx.row.getValue<number>('id');
         const slug = ctx.row.getValue<string>('slug');
+
+        const { isPending: isDeleting, mutateAsync: deleteAsync } = useMutation({
+          ...orpc.admin.news.delete.mutationOptions(),
+          onSuccess: () => {
+            void queryClient.invalidateQueries({ queryKey: orpc.admin.news.key() });
+          }
+        });
+
+        const handleDelete = async () => {
+          const isConfirmed = await confirm({
+            title: m['pages.admin.news.delete.confirmTitle'](),
+            description: m['pages.admin.news.delete.confirmDescriptionSingle'](),
+            confirmText: m['pages.admin.shared.actions.delete'](),
+            cancelText: m['common.cancel']()
+          });
+
+          if (!isConfirmed)
+            return;
+
+          toast.promise(deleteAsync({ id }), {
+            loading: m['pages.admin.news.delete.loadingToast'](),
+            success: m['pages.admin.news.delete.successToast'](),
+            error: (err) => err instanceof Error ? err.message : m['pages.admin.news.delete.errorToast']()
+          });
+        };
 
         return (
           <div className="text-right">
             <DropdownMenu>
-              <DropdownMenuTrigger disabled={disabled} asChild>
+              <DropdownMenuTrigger disabled={disabled || isDeleting} asChild>
                 <Button size="icon-xs" variant="ghost">
                   <IconDots/>
                 </Button>
@@ -221,22 +256,31 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
 
               <DropdownMenuContent className="w-40" align="end">
                 <DropdownMenuLabel>
-                  Actions
+                  {m['pages.admin.shared.actions.actions']()}
                 </DropdownMenuLabel>
 
                 <DropdownMenuSeparator/>
 
                 <DropdownMenuGroup>
                   <DropdownMenuItem onClick={() => navigate({ to: '/news/$slug', params: { slug: slug } })}>
-                    <span>Go to page</span>
+                    <span>{m['pages.admin.shared.actions.goToPage']()}</span>
                     <IconLink className="ml-auto size-4"/>
                   </DropdownMenuItem>
 
                   <DropdownMenuItem asChild>
                     <Link to="/admin/news/$id/edit" params={{ id: `${id}` }}>
-                      <span>Edit</span>
+                      <span>{m['pages.admin.shared.actions.edit']()}</span>
                       <IconPencil className="ml-auto size-4"/>
                     </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+
+                <DropdownMenuSeparator/>
+
+                <DropdownMenuGroup>
+                  <DropdownMenuItem variant="destructive" onClick={handleDelete}>
+                    <span>{m['pages.admin.shared.actions.delete']()}</span>
+                    <IconTrash className="ml-auto size-4"/>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
               </DropdownMenuContent>

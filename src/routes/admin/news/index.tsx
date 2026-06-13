@@ -3,6 +3,7 @@ import { getNewsPaginatedForAdminSchema } from '@/features/news/schemas/search-n
 import { orpc } from '@/lib/orpc';
 import { NewsTable } from './-components/news-table';
 import { awaitIfServer } from '@/lib/await-if-server';
+import { m } from '@/paraglide/messages';
 
 
 export const Route = createFileRoute('/admin/news/')({
@@ -12,7 +13,7 @@ export const Route = createFileRoute('/admin/news/')({
   loader: async ({ context, deps: { search } }) => {
     await awaitIfServer(context.queryClient.prefetchQuery(orpc.admin.news.search.queryOptions({ input: search })));
   },
-  head: () => ({ meta: [{ title: 'News' }] })
+  head: () => ({ meta: [{ title: m['pages.admin.news.head.list']() }] })
 });
 
 function Component() {

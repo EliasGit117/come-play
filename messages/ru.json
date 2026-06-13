@@ -99,7 +99,8 @@
       "sr": {
         "calculator": "Страница калькулятора",
         "menu": "Кнопка меню"
-      }
+      },
+      "admin": "Админ"
     },
     "sidebar": {
       "title": "Навигация",
@@ -430,8 +431,283 @@
     },
     "admin": {
       "dashboard": {
-        "title": "Дэшборд"
+        "title": "Панель управления",
+        "placeholder": "Здесь будет панель управления"
+      },
+      "nav": {
+        "main": "Главное",
+        "dashboard": "Панель управления",
+        "banners": "Баннеры",
+        "requests": "Заявки",
+        "news": "Новости",
+        "settings": "Настройки"
+      },
+      "theme": {
+        "label": "Тема",
+        "light": "Светлая",
+        "dark": "Тёмная",
+        "system": "Системная"
+      },
+      "language": {
+        "label": "Язык"
+      },
+      "user": {
+        "account": "Аккаунт",
+        "logout": "Выход",
+        "loggingOut": "Выход..."
+      },
+      "badge": "Админ",
+      "breadcrumbs": {
+        "root": "Админ"
+      },
+      "shared": {
+        "fields": {
+          "slug": "Слаг",
+          "slugPlaceholder": "some-slug-for-product",
+          "titleRo": "Название на румынском",
+          "titleRu": "Название на русском",
+          "status": "Статус",
+          "image": "Изображение"
+        },
+        "status": {
+          "published": "Опубликовано",
+          "hidden": "Скрыто"
+        },
+        "tabs": {
+          "romanian": "Румынский",
+          "russian": "Русский"
+        },
+        "actions": {
+          "actions": "Действия",
+          "goToPage": "Перейти на страницу",
+          "edit": "Редактировать",
+          "delete": "Удалить",
+          "reset": "Сбросить",
+          "save": "Сохранить",
+          "view": "Просмотр"
+        },
+        "uploader": {
+          "uploading": "Загрузка...",
+          "removing": "Удаление..."
+        },
+        "meta": {
+          "created": "Создано",
+          "updated": "Обновлено"
+        },
+        "editAfterCreation": {
+          "label": "Редактировать после создания"
+        },
+        "table": {
+          "id": "Id",
+          "select": "Выбор",
+          "title": "Название",
+          "slug": "Слаг",
+          "created": "Создано",
+          "updated": "Обновлено",
+          "searchByTitle": "Поиск по названию",
+          "searchBySlug": "Поиск по слагу",
+          "yes": "Да",
+          "no": "Нет"
+        }
+      },
+      "news": {
+        "breadcrumbs": {
+          "list": "Новости",
+          "edit": "Редактировать новость",
+          "editWithTitle": "Редактировать «{title}»"
+        },
+        "head": {
+          "list": "Новости",
+          "editWithTitle": "Редактировать новость «{title}»"
+        },
+        "table": {
+          "columns": {
+            "image": "Изображение",
+            "status": "Статус"
+          },
+          "filters": {
+            "hasImage": "Есть изображение"
+          }
+        },
+        "create": {
+          "trigger": {
+            "full": "Создать новость",
+            "short": "Создать"
+          },
+          "title": "Создать новость",
+          "description": "Заполните форму ниже, чтобы создать новую новость.",
+          "editAfterCreationHint": "Перейти на страницу редактирования после создания",
+          "successToast": "Новость успешно создана"
+        },
+        "delete": {
+          "confirmTitle": "Удалить новость",
+          "confirmDescriptionSingle": "Вы уверены, что хотите удалить эту новость?",
+          "confirmDescriptionBulk": "Вы уверены, что хотите удалить выбранные новости?",
+          "loadingToast": "Удаление новости...",
+          "successToast": "Новость успешно удалена!",
+          "errorToast": "Не удалось удалить новость."
+        },
+        "form": {
+          "titleRoPlaceholder": "Denumirea produsului",
+          "titleRuPlaceholder": "Название продукта"
+        }
+      },
+      "banners": {
+        "breadcrumbs": {
+          "list": "Баннеры",
+          "edit": "Редактировать баннер",
+          "editWithTitle": "Редактировать «{title}»"
+        },
+        "head": {
+          "list": "Баннеры",
+          "edit": "Редактировать баннер"
+        },
+        "table": {
+          "columns": {
+            "order": "Порядок",
+            "images": "Изображения",
+            "path": "Путь",
+            "title": "Название",
+            "isActive": "Активен"
+          },
+          "status": {
+            "active": "Активен",
+            "inactive": "Неактивен"
+          },
+          "filters": {
+            "searchByPath": "Поиск по пути",
+            "hasDesktop": "Есть десктоп",
+            "hasTablet": "Есть планшет",
+            "hasMobile": "Есть телефон"
+          }
+        },
+        "create": {
+          "trigger": {
+            "full": "Создать баннер",
+            "short": "Создать"
+          },
+          "title": "Создать баннер",
+          "description": "Заполните форму ниже, чтобы создать новый баннер.",
+          "editAfterCreationHint": "Перейти на страницу редактирования баннера для добавления деталей",
+          "successToast": "Баннер успешно создан"
+        },
+        "reorder": {
+          "trigger": {
+            "full": "Изменить порядок баннеров",
+            "short": "Порядок"
+          },
+          "title": "Изменить порядок баннеров"
+        },
+        "delete": {
+          "confirmTitleSingle": "Удалить баннер",
+          "confirmTitleBulk": "Удалить баннеры",
+          "confirmDescriptionSingle": "Вы уверены, что хотите удалить этот баннер?",
+          "confirmDescriptionBulk": "Вы уверены, что хотите удалить выбранные баннеры?",
+          "loadingToastSingle": "Удаление баннера...",
+          "loadingToastBulk": "Удаление баннеров...",
+          "successToastSingle": "Баннер успешно удалён!",
+          "successToastBulk": "Баннеры успешно удалены!",
+          "errorToastSingle": "Не удалось удалить баннер.",
+          "errorToastBulk": "Не удалось удалить баннеры."
+        },
+        "form": {
+          "title": "Название",
+          "titlePlaceholder": "Название баннера",
+          "path": "Путь",
+          "pathPlaceholderCreate": "some-path-for-banner",
+          "pathPlaceholderEdit": "/path/to/page",
+          "titleRoPlaceholder": "Denumirea bannerului",
+          "titleRuPlaceholder": "Название баннера",
+          "textRo": "Текст на румынском",
+          "textRoPlaceholder": "Descriere",
+          "textRu": "Текст на русском",
+          "textRuPlaceholder": "Описание",
+          "isActive": "Активен",
+          "isActiveDescription": "Управляет видимостью баннера",
+          "isActiveEdit": "Активен",
+          "isActiveEditDescription": "Определяет, будет ли баннер показан пользователям"
+        },
+        "images": {
+          "label": "Изображения",
+          "desktop": "Десктоп",
+          "tablet": "Планшет",
+          "phone": "Телефон"
+        }
+      },
+      "customerRequests": {
+        "breadcrumbs": {
+          "list": "Заявки клиентов"
+        },
+        "head": {
+          "list": "Заявки клиентов"
+        },
+        "table": {
+          "columns": {
+            "name": "Имя",
+            "email": "Email",
+            "phone": "Телефон",
+            "notification": "Уведомление"
+          },
+          "filters": {
+            "searchByName": "Поиск по имени",
+            "searchByEmail": "Поиск по email",
+            "searchByPhone": "Поиск по телефону"
+          },
+          "status": {
+            "pending": "В ожидании",
+            "sent": "Отправлено",
+            "failed": "Не удалось"
+          }
+        },
+        "delete": {
+          "confirmTitleSingle": "Удалить заявку",
+          "confirmTitleBulk": "Удалить заявки",
+          "confirmDescriptionSingle": "Вы уверены, что хотите удалить эту заявку?",
+          "confirmDescriptionBulk": "Вы уверены, что хотите удалить выбранные заявки?",
+          "loadingToastSingle": "Удаление заявки...",
+          "loadingToastBulk": "Удаление заявок...",
+          "successToastSingle": "Заявка успешно удалена!",
+          "successToastBulk": "Заявки успешно удалены!",
+          "errorToastSingle": "Не удалось удалить заявку.",
+          "errorToastBulk": "Не удалось удалить заявки."
+        },
+        "view": {
+          "title": "Заявка клиента №{id}",
+          "description": "Детали отправленной заявки.",
+          "fields": {
+            "firstName": "Имя",
+            "lastName": "Фамилия",
+            "phone": "Телефон",
+            "email": "Email",
+            "notification": "Уведомление",
+            "created": "Создано",
+            "message": "Сообщение"
+          }
+        }
       }
     }
+  },
+  "dataTable": {
+    "toolbar": {
+      "resetFilters": "Сбросить фильтры"
+    },
+    "clear": "Очистить",
+    "sort": {
+      "label": "Сортировка",
+      "by": "Сортировать по",
+      "direction": "Направление",
+      "asc": "Возр.",
+      "desc": "Убыв."
+    },
+    "hide": "Скрыть",
+    "searchColumns": "Поиск столбцов...",
+    "noColumnsFound": "Столбцы не найдены",
+    "noResultsFound": "Результаты не найдены",
+    "toggleColumns": "Переключить столбцы",
+    "columns": "Столбцы",
+    "selectedCount": "{count} выбрано",
+    "min": "Мин",
+    "max": "Макс",
+    "clearFilter": "Очистить фильтр {title}"
   }
 }

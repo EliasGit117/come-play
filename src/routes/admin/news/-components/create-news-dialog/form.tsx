@@ -8,6 +8,7 @@ import {
   FieldLabel
 } from '@/components/ui/field';
 import { TCreateNewsSchema } from '@/features/news/schemas/create-news';
+import { m } from '@/paraglide/messages';
 
 
 export interface IPostProps {
@@ -26,12 +27,12 @@ export const NewsForm: FC<IPostProps> = ({ className, disabled }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="slug-input">Slug</FieldLabel>
+              <FieldLabel htmlFor="slug-input">{m['pages.admin.shared.fields.slug']()}</FieldLabel>
               <Input
                 {...field}
                 id="slug-input"
                 aria-invalid={fieldState.invalid}
-                placeholder="some-slug-for-product"
+                placeholder={m['pages.admin.shared.fields.slugPlaceholder']()}
                 autoComplete="off"
               />
               {fieldState.invalid && (
@@ -46,12 +47,12 @@ export const NewsForm: FC<IPostProps> = ({ className, disabled }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="title-ro-input">Romanian title</FieldLabel>
+              <FieldLabel htmlFor="title-ro-input">{m['pages.admin.shared.fields.titleRo']()}</FieldLabel>
               <Input
                 {...field}
                 id="title-ro-input"
                 aria-invalid={fieldState.invalid}
-                placeholder="Denumirea produsului"
+                placeholder={m['pages.admin.news.form.titleRoPlaceholder']()}
                 autoComplete="off"
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
@@ -64,12 +65,12 @@ export const NewsForm: FC<IPostProps> = ({ className, disabled }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="title-ru-input">Russian title</FieldLabel>
+              <FieldLabel htmlFor="title-ru-input">{m['pages.admin.shared.fields.titleRu']()}</FieldLabel>
               <Input
                 {...field}
                 id="title-ru-input"
                 aria-invalid={fieldState.invalid}
-                placeholder="Название продукта"
+                placeholder={m['pages.admin.news.form.titleRuPlaceholder']()}
                 autoComplete="off"
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}

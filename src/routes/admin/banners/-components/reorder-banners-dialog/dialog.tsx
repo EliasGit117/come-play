@@ -23,6 +23,7 @@ import { useMediaQuery } from '@/hooks/use-media-query';
 import { MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
+import { m } from '@/paraglide/messages';
 
 
 interface IReorderBannerDialogProps {
@@ -71,7 +72,7 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent className="sm:max-w-3xl!">
         <AlertDialogHeader>
-          <AlertDialogTitle>Reorder banners</AlertDialogTitle>
+          <AlertDialogTitle>{m['pages.admin.banners.reorder.title']()}</AlertDialogTitle>
           <AlertDialogDescription/>
         </AlertDialogHeader>
 
@@ -122,7 +123,7 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
             disabled={isBusy}
           >
             <IconX/>
-            <span>Cancel</span>
+            <span>{m['common.cancel']()}</span>
           </AlertDialogCancel>
 
           <LoadingButton
@@ -133,7 +134,7 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
             className="flex-1 sm:flex-none"
           >
             <IconSend/>
-            <span>Submit</span>
+            <span>{m['common.submit']()}</span>
           </LoadingButton>
         </AlertDialogFooter>
       </AlertDialogContent>

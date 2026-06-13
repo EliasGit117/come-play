@@ -99,7 +99,8 @@
       "sr": {
         "calculator": "Pagina calculator",
         "menu": "Buton meniu"
-      }
+      },
+      "admin": "Admin"
     },
     "sidebar": {
       "title": "Navigare",
@@ -430,8 +431,283 @@
     },
     "admin": {
       "dashboard": {
-        "title": "Dashboard"
+        "title": "Tablou de bord",
+        "placeholder": "Aici va fi tabloul de bord"
+      },
+      "nav": {
+        "main": "Principal",
+        "dashboard": "Tablou de bord",
+        "banners": "Bannere",
+        "requests": "Cereri",
+        "news": "Știri",
+        "settings": "Setări"
+      },
+      "theme": {
+        "label": "Temă",
+        "light": "Luminoasă",
+        "dark": "Întunecată",
+        "system": "Sistem"
+      },
+      "language": {
+        "label": "Limbă"
+      },
+      "user": {
+        "account": "Cont",
+        "logout": "Deconectare",
+        "loggingOut": "Se deconectează..."
+      },
+      "badge": "Admin",
+      "breadcrumbs": {
+        "root": "Admin"
+      },
+      "shared": {
+        "fields": {
+          "slug": "Slug",
+          "slugPlaceholder": "some-slug-for-product",
+          "titleRo": "Titlu în română",
+          "titleRu": "Titlu în rusă",
+          "status": "Status",
+          "image": "Imagine"
+        },
+        "status": {
+          "published": "Publicat",
+          "hidden": "Ascuns"
+        },
+        "tabs": {
+          "romanian": "Română",
+          "russian": "Rusă"
+        },
+        "actions": {
+          "actions": "Acțiuni",
+          "goToPage": "Mergi la pagină",
+          "edit": "Editează",
+          "delete": "Șterge",
+          "reset": "Resetează",
+          "save": "Salvează",
+          "view": "Vizualizare"
+        },
+        "uploader": {
+          "uploading": "Se încarcă...",
+          "removing": "Se elimină..."
+        },
+        "meta": {
+          "created": "Creat",
+          "updated": "Actualizat"
+        },
+        "editAfterCreation": {
+          "label": "Editează după creare"
+        },
+        "table": {
+          "id": "Id",
+          "select": "Selectează",
+          "title": "Titlu",
+          "slug": "Slug",
+          "created": "Creat",
+          "updated": "Actualizat",
+          "searchByTitle": "Căutare după titlu",
+          "searchBySlug": "Căutare după slug",
+          "yes": "Da",
+          "no": "Nu"
+        }
+      },
+      "news": {
+        "breadcrumbs": {
+          "list": "Știri",
+          "edit": "Editează știrea",
+          "editWithTitle": "Editează «{title}»"
+        },
+        "head": {
+          "list": "Știri",
+          "editWithTitle": "Editează știrea «{title}»"
+        },
+        "table": {
+          "columns": {
+            "image": "Imagine",
+            "status": "Status"
+          },
+          "filters": {
+            "hasImage": "Are imagine"
+          }
+        },
+        "create": {
+          "trigger": {
+            "full": "Creează știre",
+            "short": "Creează"
+          },
+          "title": "Creează știre",
+          "description": "Completați formularul de mai jos pentru a crea o știre nouă.",
+          "editAfterCreationHint": "Redirecționare către pagina de editare după creare",
+          "successToast": "Știrea a fost creată cu succes"
+        },
+        "delete": {
+          "confirmTitle": "Șterge știrea",
+          "confirmDescriptionSingle": "Sigur doriți să ștergeți această știre?",
+          "confirmDescriptionBulk": "Sigur doriți să ștergeți știrile selectate?",
+          "loadingToast": "Se șterge știrea...",
+          "successToast": "Știrea a fost ștearsă cu succes!",
+          "errorToast": "Ștergerea știrii a eșuat."
+        },
+        "form": {
+          "titleRoPlaceholder": "Denumirea produsului",
+          "titleRuPlaceholder": "Название продукта"
+        }
+      },
+      "banners": {
+        "breadcrumbs": {
+          "list": "Bannere",
+          "edit": "Editează bannerul",
+          "editWithTitle": "Editează «{title}»"
+        },
+        "head": {
+          "list": "Bannere",
+          "edit": "Editează bannerul"
+        },
+        "table": {
+          "columns": {
+            "order": "Ordine",
+            "images": "Imagini",
+            "path": "Cale",
+            "title": "Titlu",
+            "isActive": "Activ"
+          },
+          "status": {
+            "active": "Activ",
+            "inactive": "Inactiv"
+          },
+          "filters": {
+            "searchByPath": "Căutare după cale",
+            "hasDesktop": "Are desktop",
+            "hasTablet": "Are tabletă",
+            "hasMobile": "Are mobil"
+          }
+        },
+        "create": {
+          "trigger": {
+            "full": "Creează banner",
+            "short": "Creează"
+          },
+          "title": "Creează banner",
+          "description": "Completați formularul de mai jos pentru a crea un banner nou.",
+          "editAfterCreationHint": "Redirecționare către pagina de editare a bannerului",
+          "successToast": "Bannerul a fost creat cu succes"
+        },
+        "reorder": {
+          "trigger": {
+            "full": "Reordonează bannerele",
+            "short": "Reordonează"
+          },
+          "title": "Reordonează bannerele"
+        },
+        "delete": {
+          "confirmTitleSingle": "Șterge bannerul",
+          "confirmTitleBulk": "Șterge bannerele",
+          "confirmDescriptionSingle": "Sigur doriți să ștergeți acest banner?",
+          "confirmDescriptionBulk": "Sigur doriți să ștergeți bannerele selectate?",
+          "loadingToastSingle": "Se șterge bannerul...",
+          "loadingToastBulk": "Se șterg bannerele...",
+          "successToastSingle": "Bannerul a fost șters cu succes!",
+          "successToastBulk": "Bannerele au fost șterse cu succes!",
+          "errorToastSingle": "Ștergerea bannerului a eșuat.",
+          "errorToastBulk": "Ștergerea bannerelor a eșuat."
+        },
+        "form": {
+          "title": "Titlu",
+          "titlePlaceholder": "Titlul bannerului",
+          "path": "Cale",
+          "pathPlaceholderCreate": "some-path-for-banner",
+          "pathPlaceholderEdit": "/path/to/page",
+          "titleRoPlaceholder": "Denumirea bannerului",
+          "titleRuPlaceholder": "Название баннера",
+          "textRo": "Text în română",
+          "textRoPlaceholder": "Descriere",
+          "textRu": "Text în rusă",
+          "textRuPlaceholder": "Описание",
+          "isActive": "Activ",
+          "isActiveDescription": "Controlează vizibilitatea bannerului",
+          "isActiveEdit": "Activ",
+          "isActiveEditDescription": "Reprezintă starea bannerului, determinând dacă va fi afișat utilizatorilor"
+        },
+        "images": {
+          "label": "Imagini",
+          "desktop": "Desktop",
+          "tablet": "Tabletă",
+          "phone": "Telefon"
+        }
+      },
+      "customerRequests": {
+        "breadcrumbs": {
+          "list": "Cereri de la clienți"
+        },
+        "head": {
+          "list": "Cereri de la clienți"
+        },
+        "table": {
+          "columns": {
+            "name": "Nume",
+            "email": "Email",
+            "phone": "Telefon",
+            "notification": "Notificare"
+          },
+          "filters": {
+            "searchByName": "Căutare după nume",
+            "searchByEmail": "Căutare după email",
+            "searchByPhone": "Căutare după telefon"
+          },
+          "status": {
+            "pending": "În așteptare",
+            "sent": "Trimis",
+            "failed": "Eșuat"
+          }
+        },
+        "delete": {
+          "confirmTitleSingle": "Șterge cererea",
+          "confirmTitleBulk": "Șterge cererile",
+          "confirmDescriptionSingle": "Sigur doriți să ștergeți această cerere?",
+          "confirmDescriptionBulk": "Sigur doriți să ștergeți cererile selectate?",
+          "loadingToastSingle": "Se șterge cererea...",
+          "loadingToastBulk": "Se șterg cererile...",
+          "successToastSingle": "Cererea a fost ștearsă cu succes!",
+          "successToastBulk": "Cererile au fost șterse cu succes!",
+          "errorToastSingle": "Ștergerea cererii a eșuat.",
+          "errorToastBulk": "Ștergerea cererilor a eșuat."
+        },
+        "view": {
+          "title": "Cererea clientului #{id}",
+          "description": "Detaliile cererii trimise.",
+          "fields": {
+            "firstName": "Prenume",
+            "lastName": "Nume",
+            "phone": "Telefon",
+            "email": "Email",
+            "notification": "Notificare",
+            "created": "Creat",
+            "message": "Mesaj"
+          }
+        }
       }
     }
+  },
+  "dataTable": {
+    "toolbar": {
+      "resetFilters": "Resetare filtre"
+    },
+    "clear": "Șterge",
+    "sort": {
+      "label": "Sortare",
+      "by": "Sortează după",
+      "direction": "Direcție",
+      "asc": "Cresc.",
+      "desc": "Descresc."
+    },
+    "hide": "Ascunde",
+    "searchColumns": "Căutare coloane...",
+    "noColumnsFound": "Nicio coloană găsită",
+    "noResultsFound": "Niciun rezultat găsit",
+    "toggleColumns": "Comutare coloane",
+    "columns": "Coloane",
+    "selectedCount": "{count} selectate",
+    "min": "Min",
+    "max": "Max",
+    "clearFilter": "Șterge filtrul {title}"
   }
 }

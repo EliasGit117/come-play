@@ -9,6 +9,7 @@ import { Separator } from '@/components/ui/separator';
 import { Slider } from '@/components/ui/slider';
 import { ButtonGroup } from '@/components/ui/button-group';
 import { IconCirclePlus, IconCircleX } from '@tabler/icons-react';
+import { m } from '@/paraglide/messages';
 
 
 
@@ -113,7 +114,7 @@ export function DataTableNumberRangeFilter<TData, TValue>(props: IDataTableNumbe
               min={min}
               max={filterValue?.[1] ?? max}
               onValueChange={(v) => handleChange(v, 'min')}
-              placeholder={min?.toString() ?? 'Min'}
+              placeholder={min?.toString() ?? m['dataTable.min']()}
             />
             <NumberInput
               inputSize="sm"
@@ -121,7 +122,7 @@ export function DataTableNumberRangeFilter<TData, TValue>(props: IDataTableNumbe
               max={max}
               value={filterValue?.[1] ?? undefined}
               onValueChange={(v) => handleChange(v, 'max')}
-              placeholder={max?.toString() ?? 'Max'}
+              placeholder={max?.toString() ?? m['dataTable.max']()}
             />
           </div>
 
@@ -140,7 +141,7 @@ export function DataTableNumberRangeFilter<TData, TValue>(props: IDataTableNumbe
           {!!filterValue && (
             <Button size="sm" variant="outline" className="w-full" onClick={clear}>
               <IconCircleX/>
-              <span>Clear</span>
+              <span>{m['dataTable.clear']()}</span>
             </Button>
           )}
         </PopoverContent>

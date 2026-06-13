@@ -5,6 +5,7 @@ import { NumberInput } from '@/components/ui/number-input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { IconX } from '@tabler/icons-react';
+import { m } from '@/paraglide/messages';
 
 
 interface IDataTableNumberFilterProps<TData, TValue>
@@ -63,7 +64,7 @@ export function DataTableNumberFilter<TData, TValue>(props: IDataTableNumberFilt
             disabled={restOfProps.disabled}
           >
             <IconX className="size-3.5"/>
-            <span className="sr-only">Clear</span>
+            <span className="sr-only">{m['dataTable.clear']()}</span>
           </Button>
         </div>
       )}

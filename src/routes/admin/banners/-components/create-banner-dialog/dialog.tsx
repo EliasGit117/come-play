@@ -24,6 +24,7 @@ import { createBannerSchema, TCreateBannerSchema } from '@/features/banners/sche
 import { orpc } from '@/lib/orpc';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCreateBannerDialogContext } from './provider';
+import { m } from '@/paraglide/messages';
 
 interface ICreateBannerDialogProps {
   afterSuccess?: () => void;
@@ -54,7 +55,7 @@ export const CreateBannerDialog: FC<ICreateBannerDialogProps> = ({ afterSuccess 
     onSuccess: (res) => {
       void queryClient.invalidateQueries({ queryKey: orpc.admin.banners.key() });
       setIsOpen(false);
-      toast.success('Banner has been successfully created');
+      toast.success(m['pages.admin.banners.create.successToast']());
       afterSuccess?.();
 
       if (editAfterCreation)
@@ -79,9 +80,9 @@ export const CreateBannerDialog: FC<ICreateBannerDialogProps> = ({ afterSuccess 
         <Form {...form}>
           <form onSubmit={form.handleSubmit((values) => mutate(values))}>
             <AlertDialogHeader>
-              <AlertDialogTitle>Create Banner</AlertDialogTitle>
+              <AlertDialogTitle>{m['pages.admin.banners.create.title']()}</AlertDialogTitle>
               <AlertDialogDescription>
-                Fill out the form below to create a new banner entry.
+                {m['pages.admin.banners.create.description']()}
               </AlertDialogDescription>
             </AlertDialogHeader>
 
@@ -98,10 +99,10 @@ export const CreateBannerDialog: FC<ICreateBannerDialogProps> = ({ afterSuccess 
               />
               <div className="grid gap-2">
                 <Label htmlFor="edit-after-creation-checkbox">
-                  Edit after creation
+                  {m['pages.admin.shared.editAfterCreation.label']()}
                 </Label>
                 <p className="text-muted-foreground text-sm">
-                  Redirect to edit banner page to add or change details.
+                  {m['pages.admin.banners.create.editAfterCreationHint']()}
                 </p>
               </div>
             </div>
@@ -112,7 +113,7 @@ export const CreateBannerDialog: FC<ICreateBannerDialogProps> = ({ afterSuccess 
                 className="flex-1 sm:flex-none"
               >
                 <IconX/>
-                <span>Cancel</span>
+                <span>{m['common.cancel']()}</span>
               </AlertDialogCancel>
 
               <LoadingButton
@@ -121,7 +122,7 @@ export const CreateBannerDialog: FC<ICreateBannerDialogProps> = ({ afterSuccess 
                 className="flex-1 sm:flex-none"
               >
                 <IconSend/>
-                <span>Submit</span>
+                <span>{m['common.submit']()}</span>
               </LoadingButton>
             </AlertDialogFooter>
           </form>

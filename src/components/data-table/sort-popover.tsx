@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/command';
 import { Separator } from '@/components/ui/separator';
 import { IconArrowsUpDown, IconChevronDown, IconChevronUp, IconCircleX } from '@tabler/icons-react';
+import { m } from '@/paraglide/messages';
 
 
 
@@ -38,7 +39,7 @@ export function DataTableSortPopover<TData>({ ...props }: IDataTableSortPopoverP
         <Button role="combobox" variant="outline" size="sm" className='w-7 sm:w-fit'>
           <IconArrowsUpDown/>
           <span className="sr-only sm:not-sr-only">
-            Sort
+            {m['dataTable.sort.label']()}
           </span>
         </Button>
       </PopoverTrigger>
@@ -46,15 +47,15 @@ export function DataTableSortPopover<TData>({ ...props }: IDataTableSortPopoverP
       <PopoverContent align="start" className="min-w-48 w-fit p-0 gap-1">
         <Command className="space-y-1">
           <CommandInput
-            placeholder='Search columns...'
+            placeholder={m['dataTable.searchColumns']()}
             // wrapperClassName="p-0"
             // groupClassName="rounded-sm!"
           />
           <CommandList>
             <CommandEmpty>
-              No columns found
+              {m['dataTable.noColumnsFound']()}
             </CommandEmpty>
-            <CommandGroup className="p-0" heading='Sort by'>
+            <CommandGroup className="p-0" heading={m['dataTable.sort.by']()}>
               {sortableColumns.map((column) => {
                 const Icon = column.columnDef.meta?.icon;
 
@@ -81,14 +82,14 @@ export function DataTableSortPopover<TData>({ ...props }: IDataTableSortPopoverP
 
             <Command className="space-y-1">
               <CommandList>
-                <CommandGroup className="p-0" heading='Direction'>
+                <CommandGroup className="p-0" heading={m['dataTable.sort.direction']()}>
                   <CommandItem
                     data-checked={!currentSort.desc}
                     onSelect={() => table.setSorting([{ id: currentSort.id, desc: false }])}
                   >
                     <IconChevronUp className="size-4 text-muted-foreground"/>
-                    <span className="truncate">
-                      ASC
+                    <span className="truncate uppercase">
+                      {m['dataTable.sort.asc']()}
                     </span>
                   </CommandItem>
 
@@ -97,8 +98,8 @@ export function DataTableSortPopover<TData>({ ...props }: IDataTableSortPopoverP
                     onSelect={() => table.setSorting([{ id: currentSort.id, desc: true }])}
                   >
                     <IconChevronDown className="size-4 text-muted-foreground"/>
-                    <span className="truncate">
-                      DESC
+                    <span className="truncate uppercase">
+                      {m['dataTable.sort.desc']()}
                     </span>
                   </CommandItem>
                 </CommandGroup>
@@ -109,7 +110,7 @@ export function DataTableSortPopover<TData>({ ...props }: IDataTableSortPopoverP
 
             <Button size="sm" variant="ghost" className="m-1 mt-0" onClick={() => table.setSorting([])}>
               <IconCircleX/>
-              <span>Clear</span>
+              <span>{m['dataTable.clear']()}</span>
             </Button>
           </>
         )}

@@ -63,6 +63,6 @@ export const getHeaderLinks = (user?: TUser | null): TLinkItem[] => [
   },
   ...(user?.role === 'admin' ? [{
     type: MenuItemType.Single,
-    item: { label: 'Admin', linkOpt: { to: '/admin' } }
+    item: { label: m['layout.header.admin'](), linkOpt: { to: '/admin' } }
   } satisfies TSingleLinkItem] : [])
 ];

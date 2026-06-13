@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/field';
 import { TCreateBannerSchema } from '@/features/banners/schemas/create-banner';
 import { Checkbox } from '@/components/ui/checkbox';
+import { m } from '@/paraglide/messages';
 
 interface IBannerFormProps {
   disabled?: boolean;
@@ -28,8 +29,8 @@ export const BannerForm: FC<IBannerFormProps> = ({ disabled, className }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="title-input">Title</FieldLabel>
-              <Input {...field} id="title-input" placeholder="Banner title" />
+              <FieldLabel htmlFor="title-input">{m['pages.admin.banners.form.title']()}</FieldLabel>
+              <Input {...field} id="title-input" placeholder={m['pages.admin.banners.form.titlePlaceholder']()} />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -41,11 +42,11 @@ export const BannerForm: FC<IBannerFormProps> = ({ disabled, className }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="path-input">Path</FieldLabel>
+              <FieldLabel htmlFor="path-input">{m['pages.admin.banners.form.path']()}</FieldLabel>
               <Input
                 {...field}
                 id="path-input"
-                placeholder="some-path-for-banner"
+                placeholder={m['pages.admin.banners.form.pathPlaceholderCreate']()}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -58,8 +59,8 @@ export const BannerForm: FC<IBannerFormProps> = ({ disabled, className }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Romanian title</FieldLabel>
-              <Input {...field} placeholder="Denumirea bannerului" />
+              <FieldLabel>{m['pages.admin.shared.fields.titleRo']()}</FieldLabel>
+              <Input {...field} placeholder={m['pages.admin.banners.form.titleRoPlaceholder']()} />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -70,8 +71,8 @@ export const BannerForm: FC<IBannerFormProps> = ({ disabled, className }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Russian title</FieldLabel>
-              <Input {...field} placeholder="Название баннера" />
+              <FieldLabel>{m['pages.admin.shared.fields.titleRu']()}</FieldLabel>
+              <Input {...field} placeholder={m['pages.admin.banners.form.titleRuPlaceholder']()} />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -83,8 +84,8 @@ export const BannerForm: FC<IBannerFormProps> = ({ disabled, className }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Romanian text</FieldLabel>
-              <Textarea {...field} placeholder="Descriere" />
+              <FieldLabel>{m['pages.admin.banners.form.textRo']()}</FieldLabel>
+              <Textarea {...field} placeholder={m['pages.admin.banners.form.textRoPlaceholder']()} />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -95,8 +96,8 @@ export const BannerForm: FC<IBannerFormProps> = ({ disabled, className }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Russian text</FieldLabel>
-              <Textarea {...field} placeholder="Описание" />
+              <FieldLabel>{m['pages.admin.banners.form.textRu']()}</FieldLabel>
+              <Textarea {...field} placeholder={m['pages.admin.banners.form.textRuPlaceholder']()} />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -115,10 +116,10 @@ export const BannerForm: FC<IBannerFormProps> = ({ disabled, className }) => {
               />
               <FieldContent>
                 <FieldLabel htmlFor="is-active-checkbox">
-                  Is active
+                  {m['pages.admin.banners.form.isActive']()}
                 </FieldLabel>
                 <FieldDescription>
-                  Controls visibility of the banner
+                  {m['pages.admin.banners.form.isActiveDescription']()}
                 </FieldDescription>
               </FieldContent>
             </Field>

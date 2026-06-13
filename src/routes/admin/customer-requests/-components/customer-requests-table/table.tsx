@@ -15,6 +15,7 @@ import { customerRequestsColumns } from '@/routes/admin/customer-requests/-compo
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { useConfirm } from '@/components/ui/confirm-dialog';
+import { m } from '@/paraglide/messages';
 
 
 interface IProps extends ComponentProps<'div'> {
@@ -57,19 +58,19 @@ export const CustomerRequestsTable: FC<IProps> = (props) => {
       return;
 
     const isConfirmed = await confirm({
-      title: 'Delete customer requests',
-      description: 'Are you sure you want to delete the selected customer requests?',
-      confirmText: 'Delete',
-      cancelText: 'Cancel'
+      title: m['pages.admin.customerRequests.delete.confirmTitleBulk'](),
+      description: m['pages.admin.customerRequests.delete.confirmDescriptionBulk'](),
+      confirmText: m['pages.admin.shared.actions.delete'](),
+      cancelText: m['common.cancel']()
     });
 
     if (!isConfirmed)
       return;
 
     toast.promise(deleteAsync({ ids: selectedItems.map((i) => i.id) }), {
-      loading: 'Deleting customer requests...',
-      success: 'Customer requests deleted successfully!',
-      error: (err) => err instanceof Error ? err.message : 'Failed to delete customer requests.'
+      loading: m['pages.admin.customerRequests.delete.loadingToastBulk'](),
+      success: m['pages.admin.customerRequests.delete.successToastBulk'](),
+      error: (err) => err instanceof Error ? err.message : m['pages.admin.customerRequests.delete.errorToastBulk']()
     });
   }, [deleteAsync, selectedItems]);
 
@@ -82,7 +83,7 @@ export const CustomerRequestsTable: FC<IProps> = (props) => {
           {selectedItems.length > 0 && (
             <Button size="sm" variant="ghost-destructive" onClick={deleteRequests} disabled={isLoading}>
               <IconTrash/>
-              <span className="sr-only sm:not-sr-only">Delete</span>
+              <span className="sr-only sm:not-sr-only">{m['pages.admin.shared.actions.delete']()}</span>
             </Button>
           )}
         </DataTableToolbar>

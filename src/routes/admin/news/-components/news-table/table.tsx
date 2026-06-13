@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button';
 
 import { useConfirm } from '@/components/ui/confirm-dialog';
 import * as React from 'react';
+import { m } from '@/paraglide/messages';
 
 
 interface IProps extends ComponentProps<'div'> {
@@ -64,19 +65,19 @@ export const NewsTable: FC<IProps> = (props) => {
       return;
 
     const isConfirmed = await confirm({
-      title: 'Delete news',
-      description: 'Are you sure you want to delete selected news?',
-      confirmText: 'Delete',
-      cancelText: 'Cancel'
+      title: m['pages.admin.news.delete.confirmTitle'](),
+      description: m['pages.admin.news.delete.confirmDescriptionBulk'](),
+      confirmText: m['pages.admin.shared.actions.delete'](),
+      cancelText: m['common.cancel']()
     });
 
     if (!isConfirmed)
       return;
 
     toast.promise(deleteAsync({ ids: selectedItems.map((i) => i.id) }), {
-      loading: 'Deleting news...',
-      success: 'News deleted successfully!',
-      error: (err) => err instanceof Error ? err.message : 'Failed to delete news.'
+      loading: m['pages.admin.news.delete.loadingToast'](),
+      success: m['pages.admin.news.delete.successToast'](),
+      error: (err) => err instanceof Error ? err.message : m['pages.admin.news.delete.errorToast']()
     });
   }, [deleteAsync, selectedItems]);
 
@@ -90,7 +91,7 @@ export const NewsTable: FC<IProps> = (props) => {
             {selectedItems.length > 0 && (
               <Button size="sm" variant="ghost-destructive" onClick={deleteNews} disabled={isLoading}>
                 <IconTrash/>
-                <span className="sr-only sm:not-sr-only">Delete</span>
+                <span className="sr-only sm:not-sr-only">{m['pages.admin.shared.actions.delete']()}</span>
               </Button>
             )}
 

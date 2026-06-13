@@ -23,6 +23,7 @@ import { orpc } from '@/lib/orpc';
 import { Spinner } from '@/components/ui/spinner';
 import { pickFirstLetters } from '@/utils/text';
 import { useAuth } from '@/hooks/use-auth';
+import { m } from '@/paraglide/messages';
 
 
 export function NavUser() {
@@ -83,7 +84,7 @@ export function NavUser() {
               <DropdownMenuItem asChild>
                 <Link to=".">
                   <IconUserCircle/>
-                  <span>Account</span>
+                  <span>{m['pages.admin.user.account']()}</span>
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -121,11 +122,11 @@ const LogoutButton = () => {
         isPending ?
           <>
             <Spinner/>
-            <span>Logging out</span>
+            <span>{m['pages.admin.user.loggingOut']()}</span>
           </> :
           <>
             <IconLogout/>
-            <span>Logout</span>
+            <span>{m['pages.admin.user.logout']()}</span>
           </>
       }
     </DropdownMenuItem>

@@ -3,6 +3,7 @@ import { getCustomerRequestsPaginatedForAdminSchema } from '@/features/customer-
 import { orpc } from '@/lib/orpc';
 import { CustomerRequestsTable } from './-components/customer-requests-table';
 import { awaitIfServer } from '@/lib/await-if-server';
+import { m } from '@/paraglide/messages';
 
 
 export const Route = createFileRoute('/admin/customer-requests/')({
@@ -12,7 +13,7 @@ export const Route = createFileRoute('/admin/customer-requests/')({
   loader: async ({ context, deps: { search } }) => {
     await awaitIfServer(context.queryClient.prefetchQuery(orpc.admin.customerRequests.search.queryOptions({ input: search })));
   },
-  head: () => ({ meta: [{ title: 'Customer Requests' }] })
+  head: () => ({ meta: [{ title: m['pages.admin.customerRequests.head.list']() }] })
 });
 
 function Component() {

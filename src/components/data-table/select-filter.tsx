@@ -23,6 +23,7 @@ import {
 } from '@/components/data-table/types/tanstack-table-meta';
 import { IconCirclePlus, IconCircleX } from '@tabler/icons-react';
 import { ButtonGroup } from '@/components/ui/button-group';
+import { m } from '@/paraglide/messages';
 
 
 interface IDataTableSelectFilter<TData, TValue> {
@@ -56,7 +57,7 @@ export function DataTableSelectFilter<TData, TValue>({ column }: IDataTableSelec
           size="icon-sm"
           variant="outline"
           className="border-dashed"
-          aria-label={`Clear ${title} filter`}
+          aria-label={m['dataTable.clearFilter']({ title })}
           onClick={onReset}
         >
           <IconCircleX className="text-muted-foreground"/>
@@ -97,7 +98,7 @@ export function DataTableSelectFilter<TData, TValue>({ column }: IDataTableSelec
 
             <CommandList className="max-h-72">
               <CommandEmpty>
-                No results found
+                {m['dataTable.noResultsFound']()}
               </CommandEmpty>
 
               <CommandGroup className="p-0" heading={title}>
@@ -134,7 +135,7 @@ export function DataTableSelectFilter<TData, TValue>({ column }: IDataTableSelec
                       className="flex justify-center"
                     >
                       <IconCircleX/>
-                      <span>Clear</span>
+                      <span>{m['dataTable.clear']()}</span>
                     </CommandItem>
                   </CommandGroup>
                 </>
