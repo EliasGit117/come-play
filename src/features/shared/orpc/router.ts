@@ -7,6 +7,7 @@ import { bannersAdminRoutes } from '@/features/banners/routes/admin';
 import { customerRequestsAdminRoutes } from '@/features/customer-requests/routes/admin';
 import { customerRequestsPublicRoutes } from '@/features/customer-requests/routes/public';
 import { bannersPublicRoutes } from '@/features/banners/routes/public';
+import { dashboardAdminRoutes } from '@/features/dashboard/routes/admin';
 
 export const orpcRouter = base.router({
   sessions: sessionsPublicRoutes,
@@ -17,6 +18,7 @@ export const orpcRouter = base.router({
     news: newsAdminRoutes,
     banners: bannersAdminRoutes,
     customerRequests: customerRequestsAdminRoutes,
+    dashboard: dashboardAdminRoutes,
   },
 });
 

@@ -431,12 +431,21 @@
     },
     "admin": {
       "dashboard": {
-        "title": "Панель управления",
-        "placeholder": "Здесь будет панель управления"
+        "title": "Дэшборд",
+        "placeholder": "Здесь будет панель управления",
+        "stats": {
+          "news": "Новости",
+          "banners": "Баннеры",
+          "customerRequests": "Заявки клиентов"
+        },
+        "overview": {
+          "title": "Обзор",
+          "description": "Всего за последние 6 месяцев"
+        }
       },
       "nav": {
         "main": "Главное",
-        "dashboard": "Панель управления",
+        "dashboard": "Дэшборд",
         "banners": "Баннеры",
         "requests": "Заявки",
         "news": "Новости",

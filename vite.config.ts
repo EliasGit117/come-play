@@ -4,8 +4,7 @@ import tsConfigPaths from 'vite-tsconfig-paths';
 import tailwindcss from '@tailwindcss/vite';
 import svgr from 'vite-plugin-svgr';
 import { fileURLToPath } from 'node:url';
-import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react';
-import babel from '@rolldown/plugin-babel';
+import viteReact from '@vitejs/plugin-react';
 import { nitroV2Plugin } from '@tanstack/nitro-v2-vite-plugin'
 import { paraglideVitePlugin } from '@inlang/paraglide-js'
 
@@ -19,8 +18,7 @@ export default defineConfig({
   plugins: [
     tsConfigPaths({ projects: ['./tsconfig.json'] }),
     tanstackStart(),
-    viteReact(),
-    babel({ presets: [reactCompilerPreset()] }),
+    viteReact({ babel: { plugins: ['babel-plugin-react-compiler'] } }),
     tailwindcss(),
     svgr(),
     paraglideVitePlugin({

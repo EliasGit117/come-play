@@ -431,12 +431,21 @@
     },
     "admin": {
       "dashboard": {
-        "title": "Tablou de bord",
-        "placeholder": "Aici va fi tabloul de bord"
+        "title": "Dashboard",
+        "placeholder": "Aici va fi tabloul de bord",
+        "stats": {
+          "news": "Știri",
+          "banners": "Bannere",
+          "customerRequests": "Cereri clienți"
+        },
+        "overview": {
+          "title": "Prezentare generală",
+          "description": "Total ultimele 6 luni"
+        }
       },
       "nav": {
         "main": "Principal",
-        "dashboard": "Tablou de bord",
+        "dashboard": "Dashboard",
         "banners": "Bannere",
         "requests": "Cereri",
         "news": "Știri",
