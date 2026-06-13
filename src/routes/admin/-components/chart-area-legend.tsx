@@ -1,6 +1,7 @@
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts'
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardHeader,
@@ -14,7 +15,16 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from '@/components/ui/chart'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { m } from '@/paraglide/messages'
+import { dashboardChartPeriods, type TDashboardChartPeriod } from '@/features/dashboard/schemas/get-chart-data'
 
 const chartConfig = {
   news: {
@@ -31,28 +41,55 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
+const periodLabels: Record<TDashboardChartPeriod, string> = {
+  day: m['pages.admin.dashboard.periods.day'](),
+  week: m['pages.admin.dashboard.periods.week'](),
+  month: m['pages.admin.dashboard.periods.month'](),
+  '3months': m['pages.admin.dashboard.periods.3months'](),
+  '6months': m['pages.admin.dashboard.periods.6months'](),
+  year: m['pages.admin.dashboard.periods.year'](),
+}
+
 export interface IChartAreaLegendData {
-  month: string;
+  label: string;
   news: number;
   banners: number;
   customerRequests: number;
 }
 
-export function ChartAreaLegend(props: { data: IChartAreaLegendData[] }) {
-  const { data } = props;
+export function ChartAreaLegend(props: {
+  data: IChartAreaLegendData[];
+  period: TDashboardChartPeriod;
+  onPeriodChange: (period: TDashboardChartPeriod) => void;
+}) {
+  const { data, period, onPeriodChange } = props;
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>{m['pages.admin.dashboard.overview.title']()}</CardTitle>
         <CardDescription>{m['pages.admin.dashboard.overview.description']()}</CardDescription>
+        <CardAction>
+          <Select value={period} onValueChange={(value) => onPeriodChange(value as TDashboardChartPeriod)}>
+            <SelectTrigger size='sm'>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {dashboardChartPeriods.map((value) => (
+                  <SelectItem key={value} value={value}>{periodLabels[value]}</SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </CardAction>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className='max-h-[300px] w-full'>
           <AreaChart accessibilityLayer data={data} margin={{ left: 12, right: 12 }}>
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey='month'
+              dataKey='label'
               tickLine={false}
               axisLine={false}
               tickMargin={8}

@@ -1,5 +1,5 @@
 export interface IAdminDashboardChartPointDto {
-  month: string;
+  label: string;
   value: number;
 }
 

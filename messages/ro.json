@@ -441,6 +441,14 @@
         "overview": {
           "title": "Prezentare generală",
           "description": "Total ultimele 6 luni"
+        },
+        "periods": {
+          "day": "Ultima zi",
+          "week": "Ultima săptămână",
+          "month": "Ultima lună",
+          "3months": "Ultimele 3 luni",
+          "6months": "Ultimele 6 luni",
+          "year": "Ultimul an"
         }
       },
       "nav": {

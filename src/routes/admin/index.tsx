@@ -1,5 +1,6 @@
 import { ClientOnly, createFileRoute } from '@tanstack/react-router'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, keepPreviousData } from '@tanstack/react-query'
+import { useState } from 'react'
 import { IconNews, IconPhoto, IconUsers } from '@tabler/icons-react'
 import { m } from '@/paraglide/messages';
 import { orpc } from '@/lib/orpc'
@@ -12,6 +13,7 @@ import {
 import { Skeleton } from '@/components/ui/skeleton'
 import { ChartAreaSparkline } from './-components/chart-area-sparkline'
 import { ChartAreaLegend } from './-components/chart-area-legend'
+import type { TDashboardChartPeriod } from '@/features/dashboard/schemas/get-chart-data'
 
 export const Route = createFileRoute('/admin/')({
   component: RouteComponent,
@@ -21,7 +23,7 @@ export const Route = createFileRoute('/admin/')({
   },
 })
 
-function StatCard(props: { title: string; value?: number; chartData?: { value: number }[]; isPending: boolean; icon: React.ComponentType<{ className?: string }>; className?: string }) {
+function StatCard(props: { title: string; value?: number; chartData?: { label: string; value: number }[]; isPending: boolean; icon: React.ComponentType<{ className?: string }>; className?: string }) {
   const { title, value, chartData, isPending, icon: Icon, className } = props;
 
   return (
@@ -45,10 +47,12 @@ function StatCard(props: { title: string; value?: number; chartData?: { value: n
 }
 
 function RouteComponent() {
+  const [period, setPeriod] = useState<TDashboardChartPeriod>('6months')
+
   const newsQuery = useQuery(orpc.admin.news.search.queryOptions({ input: { page: 1, limit: 1 } }))
   const bannersQuery = useQuery(orpc.admin.banners.search.queryOptions({ input: {} }))
   const customerRequestsQuery = useQuery(orpc.admin.customerRequests.search.queryOptions({ input: { page: 1, limit: 1 } }))
-  const chartDataQuery = useQuery(orpc.admin.dashboard.getChartData.queryOptions({ input: { months: 6 } }))
+  const chartDataQuery = useQuery(orpc.admin.dashboard.getChartData.queryOptions({ input: { period }, placeholderData: keepPreviousData }))
 
   return (
     <main className='container mx-auto px-4'>
@@ -81,8 +85,10 @@ function RouteComponent() {
         <ClientOnly fallback={<Skeleton className='h-[350px] w-full' />}>
           {chartDataQuery.data && (
             <ChartAreaLegend
+              period={period}
+              onPeriodChange={setPeriod}
               data={chartDataQuery.data.news.map((point, index) => ({
-                month: point.month,
+                label: point.label,
                 news: point.value,
                 banners: chartDataQuery.data!.banners[index]?.value ?? 0,
                 customerRequests: chartDataQuery.data!.customerRequests[index]?.value ?? 0,
