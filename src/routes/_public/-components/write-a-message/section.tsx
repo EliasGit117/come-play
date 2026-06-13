@@ -13,7 +13,7 @@ interface IProps extends ComponentProps<'section'> {
 const WriteAMessageSection: FC<IProps> = ({ className, ...props }) => {
 
   return (
-    <section className={cn('grid lg:grid-cols-2 gap-4 md:gap-8', className)} {...props}>
+    <section id="contact" className={cn('grid lg:grid-cols-2 gap-4 md:gap-8', className)} {...props}>
       <div>
         <h2 className="text-3xl font-bold tracking-tight text-foregrounds uppercase">
           {m['pages.public.home.contact.title']()}

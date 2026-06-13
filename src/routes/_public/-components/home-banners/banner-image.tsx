@@ -30,7 +30,6 @@ export const BannerImage: FC<BannerImageProps> = ({ banner, className }) => {
 
   return (
     <UnLazyImageSSR
-      autoSizes
       src={src}
       thumbhash={thumbhash}
       alt={banner.title ?? ''}

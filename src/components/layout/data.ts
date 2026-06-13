@@ -1,4 +1,5 @@
 import { LinkOptions } from '@tanstack/react-router';
+import { m } from '@/paraglide/messages';
 
 export interface ILinkItem {
   label: string;
@@ -16,62 +17,42 @@ export type TLinkGroupItem = { type: MenuItemType.Group; title: string; items: I
 
 export type TLinkItem = TSingleLinkItem | TLinkGroupItem;
 
-export const headerLinks: TLinkItem[] = [
+export const getHeaderLinks = (): TLinkItem[] => [
   {
     type: MenuItemType.Group,
-    title: 'Products',
+    title: m['layout.header.products.title'](),
     items: [
-      { label: 'Indoor LED Display', description: 'High-quality LED screens for indoor use.', linkOpt: { to: '/' } },
-      {
-        label: 'Outdoor LED Display',
-        description: 'Durable and bright displays for outdoor environments.',
-        linkOpt: { to: '/' }
-      },
-      {
-        label: 'Rental LED Display',
-        description: 'Portable LED solutions for events and shows.',
-        linkOpt: { to: '/' }
-      },
-      {
-        label: 'Transparent LED Screen',
-        description: 'See-through LED displays for creative setups.',
-        linkOpt: { to: '/' }
-      },
-      { label: 'Soft LED Screen', description: 'Flexible LED panels for unique installations.', linkOpt: { to: '/' } },
-      {
-        label: 'Floor Tile Screen',
-        description: 'Interactive LED floor tiles for events and spaces.',
-        linkOpt: { to: '/' }
-      }
+      { label: m['layout.header.products.indoor.label'](), description: m['layout.header.products.indoor.description'](), linkOpt: { to: '/' } },
+      { label: m['layout.header.products.outdoor.label'](), description: m['layout.header.products.outdoor.description'](), linkOpt: { to: '/' } },
+      { label: m['layout.header.products.rental.label'](), description: m['layout.header.products.rental.description'](), linkOpt: { to: '/' } },
+      { label: m['layout.header.products.transparent.label'](), description: m['layout.header.products.transparent.description'](), linkOpt: { to: '/' } },
+      { label: m['layout.header.products.soft.label'](), description: m['layout.header.products.soft.description'](), linkOpt: { to: '/' } },
+      { label: m['layout.header.products.floorTile.label'](), description: m['layout.header.products.floorTile.description'](), linkOpt: { to: '/' } }
     ]
   },
   {
     type: MenuItemType.Group,
-    title: 'News',
+    title: m['layout.header.news.title'](),
     items: [
-      { label: 'All news', description: 'Discover latest news', linkOpt: { to: '/news' } },
-      { label: 'Company News', description: 'Updates and announcements from our company.', linkOpt: { to: '/' } },
-      {
-        label: 'LED Knowledge',
-        description: 'Learn tips, insights, and LED display technology basics.',
-        linkOpt: { to: '/' }
-      }
+      { label: m['layout.header.news.all.label'](), description: m['layout.header.news.all.description'](), linkOpt: { to: '/news' } },
+      { label: m['layout.header.news.company.label'](), description: m['layout.header.news.company.description'](), linkOpt: { to: '/' } },
+      { label: m['layout.header.news.knowledge.label'](), description: m['layout.header.news.knowledge.description'](), linkOpt: { to: '/' } }
     ]
   },
   {
     type: MenuItemType.Group,
-    title: 'About',
+    title: m['layout.header.about.title'](),
     items: [
-      { label: 'Company Information', description: 'Learn more about our company background.', linkOpt: { to: '/' } },
-      { label: 'Factory Profile', description: 'Explore our production facilities.', linkOpt: { to: '/' } },
-      { label: 'Certificates', description: 'View our quality and compliance certifications.', linkOpt: { to: '/' } },
-      { label: 'VR Showroom', description: 'Take a virtual tour of our products.', linkOpt: { to: '/' } },
-      { label: 'Privacy Policy', description: 'Learn how we handle your data.', linkOpt: { to: '/' } }
+      { label: m['layout.header.about.company.label'](), description: m['layout.header.about.company.description'](), linkOpt: { to: '/' } },
+      { label: m['layout.header.about.factory.label'](), description: m['layout.header.about.factory.description'](), linkOpt: { to: '/' } },
+      { label: m['layout.header.about.certificates.label'](), description: m['layout.header.about.certificates.description'](), linkOpt: { to: '/' } },
+      { label: m['layout.header.about.vr.label'](), description: m['layout.header.about.vr.description'](), linkOpt: { to: '/' } },
+      { label: m['layout.header.about.privacy.label'](), description: m['layout.header.about.privacy.description'](), linkOpt: { to: '/' } }
     ]
   },
   {
     type: MenuItemType.Single,
-    item: { label: 'Contact', linkOpt: { to: '/' } }
+    item: { label: m['layout.header.contact'](), linkOpt: { to: '/' } }
   },
   {
     type: MenuItemType.Single,

@@ -22,6 +22,82 @@
         "facebook": "Link Facebook",
         "twitter": "Link Twitter"
       }
+    },
+    "header": {
+      "products": {
+        "title": "Produse",
+        "indoor": {
+          "label": "Ecran LED interior",
+          "description": "Ecrane LED de calitate pentru interior."
+        },
+        "outdoor": {
+          "label": "Ecran LED exterior",
+          "description": "Ecrane durabile și luminoase pentru exterior."
+        },
+        "rental": {
+          "label": "Ecran LED de închiriat",
+          "description": "Soluții LED portabile pentru evenimente și spectacole."
+        },
+        "transparent": {
+          "label": "Ecran LED transparent",
+          "description": "Ecrane LED transparente pentru soluții creative."
+        },
+        "soft": {
+          "label": "Ecran LED flexibil",
+          "description": "Panouri LED flexibile pentru instalații unice."
+        },
+        "floorTile": {
+          "label": "Ecran LED de podea",
+          "description": "Dale LED interactive pentru spații și evenimente."
+        }
+      },
+      "news": {
+        "title": "Știri",
+        "all": {
+          "label": "Toate știrile",
+          "description": "Descoperă cele mai noi știri."
+        },
+        "company": {
+          "label": "Știri companie",
+          "description": "Actualizări și anunțuri de la compania noastră."
+        },
+        "knowledge": {
+          "label": "Despre LED",
+          "description": "Sfaturi, perspective și bazele tehnologiei LED."
+        }
+      },
+      "about": {
+        "title": "Despre",
+        "company": {
+          "label": "Informații companie",
+          "description": "Aflați mai multe despre compania noastră."
+        },
+        "factory": {
+          "label": "Despre fabrică",
+          "description": "Explorați facilitățile noastre de producție."
+        },
+        "certificates": {
+          "label": "Certificate",
+          "description": "Certificările noastre de calitate și conformitate."
+        },
+        "vr": {
+          "label": "Showroom VR",
+          "description": "Tur virtual al produselor noastre."
+        },
+        "privacy": {
+          "label": "Politica de confidențialitate",
+          "description": "Cum gestionăm datele dumneavoastră."
+        }
+      },
+      "contact": "Contact",
+      "sr": {
+        "calculator": "Pagina calculator",
+        "menu": "Buton meniu"
+      }
+    },
+    "sidebar": {
+      "title": "Navigare",
+      "description": "Navigați prin secțiunile site-ului"
     }
   },
   "pages": {
@@ -98,6 +174,251 @@
           "prevSlide": "Slide-ul anterior",
           "nextSlide": "Slide-ul următor",
           "goToSlide": "La slide-ul {index}"
+        }
+      },
+      "products": {
+        "common": {
+          "cta": "Solicitați o consultație",
+          "applicationsLabel": "Domenii de utilizare",
+          "specsLabel": "Parametri tehnici",
+          "pixelPitchLabel": "Pasul pixelului",
+          "brightnessLabel": "Luminozitate",
+          "transparencyLabel": "Transparență",
+          "protectionLabel": "Grad de protecție",
+          "formatLabel": "Format",
+          "installationLabel": "Instalare",
+          "connectionLabel": "Conectare",
+          "productsLabel": "Produse"
+        },
+        "indoor": {
+          "title": "Afișaje LED de interior",
+          "subtitle": "Soluții care transformă spațiul într-un instrument de atragere și păstrare a atenției",
+          "description": "Afișajele LED de interior sunt o soluție modernă pentru spațiile în care este important să atragi atenția, să prezinți conținut într-un mod plăcut și să creezi o impresie vizuală puternică.\n\nAcestea fac spațiul mai vizibil, modern și dinamic. Un astfel de ecran poate fi folosit pentru publicitate, prezentări, navigare, amenajarea vitrinelor și a zonelor de brand.\n\nAfișajele LED de interior sunt potrivite pentru centre comerciale, birouri, showroom-uri, expoziții și orice spațiu în care informația trebuie să fie nu doar prezentată, ci și vizibilă și memorabilă.",
+          "items": {
+            "ledWalls": {
+              "title": "Pereți LED (Wall LED Displays)",
+              "description": "Pereții LED sunt ecrane de format mare care devin principalul accent vizual al unui spațiu. Permit afișarea publicității, a materialelor video, a prezentărilor și a conținutului de brand la scară largă, oferind o prezentare luminoasă și modernă.\n\nAceastă soluție este ideală pentru spațiile în care este nevoie să captezi imediat atenția și să amenajezi frumos zona de interacțiune cu clienții. Pereții LED sunt folosiți frecvent atunci când este importantă o prezentare vizuală puternică și un efect de prezență.",
+              "applications": "centre comerciale\nspații de birouri și recepții\nshowroom-uri\nzone expoziționale\nsăli de conferințe",
+              "specs": {
+                "pixelPitch": "P1.37 - P4",
+                "brightness": "600 - 1800 nit"
+              }
+            },
+            "cornerInstallations": {
+              "title": "Instalații LED de colț",
+              "description": "Instalațiile LED de colț valorifică spațiul de la îmbinarea pereților, creând efectul unei imagini continue. Această soluție face conținutul vizual mai dinamic, mai expresiv și mai memorabil.",
+              "applications": "spații comerciale\ninterioare de design\nshowroom-uri\nzone publicitare\nzone de brand"
+            },
+            "storefrontSystems": {
+              "title": "Sisteme LED pentru vitrine",
+              "description": "Sistemele LED pentru vitrine ajută la transformarea unei vitrine obișnuite într-un instrument activ de atragere a clienților. Acestea fac spațiul mai vizibil, dau viață vitrinei și permit prezentarea atractivă a reclamelor, promoțiilor, noutăților sau conținutului de brand.\n\nAceastă soluție este utilă mai ales atunci când este important să captezi privirea trecătorilor și să întărești prima impresie despre magazin sau brand. Ecranul de vitrină face ca aceasta să fie mai modernă, mai luminoasă și mai eficientă din punct de vedere comercial.",
+              "applications": "vitrine de magazine\nboutique-uri\ncentre comerciale\nshowroom-uri\nsaloane"
+            },
+            "mobileSolutions": {
+              "title": "Soluții LED mobile",
+              "description": "Soluțiile LED mobile sunt ecrane montate pe o bază cu roți, care pot fi deplasate cu ușurință și utilizate în diverse zone fără o instalare complexă. Este o opțiune convenabilă pentru companiile care au nevoie de flexibilitate și de posibilitatea de a schimba rapid amplasarea ecranului în funcție de necesități.\n\nAceste afișaje sunt potrivite pentru prezentări, săli de ședințe, zone publicitare temporare și evenimente desfășurate în interior. Sunt simple de utilizat și permit pornirea rapidă a conținutului exact unde este nevoie.",
+              "applications": "prezentări și săli de ședințe\nconferințe și evenimente\nspații comerciale\nshowroom-uri\nzone publicitare temporare\nexpoziții"
+            }
+          }
+        },
+        "outdoor": {
+          "title": "Afișaje LED de exterior",
+          "subtitle": "Soluții care fac brandul tău vizibil în spațiul urban",
+          "description": "Afișajele LED de exterior reprezintă o soluție de publicitate exterioară care ajută brandul să devină vizibil în oraș și să atragă atenția în zonele cu trafic intens de persoane și autovehicule.\n\nAceste ecrane sunt vizibile de la distanță, funcționează la o luminozitate ridicată ziua și noaptea și permit afișarea de conținut dinamic acolo unde este nevoie de acoperire maximă. Este un format eficient pentru companiile care nu vor doar să fie prezente în mediul urban, ci să se și remarce.\n\nAfișajele LED de exterior sunt potrivite pentru fațade de clădiri, artere rutiere, obiective comerciale, construcții publicitare și spații publice.",
+          "items": {
+            "billboardPanels": {
+              "title": "Panouri LED publicitare (Digital Billboard Displays)",
+              "description": "Panourile LED publicitare reprezintă formatul clasic de publicitate exterioară, care asigură vizibilitate și acoperire maximă. Formatul mare și luminozitatea ridicată fac din aceste ecrane un instrument eficient pentru a atrage atenția în mediul urban.\n\nPermit afișarea de conținut luminos în zone cu trafic intens și fac reclama vizibilă chiar și de la distanță mare. Aceste ecrane ajută la transmiterea rapidă a mesajului către un public larg și sunt potrivite pentru companiile care doresc să fie vizibile și să își reamintească periodic prezența.",
+              "applications": "străzi urbane\nconstrucții publicitare\nzone cu trafic intens\nartere rutiere",
+              "specs": {
+                "pixelPitch": "P4 – P10",
+                "brightness": "5000–8000 nit",
+                "protection": "IP65"
+              }
+            },
+            "mediaFacades": {
+              "title": "Mediafațade și ecrane LED de fațadă",
+              "description": "Mediafațadele și ecranele LED de fațadă sunt un format modern de publicitate exterioară, care se integrează în arhitectura clădirii și o transformă într-un suport digital activ. Aceste soluții permit utilizarea fațadei nu doar ca element al construcției, ci și ca o suprafață publicitară completă.\n\nDatorită amplorii și efectului vizual, aceste ecrane sunt foarte vizibile în mediul urban și creează o prezență puternică a brandului. Sunt potrivite pentru companii și clădiri care doresc să își sublinieze statutul, modernitatea și să se distingă în peisajul urban.",
+              "applications": "centre de afaceri\ncomplexe comerciale\nfațade de clădiri\nobiective comerciale\nstrăzi centrale",
+              "specs": {
+                "pixelPitch": "P6 – P16",
+                "brightness": "4000–7000 nit",
+                "note": "Structură transparentă disponibilă"
+              }
+            },
+            "outdoorStorefront": {
+              "title": "Afișaje LED exterioare pentru vitrine",
+              "description": "Afișajele LED exterioare pentru vitrine reprezintă o soluție de publicitate prin sticlă, în care ecranul este instalat în interior, dar orientat spre exterior. Acest format permite atragerea atenției trecătorilor fără a amplasa echipamente pe exteriorul clădirii.\n\nAceste ecrane fac vitrina mai vizibilă și mai modernă, păstrând în același timp un aspect îngrijit al fațadei. Sunt potrivite pentru magazine și spații comerciale unde este importantă diferențierea și creșterea fluxului de clienți printr-o prezentare vizuală atractivă.",
+              "applications": "vitrine de magazine\nboutique-uri\ncentre comerciale\nshowroom-uri\nspații comerciale",
+              "specs": {
+                "pixelPitch": "P2.5 – P5",
+                "brightness": "2500–5000 nit"
+              }
+            },
+            "urbanInfoPanels": {
+              "title": "Panouri LED informative urbane",
+              "description": "Panourile LED informative urbane sunt ecrane compacte utilizate pentru afișarea de informații și publicitate în spații publice. Acestea permit transmiterea conținutului într-un format accesibil și rămân vizibile în mediul urban.\n\nAceste soluții sunt potrivite pentru zonele cu flux constant de persoane, unde este importantă combinarea funcției informative cu cea publicitară. Nu încarcă vizual spațiul și se integrează armonios în infrastructura urbană.",
+              "applications": "stații de transport public\nzone pietonale\nparcuri\nzone ale centrelor comerciale\ninfrastructură urbană",
+              "specs": {
+                "pixelPitch": "P3 – P6",
+                "brightness": "3000–6000 nit"
+              }
+            },
+            "transportScreens": {
+              "title": "Ecrane LED pentru transport",
+              "description": "Ecranele LED pentru transport reprezintă un format de publicitate exterioară amplasat pe mijloace de transport în mișcare: camioane, autobuze, taxiuri și alte vehicule. Această abordare permite acoperirea diferitelor zone ale orașului și interacțiunea cu publicul aflat în mișcare.\n\nAceste ecrane fac publicitatea mai dinamică și mai vizibilă, deoarece se deplasează constant și ajunge în diverse locații. Este o soluție eficientă pentru branduri care doresc să își crească acoperirea și prezența în oraș.",
+              "applications": "camioane\nautobuze\ntaxiuri\ntransport corporativ",
+              "specs": {
+                "pixelPitch": "P3 – P6",
+                "brightness": "4000–7000 nit",
+                "note": "Rezistență la vibrații și la condițiile meteo"
+              }
+            },
+            "stadiumEventSystems": {
+              "title": "Sisteme LED pentru stadioane și evenimente",
+              "description": "Sistemele LED pentru stadioane și evenimente sunt soluții pentru afișarea de conținut publicitar și informativ în locații mari, cu un număr ridicat de spectatori. Asigură o vizibilitate bună din diverse unghiuri și sunt adecvate pentru utilizare intensă.\n\nAceste ecrane sunt utilizate pe obiective sportive și la evenimente unde este importantă interacțiunea eficientă cu publicul. Permit afișarea de conținut dinamic și consolidează prezența vizuală a brandului în proiecte de amploare.",
+              "applications": "stadioane\ncomplexe sportive\narene\nsăli de concerte\nspații pentru evenimente",
+              "specs": {
+                "pixelPitch": "P4 – P10",
+                "brightness": "5000–8000 nit",
+                "note": "Durabilitate ridicată"
+              }
+            }
+          }
+        },
+        "transparent": {
+          "title": "Afișaje LED transparente",
+          "subtitle": "Publicitate care atrage atenția și păstrează spațiul",
+          "description": "Afișajele LED transparente sunt o soluție pentru suprafețele de sticlă, acolo unde este important să afișezi conținut fără a bloca vizibilitatea și lumina.\n\nAcestea fac vitrina sau fațada vizibilă, păstrând în același timp spațiul deschis și luminos din punct de vedere vizual.\n\nAceste ecrane au un aspect modern și elegant, fiind potrivite nu doar pentru magazine, ci și pentru evenimente, expoziții și muzee.",
+          "items": {
+            "storefrontTransparent": {
+              "title": "Afișaje LED transparente pentru vitrine",
+              "description": "Afișajele LED transparente pentru vitrine fac vitrina mai vizibilă, mai modernă și mai expresivă, fără a bloca vizibilitatea spre interiorul magazinului. Această soluție permite afișarea de reclame, promoții, noutăți și conținut de brand direct pe sticlă, păstrând în același timp sentimentul de spațiu deschis și luminos.\n\nAcest format funcționează deosebit de bine atunci când este importantă atragerea atenției de pe stradă, păstrând în același timp un aspect estetic al vitrinei. Ecranul nu încarcă vizual spațiul, dar îl face mult mai vizibil pentru trecători.",
+              "applications": "vitrine de magazine\nboutique-uri\ncentre comerciale\nsaloane\nshowroom-uri",
+              "specs": {
+                "pixelPitch": "P2.9 – P7.8",
+                "brightness": "800–3000 nit",
+                "transparency": "până la 70%"
+              }
+            },
+            "facadeTransparent": {
+              "title": "Sisteme LED transparente de fațadă",
+              "description": "Sistemele LED transparente de fațadă sunt destinate fațadelor de sticlă ale clădirilor, acolo unde este importantă combinarea arhitecturii cu funcția publicitară. Acestea fac fațada mai vizibilă și mai modernă, fără a o acoperi cu o structură masivă și opacă.\n\nAceastă soluție este potrivită pentru clădirile care doresc un aspect modern și prestigios. Ecranul devine parte a fațadei și transformă clădirea într-un suport vizual activ, păstrând în același timp lumina și aspectul aerisit al arhitecturii.",
+              "applications": "fațade de sticlă ale clădirilor\ncentre de afaceri\ncomplexe comerciale\nobiective comerciale moderne\nspații urbane",
+              "specs": {
+                "pixelPitch": "P3.9 – P10",
+                "brightness": "3000–5500 nit",
+                "transparency": "60–80%"
+              }
+            },
+            "stageTransparent": {
+              "title": "Soluții LED transparente pentru scenă",
+              "description": "Soluțiile LED transparente pentru scenă sunt folosite atunci când este nevoie de un efect vizual spectaculos, fără senzația unui ecran masiv și opac. Acestea permit crearea unei scenografii ușoare, moderne și expresive, care sprijină percepția unui spectacol, concert sau prezentări.\n\nUn astfel de ecran amplifică impresia generală a spectacolului, adaugă profunzime scenei și face conținutul mai interesant pentru spectatori. Este deosebit de relevant pentru proiectele în care prezentarea vizuală, atmosfera și formatul modern al scenei sunt esențiale.",
+              "applications": "concerte\nspectacole\nprezentări\nproducții scenice\nevenimente\nproiecte event",
+              "specs": {
+                "pixelPitch": "P3.9 – P7.8",
+                "brightness": "1000–4000 nit"
+              }
+            },
+            "museumExhibition": {
+              "title": "Afișaje LED transparente pentru muzee și expoziții",
+              "description": "Afișajele LED transparente pentru muzee și expoziții sunt potrivite pentru spațiile în care este importantă păstrarea esteticii expoziției, adăugând în același timp conținut digital modern. Un astfel de ecran nu acoperă complet exponatul, ci îl completează discret, creând o experiență vizuală mai profundă și mai interesantă pentru vizitatori.\n\nAceastă soluție funcționează bine în spații culturale și expoziționale, unde este importantă echilibrarea dintre design, tehnologie și conținut. Ajută la prezentarea informației într-un mod modern, fără a perturba atmosfera spațiului.",
+              "applications": "muzee\nexpoziții\ngalerii\nspații culturale\nproiecte expoziționale",
+              "specs": {
+                "pixelPitch": "P2.5 – P5",
+                "brightness": "800–2000 nit"
+              }
+            }
+          }
+        },
+        "soft": {
+          "title": "Afișaje LED flexibile",
+          "subtitle": "Soluții pentru forme nestandard și spații creative",
+          "description": "Afișajele LED flexibile sunt folosite atunci când un ecran standard nu se potrivește din punct de vedere al formei.\n\nAcestea permit crearea de coloane, suprafețe curbate și construcții nestandard, făcând spațiul mai expresiv și mai modern.\n\nAceastă soluție este potrivită pentru proiectele în care nu este suficient să afișezi conținut, ci este nevoie să creezi un efect vizual.",
+          "items": {
+            "roundColumns": {
+              "title": "Coloane LED rotunde",
+              "description": "Coloanele LED rotunde transformă o coloană obișnuită într-un element vizual activ al spațiului. În loc să ocupe pur și simplu loc, coloana începe să contribuie la atragerea atenției, la imaginea brandului și la impresia generală a interiorului.\n\nAceastă soluție are un aspect neobișnuit, modern și se remarcă imediat. Este potrivită mai ales pentru spațiile în care este important să surprinzi, să faci interiorul mai dinamic și să valorifici fiecare element în prezentarea vizuală generală.",
+              "applications": "centre comerciale\nshowroom-uri\nexpoziții\nzone de brand\nspații interioare\nobiective comerciale moderne",
+              "specs": {
+                "pixelPitch": "P2 – P3",
+                "brightness": "800–1200 nit"
+              }
+            },
+            "curvedDisplays": {
+              "title": "Afișaje LED curbate",
+              "description": "Afișajele LED curbate sunt potrivite pentru proiectele în care un ecran drept ar fi prea simplu sau nu s-ar încadra în arhitectura spațiului. Acestea permit crearea de linii fluide, valuri, arcade și alte forme care fac prezentarea vizuală mai interesantă și mai expresivă.\n\nAcest format este ales frecvent pentru proiecte de design, în care ecranul nu este doar un suport de conținut, ci parte a conceptului general. Ajută la crearea unui spațiu mai elegant, mai modern și mai memorabil.",
+              "applications": "proiecte de design\nsoluții arhitecturale\nspații expoziționale\nscene\nconcepte interioare\ninstalații de brand",
+              "specs": {
+                "pixelPitch": "P1.8 – P4",
+                "brightness": "700–1200 nit"
+              }
+            },
+            "customShapes": {
+              "title": "Afișaje LED pentru forme nestandard",
+              "description": "Afișajele LED pentru forme nestandard sunt create pentru proiecte individuale, în care ecranul trebuie să urmeze forma unui obiect sau să fie integrat într-o construcție neobișnuită. Această soluție este potrivită atunci când un format standard nu oferă efectul vizual dorit.\n\nAceste ecrane ajută la crearea de instalații unice, fac spațiul mai expresiv și transformă LED-ul într-un element de design propriu-zis. Este o variantă potrivită pentru proiectele în care este importantă surprinderea publicului printr-o prezentare cu adevărat ieșită din comun.",
+              "applications": "obiecte de artă\nvitrine\nspații pentru evenimente\nproiecte publicitare creative\nzone expoziționale\ninstalații de brand",
+              "specs": {
+                "pixelPitch": "P2 – P5",
+                "brightness": "700–1000 nit"
+              }
+            }
+          }
+        },
+        "rental": {
+          "title": "Afișaje LED de închiriat",
+          "subtitle": "Soluții pregătite pentru evenimente și proiecte temporare",
+          "description": "Închirierea de afișaje LED este o opțiune convenabilă atunci când ai nevoie de un ecran pentru o perioadă limitată.\n\nNu este nevoie să achiziționezi echipament — primești o soluție completă, care se instalează rapid și este pregătită de utilizare imediat.\n\nPotrivită pentru evenimente, prezentări, expoziții și concerte.",
+          "items": {
+            "outdoorRental": {
+              "title": "Afișaje LED de exterior pentru închiriere",
+              "description": "Afișajele LED de exterior pentru închiriere sunt destinate evenimentelor în aer liber, unde este nevoie de un ecran luminos, montaj rapid și funcționare fiabilă în condiții exterioare solicitante. Această soluție este potrivită pentru proiectele în care ecranul este necesar temporar, dar trebuie să aibă un aspect profesional și să fie vizibil de la distanță.\n\nAceste ecrane sunt potrivite pentru concerte, festivaluri, scene și evenimente urbane de amploare. Se montează rapid, se transportă cu ușurință și permit o prezentare vizuală puternică, fără a fi nevoie de achiziționarea unui echipament permanent.",
+              "applications": "concerte\nfestivaluri\nscene\nevenimente stradale\nevenimente urbane\nproiecte outdoor",
+              "specs": {
+                "pixelPitch": "P3.9 – P6",
+                "brightness": "4000–7000 nit"
+              }
+            },
+            "indoorRental": {
+              "title": "Afișaje LED de interior pentru închiriere",
+              "description": "Afișajele LED de interior pentru închiriere sunt potrivite pentru evenimente desfășurate în interior, unde sunt importante calitatea imaginii, aspectul îngrijit și instalarea rapidă. Este o soluție convenabilă pentru proiectele în care ecranul este necesar pe termen scurt, dar trebuie să aibă un aspect modern și să funcționeze fără complicații.\n\nAcest format este folosit frecvent pentru conferințe, expoziții, prezentări și evenimente de afaceri. Permite organizarea rapidă a unei prezentări vizuale profesionale și adaptarea ecranului la formatul specific al evenimentului.",
+              "applications": "conferințe\nexpoziții\nprezentări\nforumuri\nevenimente de afaceri\nscene indoor",
+              "specs": {
+                "pixelPitch": "P2.6 – P3.9",
+                "brightness": "800–1500 nit"
+              }
+            }
+          }
+        },
+        "readyMade": {
+          "title": "Soluții LED gata de utilizare",
+          "subtitle": "Un ecran pe care îl poți instala și folosi imediat",
+          "description": "Soluțiile LED gata de utilizare sunt ecrane complet asamblate, care nu necesită montaj complex, configurare sau proiectare.\n\nSpre diferență de sistemele LED clasice, unde ecranul este asamblat din module în funcție de proiect, aici primești un produs finit — îl poți instala, conecta și folosi imediat.\n\nEste o soluție convenabilă pentru companiile care doresc să pună rapid ecranul în funcțiune, fără complicații tehnice.\n\nAceste ecrane sunt potrivite pentru publicitate, prezentări, amenajarea spațiului și utilizarea zilnică în zone comerciale.",
+          "applications": "magazine și puncte de vânzare\nbirouri și săli de ședințe\nshowroom-uri\ncentre comerciale\nexpoziții și prezentări\nzone publicitare\nproiecte temporare",
+          "specs": {
+            "pixelPitch": "P1.2 – P3",
+            "brightness": "600–1200 nit",
+            "format": "Construcție tip cabinet (carcasă preasamblată)",
+            "installation": "Fără montaj complex",
+            "connection": "Plug & play (se conectează și funcționează)"
+          }
+        }
+      },
+      "news": {
+        "detail": {
+          "published": "Publicat"
+        },
+        "notFound": {
+          "title": "Ups...",
+          "text": "Știrea nu a fost găsită"
+        },
+        "list": {
+          "title": "Știri",
+          "subtitle": "Fiți la curent cu cele mai recente articole",
+          "searchPlaceholder": "Caută după titlu",
+          "orderDirection": "Direcție de sortare",
+          "asc": "Crescător",
+          "desc": "Descrescător"
         }
       }
     },

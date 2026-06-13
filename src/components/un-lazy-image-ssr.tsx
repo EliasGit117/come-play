@@ -6,9 +6,8 @@ import { createPngDataUri as createPngDataUriThumbhash } from '@unlazy/core/thum
 import { createPngDataUri as createPngDataUriBlurhash } from '@unlazy/core/blurhash';
 import { cn } from '@/lib/utils';
 
-interface IProps
-  extends ImgHTMLAttributes<HTMLImageElement>,
-    Pick<UnLazyLoadOptions, 'placeholderSize'> {
+
+interface IProps extends ImgHTMLAttributes<HTMLImageElement>, Pick<UnLazyLoadOptions, 'placeholderSize'> {
   src?: ImgHTMLAttributes<HTMLImageElement>['src'];
   srcSet?: ImgHTMLAttributes<HTMLImageElement>['srcSet'];
   autoSizes?: boolean;
@@ -35,7 +34,6 @@ const UnLazyImageSSR: FC<IProps> = (props) => {
   const thumbhashSrc = thumbhash && createPngDataUriThumbhash(thumbhash);
   const blurhashSrc = blurhash && createPngDataUriBlurhash(blurhash);
   const placeholderSrc = thumbhashSrc ?? blurhashSrc;
-
 
   useEffect(() => {
     if (!target.current)

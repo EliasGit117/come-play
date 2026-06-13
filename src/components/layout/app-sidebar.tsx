@@ -15,13 +15,15 @@ import { Button } from '@/components/ui/button';
 import { Link } from '@tanstack/react-router';
 import * as React from 'react';
 import { useAppSidebar } from './app-sidebar-provider';
-import { headerLinks, ILinkItem, MenuItemType } from '@/components/layout/data';
+import { getHeaderLinks, ILinkItem, MenuItemType } from '@/components/layout/data';
 import { FC } from 'react';
 import { cn } from '@/lib/utils';
+import { m } from '@/paraglide/messages';
 
 const AppSidebar = () => {
   const isOpen = useAppSidebar((s) => s.isOpen);
   const setOpen = useAppSidebar((s) => s.setOpen);
+  const headerLinks = getHeaderLinks();
 
   const handleClick = () => setOpen(false);
 
@@ -30,11 +32,11 @@ const AppSidebar = () => {
       <SheetContent side="right">
         <SheetHeader>
           <SheetTitle>
-            Navigation Links
+            {m['layout.sidebar.title']()}
           </SheetTitle>
 
           <SheetDescription>
-            Navigate through different sections of the website
+            {m['layout.sidebar.description']()}
           </SheetDescription>
         </SheetHeader>
 
