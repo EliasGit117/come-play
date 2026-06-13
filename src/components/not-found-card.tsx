@@ -6,6 +6,7 @@ import type { VariantProps } from 'class-variance-authority';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { ComponentProps, FC } from 'react';
 import { cn } from '@/lib/utils';
+import { m } from '@/paraglide/messages';
 
 const buttonSize: VariantProps<typeof buttonVariants>['size'] = 'sm';
 
@@ -16,10 +17,10 @@ export const NotFoundCard: FC<INotFoundedCardProps> = ({ children, className, ..
       <Card className={cn("w-full max-w-sm mt-20", className)} {...props}>
         <CardHeader>
           <CardTitle>
-            404 - Not Found
+            {m['common.notFound.title']()}
           </CardTitle>
           <CardDescription>
-            {children || <p>The page you are looking for does not exist.</p>}
+            {children || <p>{m['common.notFound.description']()}</p>}
           </CardDescription>
         </CardHeader>
 
@@ -31,13 +32,13 @@ export const NotFoundCard: FC<INotFoundedCardProps> = ({ children, className, ..
             className="flex-1"
           >
             <IconArrowLeft/>
-            <span>Go back</span>
+            <span>{m['common.notFound.goBack']()}</span>
           </Button>
 
           <Button size={buttonSize} variant='outline' className="flex-1" asChild>
             <Link to="/">
               <IconHome/>
-              <span>Start Over</span>
+              <span>{m['common.notFound.startOver']()}</span>
             </Link>
           </Button>
         </CardFooter>

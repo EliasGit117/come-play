@@ -15,7 +15,7 @@ export const Route = createFileRoute('/_public/products/$category/')({
 
     return { config };
   },
-  notFoundComponent: () => <NotFoundCard/>
+  notFoundComponent: () => <NotFoundCard className='mx-auto'/>
 });
 
 function RouteComponent() {

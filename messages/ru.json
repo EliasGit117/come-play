@@ -9,7 +9,13 @@
     "error": "Ошибка",
     "success": "Успешно",
     "submit": "Отправить",
-    "cancel": "Отмена"
+    "cancel": "Отмена",
+    "notFound": {
+      "title": "404 - Не найдено",
+      "description": "Страница, которую вы ищете, не существует.",
+      "goBack": "Назад",
+      "startOver": "На главную"
+    }
   },
   "layout": {
     "footer": {

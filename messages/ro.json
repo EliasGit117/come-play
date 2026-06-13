@@ -9,7 +9,13 @@
     "error": "Eroare",
     "success": "Succes",
     "submit": "Trimite",
-    "cancel": "Anulare"
+    "cancel": "Anulare",
+    "notFound": {
+      "title": "404 - Nu a fost găsit",
+      "description": "Pagina pe care o căutați nu există.",
+      "goBack": "Înapoi",
+      "startOver": "Pagina principală"
+    }
   },
   "layout": {
     "footer": {

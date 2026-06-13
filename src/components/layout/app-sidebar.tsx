@@ -12,7 +12,7 @@ import {
   AccordionTrigger
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
-import { Link } from '@tanstack/react-router';
+import { Link, useRouteContext } from '@tanstack/react-router';
 import * as React from 'react';
 import { useAppSidebar } from './app-sidebar-provider';
 import { getHeaderLinks, ILinkItem, MenuItemType } from '@/components/layout/data';
@@ -23,7 +23,8 @@ import { m } from '@/paraglide/messages';
 const AppSidebar = () => {
   const isOpen = useAppSidebar((s) => s.isOpen);
   const setOpen = useAppSidebar((s) => s.setOpen);
-  const headerLinks = getHeaderLinks();
+  const { user } = useRouteContext({ from: '__root__' });
+  const headerLinks = getHeaderLinks(user);
 
   const handleClick = () => setOpen(false);
 

@@ -129,10 +129,7 @@ const ImageLink: FC<IImageLinkProps> = ({ linkOptions, img, title, className, th
 
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <p
-          className={cn(
-            'text-white text-center text-2xl font-bold uppercase',
-            'transition-transform duration-400 ease-in-out group-hover:scale-125 group-focus:scale-125'
-          )}>
+          className="text-white text-center text-2xl font-bold uppercase">
           {title}
         </p>
       </div>
