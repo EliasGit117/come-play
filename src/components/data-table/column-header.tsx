@@ -1,23 +1,16 @@
-import { Column } from '@tanstack/react-table';
-import {
-  ArrowDown,
-  ArrowDownIcon,
-  ArrowUp,
-  ArrowUpIcon,
-  ChevronsUpDown,
-  EraserIcon,
-  EyeOffIcon,
-} from 'lucide-react';
+import { type Column } from '@tanstack/react-table';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { type HTMLAttributes } from 'react';
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
+  DropdownMenuContent, DropdownMenuGroup,
+  DropdownMenuItem, DropdownMenuRadioGroup, DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { HTMLAttributes } from 'react';
+import { IconChevronDown, IconSelector, IconChevronUp, IconEraser, IconEyeOff } from '@tabler/icons-react';
+
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends HTMLAttributes<HTMLDivElement> {
@@ -27,23 +20,21 @@ interface DataTableColumnHeaderProps<TData, TValue>
 }
 
 export function DataTableColumnHeader<TData, TValue>(props: DataTableColumnHeaderProps<TData, TValue>) {
-  // noinspection BadExpressionStatementJS
-  "use no memo";
+  'use no memo';
 
   const { column, title: customTitle, className, iconHidden } = props;
   const isSorted = column.getIsSorted();
-  const Icon = !iconHidden ? column.columnDef.meta?.icon : undefined;
   const title = customTitle ?? column.columnDef.meta?.label ?? column.id;
+  const Icon = !iconHidden ? column.columnDef.meta?.icon : undefined;
 
   if (!column.getCanSort()) {
     return (
       <div className={cn(className, 'flex items-center gap-2')}>
-        {Icon && <Icon className="size-3.5 text-muted-foreground"/>}
+        {Icon && <Icon className="size-4 text-muted-foreground"/>}
         <span>{title}</span>
       </div>
     );
   }
-
 
   const toggleSorting = (value: boolean) => column.toggleSorting(value);
   const clearSorting = () => column.clearSorting();
@@ -54,46 +45,54 @@ export function DataTableColumnHeader<TData, TValue>(props: DataTableColumnHeade
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            variant="ghost"
             size="sm"
-            className="data-[state=open]:bg-accent -ml-3 h-fit py-1 flex items-center gap-2"
+            variant="ghost"
+            className="data-[state=open]:bg-accent h-fit px-1.5 -ml-1.5 py-1 flex items-center gap-2"
           >
-            {Icon && <Icon className="size-3.5 text-muted-foreground"/>}
+            {Icon && <Icon className="text-muted-foreground"/>}
             <span>{title}</span>
+
             {isSorted === 'desc' ? (
-              <ArrowDownIcon/>
+              <IconChevronDown className=" text-muted-foreground"/>
             ) : isSorted === 'asc' ? (
-              <ArrowUpIcon/>
+              <IconChevronUp className=" text-muted-foreground"/>
             ) : (
-              <ChevronsUpDown/>
+              <IconSelector className=" text-muted-foreground"/>
             )}
           </Button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent align="start">
-          <DropdownMenuItem onClick={() => toggleSorting(false)}>
-            <ArrowUp/>
-            Asc
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => toggleSorting(true)}>
-            <ArrowDown/>
-            Desc
-          </DropdownMenuItem>
+        <DropdownMenuContent className="w-fit min-w-42" align="start">
+          <DropdownMenuGroup>
+            <DropdownMenuRadioGroup value={`${isSorted}`}>
+              <DropdownMenuRadioItem value="asc" onClick={() => toggleSorting(false)}>
+                <IconChevronUp className='text-muted-foreground'/>
+                <span>Asc</span>
+              </DropdownMenuRadioItem>
+
+              <DropdownMenuRadioItem value="desc" onClick={() => toggleSorting(true)}>
+                <IconChevronDown className='text-muted-foreground'/>
+                <span>Desc</span>
+              </DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuGroup>
 
           {isSorted && (
             <DropdownMenuItem onClick={clearSorting}>
-              <EraserIcon/>
-              Clear
+              <IconEraser className='text-muted-foreground'/>
+              <span>Clear</span>
             </DropdownMenuItem>
           )}
 
           <DropdownMenuSeparator/>
+
           <DropdownMenuItem onClick={hide}>
-            <EyeOffIcon/>
-            Hide
+            <IconEyeOff className='text-muted-foreground'/>
+            <span>Hide</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
-  );
+  )
+    ;
 }

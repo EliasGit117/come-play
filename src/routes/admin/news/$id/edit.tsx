@@ -1,6 +1,7 @@
+import { IconArrowBackUp, IconDeviceFloppy } from '@tabler/icons-react';
 import { createFileRoute } from '@tanstack/react-router';
-import { getNewsByIdQueryOptions } from '@/features/news/server-functions/admin/get-news-by-id-for-admin';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import {
   EditNewsForm,
   editNewsFormSchema,
@@ -10,8 +11,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { LoadingButton } from '@/components/ui/loading-button';
-import { SaveIcon, UndoIcon } from 'lucide-react';
-import { useEditNewsMutation } from '@/features/news/server-functions/admin/edit-news';
+
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -27,7 +27,7 @@ export const Route = createFileRoute('/admin/news/$id/edit')({
   component: RouteComponent,
   staticData: { breadcrumbs: { title: 'Edit news' } },
   loader: async ({ params: { id }, context }) => {
-    const data = await context.queryClient.ensureQueryData(getNewsByIdQueryOptions(id));
+    const data = await context.queryClient.ensureQueryData(orpc.admin.news.getById.queryOptions({ input: { id: Number(id) } }));
     return {
       post: data,
       breadcrumbs: { title: `Edit «${data.titleRo}»` }
@@ -42,7 +42,8 @@ export const Route = createFileRoute('/admin/news/$id/edit')({
 
 function RouteComponent() {
   const { id } = Route.useParams();
-  const { data: news, isPending: isFetching } = useSuspenseQuery(getNewsByIdQueryOptions(id));
+  const queryClient = useQueryClient();
+  const { data: news, isPending: isFetching } = useSuspenseQuery(orpc.admin.news.getById.queryOptions({ input: { id: Number(id) } }));
   const [isImgPending, setIsImgPending] = useState<boolean>(false);
 
   const form = useForm<TEditNewsFormSchema>({
@@ -57,13 +58,18 @@ function RouteComponent() {
     }
   });
 
-  const { mutate, isPending: isUpdating } = useEditNewsMutation({
+  const { mutate, isPending: isUpdating } = useMutation({
+    ...orpc.admin.news.update.mutationOptions(),
     onError: (error) => toast.error(error.name, { description: error.message }),
-    onSuccess: data => form.reset({
-      ...data,
-      contentRo: data.contentRo ?? undefined,
-      contentRu: data.contentRu ?? undefined
-    })
+    onSuccess: data => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.news.key() });
+      void queryClient.invalidateQueries({ queryKey: orpc.news.key() });
+      form.reset({
+        ...data,
+        contentRo: data.contentRo ?? undefined,
+        contentRu: data.contentRu ?? undefined
+      });
+    }
   });
 
 
@@ -132,14 +138,14 @@ const BottomButtons: FC<IBottomButtons> = (props) => {
             onClick={onResetClick}
             className="border"
           >
-            <UndoIcon/>
+            <IconArrowBackUp/>
             <span className="sr-only sm:not-sr-only">Reset</span>
           </Button>
         </div>
 
         <div className="bg-background shadow-md rounded-md">
           <LoadingButton type="submit" hideTextOnMobile onClick={onSubmitClick} disabled={disabled} loading={isLoading}>
-            <SaveIcon/>
+            <IconDeviceFloppy/>
             <span className="sr-only sm:not-sr-only">Save</span>
           </LoadingButton>
         </div>

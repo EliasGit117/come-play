@@ -1,3 +1,4 @@
+import { IconMinus, IconPlus } from '@tabler/icons-react';
 import { createFileRoute } from '@tanstack/react-router';
 import { useState, useEffect } from 'react';
 import {
@@ -7,7 +8,7 @@ import {
 import PanelSettingsSheet from './-components/panel-settings-sheet';
 import OpenPanelSettingsButton from './-components/open-panel-settings-button';
 import { Button } from '@/components/ui/button';
-import { MinusIcon, PlusIcon } from 'lucide-react';
+
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
@@ -84,27 +85,27 @@ function RouteComponent() {
             <Label>Vertical count</Label>
             <div className="flex justify-center">
               <Button
-                size="icon-sm"
+                size="icon"
                 variant="secondary"
-                className="rounded-r-none border"
+                className="rounded-r-none border border-border"
                 disabled={tilesYCount <= 1}
                 onClick={() => setTilesYCount(pv => pv > 0 ? pv - 1 : pv)}
               >
-                <MinusIcon/>
+                <IconMinus/>
               </Button>
               <Input
-                className="h-8 w-12 text-center rounded-none border-x-0"
+                className="h-8 w-12 text-center rounded-none dark:border-secondary border-x-0"
                 value={tilesYCount}
                 readOnly
               />
               <Button
-                size="icon-sm"
+                size="icon"
                 variant="secondary"
-                className='rounded-l-none border'
+                className="rounded-l-none border border-border"
                 disabled={tilesYCount >= 100}
                 onClick={() => setTilesYCount(pv => pv <= 100 ? pv + 1 : pv)}
               >
-                <PlusIcon/>
+                <IconPlus/>
               </Button>
             </div>
           </div>
@@ -114,27 +115,27 @@ function RouteComponent() {
             <Label>Horizontal count</Label>
             <div className="flex justify-center">
               <Button
-                size="icon-sm"
+                size="icon"
                 variant="secondary"
-                className="rounded-r-none border"
+                className="rounded-r-none border border-border"
                 disabled={tilesXCount <= 1}
                 onClick={() => setTilesXCount(pv => pv > 0 ? pv - 1 : pv)}
               >
-                <MinusIcon/>
+                <IconMinus/>
               </Button>
               <Input
-                className="h-8 w-12 text-center rounded-none border-x-0"
+                className="h-8 w-12 text-center rounded-none dark:border-secondary border-x-0"
                 value={tilesXCount}
                 readOnly
               />
               <Button
-                size="icon-sm"
+                size="icon"
                 variant="secondary"
-                className='rounded-l-none border'
+                className="rounded-l-none border border-border"
                 disabled={tilesXCount >= 100}
                 onClick={() => setTilesXCount(pv => pv <= 100 ? pv + 1 : pv)}
               >
-                <PlusIcon/>
+                <IconPlus/>
               </Button>
             </div>
           </div>
@@ -162,7 +163,7 @@ function RouteComponent() {
               <div
                 key={line.id}
                 style={{ left: `${line.left}%` }}
-                className="absolute top-0 bottom-0 w-[1px] bg-white/50"
+                className="absolute top-0 bottom-0 w-px bg-white/50"
               />
             ))}
 
@@ -171,12 +172,12 @@ function RouteComponent() {
               <div
                 key={line.id}
                 style={{ top: `${line.top}%` }}
-                className="absolute left-0 right-0 h-[1px] bg-white/50"
+                className="absolute left-0 right-0 h-px bg-white/50"
               />
             ))}
 
             {/* Total height label (on left, centered vertically) */}
-            <div className="absolute -left-14 top-1/2 -translate-y-1/2  text-sm rotate-[-90deg]">
+            <div className="absolute -left-14 top-1/2 -translate-y-1/2  text-sm -rotate-90">
               {height} mm
             </div>
 

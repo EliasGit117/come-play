@@ -17,7 +17,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
-  AlertDialogPortal,
   AlertDialogTitle
 } from '@/components/ui/alert-dialog'
 
@@ -119,7 +118,6 @@ const ConfirmDialogContent = memo(
       icon,
       contentSlot,
       customActions,
-      alertDialogOverlay,
       alertDialogContent,
       alertDialogHeader,
       alertDialogTitle,
@@ -167,23 +165,20 @@ const ConfirmDialogContent = memo(
     }
 
     return (
-      <AlertDialogPortal>
-        <AlertDialogOverlay {...alertDialogOverlay} />
-        <AlertDialogContent {...alertDialogContent}>
-          <AlertDialogHeader {...alertDialogHeader}>
-            {renderTitle()}
-            {description && (
-              <AlertDialogDescription {...alertDialogDescription}>
-                {description}
-              </AlertDialogDescription>
-            )}
-            {contentSlot}
-          </AlertDialogHeader>
-          <AlertDialogFooter {...alertDialogFooter}>
-            {renderActions()}
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialogPortal>
+      <AlertDialogContent {...alertDialogContent}>
+        <AlertDialogHeader {...alertDialogHeader}>
+          {renderTitle()}
+          {description && (
+            <AlertDialogDescription {...alertDialogDescription}>
+              {description}
+            </AlertDialogDescription>
+          )}
+          {contentSlot}
+        </AlertDialogHeader>
+        <AlertDialogFooter {...alertDialogFooter}>
+          {renderActions()}
+        </AlertDialogFooter>
+      </AlertDialogContent>
     )
   }
 )

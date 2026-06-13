@@ -1,3 +1,4 @@
+import { IconCarouselHorizontal, IconInbox, IconLayoutDashboard, IconNews } from '@tabler/icons-react';
 import { ComponentProps } from 'react';
 import { NavLinkGroup } from './nav-link-group';
 import { NavUser } from './nav-user';
@@ -10,14 +11,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '@/components/ui/sidebar';
-import {
-  SettingsIcon,
-  LayoutDashboardIcon,
-  NewspaperIcon,
-  ShoppingCartIcon,
-  HomeIcon,
-  GalleryHorizontalIcon, TagsIcon, TagIcon, ShoppingBasketIcon
-} from 'lucide-react';
+import LogoIcon from '@/assets/icons/logo/icon.svg?react';
+import LogoText from '@/assets/icons/logo/text.svg?react';
 import { INavItem } from '@/routes/admin/-components/sidebar/types/nav-item';
 import { Link } from '@tanstack/react-router';
 import { NavSettings } from '@/routes/admin/-components/sidebar/nav-settings';
@@ -28,18 +23,18 @@ interface IAdminSidebarProps extends ComponentProps<typeof Sidebar> {}
 export function AdminSidebar({ ...props }: IAdminSidebarProps) {
 
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
+    <Sidebar variant='floating' collapsible="offcanvas" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
-            >
-              <Link to="/admin">
-                <ShoppingCartIcon className="!size-5" strokeWidth={2.5}/>
-                <span className="text-base font-semibold">
-                  {import.meta.env.VITE_APP_NAME ?? 'Website Name'}
+            <SidebarMenuButton className="data-[slot=sidebar-menu-button]:p-1.5! h-10" asChild>
+              <Link to="/" className='flex gap-2'>
+                <LogoIcon className='size-7.5! text-foreground'/>
+                <span className='flex flex-col'>
+                  <LogoText className='h-3.5! w-fit! text-foreground'/>
+                  <span className='text-xs text-muted-foreground'>
+                    Admin
+                  </span>
                 </span>
               </Link>
             </SidebarMenuButton>
@@ -60,43 +55,23 @@ export function AdminSidebar({ ...props }: IAdminSidebarProps) {
 
 const navMain: INavItem[] = [
   {
-    title: 'Home',
-    linkOptions: { to: '/',  activeOptions: { exact: true } },
-    icon: HomeIcon
-  },
-  {
     title: 'Dashboard',
     linkOptions: { to: '/admin', activeOptions: { exact: true } },
-    icon: LayoutDashboardIcon
+    icon: IconLayoutDashboard
   },
   {
     title: 'Banners',
     linkOptions: { to: '/admin/banners' },
-    icon: GalleryHorizontalIcon,
+    icon: IconCarouselHorizontal,
+  },
+  {
+    title: 'Requests',
+    linkOptions: { to: '/admin/customer-requests' },
+    icon: IconInbox
   },
   {
     title: 'News',
     linkOptions: { to: '/admin/news' },
-    icon: NewspaperIcon
-  },
-  {
-    title: 'Products',
-    linkOptions: { to: '/admin/products' },
-    icon: ShoppingBasketIcon
-  },
-  {
-    title: 'Categories',
-    linkOptions: { to: '/admin/categories' },
-    icon: TagIcon
-  },
-  {
-    title: 'Subcategories',
-    linkOptions: { to: '/admin/subcategories' },
-    icon: TagsIcon
-  },
-  {
-    title: 'Settings',
-    linkOptions: { to: '/' },
-    icon: SettingsIcon
+    icon: IconNews
   }
 ];

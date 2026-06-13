@@ -5,6 +5,7 @@ import { NotFoundCard } from './components/not-found-card';
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query';
 import { createRouter } from '@tanstack/react-router';
 import { TBreadcrumbData } from '@/routes/admin/-components/admin-header/breadcrumb-nav';
+import { deLocalizeUrl, localizeUrl } from '@/paraglide/runtime';
 
 
 export function getRouter() {
@@ -18,6 +19,10 @@ export function getRouter() {
   });
 
   const router = createRouter({
+    rewrite: {
+      input: ({ url }) => url.pathname.startsWith('/api') ? url : deLocalizeUrl(url),
+      output: ({ url }) => url.pathname.startsWith('/api') ? url : localizeUrl(url)
+    },
     routeTree,
     context: { queryClient },
     defaultPreload: 'intent',
@@ -52,6 +57,5 @@ declare module '@tanstack/react-router' {
     headerOptions?: {
       type?: 'fixed' | 'sticky';
     };
-
   }
 }

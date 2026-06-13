@@ -1,10 +1,8 @@
-import { ComponentProps, PropsWithChildren, useCallback, useMemo } from 'react';
-import { XIcon } from 'lucide-react';
+import { type ComponentProps, type PropsWithChildren, useCallback, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { type Column } from '@tanstack/react-table';
 import { DataTableSortPopover } from '@/components/data-table/sort-popover';
-import { DataTableViewOptions } from '@/components/data-table/view-options';
 import { DataTableTextFilter } from '@/components/data-table/text-filter';
 import { ColumnFilterType } from '@/components/data-table/types/tanstack-table-meta';
 import { useDataTableContext } from '@/components/data-table/context';
@@ -14,10 +12,12 @@ import { DataTableSelectFilter } from '@/components/data-table/select-filter';
 import { DataTableDateFilter } from '@/components/data-table/date-filter';
 import { DataTableDateRangeFilter } from '@/components/data-table/date-range-filter';
 import { DataTableNumberRangeFilter } from '@/components/data-table/number-range-filter';
+import { IconFilterOff } from '@tabler/icons-react';
+import { DataTableColumnsOptions } from '@/components/data-table/columns-options';
 
 
-interface IDataTableToolbarProps<TData> extends PropsWithChildren<ComponentProps<'div'>> {
-}
+
+interface IDataTableToolbarProps<_> extends PropsWithChildren<ComponentProps<'div'>> {}
 
 export function DataTableToolbar<TData>(props: IDataTableToolbarProps<TData>) {
   // noinspection BadExpressionStatementJS
@@ -37,7 +37,7 @@ export function DataTableToolbar<TData>(props: IDataTableToolbarProps<TData>) {
       {...restOfProps}
     >
       <div className="flex items-center gap-2">
-        <DataTableViewOptions/>
+        <DataTableColumnsOptions/>
         <DataTableSortPopover/>
         {children}
       </div>
@@ -54,8 +54,8 @@ export function DataTableToolbar<TData>(props: IDataTableToolbarProps<TData>) {
             className="border-dashed"
             onClick={onReset}
           >
-            <XIcon/>
-            Reset
+            <IconFilterOff className='text-muted-foreground'/>
+            <span>Clear</span>
           </Button>
         )}
       </div>
@@ -100,6 +100,9 @@ function DataTableToolbarFilter<TData>(props: DataTableToolbarFilterProps<TData>
 
       case ColumnFilterType.DateRange:
         return <DataTableDateRangeFilter column={column} key={column.id}/>;
+
+      case ColumnFilterType.Custom:
+        return columnMeta.filter.render({ column });
 
       default:
         return null;

@@ -1,6 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
 import type { Column } from '@tanstack/react-table';
-import { CheckIcon, PlusCircle, XCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,13 +17,13 @@ import {
   PopoverTrigger
 } from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
 import {
   ColumnFilterType,
-  IFacetedOption,
-  TFacetedOptionValue
+  type TFacetedOptionValue
 } from '@/components/data-table/types/tanstack-table-meta';
-import * as React from 'react';
+import { ButtonGroup } from '@/components/ui/button-group';
+import { IconCirclePlus, IconCircleX } from '@tabler/icons-react';
+
 
 interface IDataTableMultiSelectFilter<TData, TValue> {
   column: Column<TData, TValue>;
@@ -34,122 +33,168 @@ export function DataTableMultiSelectFilter<TData, TValue>({ column }: IDataTable
   // noinspection BadExpressionStatementJS
   'use no memo';
 
-  const filterValue = (column.getFilterValue() as TFacetedOptionValue[]) ?? [];
-  const meta = column.columnDef.meta;
-  const title = meta?.label ?? column.id;
+  const { meta } = column.columnDef;
+
+  if (!meta || meta.filter?.type !== ColumnFilterType.MultiSelect) {
+    throw new Error(
+      'DataTableMultiSelectFilter requires ColumnFilterType.MultiSelect'
+    );
+  }
+
+  const { label, filter } = meta;
+  const options = filter.options;
+
+  const filterValue =
+    (column.getFilterValue() as TFacetedOptionValue[]) ?? [];
+  const hasFilter = filterValue.length > 0;
+  const title = label ?? column.id;
+
   const [open, setOpen] = useState(false);
 
-  if (meta?.filter?.type !== ColumnFilterType.MultiSelect)
-    throw new Error('DataTableFacetedFilter only supports MultiSelect type');
+  const selectedSet = useMemo(
+    () => new Set(filterValue),
+    [filterValue]
+  );
 
-  const options = meta.filter.options;
-  const selectedSet = useMemo(() => new Set(filterValue), [filterValue]);
+  const selectedOptions = useMemo(
+    () => options.filter((o) => selectedSet.has(o.value)),
+    [options, selectedSet]
+  );
 
-  const onItemSelect = useCallback((option: IFacetedOption, isSelected: boolean) => {
-    const newSelected =
-      isSelected ? filterValue.filter((v) => v !== option.value) : [...filterValue, option.value];
+  const onItemSelect = useCallback(
+    (value: TFacetedOptionValue, isSelected: boolean) => {
+      const next = isSelected
+        ? filterValue.filter((v) => v !== value)
+        : [...filterValue, value];
 
+      column.setFilterValue(next.length ? next : undefined);
+    },
+    [filterValue, column]
+  );
 
-    column.setFilterValue(newSelected.length > 0 ? newSelected : undefined);
-  }, [filterValue, column]);
+  const onReset = useCallback(
+    () => column.setFilterValue(undefined),
+    [column]
+  );
 
-  const onReset = useCallback(() => column.setFilterValue(undefined), [column]);
+  const onClearClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      onReset();
+    },
+    [onReset]
+  );
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="border-dashed !px-2.5">
-          {filterValue.length > 0 ? (
-            <div
-              role="button"
-              aria-label={`Clear ${title} filter`}
-              tabIndex={0}
-              onClick={(e) => {
-                e.stopPropagation();
-                onReset();
-              }}
-              className="rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-            >
-              <XCircle/>
-            </div>
-          ) : (
-            <PlusCircle/>
-          )}
-          {title}
-          {filterValue.length > 0 && (
-            <>
-              <Separator orientation="vertical" className="mx-0.5 data-[orientation=vertical]:h-4"/>
-              <Badge variant="secondary" className="rounded-sm font-normal lg:hidden">
-                {filterValue.length}
-              </Badge>
+    <ButtonGroup>
+      {hasFilter && (
+        <Button
+          size="icon-sm"
+          variant="outline"
+          className="border-dashed"
+          aria-label={`Clear ${title} filter`}
+          onClick={onClearClick}
+        >
+          <IconCircleX className="text-muted-foreground"/>
+        </Button>
+      )}
 
-              <div className="hidden items-center gap-1 lg:flex">
-                {filterValue.length > 2 ? (
-                  <Badge variant="secondary" className="rounded-sm px-1 font-normal">
-                    {filterValue.length} selected
-                  </Badge>
-                ) : (
-                  options
-                    .filter((option) => selectedSet.has(option.value))
-                    .map((option) => (
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button variant="outline" size="sm" className="border-dashed px-2.5!">
+            {!hasFilter && <IconCirclePlus className="text-muted-foreground"/>}
+            {title}
+
+            {hasFilter && (
+              <>
+                <Separator orientation="vertical" className="mx-1 my-auto h-3.5"/>
+
+                <Badge variant="secondary" className="border border-border rounded-sm px-1 font-normal lg:hidden">
+                  {filterValue.length}
+                </Badge>
+
+                <div className="hidden items-center gap-1 lg:flex">
+                  {filterValue.length > 2 ? (
+                    <Badge variant="secondary" className="border border-border rounded-sm px-1 font-normal">
+                      {filterValue.length} selected
+                    </Badge>
+                  ) : (
+                    selectedOptions.map((option) => (
                       <Badge
                         variant="secondary"
+                        className="border border-border rounded-sm px-1 font-normal [&>svg]:size-2.5!"
                         key={`${option.value}`}
-                        className="rounded-sm px-1 font-normal"
                       >
-                        {option.title}
+                        {option.icon && <option.icon className='text-muted-foreground'/>}
+                        <span>{option.title}</span>
                       </Badge>
                     ))
-                )}
-              </div>
-            </>
-          )}
-        </Button>
-      </PopoverTrigger>
-
-      <PopoverContent className="w-[12.5rem] p-0" align="start">
-        <Command>
-          {options.length > 5 && <CommandInput placeholder={title}/>}
-          <CommandList className="max-h-full">
-            <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup className="max-h-[18.75rem] overflow-y-auto overflow-x-hidden">
-              {options.map((option) => {
-                const isSelected = selectedSet.has(option.value);
-                return (
-                  <CommandItem key={`${option.value}`} onSelect={() => onItemSelect(option, isSelected)}>
-                    <div
-                      className={cn(
-                        'flex size-4 items-center justify-center rounded-sm',
-                        isSelected ? 'bg-primary' : 'opacity-50 [&_svg]:invisible border border-primary'
-                      )}
-                    >
-                      <CheckIcon className="text-secondary size-3"/>
-                    </div>
-                    {option.icon && <option.icon/>}
-                    <span className="truncate">{option.title}</span>
-                    {option.count && (
-                      <Badge variant='outline' className="ml-auto font-mono text-xs px-1.5">
-                        {option.count}
-                      </Badge>
-                    )}
-                  </CommandItem>
-                );
-              })}
-            </CommandGroup>
-
-            {filterValue.length > 0 && (
-              <>
-                <CommandSeparator/>
-                <CommandGroup>
-                  <CommandItem onSelect={onReset} className="justify-center text-center">
-                    Clear filters
-                  </CommandItem>
-                </CommandGroup>
+                  )}
+                </div>
               </>
             )}
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+          </Button>
+        </PopoverTrigger>
+
+        <PopoverContent className="min-w-52 w-fit p-0 gap-1" align='start'>
+          <Command className='space-y-1'>
+            {options.length > 5 && (
+              <CommandInput
+                placeholder={title}
+                // wrapperClassName="p-0"
+                // groupClassName="rounded-sm!"
+              />
+            )}
+
+            <CommandList className="max-h-72">
+              <CommandEmpty>
+                No results found
+              </CommandEmpty>
+
+              <CommandGroup  className="p-0" heading={title}>
+                {options.map((option) => {
+                  const isSelected = selectedSet.has(option.value);
+
+                  return (
+                    <CommandItem
+                      key={`${option.value}`}
+                      data-checked={isSelected}
+                      onSelect={() => onItemSelect(option.value, isSelected)}
+                      className="group"
+                    >
+                      {option.icon && <option.icon className='text-muted-foreground'/>}
+                      <span className="truncate">
+                        {option.title}
+                      </span>
+
+                      {option.count && (
+                        <Badge variant="secondary" className="border border-border ml-auto px-1.5 font-mono text-xs">
+                          {option.count}
+                        </Badge>
+                      )}
+                    </CommandItem>
+                  );
+                })}
+              </CommandGroup>
+
+              {hasFilter && (
+                <>
+                  <CommandSeparator/>
+                  <CommandGroup>
+                    <CommandItem
+                      onSelect={onReset}
+                      className="flex justify-center"
+                    >
+                      <IconCircleX/>
+                      <span>Clear</span>
+                    </CommandItem>
+                  </CommandGroup>
+                </>
+              )}
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </ButtonGroup>
   );
 }

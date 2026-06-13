@@ -24,11 +24,11 @@ const triggerAltClassName = cn(
 
 
 const HeaderNavMenu: FC<IProps> = ({ transparent, ...props }) => {
-  const triggerClassName = cn('uppercase bg-transparent duration-0 [&_svg]:duration-0 [&_svg]:transition-none', transparent ? triggerAltClassName : '');
+  const triggerClassName = cn('uppercase font-medium bg-transparent duration-0 [&_svg]:duration-0 [&_svg]:transition-none', transparent ? triggerAltClassName : '');
 
   return (
     <NavigationMenu viewport={false} {...props}>
-      <NavigationMenuList>
+      <NavigationMenuList className='gap-2'>
         {headerLinks.map((menu, idx) =>
           menu.type === MenuItemType.Group ? (
             <DropdownMenu
@@ -61,10 +61,10 @@ const DropdownMenu: FC<IDropdownMenuProps> = ({ title, items, triggerClassName, 
   <NavigationMenuItem {...props}>
     <NavigationMenuTrigger className={triggerClassName}>{title}</NavigationMenuTrigger>
     <NavigationMenuContent>
-      <ul className={cn('grid gap-2 w-[300px]', items.length > 4 && 'grid-cols-2 w-[400px]')}>
+      <ul className={cn('grid gap-2 w-75', items.length > 4 && 'grid-cols-2 w-100')}>
         {items.map((item, idx) => (
           <li key={idx}>
-            <NavigationMenuLink asChild>
+            <NavigationMenuLink className='flex flex-col items-start' asChild>
               <Link {...item.linkOpt}>
                 <div className="font-medium">{item.label}</div>
                 {item.description && (

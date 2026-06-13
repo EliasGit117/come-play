@@ -4,8 +4,7 @@ import { ProductList } from './-components/product-list';
 import { SolutionList } from './-components/solutions';
 import { WriteAMessageSection } from './-components/write-a-message';
 import LatestNews from '@/routes/_public/-components/latest-news';
-import { getLatestNewsQueryOptions } from '@/features/news/server-functions/public/get-latest-news';
-import { getBannersQueryOptions } from '@/features/banners/server-functions/public/get-banners';
+import { orpc } from '@/lib/orpc';
 
 
 export const Route = createFileRoute('/_public/')({
@@ -14,8 +13,8 @@ export const Route = createFileRoute('/_public/')({
     headerOptions: { type: 'fixed' }
   },
   loader: async ({ context: { queryClient } }) => {
-    const newsPromise = queryClient.prefetchQuery(getLatestNewsQueryOptions());
-    const bannersPromise = queryClient.ensureQueryData(getBannersQueryOptions());
+    const newsPromise = queryClient.prefetchQuery(orpc.news.latest.queryOptions());
+    const bannersPromise = queryClient.ensureQueryData(orpc.banners.list.queryOptions());
 
     return Promise.all([newsPromise, bannersPromise]);
   },

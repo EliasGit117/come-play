@@ -1,8 +1,8 @@
 import { ComponentProps, FC, useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { useSetNewsImageMutation } from '@/features/news/server-functions/admin/set-news-image';
-import { useRemoveImageFromNews } from '@/features/news/server-functions/admin/remove-image-from-news';
-import { LoaderCircleIcon } from 'lucide-react';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { cn } from '@/lib/utils';
 import CoverImagePicker, { IImagePickerValue } from '@/components/ui/cover-image-picker';
 import { Spinner } from '@/components/ui/spinner';
@@ -20,19 +20,28 @@ export const NewsImageUploader: FC<INewsImageUploaderProps> = (props) => {
 
   const numNewsId = typeof newsId === 'number' ? newsId : parseInt(newsId);
   const [imageData, setImageData] = useState<IImagePickerValue | undefined>(defaultImage);
+  const queryClient = useQueryClient();
   let lastFile: File;
 
-  const { mutate: upload, isPending: isUploading } = useSetNewsImageMutation({
+  const { mutate: upload, isPending: isUploading } = useMutation({
+    ...orpc.admin.news.setImage.mutationOptions(),
     onError: (e) => {
       setImageData(undefined);
       toast.error(e.name, { description: e.message });
     },
-    onSuccess: (res) => setImageData({ thumbhash: res.thumbhash, src: res.url })
+    onSuccess: (res) => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.news.key() });
+      setImageData({ thumbhash: res.thumbhash, src: res.url });
+    }
   });
 
-  const { mutateAsync: removeAsync, isPending: isRemoving } = useRemoveImageFromNews({
+  const { mutateAsync: removeAsync, isPending: isRemoving } = useMutation({
+    ...orpc.admin.news.removeImage.mutationOptions(),
     onError: (e) => toast.error(e.name, { description: e.message }),
-    onSuccess: () => setImageData(undefined)
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.news.key() });
+      setImageData(undefined);
+    }
   });
 
   const isPending = isUploading || isRemoving;
@@ -43,7 +52,7 @@ export const NewsImageUploader: FC<INewsImageUploaderProps> = (props) => {
       return;
 
     if (!file) {
-      await removeAsync({ data: { newsId: numNewsId } });
+      await removeAsync({ newsId: numNewsId });
       return;
     }
 

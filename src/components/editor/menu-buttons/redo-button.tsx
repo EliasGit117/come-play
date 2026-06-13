@@ -1,7 +1,8 @@
+import { IconArrowForwardUp } from '@tabler/icons-react';
 import { Button } from '@/components/ui/button';
 import React, { ComponentProps } from 'react';
 import { useCurrentEditor } from '@tiptap/react';
-import { Redo2Icon } from 'lucide-react';
+
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { tooltipDefaultDelay } from '@/components/editor/consts/menu-item-options';
 import { getShortcutKey } from '@/components/editor/utils/get-shortcut-key';
@@ -27,7 +28,7 @@ const RedoButton = ({ ...props }: IProps) => {
           className="transition-none"
           {...props}
         >
-          <Redo2Icon />
+          <IconArrowForwardUp />
         </Button>
       </TooltipTrigger>
 

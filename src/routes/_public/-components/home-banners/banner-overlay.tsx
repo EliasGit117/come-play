@@ -2,13 +2,15 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Link } from '@tanstack/react-router';
 import { IBannerBriefDto } from '@/features/banners/dtos/banner-brief-dto';
+import { FC } from 'react';
+import { m } from '@/paraglide/messages';
 
 interface BannerOverlayProps {
   banner: IBannerBriefDto;
   className?: string;
 }
 
-export const BannerOverlay: React.FC<BannerOverlayProps> = ({ banner, className }) => {
+export const BannerOverlay: FC<BannerOverlayProps> = ({ banner, className }) => {
   const { title, text, path } = banner;
 
   return (
@@ -16,21 +18,21 @@ export const BannerOverlay: React.FC<BannerOverlayProps> = ({ banner, className 
       <div
         className="container mx-auto py-4 px-8 space-y-3 sm:space-y-4 lg:space-y-5 xl:space-y-6 text-white whitespace-pre-line">
         {title && (
-          <p className="text-xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl font-semibold leading-tight max-w-3xl">
+          <p className="text-4xl lg:text-5xl xl:text-6xl font-semibold leading-tight max-w-3xl">
             {title}
           </p>
         )}
 
         {text && (
-          <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl max-w-2xl">
+          <p className="text-sm md:text-base lg:text-lg xl:text-xl max-w-2xl">
             {text}
           </p>
         )}
 
         {path && (
-          <Button className="text-xs sm:text-sm md:text-base h-fit lg:h-10 xl:h-12 !bg-white !text-black" asChild>
+          <Button className="text-xs sm:text-sm md:text-base h-fit lg:h-10 xl:h-12 bg-white! text-black!" asChild>
             <Link to={path}>
-              Show details
+              {m['pages.public.home.banner.showDetails']()}
             </Link>
           </Button>
         )}

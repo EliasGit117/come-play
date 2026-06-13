@@ -1,3 +1,4 @@
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 import {
   Carousel,
   CarouselApi,
@@ -7,14 +8,15 @@ import {
 import { ComponentProps, FC, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Autoplay from 'embla-carousel-autoplay';
-import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+
 import { cn } from '@/lib/utils';
-import { getBannersQueryOptions } from '@/features/banners/server-functions/public/get-banners';
+import { orpc } from '@/lib/orpc';
 import { useQuery } from '@tanstack/react-query';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BannerOverlay } from '@/routes/_public/-components/home-banners/banner-overlay';
 import { BannerImage } from '@/routes/_public/-components/home-banners/banner-image';
 import { VideoBanner } from '@/routes/_public/-components/home-banners/video-banner';
+import { m } from '@/paraglide/messages';
 
 
 interface IProps extends ComponentProps<typeof Carousel> {
@@ -24,7 +26,7 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
-  const { isPending, data } = useQuery(getBannersQueryOptions());
+  const { isPending, data } = useQuery(orpc.banners.list.queryOptions());
 
   useEffect(() => {
     if (!api)
@@ -37,7 +39,7 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
 
 
   if (isPending)
-    return (<Skeleton className="flex flex-col w-full min-h-[512px]"/>);
+    return (<Skeleton className="flex flex-col w-full min-h-128"/>);
 
   return (
     <Carousel
@@ -54,7 +56,7 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
 
             return (
               <CarouselItem key={index} className="relative pl-0">
-                <BannerImage banner={banner} className="min-h-[512px]"/>
+                <BannerImage banner={banner} className="min-h-128"/>
                 {hasData && (<BannerOverlay banner={banner}/>)}
               </CarouselItem>
             );
@@ -69,13 +71,13 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
           <div className="flex justify-center gap-2 py-2 mx-auto items-center">
             <Button
               data-slot="carousel-previous"
-              variant="lightGhost"
+              variant="light-ghost"
               size="icon-xs"
               className={cn()}
               onClick={() => api?.scrollPrev()}
             >
-              <ChevronLeftIcon/>
-              <span className="sr-only">Previous slide</span>
+              <IconChevronLeft/>
+              <span className="sr-only">{m['pages.public.home.banner.prevSlide']()}</span>
             </Button>
 
             {Array.from({ length: count }).map((_, index) => (
@@ -83,22 +85,22 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
                 key={index}
                 variant="secondary"
                 data-active={current === index + 1}
-                className="size-3 p-0 data-[active=true]:bg-primary border data-[active=true]:border-secondary"
+                className="size-3 p-0 data-[active=true]:bg-secondary-foreground border data-[active=true]:border-secondary"
                 onClick={() => api?.scrollTo(index)}
               >
-                <span className="sr-only">To {current} slide</span>
+                <span className="sr-only">{m['pages.public.home.banner.goToSlide']({ index: index + 1 })}</span>
               </Button>
             ))}
 
             <Button
               data-slot="carousel-previous"
-              variant="lightGhost"
+              variant="light-ghost"
               size="icon-xs"
               className={cn()}
               onClick={() => api?.scrollNext()}
             >
-              <ChevronRightIcon/>
-              <span className="sr-only">Next slide</span>
+              <IconChevronRight/>
+              <span className="sr-only">{m['pages.public.home.banner.nextSlide']()}</span>
             </Button>
           </div>
         </div>

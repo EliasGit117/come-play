@@ -1,0 +1,1 @@
+export { CustomerRequestsTable } from './table';

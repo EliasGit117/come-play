@@ -1,3 +1,4 @@
+import { IconTrash } from '@tabler/icons-react';
 import { ComponentProps, FC, useCallback, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import {
@@ -5,13 +6,11 @@ import {
   DataTableToolbar,
   DataTable, useDataTable
 } from '@/components/data-table';
-import {
-  getBannersForAdminQueryOptions,
-  TGetBannersForAdminSchema
-} from '@/features/banners/server-functions/admin/get-banners-for-admin';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { TGetBannersForAdminSchema } from '@/features/banners/schemas/search-banners';
+import { orpc } from '@/lib/orpc';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { bannerColumns } from '@/routes/admin/banners/-components/banners-table/columns';
-import { TrashIcon } from 'lucide-react';
+
 import {
   CreateBannerDialogTrigger,
   CreateBannerDialogProvider,
@@ -19,7 +18,6 @@ import {
 } from '@/routes/admin/banners/-components/create-banner-dialog';
 import { Button } from '@/components/ui/button';
 import { useConfirm } from '@/components/ui/confirm-dialog';
-import { useDeleteBannersByIdsMutation } from '@/features/banners/server-functions/admin/delete-banner-by-ids';
 import {
   ReorderBannersDialogProvider,
   ReorderBannersDialog,
@@ -37,21 +35,28 @@ export const BannerTable: FC<IProps> = (props) => {
   'use no memo';
   const { className, search = {}, ...restOfProps } = props;
   const confirm = useConfirm();
+  const queryClient = useQueryClient();
+
   const { data, isPending } = useQuery({
-    ...getBannersForAdminQueryOptions(search),
+    ...orpc.admin.banners.search.queryOptions({ input: search }),
     placeholderData: keepPreviousData
   });
 
-  const { isPending: isDeleting, mutateAsync: deleteAsync } = useDeleteBannersByIdsMutation();
+  const { isPending: isDeleting, mutateAsync: deleteAsync } = useMutation({
+    ...orpc.admin.banners.deleteMany.mutationOptions(),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.banners.key() });
+    }
+  });
   const isLoading = isPending || isDeleting;
   const columns = useMemo(() => bannerColumns({ disabled: isLoading }), [isLoading]);
 
   const { table, selectedItems } = useDataTable({
-    data: data,
+    data: data ?? [],
     page: 1,
     limit: 10,
-    total: data?.length,
-    totalPages: 1,
+    totalCount: data?.length ?? 0,
+    pageCount: 1,
     columns: columns,
     pageOnSearchChange: 'none',
     initialState: {
@@ -81,9 +86,7 @@ export const BannerTable: FC<IProps> = (props) => {
     if (!isConfirmed)
       return;
 
-    toast.promise(deleteAsync({
-      data: { ids: selectedItems.map((i) => i.id) }
-    }), {
+    toast.promise(deleteAsync({ ids: selectedItems.map((i) => i.id) }), {
       loading: 'Deleting banners...',
       success: 'Banners deleted successfully!',
       error: (err) => err instanceof Error ? err.message : 'Failed to delete banners.'
@@ -95,7 +98,7 @@ export const BannerTable: FC<IProps> = (props) => {
     <CreateBannerDialogProvider>
       <ReorderBannersDialogProvider>
         <div className={cn('flex flex-col gap-2', className)} {...restOfProps}>
-          <DataTableProvider table={table} isPending={isPending}>
+          <DataTableProvider table={table} loading={isPending}>
             <DataTableToolbar>
               <div className="flex-1"/>
               {selectedItems.length > 0 && (
@@ -105,7 +108,7 @@ export const BannerTable: FC<IProps> = (props) => {
                   disabled={isLoading}
                   onClick={deleteBanners}
                 >
-                  <TrashIcon/>
+                  <IconTrash/>
                   <span className="sr-only lg:not-sr-only">Delete</span>
                 </Button>
               )}

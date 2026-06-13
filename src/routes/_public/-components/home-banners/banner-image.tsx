@@ -34,7 +34,7 @@ export const BannerImage: FC<BannerImageProps> = ({ banner, className }) => {
       src={src}
       thumbhash={thumbhash}
       alt={banner.title ?? ''}
-      className={cn('w-full h-full max-h-svh object-cover brightness-75 dark:brightness-65', className)}
+      className={cn('w-full h-svh object-cover brightness-75 dark:brightness-65', className)}
     />
   );
 };

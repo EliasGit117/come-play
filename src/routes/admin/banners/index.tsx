@@ -1,18 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { zodValidator } from '@tanstack/zod-adapter';
-import {
-  getBannersForAdminQueryOptions,
-  getBannersForAdminSchema
-} from '@/features/banners/server-functions/admin/get-banners-for-admin';
+import { getBannersForAdminSchema } from '@/features/banners/schemas/search-banners';
+import { orpc } from '@/lib/orpc';
 import { BannerTable } from '@/routes/admin/banners/-components/banners-table';
+import { awaitIfServer } from '@/lib/await-if-server';
 
 
 export const Route = createFileRoute('/admin/banners/')({
   component: RouteComponent,
-  validateSearch: zodValidator(getBannersForAdminSchema),
+  validateSearch: getBannersForAdminSchema,
   loaderDeps: (deps) => deps,
   loader: async ({ context, deps: { search } }) => {
-    return context.queryClient.prefetchQuery(getBannersForAdminQueryOptions(search));
+    await awaitIfServer(context.queryClient.prefetchQuery(orpc.admin.banners.search.queryOptions({ input: search })));
   },
   head: () => {
     return { meta: [{ title: 'Banners' }] };

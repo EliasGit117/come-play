@@ -4,6 +4,75 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean   @default(false) @map("email_verified")
+  image         String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  role          String?
+  banned        Boolean?  @default(false)
+  banReason     String?   @map("ban_reason")
+  banExpires    DateTime? @map("ban_expires")
+  sessions      Session[]
+  accounts      Account[]
+
+  @@unique([email])
+  @@map("users")
+}
+
+model Session {
+  id             String   @id
+  expiresAt      DateTime @map("expires_at")
+  token          String
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  ipAddress      String?  @map("ip_address")
+  userAgent      String?  @map("user_agent")
+  userId         String   @map("user_id")
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  impersonatedBy String?  @map("impersonated_by")
+
+  @@unique([token])
+  @@index([userId])
+  @@map("sessions")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String    @map("account_id")
+  providerId            String    @map("provider_id")
+  userId                String    @map("user_id")
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?   @map("access_token")
+  refreshToken          String?   @map("refresh_token")
+  idToken               String?   @map("id_token")
+  accessTokenExpiresAt  DateTime? @map("access_token_expires_at")
+  refreshTokenExpiresAt DateTime? @map("refresh_token_expires_at")
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@map("accounts")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime @map("expires_at")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@index([identifier])
+  @@map("verifications")
 }
 
 enum NewsStatus {
@@ -21,10 +90,8 @@ model News {
   status    NewsStatus @default(hidden)
   image     NewsImage?
 
-  createdAt     DateTime     @default(now()) @map("created_at")
-  updatedAt     DateTime     @default(now()) @updatedAt @map("updated_at")
-  Subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
-  subcategoryId Int?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@index(fields: [titleRo, titleRu, slug, status])
   @@map("news")
@@ -104,101 +171,25 @@ model BannerImage {
   @@map("banner_images")
 }
 
-model Category {
-  id            Int     @id @default(autoincrement())
-  nameRo        String  @map("name_ro")
-  nameRu        String  @map("name_ru")
-  slug          String  @unique
-  descriptionRo String? @map("description_ro")
-  descriptionRu String? @map("description_ru")
-
-  subcategories Subcategory[]
-  createdAt     DateTime      @default(now()) @map("created_at")
-  updatedAt     DateTime      @default(now()) @updatedAt @map("updated_at")
-
-  @@map("categories")
+enum EmailNotificationStatus {
+  pending
+  sent
+  failed
 }
 
-model Subcategory {
-  id            Int     @id @default(autoincrement())
-  nameRo        String  @map("name_ro")
-  nameRu        String  @map("name_ru")
-  slug          String
-  descriptionRo String? @map("description_ro")
-  descriptionRu String? @map("description_ru")
+model CustomerRequest {
+  id        Int     @id @default(autoincrement())
+  firstName String  @map("first_name")
+  lastName  String  @map("last_name")
+  phone     String
+  email     String
+  message   String?
 
-  categoryId Int? // Make optional
-  category   Category? @relation(fields: [categoryId], references: [id])
-
-  products  Product[]
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
-  News      News[]
-
-  @@unique([categoryId, slug])
-  @@index([categoryId])
-  @@map("subcategories")
-}
-
-enum ProductState {
-  available
-  not_available
-  out_of_stock
-}
-
-enum ProductSticker {
-  new
-  sale
-}
-
-model Product {
-  id     Int    @id @default(autoincrement())
-  nameRo String @map("name_ro")
-  nameRu String @map("name_ru")
-  slug   String @unique
-
-  state         ProductState @default(available)
-  hidden        Boolean      @default(false)
-  richContentRo String?      @map("rich_content_ro")
-  richContentRu String?      @map("rich_content_ru")
-
-  price    Decimal  @map("price")
-  oldPrice Decimal? @map("old_price")
-
-  sticker ProductSticker? @map("sticker")
-
-  shortDescriptionRo String? @map("short_description_ro")
-  shortDescriptionRu String? @map("short_description_ru")
-
-  images ProductImage[]
-
-  subcategoryId Int?
-  subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
+  emailNotificationStatus EmailNotificationStatus @default(pending) @map("email_notification_status")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
-  @@index([subcategoryId])
-  @@map("products")
-}
-
-model ProductImage {
-  id           Int     @id @default(autoincrement())
-  url          String
-  thumbhash    Bytes?
-  type         String
-  size         Int
-  originalName String? @map("original_name")
-  width        Int?
-  height       Int?
-  order        Int
-
-  productId Int
-  product   Product @relation(fields: [productId], references: [id])
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
-
-  @@index([productId, order])
-  @@map("product_images")
+  @@index([firstName, lastName, email, phone, emailNotificationStatus])
+  @@map("customer_requests")
 }

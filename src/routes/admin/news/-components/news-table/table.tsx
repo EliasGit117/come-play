@@ -1,3 +1,4 @@
+import { IconTrash } from '@tabler/icons-react';
 import { ComponentProps, FC, useCallback, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import {
@@ -7,11 +8,9 @@ import {
   DataTablePagination,
   useDataTable
 } from '@/components/data-table';
-import {
-  getNewsPaginatedForAdminQueryOptions,
-  TGetNewsPaginatedParamsForAdmin
-} from '@/features/news/server-functions/admin/get-news-paginated-for-admin';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { TGetNewsPaginatedParamsForAdmin } from '@/features/news/schemas/search-news';
+import { orpc } from '@/lib/orpc';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { newsColumns } from '@/routes/admin/news/-components/news-table/columns';
 import {
   CreateNewsDialogProvider
@@ -20,8 +19,7 @@ import { CreateNewsDialog } from '@/routes/admin/news/-components/create-news-di
 import { CreateNewsDialogTrigger } from '@/routes/admin/news/-components/create-news-dialog/trigger';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import { TrashIcon } from 'lucide-react';
-import { useDeleteNewsByIdsMutation } from '@/features/news/server-functions/admin/delete-news-by-ids';
+
 import { useConfirm } from '@/components/ui/confirm-dialog';
 import * as React from 'react';
 
@@ -36,12 +34,18 @@ export const NewsTable: FC<IProps> = (props) => {
 
   const { className, search = {}, ...divProps } = props;
   const confirm = useConfirm();
+  const queryClient = useQueryClient();
   const { data, isPending } = useQuery({
-    ...getNewsPaginatedForAdminQueryOptions(search),
+    ...orpc.admin.news.search.queryOptions({ input: search }),
     placeholderData: keepPreviousData
   });
 
-  const { isPending: isDeleting, mutateAsync: deleteAsync } = useDeleteNewsByIdsMutation();
+  const { isPending: isDeleting, mutateAsync: deleteAsync } = useMutation({
+    ...orpc.admin.news.deleteMany.mutationOptions(),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.news.key() });
+    }
+  });
   const isLoading = isPending || isDeleting;
   const columns = useMemo(() => newsColumns({ disabled: isLoading }), [isLoading]);
 
@@ -49,8 +53,8 @@ export const NewsTable: FC<IProps> = (props) => {
     data: data?.items,
     page: data?.page,
     limit: search.limit,
-    total: data?.totalCount,
-    totalPages: data?.pageCount,
+    totalCount: data?.totalCount,
+    pageCount: data?.pageCount,
     columns: columns,
     initialState: { columnPinning: { left: ['select'], right: ['actions'] } }
   });
@@ -69,9 +73,7 @@ export const NewsTable: FC<IProps> = (props) => {
     if (!isConfirmed)
       return;
 
-    toast.promise(deleteAsync({
-      data: { ids: selectedItems.map((i) => i.id) }
-    }), {
+    toast.promise(deleteAsync({ ids: selectedItems.map((i) => i.id) }), {
       loading: 'Deleting news...',
       success: 'News deleted successfully!',
       error: (err) => err instanceof Error ? err.message : 'Failed to delete news.'
@@ -82,17 +84,17 @@ export const NewsTable: FC<IProps> = (props) => {
   return (
     <div className={cn('flex flex-col gap-2', className)} {...divProps}>
       <CreateNewsDialogProvider>
-        <DataTableProvider table={table} isPending={isPending}>
+        <DataTableProvider table={table} loading={isPending}>
           <DataTableToolbar>
             <div className="flex-1"/>
             {selectedItems.length > 0 && (
               <Button size="sm" variant="ghost-destructive" onClick={deleteNews} disabled={isLoading}>
-                <TrashIcon/>
+                <IconTrash/>
                 <span className="sr-only sm:not-sr-only">Delete</span>
               </Button>
             )}
 
-            <CreateNewsDialogTrigger size="sm" variant="ghost" className="w-8 lg:w-fit" shortText/>
+            <CreateNewsDialogTrigger size="sm" variant="ghost" shortText/>
           </DataTableToolbar>
 
           <DataTable/>

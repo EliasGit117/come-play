@@ -1,20 +1,28 @@
 /// <reference types="vite/client" />
 /// <reference types="vite-plugin-svgr/client" />
 
-import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from '@tanstack/react-router';
-import type { QueryClient } from '@tanstack/react-query';
+import { HeadContent, Outlet, Scripts, createRootRouteWithContext, useRouter } from '@tanstack/react-router';
+import { QueryClient, useQuery } from '@tanstack/react-query';
 import { DefaultCatchBoundary } from '@/components/default-catch-boundary';
 import appCss from '@/styles/app.css?url';
 import { seo } from '@/utils/seo';
 import { Providers } from '@/providers';
 import { ThemeProvider } from '@/components/theme';
-import { ReactNode } from 'react';
+import { FC, ReactNode, useEffect, useRef } from 'react';
+import { orpc } from '@/lib/orpc';
+import type { TSession, TUser } from '@/lib/auth/server';
 
 interface IRootRouteProps {
   queryClient: QueryClient;
+  session?: TSession | null;
+  user?: TUser | null;
 }
 
 export const Route = createRootRouteWithContext<IRootRouteProps>()({
+  beforeLoad: async ({ context: { queryClient } }) => {
+    const res = await queryClient.ensureQueryData(orpc.sessions.current.queryOptions());
+    return { session: res?.session, user: res?.user };
+  },
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
@@ -68,9 +76,8 @@ function RootDocument({ children }: { children: ReactNode }) {
     <ThemeProvider defaultTheme="system">
       <Providers>
         {children}
+        <RouterInvalidation/>
       </Providers>
-      {/*<TanStackRouterDevtools position="bottom-right" />*/}
-      {/*<ReactQueryDevtools buttonPosition="bottom-left" />*/}
       <Scripts/>
     </ThemeProvider>
     </body>
@@ -78,3 +85,23 @@ function RootDocument({ children }: { children: ReactNode }) {
   );
 }
 
+
+// Invalidates route if session change
+const RouterInvalidation: FC = () => {
+  const router = useRouter();
+  const { data: authRes } = useQuery({
+    ...orpc.sessions.current.queryOptions(),
+    retry: false
+  });
+  const prevSession = useRef<TSession | null>(authRes?.session);
+
+  useEffect(() => {
+    if (authRes?.session === prevSession.current)
+      return;
+
+    prevSession.current = authRes?.session;
+    router.invalidate();
+  }, [authRes]);
+
+  return null;
+};

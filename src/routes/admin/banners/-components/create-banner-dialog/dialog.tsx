@@ -1,3 +1,4 @@
+import { IconSend, IconX } from '@tabler/icons-react';
 import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -15,12 +16,13 @@ import { BannerForm } from './form';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { toast } from 'sonner';
 import { useNavigate } from '@tanstack/react-router';
-import { SendIcon, XIcon } from 'lucide-react';
+
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { createBannerSchema, TCreateBannerSchema } from '@/features/banners/schemas/create-banner';
-import { useCreateBannerMutation } from '@/features/banners/server-functions/admin/create-banner';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCreateBannerDialogContext } from './provider';
 
 interface ICreateBannerDialogProps {
@@ -30,6 +32,7 @@ interface ICreateBannerDialogProps {
 export const CreateBannerDialog: FC<ICreateBannerDialogProps> = ({ afterSuccess }) => {
   const { isOpen, setIsOpen } = useCreateBannerDialogContext();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [editAfterCreation, setEditAfterCreation] = useState(true);
 
   const form = useForm<TCreateBannerSchema>({
@@ -45,9 +48,11 @@ export const CreateBannerDialog: FC<ICreateBannerDialogProps> = ({ afterSuccess 
     }
   });
 
-  const { mutate, isPending } = useCreateBannerMutation({
+  const { mutate, isPending } = useMutation({
+    ...orpc.admin.banners.create.mutationOptions(),
     onError: (e) => toast.error(e.name, { description: e.message }),
     onSuccess: (res) => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.banners.key() });
       setIsOpen(false);
       toast.success('Banner has been successfully created');
       afterSuccess?.();
@@ -106,7 +111,7 @@ export const CreateBannerDialog: FC<ICreateBannerDialogProps> = ({ afterSuccess 
                 type="button"
                 className="flex-1 sm:flex-none"
               >
-                <XIcon/>
+                <IconX/>
                 <span>Cancel</span>
               </AlertDialogCancel>
 
@@ -115,7 +120,7 @@ export const CreateBannerDialog: FC<ICreateBannerDialogProps> = ({ afterSuccess 
                 loading={isPending}
                 className="flex-1 sm:flex-none"
               >
-                <SendIcon/>
+                <IconSend/>
                 <span>Submit</span>
               </LoadingButton>
             </AlertDialogFooter>

@@ -1,10 +1,10 @@
-import { ComponentProps, useCallback } from 'react';
-import { Column } from '@tanstack/react-table';
+import { type ComponentProps, useCallback } from 'react';
+import { type Column } from '@tanstack/react-table';
 import { ColumnFilterType } from '@/components/data-table/types/tanstack-table-meta';
 import { NumberInput } from '@/components/ui/number-input';
 import { Button } from '@/components/ui/button';
-import { XIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { IconX } from '@tabler/icons-react';
 
 
 interface IDataTableNumberFilterProps<TData, TValue>
@@ -46,9 +46,9 @@ export function DataTableNumberFilter<TData, TValue>(props: IDataTableNumberFilt
         inputSize="sm"
         min={min}
         max={max}
-        placeholder={placeholder}
+        placeholder={placeholder ?? getPlaceholderText(min, max, meta?.label?.toLowerCase())}
         className="w-40 lg:w-56"
-        inputClassName={cn(filterValue && 'pr-7')}
+        inputClassName={cn('text-xs sm:text-sm', filterValue && 'pr-7')}
         {...restOfProps}
       />
       {filterValue && (
@@ -62,11 +62,25 @@ export function DataTableNumberFilter<TData, TValue>(props: IDataTableNumberFilt
             onClick={reset}
             disabled={restOfProps.disabled}
           >
-            <XIcon className="size-3.5"/>
+            <IconX className="size-3.5"/>
             <span className="sr-only">Clear</span>
           </Button>
         </div>
       )}
     </div>
   );
+}
+
+
+function getPlaceholderText(min: number | undefined, max: number | undefined, name: string = ''): string {
+  if (min !== undefined && max !== undefined)
+    return `${min} - ${max}`;
+
+  if (min !== undefined)
+    return `${min} ≤`;
+
+  if (max !== undefined)
+    return `≤ ${max}`;
+
+  return `Filter by ${name} `
 }

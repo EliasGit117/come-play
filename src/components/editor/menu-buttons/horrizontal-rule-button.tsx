@@ -1,7 +1,8 @@
+import { IconMinus } from '@tabler/icons-react';
 import { Button } from '@/components/ui/button';
 import React, { ComponentProps } from 'react';
 import { useCurrentEditor, useEditorState } from '@tiptap/react';
-import { Minus } from 'lucide-react';
+
 import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip';
 import { tooltipDefaultDelay } from '@/components/editor/consts/menu-item-options';
 
@@ -33,7 +34,7 @@ const HorizontalRuleButton = ({ ...props }: IProps) => {
           className="transition-none"
           {...props}
         >
-          <Minus/>
+          <IconMinus/>
         </Button>
       </TooltipTrigger>
     </Tooltip>

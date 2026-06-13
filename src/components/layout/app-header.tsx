@@ -1,27 +1,29 @@
+import { IconCalculator, IconMenu2 } from '@tabler/icons-react';
 import { ComponentProps, FC, useState, useEffect } from 'react';
 import { Link, useMatches } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
-import { CalculatorIcon, MenuIcon } from 'lucide-react';
+
 import { cn } from '@/lib/utils';
 import HeaderNavMenu from '@/components/layout/nav-menu';
-import LanguageDropdown from '@/components/layout/language-dropdown';
+import LocaleDropdown from '@/components/layout/locale-dropdown';
 import { useAppSidebar } from '@/components/layout/app-sidebar-provider';
-import LightLogo from '@/assets/icons/logo-white.svg?react';
-import DarkLogo from '@/assets/icons/logo.svg?react';
+import LogoFull from '@/assets/icons/logo/full.svg?react';
 import { ThemeDropdown } from '@/components/theme';
 import { useBodyScrollPosition } from '@n8tb1t/use-scroll-position';
-import { Bar, Progress } from '@bprogress/react';
 
-interface IAppHeader extends ComponentProps<'header'> {
-}
+
+interface IAppHeader extends ComponentProps<'header'> {}
 
 const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
   const setOpenSidebar = useAppSidebar((s) => s.setOpen);
   const matches = useMatches();
+  const hasError = matches.some((match) => match.status === 'error');
   const headerOptions = matches.find(
     (match) => match.staticData.headerOptions
   )?.staticData.headerOptions;
-  const { type } = headerOptions ?? { type: 'sticky' };
+  // Force sticky on error so the fixed/transparent header never overlaps the
+  // error boundary rendered in the content area.
+  const type = hasError ? 'sticky' : (headerOptions?.type ?? 'sticky');
 
   const [mounted, setMounted] = useState(false);
   const [entered, setEntered] = useState(false);
@@ -46,37 +48,31 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
 
   return (
     <>
-      <Progress>
-        <Bar className={cn('!h-[2px] !bg-border', type !== 'sticky' && isAtTop && '!bg-secondary')}/>
-      </Progress>
-
       <header
         className={cn(
           // Visibility stage
           !mounted && 'sr-only',
           'sticky top-0 flex h-16 shrink-0 items-center gap-2 z-20',
-          'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90',
-          'dark:supports-[backdrop-filter]:bg-background/75 border-b',
+          'bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/90',
+          'dark:supports-backdrop-filter:bg-background/75 border-b',
           'transition-all duration-100 ease-out',
           type === 'fixed' && 'fixed left-0 right-0',
           entered ? 'opacity-150 translate-y-0' : 'opacity-0 -translate-y-4',
-          isAtTop && '!bg-transparent border-b-transparent backdrop-blur-none',
+          isAtTop && 'bg-transparent! border-b-transparent backdrop-blur-none',
           isAtTop && type === 'fixed' && 'text-white',
           className
         )}
         {...props}
       >
         <div className="container mx-auto px-4 flex gap-2 items-center">
-          <Button variant="lightGhost" size="dense" className="-ml-1" asChild>
+          <Button size="lg" variant="link" className="-ml-1" asChild>
             <Link to="/">
-              {isAtTop && type === 'fixed' ? (
-                <LightLogo className="size-8 xl:size-10"/>
-              ) : (
-                <>
-                  <LightLogo className="size-8 xl:size-10 hidden dark:block"/>
-                  <DarkLogo className="size-8 xl:size-10 dark:hidden"/>
-                </>
-              )}
+              <LogoFull
+                className={cn(
+                  'h-8! w-fit! text-foreground -ml-3.5',
+                  (isAtTop && type === 'fixed') && 'text-white'
+                )}
+              />
             </Link>
           </Button>
 
@@ -86,7 +82,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
           />
 
           <div className="flex gap-2 items-center ml-auto">
-            <LanguageDropdown buttonVariant="ghost" align='end'/>
+            <LocaleDropdown buttonVariant="ghost" align="end"/>
             <ThemeDropdown
               variant="ghost"
               className="ml-auto"
@@ -95,7 +91,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
             />
             <Button variant="ghost" size="icon" className="transition-none" asChild>
               <Link to="/calculator">
-                <CalculatorIcon/>
+                <IconCalculator/>
                 <span className="sr-only">Calculation page</span>
               </Link>
             </Button>
@@ -105,7 +101,7 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
               className="xl:hidden"
               onClick={() => setOpenSidebar(true)}
             >
-              <MenuIcon/>
+              <IconMenu2/>
               <span className="sr-only">Sidebar button</span>
             </Button>
           </div>

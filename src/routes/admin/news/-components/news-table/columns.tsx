@@ -3,18 +3,18 @@ import { IAdminNewsBriefDto } from '@/features/news/dtos/admin-news-brief-dto';
 import { format } from 'date-fns';
 import { NewsStatus } from '@prisma/client';
 import {
-  CalendarClockIcon,
-  CalendarPlusIcon,
-  EllipsisIcon,
-  EyeIcon,
-  EyeOffIcon,
-  HashIcon,
-  HeadingIcon,
-  ImageIcon, ImageOffIcon,
-  LinkIcon,
-  ListCheckIcon,
-  PenIcon
-} from 'lucide-react';
+  IconCalendarClock,
+  IconCalendarPlus,
+  IconDots,
+  IconEye,
+  IconEyeOff,
+  IconHash,
+  IconHeading,
+  IconPhoto, IconPhotoOff,
+  IconLink,
+  IconListCheck,
+  IconPencil
+} from '@tabler/icons-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -78,7 +78,7 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
       meta: {
         label: 'Id',
         key: 'idRange',
-        icon: HashIcon,
+        icon: IconHash,
         skeletonClassName: 'w-10 h-6',
         filter: {
           type: ColumnFilterType.NumberRange,
@@ -97,7 +97,7 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
           return (
             <div
               className="h-10 aspect-video rounded-sm bg-muted text-muted-foreground/50 border justify-center items-center flex">
-              <ImageOffIcon className="size-5"/>
+              <IconPhotoOff className="size-5"/>
             </div>
           );
 
@@ -115,13 +115,13 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
       meta: {
         label: 'Image',
         key: 'hasImage',
-        icon: ImageIcon,
+        icon: IconPhoto,
         skeletonClassName: 'h-10 w-18',
         filter: {
           type: ColumnFilterType.Select,
           options: [
-            { title: 'Yes', value: true, icon: ImageIcon },
-            { title: 'No', value: false, icon: ImageOffIcon }
+            { title: 'Yes', value: true, icon: IconPhoto },
+            { title: 'No', value: false, icon: IconPhotoOff }
           ]
         }
       }
@@ -132,7 +132,7 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
       cell: ctx => ctx.getValue(),
       meta: {
         label: 'Title',
-        icon: HeadingIcon,
+        icon: IconHeading,
         skeletonClassName: 'h-6 w-40',
         filter: {
           type: ColumnFilterType.Text,
@@ -145,7 +145,7 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
       cell: ctx => ctx.getValue(),
       meta: {
         label: 'Slug',
-        icon: LinkIcon,
+        icon: IconLink,
         skeletonClassName: 'h-6 w-36',
         filter: { type: ColumnFilterType.Text, placeholder: 'Search by slug' }
       }
@@ -155,21 +155,21 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
       cell: ({ getValue }) =>
         <Badge variant="outline" className="gap-2 py-1 px-2 m-0">
           {getValue() === NewsStatus.hidden ? (
-            <EyeOffIcon className="size-3.5 text-muted-foreground"/>
+            <IconEyeOff className="size-3.5 text-muted-foreground"/>
           ) : (
-            <EyeIcon className="size-3.5 text-muted-foreground"/>
+            <IconEye className="size-3.5 text-muted-foreground"/>
           )}
           <span className="capitalize">{getValue()}</span>
         </Badge>,
       meta: {
         label: 'Status',
-        icon: ListCheckIcon,
+        icon: IconListCheck,
         skeletonClassName: 'h-6 w-20',
         filter: {
           type: ColumnFilterType.MultiSelect,
           options: [
-            { title: 'Hidden', value: NewsStatus.hidden, icon: EyeOffIcon },
-            { title: 'Published', value: NewsStatus.published, icon: EyeIcon }
+            { title: 'Hidden', value: NewsStatus.hidden, icon: IconEyeOff },
+            { title: 'Published', value: NewsStatus.published, icon: IconEye }
           ]
         }
       }
@@ -179,7 +179,7 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
       cell: ctx => <span className="text-xs">{format(ctx.getValue(), 'dd.MM.yyyy - HH:mm')}</span>,
       meta: {
         label: 'Created',
-        icon: CalendarPlusIcon,
+        icon: IconCalendarPlus,
         skeletonClassName: 'h-6 w-30',
         filter: {
           type: ColumnFilterType.DateRange
@@ -191,7 +191,7 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
       cell: ctx => <span className="text-xs">{format(ctx.getValue(), 'dd.MM.yyyy - HH:mm')}</span>,
       meta: {
         label: 'Updated',
-        icon: CalendarClockIcon,
+        icon: IconCalendarClock,
         skeletonClassName: 'h-6 w-30',
         filter: {
           type: ColumnFilterType.DateRange
@@ -215,7 +215,7 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
             <DropdownMenu>
               <DropdownMenuTrigger disabled={disabled} asChild>
                 <Button size="icon-xs" variant="ghost">
-                  <EllipsisIcon/>
+                  <IconDots/>
                 </Button>
               </DropdownMenuTrigger>
 
@@ -229,13 +229,13 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
                 <DropdownMenuGroup>
                   <DropdownMenuItem onClick={() => navigate({ to: '/news/$slug', params: { slug: slug } })}>
                     <span>Go to page</span>
-                    <LinkIcon className="ml-auto size-4"/>
+                    <IconLink className="ml-auto size-4"/>
                   </DropdownMenuItem>
 
                   <DropdownMenuItem asChild>
                     <Link to="/admin/news/$id/edit" params={{ id: `${id}` }}>
                       <span>Edit</span>
-                      <PenIcon className="ml-auto size-4"/>
+                      <IconPencil className="ml-auto size-4"/>
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>

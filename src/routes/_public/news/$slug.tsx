@@ -1,8 +1,8 @@
 import { createFileRoute, notFound } from '@tanstack/react-router';
-import { getNewsBySlugQueryOptions } from '@/features/news/server-functions/public/get-news-by-slug';
+import { orpc } from '@/lib/orpc';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import { ro, ru } from 'date-fns/locale';
+import { ro } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
 import imgPlaceholder from '/images/news/placeholder.webp';
@@ -16,7 +16,7 @@ export const Route = createFileRoute('/_public/news/$slug')({
   },
   loader: async ({ context: { queryClient }, params: { slug } }) => {
     const res = await queryClient
-      .ensureQueryData(getNewsBySlugQueryOptions(slug))
+      .ensureQueryData(orpc.news.getBySlug.queryOptions({ input: { slug } }))
       .catch(e => {
         console.error(e);
         throw notFound();
@@ -58,7 +58,7 @@ export const Route = createFileRoute('/_public/news/$slug')({
 
 function RouteComponent() {
   const { slug } = Route.useParams();
-  const { data } = useSuspenseQuery({ ...getNewsBySlugQueryOptions(slug) });
+  const { data } = useSuspenseQuery({ ...orpc.news.getBySlug.queryOptions({ input: { slug } }) });
 
   return (
     <main className="space-y-4 md:space-y-6 lg:space-y-8 pb-16">
@@ -87,8 +87,8 @@ function RouteComponent() {
         <div
           dangerouslySetInnerHTML={{ __html: data.content }}
           className={cn(
-            'container mx-auto p-4 max-w-4xl',
-            'mt-4 prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-x focus:outline-none',
+            'container mx-auto p-4 max-w-4xl mt-8',
+            'prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-x focus:outline-none',
           )}
         />
       )}

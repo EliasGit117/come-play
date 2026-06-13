@@ -1,3 +1,4 @@
+import { IconSend } from '@tabler/icons-react';
 import React, { ComponentProps, FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -7,15 +8,18 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Form } from '@/components/ui/form';
 import { LoadingButton } from '@/components/ui/loading-button';
-import { SendIcon } from 'lucide-react';
+
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
+import { m } from '@/paraglide/messages';
+import { orpc } from '@/lib/orpc';
+import { useMutation } from '@tanstack/react-query';
 
 const contactSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  email: z.string().email('Invalid email address'),
-  phone: z.string().min(1, 'Phone is required'),
-  message: z.string().min(1, 'Message is required')
+  firstName: z.string().min(1),
+  lastName: z.string().min(1),
+  email: z.string().email(),
+  phone: z.string().min(1),
+  message: z.string().min(1)
 });
 
 type TContactForm = z.infer<typeof contactSchema>;
@@ -24,8 +28,16 @@ interface IProps extends ComponentProps<'form'> {
 }
 
 const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
+  const localizedSchema = z.object({
+    firstName: z.string().min(1, m['pages.public.home.contact.validation.firstNameRequired']()),
+    lastName: z.string().min(1, m['pages.public.home.contact.validation.lastNameRequired']()),
+    email: z.string().email(m['pages.public.home.contact.validation.emailInvalid']()),
+    phone: z.string().min(1, m['pages.public.home.contact.validation.phoneRequired']()),
+    message: z.string().min(1, m['pages.public.home.contact.validation.messageRequired']())
+  });
+
   const form = useForm<TContactForm>({
-    resolver: zodResolver(contactSchema),
+    resolver: zodResolver(localizedSchema),
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -35,14 +47,17 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
     }
   });
 
+  const { mutate, isPending } = useMutation({
+    ...orpc.customerRequests.create.mutationOptions(),
+    onError: (e) => toast.error(e.name, { description: e.message }),
+    onSuccess: () => {
+      form.reset();
+      toast.success(m['pages.public.home.contact.success']());
+    }
+  });
+
   function onSubmit(data: TContactForm) {
-    toast('You submitted the following values', {
-      description: (
-        <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      )
-    });
+    mutate(data);
   }
 
   return (
@@ -54,7 +69,7 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="first-name-input">First name</FieldLabel>
+                <FieldLabel htmlFor="first-name-input">{m['pages.public.home.contact.firstName']()}</FieldLabel>
                 <Input
                   {...field}
                   id="first-name-input"
@@ -71,7 +86,7 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="last-name-input">Last name</FieldLabel>
+                <FieldLabel htmlFor="last-name-input">{m['pages.public.home.contact.lastName']()}</FieldLabel>
                 <Input
                   {...field}
                   id="last-name-input"
@@ -88,7 +103,7 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="email-input">Email</FieldLabel>
+                <FieldLabel htmlFor="email-input">{m['pages.public.home.contact.email']()}</FieldLabel>
                 <Input
                   {...field}
                   id="email-input"
@@ -101,11 +116,11 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
           />
 
           <Controller
-            name="email"
+            name="phone"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="phone-input">Email</FieldLabel>
+                <FieldLabel htmlFor="phone-input">{m['pages.public.home.contact.phone']()}</FieldLabel>
                 <Input
                   {...field}
                   id="phone-input"
@@ -122,12 +137,12 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field className="col-span-full" data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="message-text-area">Message</FieldLabel>
+                <FieldLabel htmlFor="message-text-area">{m['pages.public.home.contact.message']()}</FieldLabel>
                 <Textarea
                   {...field}
                   id="message-text-area"
                   aria-invalid={fieldState.invalid}
-                  placeholder="Here you can write a message for us"
+                  placeholder={m['pages.public.home.contact.messagePlaceholder']()}
                   className='min-h-40'
                   autoComplete="off"
                 />
@@ -137,9 +152,9 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
           />
 
           <Field orientation='horizontal' className='col-span-full'>
-            <LoadingButton className="w-full md:w-fit md:ml-auto" loading={false} disabled={false}>
-              <SendIcon/>
-              <span>Submit</span>
+            <LoadingButton type="submit" className="w-full md:w-fit md:ml-auto" loading={isPending} disabled={isPending}>
+              <IconSend/>
+              <span>{m['pages.public.home.contact.submit']()}</span>
             </LoadingButton>
           </Field>
         </FieldGroup>

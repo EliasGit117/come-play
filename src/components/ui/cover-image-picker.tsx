@@ -1,7 +1,8 @@
+import { IconCloudUpload, IconUpload, IconX } from '@tabler/icons-react';
 'use client';
 import { useFileUpload, FileUploadOptions, formatBytes } from '@/hooks/use-file-upload';
 import { Button } from '@/components/ui/button';
-import { CloudUpload, Upload, XIcon } from 'lucide-react';
+
 import { cn } from '@/lib/utils';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
 import { FC, ReactNode, useEffect } from 'react';
@@ -144,7 +145,7 @@ const CoverImagePicker: FC<INewsImageUploadProps> = (props) => {
                     !disabled && 'group-hover:pointer-events-auto group-focus-within:pointer-events-auto group-focus:pointer-events-auto'
                   )}
                 >
-                  <Upload/>
+                  <IconUpload/>
                   <span>Replace</span>
                 </Button>
               </div>
@@ -163,7 +164,7 @@ const CoverImagePicker: FC<INewsImageUploadProps> = (props) => {
                     !disabled && 'group-hover:pointer-events-auto group-focus-within:pointer-events-auto group-focus:pointer-events-auto'
                   )}
                 >
-                  <XIcon/>
+                  <IconX/>
                   <span>Remove</span>
                 </Button>
               </div>
@@ -176,11 +177,11 @@ const CoverImagePicker: FC<INewsImageUploadProps> = (props) => {
           className="flex flex-col gap-4 items-center justify-center w-full h-full cursor-pointer  p-8 text-center"
         >
           <div className="rounded-full bg-primary/10 p-2">
-            <CloudUpload className="size-5 text-primary"/>
+            <IconCloudUpload className="size-5 text-primary"/>
           </div>
 
           <div className="space-y-1">
-            <h3 className="text-base font-semibold">Upload Image</h3>
+            <h3 className="text-base font-semibold">IconUpload Image</h3>
             <p className="text-xs text-muted-foreground">Drag and drop an image here, or click to browse. Max
               size: {formatBytes(maxSize)}</p>
           </div>

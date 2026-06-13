@@ -1,18 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { zodValidator } from '@tanstack/zod-adapter';
-import {
-  getNewsPaginatedForAdminQueryOptions,
-  getNewsPaginatedForAdminSchema
-} from '@/features/news/server-functions/admin/get-news-paginated-for-admin';
+import { getNewsPaginatedForAdminSchema } from '@/features/news/schemas/search-news';
+import { orpc } from '@/lib/orpc';
 import { NewsTable } from './-components/news-table';
+import { awaitIfServer } from '@/lib/await-if-server';
 
 
 export const Route = createFileRoute('/admin/news/')({
   component: Component,
-  validateSearch: zodValidator(getNewsPaginatedForAdminSchema),
+  validateSearch: getNewsPaginatedForAdminSchema,
   loaderDeps: (deps) => (deps),
   loader: async ({ context, deps: { search } }) => {
-    return context.queryClient.prefetchQuery(getNewsPaginatedForAdminQueryOptions(search));
+    await awaitIfServer(context.queryClient.prefetchQuery(orpc.admin.news.search.queryOptions({ input: search })));
   },
   head: () => ({ meta: [{ title: 'News' }] })
 });

@@ -1,3 +1,4 @@
+import { IconChevronDown, IconEye, IconEyeOff } from '@tabler/icons-react';
 import { FormControl } from '@/components/ui/form';
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -7,7 +8,7 @@ import { RichEditor } from '@/components/editor';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { NewsStatus } from '@prisma/client';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
-import { ChevronDownIcon, EyeIcon, EyeOffIcon } from 'lucide-react';
+
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 
 
@@ -61,21 +62,18 @@ export const EditNewsForm: FC<IEditNewsFormProps> = ({ className, disabled }) =>
               <FieldLabel htmlFor="status-select">Status</FieldLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger className="w-full justify-start" asChild>
-                    <button type="button">
-                      {field.value === NewsStatus.hidden ? <EyeOffIcon/> : <EyeIcon/>}
-                      <span className="capitalize">{field.value}</span>
-                      <ChevronDownIcon className="ml-auto"/>
-                    </button>
+                  <SelectTrigger id="status-select" className="w-full justify-start">
+                    {field.value === NewsStatus.hidden ? <IconEyeOff/> : <IconEye/>}
+                    <span className="capitalize">{field.value}</span>
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
                   <SelectItem value={NewsStatus.published}>
-                    <EyeIcon/>
+                    <IconEye/>
                     <span>Published</span>
                   </SelectItem>
                   <SelectItem value={NewsStatus.hidden}>
-                    <EyeOffIcon/>
+                    <IconEyeOff/>
                     <span>Hidden</span>
                   </SelectItem>
                 </SelectContent>

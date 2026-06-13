@@ -1,0 +1,110 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "example_message": "Salut, {username}!",
+  "common": {
+    "home": "Acasă",
+    "unauthorized": "Neautorizat",
+    "loading": "Încărcare",
+    "forbidden": "Interzis",
+    "error": "Eroare",
+    "success": "Succes",
+    "submit": "Trimite",
+    "cancel": "Anulare"
+  },
+  "layout": {
+    "footer": {
+      "headquarters_label": "Sediu",
+      "email_label": "Email",
+      "phone_label": "Telefon",
+      "social": {
+        "linkedin": "Link LinkedIn",
+        "youtube": "Link Youtube",
+        "facebook": "Link Facebook",
+        "twitter": "Link Twitter"
+      }
+    }
+  },
+  "pages": {
+    "public": {
+      "calculator": {
+        "title": "Calculator"
+      },
+      "home": {
+        "products": {
+          "title": "PRODUSE",
+          "subtitle": "Descoperă gama noastră de produse",
+          "indoor": "Ecran LED de interior",
+          "outdoor": "Ecran LED de exterior",
+          "rental": "Ecran LED pentru închiriere",
+          "transparent": "Ecran LED transparent",
+          "soft": "Ecran LED flexibil",
+          "floor": "Ecran LED de podea"
+        },
+        "solutions": {
+          "title": "SOLUȚII",
+          "subtitle": "Peste 1,5 milioane de cazuri de succes la nivel global cu ecrane LED",
+          "conferenceRoom": "Sală de conferințe",
+          "stadium": "Stadion de curse",
+          "advertising": "Publicitate",
+          "transportation": {
+            "title": "Transport",
+            "text": "Nodurile de transport au provocarea de a comunica non-stop cu călătorii lor. itc oferă ecrane LED avansate pentru a transmite la timp informații de orientare a traficului, asigurând o călătorie plăcută și lină."
+          },
+          "stageEvents": {
+            "title": "Scenă și evenimente",
+            "text": "Bazate pe tehnologii de ultimă generație și pe experiența vastă cu clienți din întreaga lume, produsele itc îndeplinesc diverse cerințe pentru un spectacol sau eveniment de amploare. Ne propunem să creăm o experiență memorabilă și captivantă pentru public cu ecranul LED itc."
+          },
+          "studio": {
+            "title": "Studio",
+            "text": "În ceea ce privește soluția pentru studio, produsele noastre premium dau viață poveștilor tale de difuzare, oferind publicului o performanță vizuală vie și dinamică."
+          },
+          "scenicPublic": {
+            "title": "Spații publice",
+            "text": "Ecrane LED dinamice pentru spații publice: ecrane cu luminozitate ridicată, rezistente la intemperii, care oferă imagini vibrante și informații în timp real în centrele turistice."
+          },
+          "controlRoom": {
+            "title": "Cameră de control",
+            "text": "În ceea ce privește soluția pentru camera de control, tehnologia ecranelor LED permite utilizatorilor să interacționeze cu diverse surse de informații și să proceseze simultan volume mari de date în mod eficient, ajutând la monitorizarea eficientă a mai multor fluxuri de informații într-o cameră de control."
+          }
+        },
+        "contact": {
+          "title": "Ai o întrebare?",
+          "paragraph1": "Suntem aici să te ajutăm! Completează formularul sau contactează-ne prin email sau telefon. Echipa noastră de relații cu clienții este disponibilă să te ajute să ai cea mai bună experiență, fie că ai o problemă legată de comanda ta, fie că ești în căutarea unor sfaturi utile.",
+          "paragraph2": "Fiecare primește un răspuns personalizat, așa că te rugăm să acorzi 24 de ore în timpul programului de lucru pentru un răspuns. Programul nostru de lucru este de luni până vineri, între orele 9:00 și 17:00.",
+          "chat": "Discută cu noi",
+          "firstName": "Prenume",
+          "lastName": "Nume",
+          "email": "Email",
+          "phone": "Telefon",
+          "message": "Mesaj",
+          "messagePlaceholder": "Aici poți scrie un mesaj pentru noi",
+          "submit": "Trimite",
+          "success": "Mesajul a fost trimis cu succes!",
+          "validation": {
+            "firstNameRequired": "Prenumele este obligatoriu",
+            "lastNameRequired": "Numele este obligatoriu",
+            "emailInvalid": "Adresă de email invalidă",
+            "phoneRequired": "Telefonul este obligatoriu",
+            "messageRequired": "Mesajul este obligatoriu"
+          }
+        },
+        "news": {
+          "title": "Ultimele știri",
+          "subtitle": "Noutăți proaspete, direct la tine",
+          "seeAll": "Vezi toate"
+        },
+        "banner": {
+          "showDetails": "Vezi detalii",
+          "prevSlide": "Slide-ul anterior",
+          "nextSlide": "Slide-ul următor",
+          "goToSlide": "La slide-ul {index}"
+        }
+      }
+    },
+    "admin": {
+      "dashboard": {
+        "title": "Dashboard"
+      }
+    }
+  }
+}

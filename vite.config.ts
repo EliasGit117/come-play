@@ -4,8 +4,11 @@ import tsConfigPaths from 'vite-tsconfig-paths';
 import tailwindcss from '@tailwindcss/vite';
 import svgr from 'vite-plugin-svgr';
 import { fileURLToPath } from 'node:url';
-import viteReact from '@vitejs/plugin-react';
+import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react';
+import babel from '@rolldown/plugin-babel';
 import { nitroV2Plugin } from '@tanstack/nitro-v2-vite-plugin'
+import { paraglideVitePlugin } from '@inlang/paraglide-js'
+
 
 const prismaNodeModulesPath = `${getModulePath('@prisma/client')}/node_modules`;
 
@@ -16,9 +19,16 @@ export default defineConfig({
   plugins: [
     tsConfigPaths({ projects: ['./tsconfig.json'] }),
     tanstackStart(),
-    viteReact({ babel: { plugins: [['babel-plugin-react-compiler', { target: '19' }]] } }),
+    viteReact(),
+    babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
     svgr(),
+    paraglideVitePlugin({
+      project: './project.inlang',
+      outdir: './src/paraglide',
+      strategy: ['cookie', 'preferredLanguage', 'url', 'baseLocale'],
+      cookieName: 'lang',
+    }),
     nitroV2Plugin()
   ],
   resolve: {

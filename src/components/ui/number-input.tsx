@@ -1,6 +1,7 @@
+import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 'use client';
 
-import { ChevronDown, ChevronUp } from 'lucide-react';
+
 import { forwardRef, useEffect, useState } from 'react';
 import { NumericFormat, NumericFormatProps } from 'react-number-format';
 import { Button } from '@/components/ui/button';
@@ -120,7 +121,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             }}
             disabled={value === max}
           >
-            <ChevronUp className="text-muted-foreground"/>
+            <IconChevronUp className="text-muted-foreground"/>
           </Button>
           <Button
             aria-label="Decrease value"
@@ -135,7 +136,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             }}
             disabled={value === min}
           >
-            <ChevronDown className="text-muted-foreground"/>
+            <IconChevronDown className="text-muted-foreground"/>
           </Button>
         </div>
       </div>

@@ -1,12 +1,12 @@
+import { IconArrowBackUp, IconDeviceDesktop, IconDeviceFloppy, IconDeviceMobile, IconDeviceTablet, TablerIcon } from '@tabler/icons-react';
 import { createFileRoute } from '@tanstack/react-router';
-import { getBannerByIdForAdminQueryOptions } from '@/features/banners/server-functions/admin/get-banner-by-id-for-admin';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { LoadingButton } from '@/components/ui/loading-button';
-import { LucideIcon, MonitorIcon, SaveIcon, SmartphoneIcon, TabletIcon, UndoIcon } from 'lucide-react';
-import { useEditBannerMutation } from '@/features/banners/server-functions/admin/edit-banner';
+
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -27,7 +27,7 @@ export const Route = createFileRoute('/admin/banners/$id/edit')({
   component: RouteComponent,
   staticData: { breadcrumbs: { title: 'Edit banner' } },
   loader: async ({ params: { id }, context }) => {
-    const data = await context.queryClient.ensureQueryData(getBannerByIdForAdminQueryOptions(id));
+    const data = await context.queryClient.ensureQueryData(orpc.admin.banners.getById.queryOptions({ input: { id: Number(id) } }));
     return {
       banner: data,
       breadcrumbs: { title: `Edit «${data.titleRo}»` }
@@ -40,7 +40,7 @@ export const Route = createFileRoute('/admin/banners/$id/edit')({
 interface IBannerUploaderItem {
   type: 'desktop' | 'tablet' | 'mobile';
   label: string;
-  icon: LucideIcon;
+  icon: TablerIcon;
   className: string;
   image?: IImagePickerValue;
 }
@@ -48,7 +48,8 @@ interface IBannerUploaderItem {
 
 function RouteComponent() {
   const { id } = Route.useParams();
-  const { data: banner, isPending: isFetching } = useSuspenseQuery(getBannerByIdForAdminQueryOptions(id));
+  const queryClient = useQueryClient();
+  const { data: banner, isPending: isFetching } = useSuspenseQuery(orpc.admin.banners.getById.queryOptions({ input: { id: Number(id) } }));
   const [pendingImages, setPendingImages] = useState<Record<BannerImageType, boolean>>({
     desktop: false,
     tablet: false,
@@ -60,9 +61,14 @@ function RouteComponent() {
     defaultValues: { ...banner, path: banner.path ?? '' }
   });
 
-  const { mutate, isPending: isUpdating } = useEditBannerMutation({
+  const { mutate, isPending: isUpdating } = useMutation({
+    ...orpc.admin.banners.update.mutationOptions(),
     onError: (error) => toast.error(error.name, { description: error.message }),
-    onSuccess: data => form.reset({ ...data, path: data.path ?? '' })
+    onSuccess: data => {
+      void queryClient.invalidateQueries({ queryKey: orpc.admin.banners.key() });
+      void queryClient.invalidateQueries({ queryKey: orpc.banners.key() });
+      form.reset({ ...data, path: data.path ?? '' });
+    }
   });
 
   const handleImagePending = (imageType: BannerImageType) => (value: boolean) => {
@@ -84,9 +90,9 @@ function RouteComponent() {
     : undefined;
 
   const bannerUploaders: IBannerUploaderItem[] = [
-    { type: 'desktop', label: 'Desktop', icon: MonitorIcon, className: 'max-w-[30rem]', image: desktopImage },
-    { type: 'tablet', label: 'Tablet', icon: TabletIcon, className: 'max-w-[20rem]', image: tabletImage },
-    { type: 'mobile', label: 'Phone', icon: SmartphoneIcon, className: 'max-w-[15rem]', image: mobileImage }
+    { type: 'desktop', label: 'Desktop', icon: IconDeviceDesktop, className: 'max-w-[30rem]', image: desktopImage },
+    { type: 'tablet', label: 'Tablet', icon: IconDeviceTablet, className: 'max-w-[20rem]', image: tabletImage },
+    { type: 'mobile', label: 'Phone', icon: IconDeviceMobile, className: 'max-w-[15rem]', image: mobileImage }
   ];
 
   return (
@@ -170,14 +176,14 @@ const BottomButtons: FC<IBottomButtons> = (props) => {
             onClick={onResetClick}
             className="border"
           >
-            <UndoIcon/>
+            <IconArrowBackUp/>
             <span className="sr-only sm:not-sr-only">Reset</span>
           </Button>
         </div>
 
         <div className="bg-background shadow-md rounded-md">
           <LoadingButton hideTextOnMobile onClick={onSubmitClick} disabled={disabled} loading={isLoading} type="submit">
-            <SaveIcon/>
+            <IconDeviceFloppy/>
             <span className="sr-only sm:not-sr-only">Save</span>
           </LoadingButton>
         </div>

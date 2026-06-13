@@ -1,36 +1,32 @@
+import { IconSortAscending, IconSortDescending, IconX } from '@tabler/icons-react';
 import { createFileRoute } from '@tanstack/react-router';
-import { zodValidator } from '@tanstack/zod-adapter';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
+
 import {
-  ArrowDownWideNarrowIcon,
-  ArrowUpWideNarrowIcon, XIcon
-} from 'lucide-react';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger
-} from '@/components/ui/select';
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 import { BasicPagination } from '@/components/ui/pagination';
-import {
-  getNewsPaginatedQueryOptions,
-  getNewsPaginatedSchema
-} from '@/features/news/server-functions/public/get-news-paginated';
+import { getNewsPaginatedSchema } from '@/features/news/schemas/search-news';
+import { orpc } from '@/lib/orpc';
 import { ComponentProps, FC, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useDebouncedCallback } from 'use-debounce';
 import NewsPreviewLink from '@/components/news-preview-link';
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group';
+import { Button } from "@/components/ui/button";
 
 
 export const Route = createFileRoute('/_public/news/')({
   component: RouteComponent,
-  validateSearch: zodValidator(getNewsPaginatedSchema),
+  validateSearch: getNewsPaginatedSchema,
   loaderDeps: ({ search }) => (search),
   loader: async ({ context: { queryClient }, deps }) => {
-    const res = await queryClient.prefetchQuery(getNewsPaginatedQueryOptions(deps));
+    const res = await queryClient.prefetchQuery(orpc.news.search.queryOptions({ input: deps }));
     return { news: res };
   }
 });
@@ -38,7 +34,7 @@ export const Route = createFileRoute('/_public/news/')({
 function RouteComponent() {
   const searchParams = Route.useLoaderDeps();
   const { data } = useQuery({
-    ...getNewsPaginatedQueryOptions(searchParams),
+    ...orpc.news.search.queryOptions({ input: searchParams }),
     placeholderData: keepPreviousData,
   });
 
@@ -113,34 +109,34 @@ const SearchPanel: FC<ComponentProps<'div'>> = ({ className, ...props }) => {
         {_title && (
           <InputGroupAddon align="inline-end">
             <InputGroupButton onClick={clearText} size="icon-xs">
-              <XIcon/>
+              <IconX/>
             </InputGroupButton>
           </InputGroupAddon>
         )}
       </InputGroup>
 
-      <Select value={dir} onValueChange={onDirSelectValueChange}>
-        <SelectTrigger className="justify-start" asChild>
-          <button type="button">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button type="button" variant="outline">
+            {dir === 'asc' ? <IconSortAscending/> : <IconSortDescending/>}
             <span className="capitalize">{dir ?? 'desc'}</span>
-            {dir === 'asc' ? <ArrowUpWideNarrowIcon/> : <ArrowDownWideNarrowIcon/>}
-          </button>
-        </SelectTrigger>
+          </Button>
+        </DropdownMenuTrigger>
 
-        <SelectContent align="end">
-          <SelectGroup>
-            <SelectLabel>Order direction</SelectLabel>
-            <SelectItem value="asc">
-              <ArrowUpWideNarrowIcon/>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Order direction</DropdownMenuLabel>
+          <DropdownMenuRadioGroup value={dir ?? 'desc'} onValueChange={onDirSelectValueChange}>
+            <DropdownMenuRadioItem value="asc">
+              <IconSortAscending/>
               <span>Asc</span>
-            </SelectItem>
-            <SelectItem value="desc">
-              <ArrowDownWideNarrowIcon/>
+            </DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="desc">
+              <IconSortDescending/>
               <span>Desc</span>
-            </SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+            </DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 };

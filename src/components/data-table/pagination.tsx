@@ -12,18 +12,18 @@ import {
   PaginationPrevious
 } from '@/components/ui/pagination';
 import { useNavigate } from '@tanstack/react-router';
-import { ComponentProps } from 'react';
+import { type ComponentProps } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { ChevronsUpDownIcon } from 'lucide-react';
+import { IconSelector } from '@tabler/icons-react';
 
 
-interface IDataTablePaginationProps<TData> extends ComponentProps<'div'> {
+
+interface IDataTablePaginationProps<_> extends ComponentProps<'div'> {
   pageSizeOptions?: Array<number>;
   resetScroll?: boolean;
   buttonsSize?: VariantProps<typeof buttonVariants>['size'];
@@ -53,7 +53,7 @@ export function DataTablePagination<TData>(props: IDataTablePaginationProps<TDat
       <div className="flex-1"/>
 
       <p className="text-xs sm:text-sm">
-        Page {page} of {totalPages}
+        Page {page} of {totalPages > 0 ? totalPages : 1}
       </p>
 
       <Pagination className="w-fit mx-0">
@@ -136,17 +136,21 @@ function PageLimitSelect(props: IPageLimitSelectProps) {
 
   return (
     <div className={cn('flex flex-col-reverse sm:flex-row gap-2 items-center', className)}>
-      {!hideText && <p className="text-xs sm:text-sm">Rows per page</p>}
+      {!hideText && <p className="text-xs sm:text-sm">
+        Rows per page
+      </p>}
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" className={cn('min-w-20', buttonSize === 'default' ? 'max-h-9' : 'max-h-8')}>
             <span>{value.toString()}</span>
-            <ChevronsUpDownIcon className="ml-auto"/>
+            <IconSelector className="ml-auto"/>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start">
-          <DropdownMenuLabel>Select rows per page</DropdownMenuLabel>
+        <DropdownMenuContent
+          align="start"
+          className="min-w-[--radix-popper-anchor-width]"
+        >
           {variants.map(page => (
             <DropdownMenuItem key={page} onSelect={() => _onValueChange(page)}>
               {page}

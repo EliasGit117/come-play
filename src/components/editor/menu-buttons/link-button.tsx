@@ -1,9 +1,10 @@
+import { IconLink, IconPencil, IconPlus, IconTrash } from '@tabler/icons-react';
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useCurrentEditor } from '@tiptap/react';
 import { Button } from '@/components/ui/button';
-import { LinkIcon, Edit2Icon, TrashIcon, PlusIcon } from 'lucide-react';
+
 import {
   Tooltip,
   TooltipContent,
@@ -79,7 +80,7 @@ const LinkButton = () => {
               disabled={!canToggle}
               aria-label={isActive ? 'Edit Link' : 'Add Link'}
             >
-              <LinkIcon className="w-4 h-4"/>
+              <IconLink className="w-4 h-4"/>
             </Button>
           </TooltipTrigger>
         </PopoverTrigger>
@@ -120,7 +121,7 @@ const LinkButton = () => {
                 aria-label="Remove link"
                 title="Remove link"
               >
-                <TrashIcon className="w-4 h-4"/>
+                <IconTrash className="w-4 h-4"/>
               </Button>
             )}
 
@@ -134,11 +135,11 @@ const LinkButton = () => {
               {
                 !isActive ?
                   <>
-                    <PlusIcon/>
+                    <IconPlus/>
                     <span>Add</span>
                   </> :
                   <>
-                    <Edit2Icon/>
+                    <IconPencil/>
                     <span>Update</span>
                   </>
               }

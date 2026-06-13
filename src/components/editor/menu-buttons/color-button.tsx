@@ -1,3 +1,4 @@
+import { IconPalette } from '@tabler/icons-react';
 import React from 'react';
 import { useCurrentEditor } from '@tiptap/react';
 import { Button } from '@/components/ui/button';
@@ -7,7 +8,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem
 } from '@/components/ui/dropdown-menu';
-import { PaletteIcon } from 'lucide-react';
+
 
 const colors = ['#000000', '#e11d48', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#8b5cf6', '#ec4899'];
 
@@ -25,7 +26,7 @@ const ColorButton = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon-sm">
-          <PaletteIcon />
+          <IconPalette />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="grid grid-cols-4 gap-2 p-2 w-auto">

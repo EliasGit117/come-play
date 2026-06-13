@@ -1,9 +1,10 @@
+import { IconPhotoOff } from '@tabler/icons-react';
 import { ComponentProps, FC } from 'react';
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import { Link } from '@tanstack/react-router';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
-import { ImageOffIcon } from 'lucide-react';
+
 import { INewsBriefDto } from '@/features/news/dtos/news-brief-dto';
 
 
@@ -33,7 +34,7 @@ const NewsPreviewLink: FC<INewsPreviewLinkProps> = ({ news, className, ...props 
           </figure>
         ) : (
           <figure className="rounded-lg aspect-video h-full w-full bg-muted flex items-center justify-center">
-            <ImageOffIcon className="size-6 text-muted-foreground/25"/>
+            <IconPhotoOff className="size-6 text-muted-foreground/25"/>
           </figure>
         )}
 
