@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as PublicRouteRouteImport } from './routes/_public/route'
+import { Route as AuthIndexRouteImport } from './routes/auth/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as AdminNewsRouteRouteImport } from './routes/admin/news/route'
@@ -37,6 +38,11 @@ const AdminRouteRoute = AdminRouteRouteImport.update({
 } as any)
 const PublicRouteRoute = PublicRouteRouteImport.update({
   id: '/_public',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthIndexRoute = AuthIndexRouteImport.update({
+  id: '/auth/',
+  path: '/auth/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -141,6 +147,7 @@ export interface FileRoutesByFullPath {
   '/admin/customer-requests': typeof AdminCustomerRequestsRouteRouteWithChildren
   '/admin/news': typeof AdminNewsRouteRouteWithChildren
   '/admin/': typeof AdminIndexRoute
+  '/auth/': typeof AuthIndexRoute
   '/news/$slug': typeof PublicNewsSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
@@ -158,6 +165,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
   '/admin': typeof AdminIndexRoute
+  '/auth': typeof AuthIndexRoute
   '/news/$slug': typeof PublicNewsSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
@@ -181,6 +189,7 @@ export interface FileRoutesById {
   '/admin/news': typeof AdminNewsRouteRouteWithChildren
   '/_public/': typeof PublicIndexRoute
   '/admin/': typeof AdminIndexRoute
+  '/auth/': typeof AuthIndexRoute
   '/_public/news/$slug': typeof PublicNewsSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
@@ -204,6 +213,7 @@ export interface FileRouteTypes {
     | '/admin/customer-requests'
     | '/admin/news'
     | '/admin/'
+    | '/auth/'
     | '/news/$slug'
     | '/api/auth/$'
     | '/api/rpc/$'
@@ -221,6 +231,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/admin'
+    | '/auth'
     | '/news/$slug'
     | '/api/auth/$'
     | '/api/rpc/$'
@@ -243,6 +254,7 @@ export interface FileRouteTypes {
     | '/admin/news'
     | '/_public/'
     | '/admin/'
+    | '/auth/'
     | '/_public/news/$slug'
     | '/api/auth/$'
     | '/api/rpc/$'
@@ -261,6 +273,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   PublicRouteRoute: typeof PublicRouteRouteWithChildren
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  AuthIndexRoute: typeof AuthIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiRpcSplatRoute: typeof ApiRpcSplatRoute
   AuthSignInIndexRoute: typeof AuthSignInIndexRoute
@@ -280,6 +293,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof PublicRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/': {
+      id: '/auth/'
+      path: '/auth'
+      fullPath: '/auth/'
+      preLoaderRoute: typeof AuthIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -496,6 +516,7 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   PublicRouteRoute: PublicRouteRouteWithChildren,
   AdminRouteRoute: AdminRouteRouteWithChildren,
+  AuthIndexRoute: AuthIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiRpcSplatRoute: ApiRpcSplatRoute,
   AuthSignInIndexRoute: AuthSignInIndexRoute,

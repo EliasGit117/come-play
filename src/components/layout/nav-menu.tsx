@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router';
+import { Link, useRouteContext } from '@tanstack/react-router';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,6 +11,8 @@ import {
 import { cn } from '@/lib/utils';
 import { ComponentProps, FC } from 'react';
 import { getHeaderLinks, ILinkItem, MenuItemType } from '@/components/layout/data';
+import { useAuth } from '@/hooks/use-auth';
+
 
 interface IProps extends ComponentProps<typeof NavigationMenu> {
   transparent?: boolean;
@@ -24,7 +26,8 @@ const triggerAltClassName = cn(
 
 
 const HeaderNavMenu: FC<IProps> = ({ transparent, ...props }) => {
-  const headerLinks = getHeaderLinks();
+  const { user } = useAuth();
+  const headerLinks = getHeaderLinks(user);
   const triggerClassName = cn('uppercase font-medium bg-transparent duration-0 [&_svg]:duration-0 [&_svg]:transition-none', transparent && triggerAltClassName);
 
   return (
