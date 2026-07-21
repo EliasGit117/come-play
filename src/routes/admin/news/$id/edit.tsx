@@ -145,7 +145,7 @@ const BottomButtons: FC<IBottomButtons> = (props) => {
         </div>
 
         <div className="bg-background shadow-md rounded-md">
-          <LoadingButton type="submit" hideTextOnMobile onClick={onSubmitClick} disabled={disabled} loading={isLoading}>
+          <LoadingButton loadingText={m['common.loading']()} type="submit" hideTextOnMobile onClick={onSubmitClick} disabled={disabled} loading={isLoading}>
             <IconDeviceFloppy/>
             <span className="sr-only sm:not-sr-only">{m['pages.admin.shared.actions.save']()}</span>
           </LoadingButton>

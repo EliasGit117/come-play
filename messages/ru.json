@@ -140,17 +140,22 @@
         "settings": {
           "title": "Настройки панели",
           "description": "Настройте тип панели и размеры",
-          "step_panel_type": "1. Выберите тип панели",
+          "section_panel_type": "Тип панели",
           "panel_type_label": "Тип панели",
           "panel_type_placeholder": "Выберите тип панели",
           "sight_distance_label": "Дистанция обзора (м)",
-          "step_wall": "2. Укажите размеры стены",
-          "wall_width_label": "Ширина стены (см)",
-          "wall_height_label": "Высота стены (см)",
-          "step_dimensions": "3. Укажите размеры",
-          "tiles_horizontal_label": "Модулей по горизонтали",
-          "tiles_vertical_label": "Модулей по вертикали",
-          "submit": "Сформировать результат"
+          "section_wall": "Размеры стены",
+          "wall_width_label": "Ширина (см)",
+          "wall_height_label": "Высота (см)",
+          "section_dimensions": "Размеры",
+          "tiles_horizontal_label": "По горизонтали",
+          "tiles_vertical_label": "По вертикали",
+          "submit": "Отправить заявку"
+        },
+        "request": {
+          "title": "Отправить заявку",
+          "description": "Оставьте контактные данные, и мы свяжемся с вами.",
+          "summary": "Выбранная конфигурация"
         }
       },
       "home": {
