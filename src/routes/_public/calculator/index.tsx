@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
+import { m } from '@/paraglide/messages';
 import { TILE_HEIGHT_MM, TILE_WIDTH_MM } from './-consts/tile';
 
 function useWindowSize() {
@@ -82,7 +83,7 @@ function RouteComponent() {
         <div className="flex gap-4 mx-auto w-fit">
 
           <div className="flex flex-col gap-2">
-            <Label>Vertical count</Label>
+            <Label>{m['pages.public.calculator.vertical_count']()}</Label>
             <div className="flex justify-center">
               <Button
                 size="icon"
@@ -112,7 +113,7 @@ function RouteComponent() {
 
 
           <div className="flex flex-col gap-2">
-            <Label>Horizontal count</Label>
+            <Label>{m['pages.public.calculator.horizontal_count']()}</Label>
             <div className="flex justify-center">
               <Button
                 size="icon"
@@ -153,7 +154,7 @@ function RouteComponent() {
           >
             <UnLazyImageSSR
               src={imgSrc}
-              alt="Panel preview"
+              alt={m['pages.public.calculator.preview_alt']()}
               thumbhash='necRJYRod3h/h3d0eFd3d2mA2gTo'
               className="object-cover h-full w-full"
             />
@@ -178,12 +179,12 @@ function RouteComponent() {
 
             {/* Total height label (on left, centered vertically) */}
             <div className="absolute -left-14 top-1/2 -translate-y-1/2  text-sm -rotate-90">
-              {height / 10} cm
+              {m['pages.public.calculator.size_cm']({ value: height / 10 })}
             </div>
 
             {/* Total width label (at bottom, centered horizontally) */}
             <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 -white text-sm">
-              {width / 10} cm
+              {m['pages.public.calculator.size_cm']({ value: width / 10 })}
             </div>
           </div>
         </div>

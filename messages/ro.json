@@ -128,7 +128,30 @@
   "pages": {
     "public": {
       "calculator": {
-        "title": "Calculator"
+        "title": "Calculator",
+        "vertical_count": "Număr vertical",
+        "horizontal_count": "Număr orizontal",
+        "preview_alt": "Previzualizare panou",
+        "size_cm": "{value} cm",
+        "panel_types": {
+          "indoor": "Ecran LED interior",
+          "outdoor": "Ecran LED exterior"
+        },
+        "settings": {
+          "title": "Setări panou",
+          "description": "Configurează tipul panoului și dimensiunile",
+          "step_panel_type": "1. Alege tipul panoului",
+          "panel_type_label": "Tip panou",
+          "panel_type_placeholder": "Alege tipul panoului",
+          "sight_distance_label": "Distanță de vizionare (m)",
+          "step_wall": "2. Setează dimensiunile peretelui",
+          "wall_width_label": "Lățime perete (cm)",
+          "wall_height_label": "Înălțime perete (cm)",
+          "step_dimensions": "3. Setează dimensiunile",
+          "tiles_horizontal_label": "Module pe orizontală",
+          "tiles_vertical_label": "Module pe verticală",
+          "submit": "Generează rezultate"
+        }
       },
       "home": {
         "products": {
