@@ -38,7 +38,7 @@ function StatCard(props: { title: string; value?: number; chartData?: { label: s
           : <div className='text-2xl font-bold'>{value}</div>}
       </CardContent>
       <CardContent>
-        <ClientOnly fallback={<Skeleton className='h-[60px] w-full' />}>
+        <ClientOnly fallback={<Skeleton className='h-15 w-full' />}>
           {chartData && <ChartAreaSparkline data={chartData} />}
         </ClientOnly>
       </CardContent>
@@ -55,7 +55,7 @@ function RouteComponent() {
   const chartDataQuery = useQuery(orpc.admin.dashboard.getChartData.queryOptions({ input: { period }, placeholderData: keepPreviousData }))
 
   return (
-    <main className='container mx-auto px-4'>
+    <main className='container mx-auto p-4'>
       <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
         <StatCard
           title={m['pages.admin.dashboard.stats.news']()}

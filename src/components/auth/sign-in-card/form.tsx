@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group';
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
 import { Checkbox } from '@/components/ui/checkbox';
+import { m } from '@/paraglide/messages';
 
 export const signInSchema = z.object({
   email: z.email(),
@@ -39,7 +40,7 @@ export const SignInForm: FC<IProps> = ({ form, id, onSubmit, disabled, ...props 
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="email-input">Email</FieldLabel>
+                <FieldLabel htmlFor="email-input">{m['pages.auth.signIn.email']()}</FieldLabel>
                 <Input
                   {...field}
                   id="email-input"
@@ -58,7 +59,7 @@ export const SignInForm: FC<IProps> = ({ form, id, onSubmit, disabled, ...props 
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="password-input">Password</FieldLabel>
+                <FieldLabel htmlFor="password-input">{m['pages.auth.signIn.password']()}</FieldLabel>
 
                 <InputGroup>
                   <InputGroupInput
@@ -73,8 +74,8 @@ export const SignInForm: FC<IProps> = ({ form, id, onSubmit, disabled, ...props 
                     <InputGroupButton
                       size="icon-xs"
                       type="button"
-                      aria-label="Show password"
-                      title="Show password"
+                      aria-label={m['pages.auth.signIn.showPassword']()}
+                      title={m['pages.auth.signIn.showPassword']()}
                       onClick={() => setIsPasswordVisible((pv) => !pv)}
                     >
                       {isPasswordVisible ? <IconEye /> : <IconEyeOff />}
@@ -103,7 +104,7 @@ export const SignInForm: FC<IProps> = ({ form, id, onSubmit, disabled, ...props 
                   aria-invalid={fieldState.invalid}
                 />
                 <FieldLabel htmlFor="remember-me-input" className="font-normal">
-                  Remember me
+                  {m['pages.auth.signIn.rememberMe']()}
                 </FieldLabel>
               </Field>
             )}

@@ -14,6 +14,7 @@ import { Route as PublicRouteRouteImport } from './routes/_public/route'
 import { Route as AuthIndexRouteImport } from './routes/auth/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
+import { Route as PublicContactsRouteImport } from './routes/_public/contacts'
 import { Route as AdminNewsRouteRouteImport } from './routes/admin/news/route'
 import { Route as AdminCustomerRequestsRouteRouteImport } from './routes/admin/customer-requests/route'
 import { Route as AdminBannersRouteRouteImport } from './routes/admin/banners/route'
@@ -53,6 +54,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
 const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => PublicRouteRoute,
+} as any)
+const PublicContactsRoute = PublicContactsRouteImport.update({
+  id: '/contacts',
+  path: '/contacts',
   getParentRoute: () => PublicRouteRoute,
 } as any)
 const AdminNewsRouteRoute = AdminNewsRouteRouteImport.update({
@@ -146,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/admin/banners': typeof AdminBannersRouteRouteWithChildren
   '/admin/customer-requests': typeof AdminCustomerRequestsRouteRouteWithChildren
   '/admin/news': typeof AdminNewsRouteRouteWithChildren
+  '/contacts': typeof PublicContactsRoute
   '/admin/': typeof AdminIndexRoute
   '/auth/': typeof AuthIndexRoute
   '/news/$slug': typeof PublicNewsSlugRoute
@@ -163,6 +170,7 @@ export interface FileRoutesByFullPath {
   '/products/$category/': typeof PublicProductsCategoryIndexRoute
 }
 export interface FileRoutesByTo {
+  '/contacts': typeof PublicContactsRoute
   '/': typeof PublicIndexRoute
   '/admin': typeof AdminIndexRoute
   '/auth': typeof AuthIndexRoute
@@ -187,6 +195,7 @@ export interface FileRoutesById {
   '/admin/banners': typeof AdminBannersRouteRouteWithChildren
   '/admin/customer-requests': typeof AdminCustomerRequestsRouteRouteWithChildren
   '/admin/news': typeof AdminNewsRouteRouteWithChildren
+  '/_public/contacts': typeof PublicContactsRoute
   '/_public/': typeof PublicIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/auth/': typeof AuthIndexRoute
@@ -212,6 +221,7 @@ export interface FileRouteTypes {
     | '/admin/banners'
     | '/admin/customer-requests'
     | '/admin/news'
+    | '/contacts'
     | '/admin/'
     | '/auth/'
     | '/news/$slug'
@@ -229,6 +239,7 @@ export interface FileRouteTypes {
     | '/products/$category/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/contacts'
     | '/'
     | '/admin'
     | '/auth'
@@ -252,6 +263,7 @@ export interface FileRouteTypes {
     | '/admin/banners'
     | '/admin/customer-requests'
     | '/admin/news'
+    | '/_public/contacts'
     | '/_public/'
     | '/admin/'
     | '/auth/'
@@ -314,6 +326,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof PublicIndexRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
+    '/_public/contacts': {
+      id: '/_public/contacts'
+      path: '/contacts'
+      fullPath: '/contacts'
+      preLoaderRoute: typeof PublicContactsRouteImport
       parentRoute: typeof PublicRouteRoute
     }
     '/admin/news': {
@@ -432,6 +451,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface PublicRouteRouteChildren {
+  PublicContactsRoute: typeof PublicContactsRoute
   PublicIndexRoute: typeof PublicIndexRoute
   PublicNewsSlugRoute: typeof PublicNewsSlugRoute
   PublicCalculatorIndexRoute: typeof PublicCalculatorIndexRoute
@@ -441,6 +461,7 @@ interface PublicRouteRouteChildren {
 }
 
 const PublicRouteRouteChildren: PublicRouteRouteChildren = {
+  PublicContactsRoute: PublicContactsRoute,
   PublicIndexRoute: PublicIndexRoute,
   PublicNewsSlugRoute: PublicNewsSlugRoute,
   PublicCalculatorIndexRoute: PublicCalculatorIndexRoute,

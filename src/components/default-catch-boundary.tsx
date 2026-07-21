@@ -8,6 +8,7 @@ import type { ErrorComponentProps } from '@tanstack/react-router'
 import { IconAlertTriangle, IconArrowLeft, IconHome, IconRefresh } from '@tabler/icons-react'
 
 import { Button } from '@/components/ui/button'
+import { m } from '@/paraglide/messages'
 import {
   Empty,
   EmptyContent,
@@ -35,9 +36,9 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
         >
           <IconAlertTriangle />
         </EmptyMedia>
-        <EmptyTitle>Something went wrong</EmptyTitle>
+        <EmptyTitle>{m['common.errorBoundary.title']()}</EmptyTitle>
         <EmptyDescription>
-          {error.message || 'An unexpected error occurred. Please try again.'}
+          {error.message || m['common.errorBoundary.description']()}
         </EmptyDescription>
       </EmptyHeader>
 
@@ -45,14 +46,14 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
         <div className="flex flex-wrap items-center justify-center gap-2">
           <Button onClick={() => router.invalidate()}>
             <IconRefresh data-icon="inline-start" />
-            Try again
+            {m['common.errorBoundary.tryAgain']()}
           </Button>
 
           {isRoot ? (
             <Button asChild variant="outline">
               <Link to="/">
                 <IconHome data-icon="inline-start" />
-                Home
+                {m['common.errorBoundary.home']()}
               </Link>
             </Button>
           ) : (
@@ -65,7 +66,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
                 }}
               >
                 <IconArrowLeft data-icon="inline-start" />
-                Go back
+                {m['common.errorBoundary.goBack']()}
               </Link>
             </Button>
           )}

@@ -2,6 +2,8 @@ import { IconDeviceDesktop, IconMoon, IconSun, IconSunMoon } from '@tabler/icons
 import type { TablerIcon } from '@tabler/icons-react';
 import { type ComponentProps, type FC } from 'react';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { m } from '@/paraglide/messages';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,23 +21,23 @@ interface IThemeDropdownProps extends ComponentProps<typeof Button> {
   align?: 'start' | 'center' | 'end';
 }
 
-const themeOptions: { label: string; value: TTheme; icon: TablerIcon; }[] = [
-  { value: 'light', icon: IconSun, label: 'Light' },
-  { value: 'dark', icon: IconMoon, label: 'Dark' },
-  { value: 'system', icon: IconDeviceDesktop, label: 'System' }
+const themeOptions: { label: () => string; value: TTheme; icon: TablerIcon; }[] = [
+  { value: 'light', icon: IconSun, label: m['layout.theme.light'] },
+  { value: 'dark', icon: IconMoon, label: m['layout.theme.dark'] },
+  { value: 'system', icon: IconDeviceDesktop, label: m['layout.theme.system'] }
 ];
 
-export const ThemeDropdown: FC<IThemeDropdownProps> = ({ align, ...props }) => {
+export const ThemeDropdown: FC<IThemeDropdownProps> = ({ align, className, ...props }) => {
   const { theme, setTheme } = useTheme();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" {...props}>
+        <Button variant="outline" size="icon" className={cn('transition-none', className)} {...props}>
           <IconSun className="dark:hidden"/>
           <IconMoon className="hidden dark:block"/>
           <span className="sr-only">
-            Toggle theme dropdown
+            {m['layout.theme.sr_toggle']()}
           </span>
         </Button>
       </DropdownMenuTrigger>
@@ -44,7 +46,7 @@ export const ThemeDropdown: FC<IThemeDropdownProps> = ({ align, ...props }) => {
         <DropdownMenuRadioGroup value={theme}>
           <DropdownMenuLabel className="flex gap-2 items-center">
             <IconSunMoon className="size-4"/>
-            <span>Theme</span>
+            <span>{m['layout.theme.label']()}</span>
           </DropdownMenuLabel>
 
           <DropdownMenuSeparator/>
@@ -52,7 +54,7 @@ export const ThemeDropdown: FC<IThemeDropdownProps> = ({ align, ...props }) => {
           {themeOptions.map(({ icon: Icon, label, value }) =>
             <DropdownMenuRadioItem value={value} onClick={() => setTheme(value)} key={value}>
               <Icon className="text-muted-foreground"/>
-              <span>{label}</span>
+              <span>{label()}</span>
               <div className="min-w-1 flex-1"/>
             </DropdownMenuRadioItem>
           )}

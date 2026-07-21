@@ -1,5 +1,6 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { SignInCard } from '@/components/auth/sign-in-card';
+import { m } from '@/paraglide/messages';
 
 export const Route = createFileRoute('/auth/sign-in/')({
   component: RouteComponent,
@@ -8,7 +9,7 @@ export const Route = createFileRoute('/auth/sign-in/')({
     if (context.session)
       throw redirect({ to: '/admin' });
   },
-  head: () => ({ meta: [{ title: 'Sign in' }] }),
+  head: () => ({ meta: [{ title: m['pages.auth.signIn.title']() }] }),
 });
 
 function RouteComponent() {

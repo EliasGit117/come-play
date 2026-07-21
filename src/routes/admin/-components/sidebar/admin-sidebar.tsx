@@ -32,7 +32,7 @@ export function AdminSidebar({ ...props }: IAdminSidebarProps) {
               <Link to="/" className='flex gap-2'>
                 <LogoIcon className='size-7.5! text-foreground'/>
                 <span className='flex flex-col'>
-                  <LogoText className='h-3.5! w-fit! text-foreground'/>
+                  <LogoText className='h-3.5! w-20! text-foreground'/>
                   <span className='text-xs text-muted-foreground'>
                     {m['pages.admin.badge']()}
                   </span>

@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { orpc } from '@/lib/orpc';
 import { authClient } from '@/lib/auth/better-auth-client';
+import { m } from '@/paraglide/messages';
 
 interface ISignInCard extends ComponentProps<typeof Card> {
   redirectTo?: string;
@@ -36,15 +37,15 @@ export const SignInCard: FC<ISignInCard> = ({ className, redirectTo = '/admin', 
       await navigate({ to: redirectTo });
     },
     onError: (e) => {
-      toast.error('Sign in failed', { description: e.message });
+      toast.error(m['pages.auth.signIn.failed'](), { description: e.message });
     },
   });
 
   return (
     <Card className={cn('w-full max-w-sm', className)} {...props}>
       <CardHeader>
-        <CardTitle>Sign in</CardTitle>
-        <CardDescription>Enter your credentials to access the admin panel.</CardDescription>
+        <CardTitle>{m['pages.auth.signIn.title']()}</CardTitle>
+        <CardDescription>{m['pages.auth.signIn.description']()}</CardDescription>
       </CardHeader>
 
       <CardContent>
@@ -54,7 +55,7 @@ export const SignInCard: FC<ISignInCard> = ({ className, redirectTo = '/admin', 
       <CardFooter className="flex-col gap-4">
         <LoadingButton className="w-full" loading={isPending} form="sign-in-form">
           <IconSend />
-          <span>Submit</span>
+          <span>{m['pages.auth.signIn.submit']()}</span>
         </LoadingButton>
       </CardFooter>
     </Card>

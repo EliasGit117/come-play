@@ -10,8 +10,10 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Button, buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import type { VariantProps } from 'class-variance-authority';
 import { getLocale, isLocale, Locale, setLocale } from '@/paraglide/runtime';
+import { m } from '@/paraglide/messages';
 
 
 
@@ -20,9 +22,9 @@ interface IProps extends ComponentProps<typeof DropdownMenuTrigger> {
   align?: 'start' | 'center' | 'end';
 }
 
-const options: { value: Locale; title: string; }[] = [{ value: 'ro', title: 'Romana' }, { value: 'ru', title: 'Русский' }];
+const options: { value: Locale; title: string; }[] = [{ value: 'ro', title: 'Română' }, { value: 'ru', title: 'Русский' }];
 
-const LocaleDropdown: FC<IProps> = ({ buttonVariant, align, ...props }) => {
+const LocaleDropdown: FC<IProps> = ({ buttonVariant, align, className, ...props }) => {
   const locale = getLocale();
 
   const handleChange = (value: string) => {
@@ -35,7 +37,7 @@ const LocaleDropdown: FC<IProps> = ({ buttonVariant, align, ...props }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant={buttonVariant} size='sm' {...props}>
+        <Button variant={buttonVariant} size='sm' className={cn('transition-none', className)} {...props}>
           <span className='uppercase sm:hidden'>{locale}</span>
 
           <IconLanguage className='hidden sm:block opacity-65'/>
@@ -44,14 +46,14 @@ const LocaleDropdown: FC<IProps> = ({ buttonVariant, align, ...props }) => {
           </span>
           <IconSelector className='hidden sm:block opacity-65'/>
 
-          <span className="sr-only">Language dropdown</span>
+          <span className="sr-only">{m['layout.locale.sr_toggle']()}</span>
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="min-w-36" align={align}>
         <DropdownMenuLabel className="flex items-center gap-2">
           <IconLanguage className="size-4"/>
-          <span>Language</span>
+          <span>{m['layout.locale.label']()}</span>
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator/>

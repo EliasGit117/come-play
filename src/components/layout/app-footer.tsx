@@ -24,37 +24,42 @@ const AppFooter: FC<IProps> = ({ className, ...props }) => {
       <div className="container mx-auto p-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-4 order-last md:order-first">
           <p className="text-xs md:text-sm text-center md:text-start">
-            <b>{m['layout.footer.headquarters_label']()}:</b> Building NO. A13-1, Yiku Industrial Park, The Hills, Dongyi Road, Panyu District,
-            Guangzhou,
-            China 511492
+            <b>{m['layout.footer.headquarters_label']()}:</b> {m['pages.public.contacts.offices.chisinau.address']()},
+            {' '}<b>{m['layout.footer.phone_label']()}:</b> 078 770 779
           </p>
 
           <p className="text-xs md:text-sm text-center md:text-start">
-            <b>{m['layout.footer.email_label']()}:</b> info@itc-pa.com, <b>{m['layout.footer.phone_label']()}:</b> +86-020-3567 2981
+            <b>{m['pages.public.contacts.offices.balti.title']()}:</b> {m['pages.public.contacts.offices.balti.address']()},
+            {' '}<b>{m['layout.footer.phone_label']()}:</b> 078 608 068
+          </p>
+
+          <p className="text-xs md:text-sm text-center md:text-start">
+            <b>{m['layout.footer.email_label']()}:</b> {m['pages.public.contacts.email']()},
+            {' '}{m['pages.public.contacts.working_hours']()}
           </p>
         </div>
 
         <div className="flex flex-col gap-4 items-center md:items-end order-first md:order-last">
-          <LogoFull className="h-10 w-fit"/>
+          <LogoFull className="h-10 w-42"/>
 
           <div className="flex gap-2 items-center">
             <Button variant='ghost' size='icon-sm' className={iconLinkClassName}>
-              <LinkedInLogo/>
+              <LinkedInLogo className='size-3'/>
               <span className='sr-only'>{m['layout.footer.social.linkedin']()}</span>
             </Button>
 
             <Button variant='ghost' size='icon-sm' className={iconLinkClassName}>
-              <YoutubeLogo/>
+              <YoutubeLogo className='size-3'/>
               <span className='sr-only'>{m['layout.footer.social.youtube']()}</span>
             </Button>
 
             <Button variant='ghost' size='icon-sm' className={iconLinkClassName}>
-              <FacebookLogo/>
+              <FacebookLogo className='size-3'/>
               <span className='sr-only'>{m['layout.footer.social.facebook']()}</span>
             </Button>
 
             <Button variant='ghost' size='icon-sm' className={iconLinkClassName}>
-              <TwitterLogo/>
+              <TwitterLogo className='size-3'/>
               <span className='sr-only'>{m['layout.footer.social.twitter']()}</span>
             </Button>
           </div>
