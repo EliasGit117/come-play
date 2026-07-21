@@ -62,7 +62,8 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
           'transition-all duration-100 ease-out',
           type === 'fixed' && 'fixed left-0 right-0',
           entered ? 'opacity-150 translate-y-0' : 'opacity-0 -translate-y-4',
-          isTransparent && 'bg-transparent! border-b-transparent backdrop-blur-none text-white',
+          isAtTop && 'border-b-transparent',
+          isTransparent && 'bg-transparent! backdrop-blur-none text-white',
           className
         )}
         {...props}
