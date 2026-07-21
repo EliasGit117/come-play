@@ -9,7 +9,8 @@ import {
   SheetTitle
 } from '@/components/ui/sheet';
 import { Label } from '@/components/ui/label';
-import { panelTypes, products } from '@/routes/_public/calculator/-consts/products';
+import { panelTypes } from '@/routes/_public/calculator/-consts/products';
+import { TILE_HEIGHT_CM, TILE_WIDTH_CM } from '@/routes/_public/calculator/-consts/tile';
 import RangeSlider from '@/components/ui/range-slider';
 import { Button } from '@/components/ui/button';
 import { NumberInput } from '@/components/ui/number-input';
@@ -56,43 +57,6 @@ const PanelTypeSelector: FC = () => {
   );
 };
 
-const ProductSelector: FC = () => {
-  const { panelType, productKey, setProduct } = usePanelSettingsProvider(s => ({
-    panelType: s.panelType,
-    productKey: s.product.key,
-    setProduct: s.setProduct,
-  }));
-
-  const productsByType = products.filter(p => p.type === panelType);
-
-  const onProductChange = (productKey: string) => {
-    const found = products.find(p => p.key === productKey);
-    if (!found) return;
-    setProduct(found);
-  };
-
-  return (
-    <div className="space-y-2">
-      <Label>Product</Label>
-      <Select value={productKey} onValueChange={onProductChange}>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Select a product" />
-        </SelectTrigger>
-
-        <SelectContent>
-          <SelectGroup>
-            {productsByType.map(p => (
-              <SelectItem value={p.key} key={p.key}>
-                {p.name}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </div>
-  );
-};
-
 const SightDistanceSlider: FC = () => {
   const { sight, setSight } = usePanelSettingsProvider(s => ({
     sight: s.sight,
@@ -116,38 +80,38 @@ const SightDistanceSlider: FC = () => {
   );
 };
 
-const PanelModelsSelector: FC = () => {
-  const { productModels, panelModels, setPanelModels } = usePanelSettingsProvider(s => ({
-    productModels: s.product.models ?? [],
-    panelModels: s.panelModels,
-    setPanelModels: s.setPanelModels,
+const WallSizeInput: FC = () => {
+  const { wallWidthCm, wallHeightCm, setWallWidthCm, setWallHeightCm } = usePanelSettingsProvider(s => ({
+    wallWidthCm: s.wallWidthCm,
+    wallHeightCm: s.wallHeightCm,
+    setWallWidthCm: s.setWallWidthCm,
+    setWallHeightCm: s.setWallHeightCm,
   }));
 
   return (
-    <div className="space-y-2 mt-8">
-      <Label>Recommended Model (mm)</Label>
-      <div className="flex flex-wrap gap-2">
-        {productModels.map(m => {
-          const selected = !!panelModels.find(p => p.key === m.key);
-          return (
-            <Button
-              key={m.key}
-              className="border"
-              variant={selected ? 'default' : 'outline'}
-              onClick={() => {
-                if (selected) {
-                  setPanelModels(pv => pv.filter(v => v.key !== m.key));
-                  return;
-                }
-                setPanelModels(pv => [...pv, m]);
-              }}
-            >
-              {m.name}
-            </Button>
-          );
-        })}
+    <>
+      <p className="text-xl font-semibold mt-8">2. Set your wall size</p>
+
+      <div className="space-y-2">
+        <Label>Wall width (cm)</Label>
+        <NumberInput
+          maxLength={4}
+          min={TILE_WIDTH_CM}
+          value={wallWidthCm}
+          onValueChange={v => setWallWidthCm(v ?? TILE_WIDTH_CM)}
+        />
       </div>
-    </div>
+
+      <div className="space-y-2">
+        <Label>Wall height (cm)</Label>
+        <NumberInput
+          maxLength={4}
+          min={TILE_HEIGHT_CM}
+          value={wallHeightCm}
+          onValueChange={v => setWallHeightCm(v ?? TILE_HEIGHT_CM)}
+        />
+      </div>
+    </>
   );
 };
 
@@ -161,7 +125,7 @@ const DimensionsInput: FC = () => {
 
   return (
     <>
-      <p className="text-xl font-semibold mt-8">2. Set your dimensions</p>
+      <p className="text-xl font-semibold mt-8">3. Set your dimensions</p>
 
       <div className="space-y-2">
         <Label>Tiles horizontal</Label>
@@ -201,11 +165,10 @@ const PanelSettingsSheet: FC = () => {
         </SheetHeader>
 
         <div className="px-4 space-y-4 overflow-auto">
-          <p className="text-xl font-semibold">1. Select a product</p>
+          <p className="text-xl font-semibold">1. Select a panel type</p>
           <PanelTypeSelector />
-          <ProductSelector />
           <SightDistanceSlider />
-          <PanelModelsSelector />
+          <WallSizeInput />
           <DimensionsInput />
         </div>
 

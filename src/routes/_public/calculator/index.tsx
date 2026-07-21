@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
+import { TILE_HEIGHT_MM, TILE_WIDTH_MM } from './-consts/tile';
 
 function useWindowSize() {
   const [windowSize, setWindowSize] = useState({
@@ -42,15 +43,14 @@ export const Route = createFileRoute('/_public/calculator/')({
 });
 
 function RouteComponent() {
-  const product = usePanelSettingsProvider((s) => s.product);
   const tilesYCount = usePanelSettingsProvider((s) => s.tilesYCount);
   const tilesXCount = usePanelSettingsProvider((s) => s.tilesXCount);
   const setTilesXCount = usePanelSettingsProvider((s) => s.setTilesXCount);
   const setTilesYCount = usePanelSettingsProvider((s) => s.setTilesYCount);
   const windowSize = useWindowSize();
 
-  const height = tilesYCount * product.height;
-  const width = tilesXCount * product.width;
+  const height = tilesYCount * TILE_HEIGHT_MM;
+  const width = tilesXCount * TILE_WIDTH_MM;
 
   // Calculate the actual displayed size considering max constraints
   const maxHeight = windowSize.height * 0.66; // 66vh
@@ -153,7 +153,7 @@ function RouteComponent() {
           >
             <UnLazyImageSSR
               src={imgSrc}
-              alt={`${product.name} preview`}
+              alt="Panel preview"
               thumbhash='necRJYRod3h/h3d0eFd3d2mA2gTo'
               className="object-cover h-full w-full"
             />
@@ -178,12 +178,12 @@ function RouteComponent() {
 
             {/* Total height label (on left, centered vertically) */}
             <div className="absolute -left-14 top-1/2 -translate-y-1/2  text-sm -rotate-90">
-              {height} mm
+              {height / 10} cm
             </div>
 
             {/* Total width label (at bottom, centered horizontally) */}
             <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 -white text-sm">
-              {width} mm
+              {width / 10} cm
             </div>
           </div>
         </div>
