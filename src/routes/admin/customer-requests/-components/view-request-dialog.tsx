@@ -21,7 +21,7 @@ interface IProps {
 const Row: FC<{ label: string; value?: string | null }> = ({ label, value }) => (
   <div className="grid grid-cols-3 gap-2 py-2 border-b border-border/50 last:border-0">
     <span className="text-sm text-muted-foreground">{label}</span>
-    <span className="col-span-2 text-sm break-words">{value || '—'}</span>
+    <span className="col-span-2 text-sm wrap-break-word whitespace-pre-line">{value || '—'}</span>
   </div>
 );
 
@@ -42,7 +42,6 @@ export const ViewRequestDialog: FC<IProps> = ({ request, open, onOpenChange }) =
             <Row label={m['pages.admin.customerRequests.view.fields.lastName']()} value={request.lastName}/>
             <Row label={m['pages.admin.customerRequests.view.fields.phone']()} value={request.phone}/>
             <Row label={m['pages.admin.customerRequests.view.fields.email']()} value={request.email}/>
-            <Row label={m['pages.admin.customerRequests.view.fields.notification']()} value={request.emailNotificationStatus}/>
             <Row label={m['pages.admin.customerRequests.view.fields.created']()} value={format(request.createdAt, 'dd.MM.yyyy - HH:mm')}/>
             <Row label={m['pages.admin.customerRequests.view.fields.message']()} value={request.message}/>
           </ScrollArea>
