@@ -141,6 +141,7 @@
           "title": "Setări panou",
           "description": "Configurează tipul panoului și dimensiunile",
           "section_panel_type": "Tip panou",
+          "section_image": "Imagine",
           "panel_type_label": "Tip panou",
           "panel_type_placeholder": "Alege tipul panoului",
           "sight_distance_label": "Distanță de vizionare (m)",

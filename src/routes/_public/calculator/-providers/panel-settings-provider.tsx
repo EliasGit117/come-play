@@ -8,6 +8,7 @@ import {
   TILE_HEIGHT_CM,
   TILE_WIDTH_CM
 } from '@/routes/_public/calculator/-consts/tile';
+import { defaultPreviewImage } from '@/routes/_public/calculator/-consts/preview-images';
 
 interface IPanelSettingsProviderStore {
   isPanelOpen: boolean;
@@ -15,6 +16,9 @@ interface IPanelSettingsProviderStore {
 
   panelType: PanelType;
   setPanelType: (value: PanelType) => void;
+
+  imageKey: string;
+  setImageKey: (value: string) => void;
 
   tilesXCount: number;
   setTilesXCount: (value: number | ((prevValue: number) => number)) => void;
@@ -49,6 +53,9 @@ export const PanelSettingsProvider = ({ children }: { children: React.ReactNode 
 
       panelType: panelTypes[0].type,
       setPanelType: (v) => set(() => ({ panelType: v })),
+
+      imageKey: defaultPreviewImage.key,
+      setImageKey: (v) => set(() => ({ imageKey: v })),
 
       tilesXCount: DEFAULT_TILES_X_COUNT,
       setTilesXCount: (value) => set((state) => ({

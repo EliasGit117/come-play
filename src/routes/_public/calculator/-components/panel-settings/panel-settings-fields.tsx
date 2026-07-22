@@ -5,6 +5,7 @@ import PanelTypeSelector from './panel-type-selector';
 import SightDistanceSlider from './sight-distance-slider';
 import WallSizeInput from './wall-size-input';
 import DimensionsInput from './dimensions-input';
+import ImageSelector from './image-selector';
 
 /** Every panel setting in order, the sheet and the aside both render this */
 const PanelSettingsFields: FC = () => (
@@ -23,6 +24,10 @@ const PanelSettingsFields: FC = () => (
 
     <PanelSettingsStep title={m['pages.public.calculator.settings.section_dimensions']()}>
       <DimensionsInput />
+    </PanelSettingsStep>
+
+    <PanelSettingsStep title={m['pages.public.calculator.settings.section_image']()}>
+      <ImageSelector />
     </PanelSettingsStep>
   </div>
 );

@@ -30,7 +30,7 @@ const PanelSettingsSheet: FC = () => {
           </SheetDescription>
         </SheetHeader>
 
-        <div className="px-4 overflow-auto">
+        <div className="px-4 py-1 overflow-auto">
           <PanelSettingsFields />
         </div>
 

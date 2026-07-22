@@ -126,7 +126,7 @@
 
 @layer base {
   * {
-    @apply dark:[color-scheme:dark] border-border outline-ring/50;
+    @apply dark:scheme-dark border-border outline-ring/50;
   }
 
   body {

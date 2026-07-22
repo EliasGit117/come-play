@@ -141,6 +141,7 @@
           "title": "Настройки панели",
           "description": "Настройте тип панели и размеры",
           "section_panel_type": "Тип панели",
+          "section_image": "Изображение",
           "panel_type_label": "Тип панели",
           "panel_type_placeholder": "Выберите тип панели",
           "sight_distance_label": "Дистанция обзора (м)",
