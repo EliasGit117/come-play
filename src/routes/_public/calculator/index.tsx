@@ -71,17 +71,21 @@ function RouteComponent() {
   const screenWidth = tilesXCount * TILE_WIDTH_MM;
   const screenHeight = tilesYCount * TILE_HEIGHT_MM;
 
-  // Wall is the outer bound the whole preview scales to
   const wallWidth = wallWidthCm * 10;
   const wallHeight = wallHeightCm * 10;
+
+  // Bounds are whichever is bigger, so the preview always fits even if the
+  // screen somehow exceeds the wall (guards the fit against bad tile counts)
+  const boundsWidth = Math.max(wallWidth, screenWidth);
+  const boundsHeight = Math.max(wallHeight, screenHeight);
 
   // Calculate the actual displayed size considering max constraints
   const maxHeight = windowHeight * 0.66; // 66vh
   // Room on both sides for the size labels sitting outside the wall
   const maxWidth = Math.max(canvasWidth - LABEL_GUTTER_PX * 2, MIN_CANVAS_WIDTH_PX);
 
-  const scaleX = wallWidth > maxWidth ? maxWidth / wallWidth : 1;
-  const scaleY = wallHeight > maxHeight ? maxHeight / wallHeight : 1;
+  const scaleX = boundsWidth > maxWidth ? maxWidth / boundsWidth : 1;
+  const scaleY = boundsHeight > maxHeight ? maxHeight / boundsHeight : 1;
   const scale = Math.min(scaleX, scaleY);
 
   const displayWallWidth = wallWidth * scale;
