@@ -153,7 +153,7 @@ function RouteComponent() {
 
         <OpenPanelSettingsButton
           size="icon-xl"
-          className="fixed bottom-6 right-6 border border-border/50 rounded-full 2xl:hidden"
+          className="fixed bottom-6 right-6 border border-border/50 rounded-full xl:hidden"
         />
       </main>
 

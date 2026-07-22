@@ -6,8 +6,8 @@ const PanelSettingsAside: FC = () => (
   // In-flow anchor: holds the column's space inside the container and
   // gives the fixed panel its horizontal position (no left/right set,
   // so it stays where the flow puts it).
-  <div className="hidden 2xl:block w-96 shrink-0">
-    <aside className="flex flex-col p-4 gap-4 w-96 fixed top-16 bottom-0 z-10">
+  <div className="hidden xl:block w-96 shrink-0">
+    <aside className="flex flex-col pt-4 gap-4 w-82 fixed top-16 bottom-0 z-10">
       <div className="overflow-auto">
         <PanelSettingsFields/>
       </div>
