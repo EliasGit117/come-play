@@ -128,7 +128,35 @@
   "pages": {
     "public": {
       "calculator": {
-        "title": "Кальулятор"
+        "title": "Калькулятор",
+        "vertical_count": "Количество по вертикали",
+        "horizontal_count": "Количество по горизонтали",
+        "preview_alt": "Предпросмотр панели",
+        "size_cm": "{value} см",
+        "panel_types": {
+          "indoor": "Внутренний LED-экран",
+          "outdoor": "Уличный LED-экран"
+        },
+        "settings": {
+          "title": "Настройки панели",
+          "description": "Настройте тип панели и размеры",
+          "section_panel_type": "Тип панели",
+          "panel_type_label": "Тип панели",
+          "panel_type_placeholder": "Выберите тип панели",
+          "sight_distance_label": "Дистанция обзора (м)",
+          "section_wall": "Размеры стены",
+          "wall_width_label": "Ширина (см)",
+          "wall_height_label": "Высота (см)",
+          "section_dimensions": "Размеры",
+          "tiles_horizontal_label": "По горизонтали",
+          "tiles_vertical_label": "По вертикали",
+          "submit": "Отправить заявку"
+        },
+        "request": {
+          "title": "Отправить заявку",
+          "description": "Оставьте контактные данные, и мы свяжемся с вами.",
+          "summary": "Выбранная конфигурация"
+        }
       },
       "home": {
         "products": {

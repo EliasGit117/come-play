@@ -116,7 +116,7 @@ export const CreateBannerDialog: FC<ICreateBannerDialogProps> = ({ afterSuccess 
                 <span>{m['common.cancel']()}</span>
               </AlertDialogCancel>
 
-              <LoadingButton
+              <LoadingButton loadingText={m['common.loading']()}
                 type="submit"
                 loading={isPending}
                 className="flex-1 sm:flex-none"

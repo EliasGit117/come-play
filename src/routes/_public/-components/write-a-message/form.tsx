@@ -152,7 +152,7 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
           />
 
           <Field orientation='horizontal' className='col-span-full'>
-            <LoadingButton type="submit" className="w-full md:w-fit md:ml-auto" loading={isPending} disabled={isPending}>
+            <LoadingButton loadingText={m['common.loading']()} type="submit" className="w-full md:w-fit md:ml-auto" loading={isPending} disabled={isPending}>
               <IconSend/>
               <span>{m['pages.public.home.contact.submit']()}</span>
             </LoadingButton>

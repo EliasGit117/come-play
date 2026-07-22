@@ -126,7 +126,7 @@ export const ReorderBannersDialog: FC<IReorderBannerDialogProps> = ({ afterSucce
             <span>{m['common.cancel']()}</span>
           </AlertDialogCancel>
 
-          <LoadingButton
+          <LoadingButton loadingText={m['common.loading']()}
             type="button"
             onClick={handleSubmit}
             disabled={isBusy}

@@ -109,7 +109,7 @@ export const CreateNewsDialog: FC<CreateNewsDialogProps> = ({ afterSuccess }) =>
                 <span>{m['common.cancel']()}</span>
               </AlertDialogCancel>
 
-              <LoadingButton type="submit" loading={isPending} className='flex-1 sm:flex-none'>
+              <LoadingButton loadingText={m['common.loading']()} type="submit" loading={isPending} className='flex-1 sm:flex-none'>
                 <IconSend/>
                 <span>{m['common.submit']()}</span>
               </LoadingButton>

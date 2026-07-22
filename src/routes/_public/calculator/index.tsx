@@ -1,37 +1,52 @@
-import { IconMinus, IconPlus } from '@tabler/icons-react';
 import { createFileRoute } from '@tanstack/react-router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   PanelSettingsProvider,
   usePanelSettingsProvider
 } from './-providers/panel-settings-provider';
 import PanelSettingsSheet from './-components/panel-settings-sheet';
+import PanelSettingsAside from './-components/panel-settings-aside';
 import OpenPanelSettingsButton from './-components/open-panel-settings-button';
-import { Button } from '@/components/ui/button';
-
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
+import { Skeleton } from '@/components/ui/skeleton';
+import { m } from '@/paraglide/messages';
+import { TILE_HEIGHT_MM, TILE_WIDTH_MM } from './-consts/tile';
 
-function useWindowSize() {
-  const [windowSize, setWindowSize] = useState({
-    width: typeof window !== 'undefined' ? window.innerWidth : 1920,
-    height: typeof window !== 'undefined' ? window.innerHeight : 1080
-  });
+function useWindowHeight() {
+  const [height, setHeight] = useState(1080);
 
   useEffect(() => {
     function handleResize() {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
+      if (!window.innerHeight) return;
+      setHeight(window.innerHeight);
     }
+
+    // Measure on mount, the value above is only an SSR guess
+    handleResize();
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return windowSize;
+  return height;
+}
+
+/** Width of the space actually left for the canvas, the aside takes its share of it */
+function useElementWidth<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const observer = new ResizeObserver(([entry]) => setWidth(entry.contentRect.width));
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
+  return [ref, width] as const;
 }
 
 export const Route = createFileRoute('/_public/calculator/')({
@@ -42,19 +57,18 @@ export const Route = createFileRoute('/_public/calculator/')({
 });
 
 function RouteComponent() {
-  const product = usePanelSettingsProvider((s) => s.product);
   const tilesYCount = usePanelSettingsProvider((s) => s.tilesYCount);
   const tilesXCount = usePanelSettingsProvider((s) => s.tilesXCount);
-  const setTilesXCount = usePanelSettingsProvider((s) => s.setTilesXCount);
-  const setTilesYCount = usePanelSettingsProvider((s) => s.setTilesYCount);
-  const windowSize = useWindowSize();
+  const windowHeight = useWindowHeight();
+  const [canvasRef, canvasWidth] = useElementWidth<HTMLDivElement>();
 
-  const height = tilesYCount * product.height;
-  const width = tilesXCount * product.width;
+  const height = tilesYCount * TILE_HEIGHT_MM;
+  const width = tilesXCount * TILE_WIDTH_MM;
 
   // Calculate the actual displayed size considering max constraints
-  const maxHeight = windowSize.height * 0.66; // 66vh
-  const maxWidth = windowSize.width * 0.66; // 66vw
+  const maxHeight = windowHeight * 0.66; // 66vh
+  // Room on both sides for the size labels sitting outside the panel
+  const maxWidth = Math.max(canvasWidth - LABEL_GUTTER_PX * 2, MIN_CANVAS_WIDTH_PX);
 
   const scaleX = width > maxWidth ? maxWidth / width : 1;
   const scaleY = height > maxHeight ? maxHeight / height : 1;
@@ -62,6 +76,9 @@ function RouteComponent() {
 
   const displayWidth = width * scale;
   const displayHeight = height * scale;
+
+  // 0 until the ResizeObserver reports, i.e. during SSR and first paint
+  const measured = canvasWidth > 0;
 
   // Create grid lines based on panel count
   const verticalLines = [];
@@ -77,73 +94,18 @@ function RouteComponent() {
 
 
   return (
-    <>
-      <main className="container mx-auto p-4 min-h-screen">
-        <div className="flex gap-4 mx-auto w-fit">
+    <div className="container mx-auto flex min-h-[calc(100dvh-4rem)]">
+      <main className="flex-1 min-w-0 p-4">
 
-          <div className="flex flex-col gap-2">
-            <Label>Vertical count</Label>
-            <div className="flex justify-center">
-              <Button
-                size="icon"
-                variant="secondary"
-                className="rounded-r-none border border-border"
-                disabled={tilesYCount <= 1}
-                onClick={() => setTilesYCount(pv => pv > 0 ? pv - 1 : pv)}
-              >
-                <IconMinus/>
-              </Button>
-              <Input
-                className="h-8 w-12 text-center rounded-none dark:border-secondary border-x-0"
-                value={tilesYCount}
-                readOnly
-              />
-              <Button
-                size="icon"
-                variant="secondary"
-                className="rounded-l-none border border-border"
-                disabled={tilesYCount >= 100}
-                onClick={() => setTilesYCount(pv => pv <= 100 ? pv + 1 : pv)}
-              >
-                <IconPlus/>
-              </Button>
-            </div>
-          </div>
-
-
-          <div className="flex flex-col gap-2">
-            <Label>Horizontal count</Label>
-            <div className="flex justify-center">
-              <Button
-                size="icon"
-                variant="secondary"
-                className="rounded-r-none border border-border"
-                disabled={tilesXCount <= 1}
-                onClick={() => setTilesXCount(pv => pv > 0 ? pv - 1 : pv)}
-              >
-                <IconMinus/>
-              </Button>
-              <Input
-                className="h-8 w-12 text-center rounded-none dark:border-secondary border-x-0"
-                value={tilesXCount}
-                readOnly
-              />
-              <Button
-                size="icon"
-                variant="secondary"
-                className="rounded-l-none border border-border"
-                disabled={tilesXCount >= 100}
-                onClick={() => setTilesXCount(pv => pv <= 100 ? pv + 1 : pv)}
-              >
-                <IconPlus/>
-              </Button>
-            </div>
-          </div>
-
-        </div>
-
-
-        <div className="flex justify-center items-center mt-12 relative">
+        <div ref={canvasRef} className="flex justify-center items-center mt-10 relative">
+          {!measured ? (
+            // The panel can only be sized once the canvas has been measured on
+            // the client, so hold the space with a skeleton of the same ratio
+            <Skeleton
+              style={{ aspectRatio: `${width} / ${height}` }}
+              className="w-full max-h-[66dvh]"
+            />
+          ) : (
           <div
             style={{
               width: displayWidth,
@@ -153,7 +115,7 @@ function RouteComponent() {
           >
             <UnLazyImageSSR
               src={imgSrc}
-              alt={`${product.name} preview`}
+              alt={m['pages.public.calculator.preview_alt']()}
               thumbhash='necRJYRod3h/h3d0eFd3d2mA2gTo'
               className="object-cover h-full w-full"
             />
@@ -178,25 +140,30 @@ function RouteComponent() {
 
             {/* Total height label (on left, centered vertically) */}
             <div className="absolute -left-14 top-1/2 -translate-y-1/2  text-sm -rotate-90">
-              {height} mm
+              {m['pages.public.calculator.size_cm']({ value: height / 10 })}
             </div>
 
             {/* Total width label (at bottom, centered horizontally) */}
             <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 -white text-sm">
-              {width} mm
+              {m['pages.public.calculator.size_cm']({ value: width / 10 })}
             </div>
           </div>
+          )}
         </div>
 
         <OpenPanelSettingsButton
           size="icon-xl"
-          className="fixed bottom-6 right-6 border border-border/50 rounded-full"
+          className="fixed bottom-6 right-6 border border-border/50 rounded-full 2xl:hidden"
         />
       </main>
 
+      <PanelSettingsAside/>
       <PanelSettingsSheet/>
-    </>
+    </div>
   );
 }
 
 const imgSrc = 'https://www.itcleddisplay.com/wp-content/themes/baolun/images/calcbg.jpg';
+
+const LABEL_GUTTER_PX = 64;
+const MIN_CANVAS_WIDTH_PX = 120;

@@ -53,7 +53,7 @@ export const SignInCard: FC<ISignInCard> = ({ className, redirectTo = '/admin', 
       </CardContent>
 
       <CardFooter className="flex-col gap-4">
-        <LoadingButton className="w-full" loading={isPending} form="sign-in-form">
+        <LoadingButton loadingText={m['common.loading']()} className="w-full" loading={isPending} form="sign-in-form">
           <IconSend />
           <span>{m['pages.auth.signIn.submit']()}</span>
         </LoadingButton>
