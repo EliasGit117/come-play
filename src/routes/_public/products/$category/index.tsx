@@ -6,6 +6,8 @@ import ProductsBreadcrumb from '../-components/products-breadcrumb';
 import SubcategoryCard from '../-components/subcategory-card';
 import { getCategory } from '../-consts/categories';
 import { tm } from '../-lib/get-message';
+import { seo } from '@/utils/seo';
+import { htmlToExcerpt } from '@/utils/text';
 
 export const Route = createFileRoute('/_public/products/$category/')({
   component: RouteComponent,
@@ -14,6 +16,20 @@ export const Route = createFileRoute('/_public/products/$category/')({
     if (!config) throw notFound();
 
     return { config };
+  },
+  head: ({ loaderData }) => {
+    const key = loaderData?.config.key;
+    if (!key)
+      return {};
+
+    const baseKey = `pages.public.products.${key}`;
+
+    return {
+      meta: seo({
+        title: tm(`${baseKey}.title`),
+        description: tm(`${baseKey}.subtitle`) || htmlToExcerpt(tm(`${baseKey}.description`))
+      })
+    };
   },
   notFoundComponent: () => <NotFoundCard className='mx-auto'/>
 });

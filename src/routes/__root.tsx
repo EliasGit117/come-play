@@ -28,9 +28,8 @@ export const Route = createRootRouteWithContext<IRootRouteProps>()({
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       ...seo({
-        title:
-          'TanStack Start | Type-Safe, Client-First, Full-Stack React Framework',
-        description: `TanStack Start is a type-safe, client-first, full-stack React framework. `
+        title: 'Led Display | Ecrane LED pentru interior, exterior și evenimente',
+        description: 'Soluții LED pentru interior, exterior, vitrine, scenă și evenimente: consultanță, calculator de panouri și instalare.'
       })
     ],
     links: [

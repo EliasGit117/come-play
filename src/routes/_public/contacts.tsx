@@ -10,8 +10,6 @@ export const Route = createFileRoute('/_public/contacts')({
   component: RouteComponent,
   head: () => ({
     meta: [
-      { title: m['pages.public.contacts.title']() },
-      { name: 'description', content: m['pages.public.contacts.description']() },
       ...seo({
         title: m['pages.public.contacts.title'](),
         description: m['pages.public.contacts.description']()

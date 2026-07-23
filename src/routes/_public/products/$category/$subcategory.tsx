@@ -4,6 +4,8 @@ import ProductDetail from '../-components/product-detail';
 import ProductsBreadcrumb from '../-components/products-breadcrumb';
 import { getSubcategory, getSubcategoryImage } from '../-consts/categories';
 import { tm } from '../-lib/get-message';
+import { seo } from '@/utils/seo';
+import { htmlToExcerpt } from '@/utils/text';
 
 export const Route = createFileRoute('/_public/products/$category/$subcategory')({
   component: RouteComponent,
@@ -12,6 +14,20 @@ export const Route = createFileRoute('/_public/products/$category/$subcategory')
     if (!result) throw notFound();
 
     return result;
+  },
+  head: ({ loaderData }) => {
+    if (!loaderData)
+      return {};
+
+    const { category, subcategory } = loaderData;
+    const baseKey = `pages.public.products.${category.key}.items.${subcategory.key}`;
+
+    return {
+      meta: seo({
+        title: tm(`${baseKey}.title`),
+        description: tm(`${baseKey}.subtitle`) || htmlToExcerpt(tm(`${baseKey}.description`))
+      })
+    };
   },
   notFoundComponent: () => <NotFoundCard/>
 });

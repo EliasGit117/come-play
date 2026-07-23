@@ -20,6 +20,7 @@ import NewsPreviewLink from '@/components/news-preview-link';
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group';
 import { Button } from "@/components/ui/button";
 import { m } from '@/paraglide/messages';
+import { seo } from '@/utils/seo';
 
 
 export const Route = createFileRoute('/_public/news/')({
@@ -29,7 +30,13 @@ export const Route = createFileRoute('/_public/news/')({
   loader: async ({ context: { queryClient }, deps }) => {
     const res = await queryClient.prefetchQuery(orpc.news.search.queryOptions({ input: deps }));
     return { news: res };
-  }
+  },
+  head: () => ({
+    meta: seo({
+      title: m['pages.public.news.list.title'](),
+      description: m['pages.public.news.list.subtitle']()
+    })
+  })
 });
 
 function RouteComponent() {

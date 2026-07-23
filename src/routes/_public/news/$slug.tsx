@@ -9,6 +9,8 @@ import imgPlaceholder from '/images/news/placeholder.webp';
 import { NotFoundCard } from '@/components/not-found-card';
 import { m } from '@/paraglide/messages';
 import { getLocale } from '@/paraglide/runtime';
+import { seo } from '@/utils/seo';
+import { htmlToExcerpt } from '@/utils/text';
 
 const dateLocales = { ro, ru } as const;
 
@@ -24,6 +26,24 @@ export const Route = createFileRoute('/_public/news/$slug')({
       });
 
     return { news: res };
+  },
+  head: ({ loaderData }) => {
+    const news = loaderData?.news;
+    if (!news)
+      return {
+        meta: seo({
+          title: m['pages.public.news.notFound.title'](),
+          description: m['pages.public.news.notFound.text']()
+        })
+      };
+
+    return {
+      meta: seo({
+        title: news.title,
+        description: htmlToExcerpt(news.content),
+        image: news.image?.url
+      })
+    };
   },
   notFoundComponent: () => {
 

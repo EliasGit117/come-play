@@ -11,6 +11,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { m } from '@/paraglide/messages';
 import { TILE_HEIGHT_MM, TILE_WIDTH_MM } from './-consts/tile';
 import { defaultPreviewImage, previewImages } from './-consts/preview-images';
+import { seo } from '@/utils/seo';
 
 function useWindowHeight() {
   const [height, setHeight] = useState(1080);
@@ -53,7 +54,13 @@ export const Route = createFileRoute('/_public/calculator/')({
   component: () =>
     <PanelSettingsProvider>
       <RouteComponent/>
-    </PanelSettingsProvider>
+    </PanelSettingsProvider>,
+  head: () => ({
+    meta: seo({
+      title: m['pages.public.calculator.title'](),
+      description: m['pages.public.calculator.settings.description']()
+    })
+  })
 });
 
 function RouteComponent() {

@@ -1,3 +1,5 @@
+export const SITE_NAME = 'Led Display';
+
 export interface ISeoParams {
   title: string;
   description?: string;
@@ -5,28 +7,40 @@ export interface ISeoParams {
   keywords?: string;
 }
 
+type TMetaTag =
+  | { title: string }
+  | { name: string; content: string };
+
 
 export const seo = (params: ISeoParams) => {
-  const { title, description, keywords, image } = params;
+  const { description, keywords, image } = params;
+  const title = params.title.includes(SITE_NAME)
+    ? params.title
+    : `${params.title} | ${SITE_NAME}`;
 
-  const res = [
-    // { title: title },
-    // { name: 'description', content: description },
-    // { name: 'keywords', content: keywords },
-    // { name: 'twitter:title', content: title },
-    // { name: 'twitter:description', content: description },
-    // { name: 'twitter:creator', content: '@tannerlinsley' },
-    // { name: 'twitter:site', content: '@tannerlinsley' },
-    // { name: 'og:type', content: 'website' },
-    // { name: 'og:title', content: title },
-    // { name: 'og:description', content: description }
+  const res: TMetaTag[] = [
+    { title },
+    { name: 'og:type', content: 'website' },
+    { name: 'og:site_name', content: SITE_NAME },
+    { name: 'og:title', content: title },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:card', content: 'summary_large_image' }
   ];
+
+  if (description)
+    res.push(
+      { name: 'description', content: description },
+      { name: 'og:description', content: description },
+      { name: 'twitter:description', content: description }
+    );
+
+  if (keywords)
+    res.push({ name: 'keywords', content: keywords });
 
   if (image)
     res.push(
-      { name: 'twitter:image', content: image },
-      { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'og:image', content: image }
+      { name: 'og:image', content: image },
+      { name: 'twitter:image', content: image }
     );
 
   return res;
