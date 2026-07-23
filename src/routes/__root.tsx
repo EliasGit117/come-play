@@ -5,7 +5,8 @@ import { HeadContent, Outlet, Scripts, createRootRouteWithContext, useRouter } f
 import { QueryClient, useQuery } from '@tanstack/react-query';
 import { DefaultCatchBoundary } from '@/components/default-catch-boundary';
 import appCss from '@/styles/app.css?url';
-import { seo } from '@/utils/seo';
+import { seo, SITE_NAME } from '@/utils/seo';
+import { m } from '@/paraglide/messages';
 import { Providers } from '@/providers';
 import { ThemeProvider } from '@/components/theme';
 import { FC, ReactNode, useEffect, useRef } from 'react';
@@ -28,8 +29,8 @@ export const Route = createRootRouteWithContext<IRootRouteProps>()({
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       ...seo({
-        title: 'Led Display | Ecrane LED pentru interior, exterior și evenimente',
-        description: 'Soluții LED pentru interior, exterior, vitrine, scenă și evenimente: consultanță, calculator de panouri și instalare.'
+        title: `${SITE_NAME} | ${m['common.seo.title']()}`,
+        description: m['common.seo.description']()
       })
     ],
     links: [
