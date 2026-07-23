@@ -5,6 +5,8 @@ import { PanelType, panelTypes } from '@/routes/_public/calculator/-consts/produ
 import {
   DEFAULT_TILES_X_COUNT,
   DEFAULT_TILES_Y_COUNT,
+  DEFAULT_WALL_HEIGHT_CM,
+  DEFAULT_WALL_WIDTH_CM,
   TILE_HEIGHT_CM,
   TILE_WIDTH_CM
 } from '@/routes/_public/calculator/-consts/tile';
@@ -67,7 +69,7 @@ export const PanelSettingsProvider = ({ children }: { children: React.ReactNode 
         tilesYCount: typeof value === 'function' ? value(state.tilesYCount) : value
       })),
 
-      wallWidthCm: DEFAULT_TILES_X_COUNT * TILE_WIDTH_CM,
+      wallWidthCm: DEFAULT_WALL_WIDTH_CM,
       setWallWidthCm: (value) => set((state) => {
         const next = typeof value === 'function' ? value(state.wallWidthCm) : value;
         const wallWidthCm = Math.max(next, TILE_WIDTH_CM);
@@ -79,7 +81,7 @@ export const PanelSettingsProvider = ({ children }: { children: React.ReactNode 
         };
       }),
 
-      wallHeightCm: DEFAULT_TILES_Y_COUNT * TILE_HEIGHT_CM,
+      wallHeightCm: DEFAULT_WALL_HEIGHT_CM,
       setWallHeightCm: (value) => set((state) => {
         const next = typeof value === 'function' ? value(state.wallHeightCm) : value;
         const wallHeightCm = Math.max(next, TILE_HEIGHT_CM);
