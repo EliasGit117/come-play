@@ -11,17 +11,12 @@ import {
 } from '@/components/ui/breadcrumb';
 import { tm } from '../-lib/get-message';
 
-interface ICrumb {
-  /** category slug for the category landing link; omit for the current page */
-  categorySlug?: string;
-  label: string;
-}
-
 interface IProps {
-  crumbs: ICrumb[];
+  /** label for the current page; omit when rendering the /solutions index itself */
+  current?: string;
 }
 
-const SolutionsBreadcrumb: FC<IProps> = ({ crumbs }) => {
+const SolutionsBreadcrumb: FC<IProps> = ({ current }) => {
   const solutionsLabel = tm('pages.public.solutions.common.solutionsLabel');
 
   return (
@@ -38,29 +33,23 @@ const SolutionsBreadcrumb: FC<IProps> = ({ crumbs }) => {
         <BreadcrumbSeparator/>
 
         <BreadcrumbItem>
-          <BreadcrumbPage className="text-muted-foreground">{solutionsLabel}</BreadcrumbPage>
+          {current ? (
+            <BreadcrumbLink asChild>
+              <Link to="/solutions">{solutionsLabel}</Link>
+            </BreadcrumbLink>
+          ) : (
+            <BreadcrumbPage className="text-muted-foreground">{solutionsLabel}</BreadcrumbPage>
+          )}
         </BreadcrumbItem>
 
-        {crumbs.map((crumb, i) => {
-          const isLast = i === crumbs.length - 1;
-
-          return (
-            <span key={crumb.label} className="contents">
-              <BreadcrumbSeparator/>
-              <BreadcrumbItem>
-                {isLast || !crumb.categorySlug ? (
-                  <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
-                ) : (
-                  <BreadcrumbLink asChild>
-                    <Link to="/solutions/$category" params={{ category: crumb.categorySlug }}>
-                      {crumb.label}
-                    </Link>
-                  </BreadcrumbLink>
-                )}
-              </BreadcrumbItem>
-            </span>
-          );
-        })}
+        {current && (
+          <>
+            <BreadcrumbSeparator/>
+            <BreadcrumbItem>
+              <BreadcrumbPage>{current}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </>
+        )}
       </BreadcrumbList>
     </Breadcrumb>
   );

@@ -42,24 +42,24 @@ const AppFooter: FC<IProps> = ({ className, ...props }) => {
         <div className="flex flex-col gap-4 items-center md:items-end order-first md:order-last">
           <LogoFull className="h-10 w-42"/>
 
-          <div className="flex gap-2 items-center">
-            <Button variant='ghost' size='icon-sm' className={iconLinkClassName}>
-              <LinkedInLogo className='size-3'/>
+          <div className="flex gap-2 items-center my-2">
+            <Button variant='ghost' size='icon' className={iconLinkClassName}>
+              <LinkedInLogo className='size-4'/>
               <span className='sr-only'>{m['layout.footer.social.linkedin']()}</span>
             </Button>
 
-            <Button variant='ghost' size='icon-sm' className={iconLinkClassName}>
-              <YoutubeLogo className='size-3'/>
+            <Button variant='ghost' size='icon' className={iconLinkClassName}>
+              <YoutubeLogo className='size-4'/>
               <span className='sr-only'>{m['layout.footer.social.youtube']()}</span>
             </Button>
 
-            <Button variant='ghost' size='icon-sm' className={iconLinkClassName}>
-              <FacebookLogo className='size-3'/>
+            <Button variant='ghost' size='icon' className={iconLinkClassName}>
+              <FacebookLogo className='size-4'/>
               <span className='sr-only'>{m['layout.footer.social.facebook']()}</span>
             </Button>
 
-            <Button variant='ghost' size='icon-sm' className={iconLinkClassName}>
-              <TwitterLogo className='size-3'/>
+            <Button variant='ghost' size='icon' className={iconLinkClassName}>
+              <TwitterLogo className='size-4'/>
               <span className='sr-only'>{m['layout.footer.social.twitter']()}</span>
             </Button>
           </div>

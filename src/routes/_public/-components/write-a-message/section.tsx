@@ -33,14 +33,14 @@ const WriteAMessageSection: FC<IProps> = ({ className, ...props }) => {
           <Button variant="link" className="gap-4 w-fit" asChild>
             <a href="mailto:some@email.com">
               <IconMail/>
-              some@email.com
+              info@imou.md
             </a>
           </Button>
 
           <Button variant="link" className="gap-4 w-fit" asChild>
-            <a href="tel:+37360900001">
+            <a href="tel:+37378770779">
               <IconPhone/>
-              +37360900001
+              +37378770779
             </a>
           </Button>
 

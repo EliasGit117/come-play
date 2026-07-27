@@ -1,14 +1,14 @@
 import { FC, useEffect, useRef } from 'react';
 import { IconCircleCheck } from '@tabler/icons-react';
 import { Button } from '@/components/ui/button';
-import { CaseStudyConfig } from '../-consts/categories';
+import { SolutionProjectConfig } from '../-consts/projects';
 import { tm } from '../-lib/get-message';
 import { Link } from '@tanstack/react-router';
 
 
 interface IProps {
   baseKey: string;
-  media: CaseStudyConfig;
+  media: SolutionProjectConfig;
 }
 
 const CaseStudy: FC<IProps> = ({ baseKey, media }) => {
@@ -33,7 +33,7 @@ const CaseStudy: FC<IProps> = ({ baseKey, media }) => {
     <section className="space-y-6 rounded-xl border border-border/50 bg-muted/30 p-6 md:p-10">
       <div className="space-y-1">
         <p className="text-xs font-medium uppercase tracking-wide text-primary">{label}</p>
-        <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
+        <h1 className="text-2xl md:text-3xl font-bold">{title}</h1>
         <p className="text-sm text-muted-foreground">{client}</p>
       </div>
 

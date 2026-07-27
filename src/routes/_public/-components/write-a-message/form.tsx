@@ -74,7 +74,6 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
                   {...field}
                   id="first-name-input"
                   aria-invalid={fieldState.invalid}
-                  placeholder="John"
                 />
                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
               </Field>
@@ -91,7 +90,6 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
                   {...field}
                   id="last-name-input"
                   aria-invalid={fieldState.invalid}
-                  placeholder="Doe"
                 />
                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
               </Field>
@@ -108,7 +106,6 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
                   {...field}
                   id="email-input"
                   aria-invalid={fieldState.invalid}
-                  placeholder="johnDoe537@yahoo.com"
                 />
                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
               </Field>
@@ -125,7 +122,6 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
                   {...field}
                   id="phone-input"
                   aria-invalid={fieldState.invalid}
-                  placeholder="+37360000000"
                 />
                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
               </Field>
@@ -142,7 +138,6 @@ const WriteAMessageForm: FC<IProps> = ({ className, ...props }) => {
                   {...field}
                   id="message-text-area"
                   aria-invalid={fieldState.invalid}
-                  placeholder={m['pages.public.home.contact.messagePlaceholder']()}
                   className='min-h-40'
                   autoComplete="off"
                 />

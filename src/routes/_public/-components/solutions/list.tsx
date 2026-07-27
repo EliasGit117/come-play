@@ -2,48 +2,27 @@ import { ComponentProps, FC } from 'react';
 import { cn } from '@/lib/utils';
 import { Link } from '@tanstack/react-router';
 import { m } from '@/paraglide/messages';
+import { SOLUTION_PROJECTS } from '@/routes/_public/solutions/-consts/projects';
+import { tm } from '@/routes/_public/solutions/-lib/get-message';
 
 
 interface IProps extends ComponentProps<'section'> {
 }
 
-interface ICategoryCard {
+interface IProjectCard {
   slug: string;
   title: string;
   subtitle: string;
   img: string;
-  className?: string;
 }
 
 const SolutionList: FC<IProps> = ({ className, ...props }) => {
-  const categories: ICategoryCard[] = [
-    {
-      slug: 'indoor',
-      title: m['pages.public.solutions.indoor.title'](),
-      subtitle: m['pages.public.solutions.indoor.subtitle'](),
-      img: '/images/solutions/indoor/category.webp',
-      className: 'md:row-span-2'
-    },
-    {
-      slug: 'outdoor',
-      title: m['pages.public.solutions.outdoor.title'](),
-      subtitle: m['pages.public.solutions.outdoor.subtitle'](),
-      img: '/images/solutions/outdoor/category.webp'
-    },
-    {
-      slug: 'transparent',
-      title: m['pages.public.solutions.transparent.title'](),
-      subtitle: m['pages.public.solutions.transparent.subtitle'](),
-      img: '/images/solutions/transparent/category.webp'
-    },
-    {
-      slug: 'flexible',
-      title: m['pages.public.solutions.flexible.title'](),
-      subtitle: m['pages.public.solutions.flexible.subtitle'](),
-      img: '/images/solutions/flexible/category.webp',
-      className: 'md:col-span-2'
-    }
-  ];
+  const projects: IProjectCard[] = SOLUTION_PROJECTS.map((project) => ({
+    slug: project.slug,
+    title: tm(`pages.public.solutions.items.${project.key}.title`),
+    subtitle: tm(`pages.public.solutions.items.${project.key}.client`),
+    img: project.photo
+  }));
 
   return (
     <section className={cn('space-y-8', className)} {...props}>
@@ -56,9 +35,9 @@ const SolutionList: FC<IProps> = ({ className, ...props }) => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-2 md:gap-3 md:auto-rows-fr">
-        {categories.map((cat) => (
-          <CategoryCard key={cat.slug} {...cat}/>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
+        {projects.map((project) => (
+          <CategoryCard key={project.slug} {...project}/>
         ))}
       </div>
     </section>
@@ -66,15 +45,12 @@ const SolutionList: FC<IProps> = ({ className, ...props }) => {
 };
 
 
-const CategoryCard: FC<ICategoryCard> = ({ slug, title, subtitle, img, className }) => {
+const CategoryCard: FC<IProjectCard> = ({ slug, title, subtitle, img }) => {
   return (
     <Link
-      to="/solutions/$category"
-      params={{ category: slug }}
-      className={cn(
-        'group relative flex min-h-52 flex-col justify-end overflow-hidden rounded-md border border-border/50',
-        className
-      )}
+      to="/solutions/$slug"
+      params={{ slug }}
+      className="group relative flex h-52 flex-col justify-end overflow-hidden rounded-md border border-border/50"
     >
       <img
         src={img}
@@ -86,9 +62,8 @@ const CategoryCard: FC<ICategoryCard> = ({ slug, title, subtitle, img, className
         )}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"/>
-      <div className="relative space-y-1 p-4 text-white">
-        <h3 className="text-lg font-bold uppercase">{title}</h3>
-        <p className="text-sm text-white/85 line-clamp-2">{subtitle}</p>
+      <div className="relative space-y-1 p-4 text-white max-w-md">
+        <h3 className="text-xl font-semibold uppercase">{title}</h3>
       </div>
     </Link>
   );

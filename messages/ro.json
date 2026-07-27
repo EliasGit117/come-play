@@ -488,141 +488,34 @@
           "solutionsLabel": "Soluții",
           "caseStudyLabel": "Proiect real"
         },
-        "indoor": {
-          "title": "Ecrane LED interioare",
-          "subtitle": "Ecrane pentru mall-uri, birouri și spații publice, care fac interiorul mai luminos și mai modern",
-          "description": "Soluțiile LED interioare transformă un spațiu obișnuit într-un spațiu de comunicare vizuală puternic — pentru publicitate, navigare, prezentări și amenajarea zonelor de brand.\n\nAlegem formatul ecranului în funcție de sarcina concretă: de la un perete mare într-o zonă cu trafic ridicat, până la un panou vitrină compact sau un ecran mobil pentru evenimente.",
-          "items": {
-            "ledWalls": {
-              "title": "Pereți LED",
-              "description": "Peretele LED este un ecran de format mare care devine principalul accent vizual al încăperii. Potrivit pentru afișarea publicității, a videoclipurilor și a conținutului de brand la scară mare.\n\nSoluția funcționează bine acolo unde e nevoie să atragi imediat atenția vizitatorilor și să creezi un efect de prezență — la recepție, între scări rulante într-un mall, în foaier.",
-              "advantages": "format mare și luminozitate ridicată\naccent vizual puternic în spațiu\nschimbare rapidă a conținutului, fără tipărire\npotrivit pentru publicitatea și brandingul chiriașilor\nvizibil din mai multe puncte ale sălii",
-              "caseStudy": {
-                "client": "EVI MALL — Bălți",
-                "title": "Ecran LED interior într-un centru comercial",
-                "description": "Pentru centrul comercial EVI MALL din Bălți, compania EXTERIOR a instalat un ecran LED interior în zona centrală a mall-ului — între scările rulante, într-un loc bine vizibil.\n\nEcranul afișează conținut publicitar, de imagine și informativ: promoții, oferte sezoniere, campanii ale chiriașilor și vizualuri de brand.",
-                "advantages": "vizibil din mai multe puncte din interiorul mall-ului\natrage atenția într-o zonă cu trafic intens\npotrivit pentru publicitatea chiriașilor și campanii sezoniere\nschimbare rapidă a conținutului, fără tipărirea bannerelor\nface interiorul centrului comercial mai modern"
-              }
-            },
-            "storefrontSystems": {
-              "title": "Sisteme LED pentru vitrine",
-              "description": "Sistemele LED pentru vitrine se instalează în interiorul spațiului comercial, lângă fereastră sau la intrare, și afișează conținut atât pentru clienții din interior, cât și pentru trecătorii de afară.\n\nSoluția este potrivită pentru magazine, showroom-uri și butic-uri, unde e important să prezinți frumos produsele și promoțiile fără a renunța la materialele clasice de vitrină.",
-              "advantages": "public dublu — clienți din interior și trecători\nschimbare rapidă a conținutului și promoțiilor\ninstalare compactă, fără pierderea spațiului comercial\nsuportă video, vizualuri statice și animație\nconsolidează imaginea premium a vitrinei"
-            },
-            "mobileSolutions": {
-              "title": "Soluții LED mobile",
-              "description": "Ecranele LED mobile sunt montate pe un suport sau o platformă mobilă, care poate fi mutată rapid între încăperi și adaptată la diferite formate de evenimente.\n\nSoluția este utilă în special pentru instituții culturale, săli de conferințe și companii care au nevoie de un singur ecran pentru sarcini diferite — de la prezentări la susținerea vizuală a scenei.",
-              "advantages": "instalare și mutare rapidă\npotrivit pentru conferințe, prezentări și evenimente\nun singur ecran — scenarii de utilizare diferite\nnu necesită lucrări de montaj capitale\nse adaptează ușor la formatul evenimentului",
-              "caseStudy": {
-                "client": "Secția Cultură a Consiliului Raional Sîngerei",
-                "title": "Ecran LED mobil pentru scenă și evenimente",
-                "description": "Pentru Secția Cultură a Consiliului Raional Sîngerei, compania EXTERIOR a instalat un ecran LED mobil pentru utilizare pe scenă și în timpul evenimentelor culturale — pentru afișarea videoclipurilor, a conținutului de fundal și a susținerii vizuale a programelor.\n\nO astfel de soluție este convenabilă pentru instituțiile unde este important să adaptezi rapid echipamentul la diferite formate de evenimente.",
-                "advantages": "potrivit pentru concerte și evenimente oficiale\nafișează videoclipuri, generice și conținut tematic\nface scena mai modernă și mai expresivă\nse adaptează ușor la diferite formate de evenimente\nformatul mobil este convenabil în exploatare"
-              }
-            },
-            "cornerInstallations": {
-              "title": "Instalații LED de colț",
-              "description": "Instalațiile LED de colț se asamblează din panouri montate unghiular unul față de celălalt și permit valorificarea arhitecturii încăperii — coloane, colțuri de sală, nișe neconvenționale.\n\nSoluția este potrivită acolo unde un ecran plat obișnuit nu se încadrează în spațiu, iar este nevoie de un obiect vizual unitar, care urmează conturul construcției.",
-              "advantages": "urmează arhitectura încăperii\ncreează o imagine unitară pe mai multe planuri\npotrivit pentru coloane, colțuri și nișe\nconsolidează efectul de prezență în spațiu\nconfigurație individuală pentru fiecare obiect"
-            }
-          }
+        "index": {
+          "title": "Proiecte reale",
+          "subtitle": "Exemple de implementare a soluțiilor noastre LED pe obiecte reale"
         },
-        "outdoor": {
-          "title": "Panouri LED exterioare",
-          "subtitle": "Publicitate digitală exterioară și media-fațade care atrag atenția indiferent de vreme",
-          "description": "Soluțiile LED exterioare sunt ecrane protejate la precipitații și variații de temperatură, destinate fațadelor, panourilor publicitare, transportului și infrastructurii urbane.\n\nEle înlocuiesc bannerele statice și publicitatea tipărită: conținutul poate fi schimbat instant, campaniile pot fi testate, iar mesajul poate fi adaptat în funcție de ora din zi și de public.",
-          "items": {
-            "billboardPanels": {
-              "title": "Digital Billboard",
-              "description": "Digital Billboard este un ecran exterior de format mare pentru campanii publicitare, ce înlocuiește panoul publicitar clasic cu banner tipărit.\n\nPotrivit pentru șosele, intersecții și zone cu trafic ridicat, unde vizibilitatea la distanță și schimbarea frecventă a mesajelor publicitare sunt esențiale.",
-              "advantages": "vizibil de la distanță mare\nschimbare instantanee a campaniilor publicitare\nluminozitate ridicată pentru afișare de zi și de noapte\nprotecție la precipitații și variații de temperatură\npotrivit pentru mai mulți advertiseri pe același ecran"
-            },
-            "transportScreens": {
-              "title": "LED pentru transport",
-              "description": "Ecranele LED pentru transport se instalează pe autobuze, troleibuze și alte mijloace de transport urban, afișând publicitate și conținut informativ chiar în mișcare, prin oraș.\n\nSoluția extinde acoperirea campaniei publicitare datorită deplasării constante a ecranului prin diferite cartiere.",
-              "advantages": "publicitatea acoperă diferite cartiere ale orașului\nvizibil pentru pasageri și trecători\nrezistent la vibrații și condiții meteo\npotrivit pentru publicitate și mesaje informative\nextinde acoperirea fără a fi legat de un singur punct"
-            },
-            "outdoorStorefront": {
-              "title": "LED exterior pentru vitrine",
-              "description": "Ecranele LED exterioare pentru vitrine se instalează în zona vitrinei fațadei și sunt bine vizibile de pe stradă — funcționează ca publicitate digitală modernă, în locul bannerelor tipărite.\n\nSoluția este potrivită pentru magazine și showroom-uri care au nevoie să atragă atenția trecătorilor și să actualizeze rapid conținutul publicitar.",
-              "advantages": "atrage atenția de pe stradă\nschimbare rapidă a conținutului publicitar\nînlocuiește bannerele statice\nface fațada mai modernă\najută la prezentarea brandurilor și promoțiilor",
-              "caseStudy": {
-                "client": "Global Marketing — magazin de cosmetice",
-                "title": "Ecran LED pentru vitrina unui magazin",
-                "description": "Pentru magazinul de cosmetice Global Marketing, compania EXTERIOR a instalat un ecran LED vertical în zona vitrinei fațadei — bine vizibil de pe stradă.\n\nEcranul afișează conținut beauty, spoturi publicitare, promoții și vizualuri de brand. Conținutul poate fi schimbat rapid, fără tipărire și fără costuri suplimentare pentru înlocuirea materialelor.",
-                "advantages": "atrage atenția de pe stradă\npermite schimbarea rapidă a conținutului publicitar\nînlocuiește bannerele statice\nface fațada magazinului mai modernă\najută la prezentarea atractivă a brandurilor și promoțiilor"
-              }
-            },
-            "urbanInfoPanels": {
-              "title": "Panouri LED informative urbane",
-              "description": "Panourile LED informative urbane se instalează în locuri aglomerate — stații, piețe, zone pietonale — și combină publicitatea cu informații utile pentru oraș.\n\nSoluția este potrivită atât pentru proiecte municipale, cât și pentru publicitate exterioară comercială, în același timp.",
-              "advantages": "combină publicitatea cu informații urbane\nse instalează în zone cu trafic pietonal ridicat\nrezistent la condiții meteo\nsuportă mai mulți advertiseri\naspect modern al mediului urban"
-            },
-            "mediaFacades": {
-              "title": "Media-fațade",
-              "description": "Media-fațada este o acoperire LED a întregii fațade a clădirii, care transformă arhitectura într-o suprafață publicitară și de imagine dinamică.\n\nSoluția este potrivită pentru mall-uri, centre de afaceri și clădiri emblematice care doresc să iasă în evidență în peisajul urban.",
-              "advantages": "transformă fațada într-o suprafață publicitară\nvizibilă de la mare distanță și din parcare\nconsolidează imaginea vizuală a clădirii\npotrivit pentru publicitatea chiriașilor și brandurilor\nschimbare rapidă a conținutului, fără tipărirea bannerelor",
-              "caseStudy": {
-                "client": "EVI MALL — Bălți",
-                "title": "Ecran LED exterior pe fațada unui centru comercial",
-                "description": "Pentru centrul comercial EVI MALL din Bălți, compania EXTERIOR a instalat ecrane LED exterioare pe fațada clădirii — într-o zonă cu vizibilitate ridicată dinspre parcare și intrare.\n\nEcranele afișează conținut publicitar, de imagine și vizual: promoții, branduri, campanii sezoniere și vizualuri digitale.",
-                "advantages": "bine vizibil din parcare și din zona de acces\natrage atenția încă înainte de intrarea în mall\npotrivit pentru publicitatea chiriașilor și brandurilor\nschimbare rapidă a conținutului, fără tipărirea bannerelor\nconsolidează imaginea vizuală a obiectivului"
-              }
-            },
-            "stadiumEventSystems": {
-              "title": "Stadioane și evenimente",
-              "description": "Sistemele LED pentru stadioane și evenimente afișează scorul, reluările, publicitatea sponsorilor și conținut de show pe arene sportive și scene de concert mari.\n\nSoluția este concepută pentru exploatare intensivă și vizibilitate bună de pe tribune, la orice distanță.",
-              "advantages": "luminozitate și vizibilitate de pe tribune la orice distanță\npotrivit pentru evenimente sportive și concerte\nafișarea scorului, reluărilor și publicității sponsorilor\nrezistență la exploatare intensivă\nconsolidează atmosfera evenimentului"
-            }
-          }
-        },
-        "transparent": {
-          "title": "Ecrane LED transparente",
-          "subtitle": "Ecrane care afișează conținut expresiv, păstrând vitrina sau fațada vizual deschisă",
-          "description": "Ecranele LED transparente se montează pe sticla vitrinelor, fațadelor și construcțiilor de scenă, fără a bloca vizibilitatea — produsul, interiorul sau scena rămân vizibile prin ecran.\n\nSoluția combină publicitatea digitală cu păstrarea luminii naturale și a deschiderii vizuale a spațiului.",
-          "items": {
-            "storefrontTransparent": {
-              "title": "Ecrane LED transparente pentru vitrine",
-              "description": "Ecranele LED transparente pentru vitrine afișează conținut publicitar pe sticlă, fără a bloca vizibilitatea produselor din interiorul magazinului.\n\nSoluția este potrivită pentru butice de brand și magazine unde este important să combini publicitatea digitală expresivă cu expunerea clasică a produselor.",
-              "advantages": "nu blochează vizibilitatea vitrinei\ncombină publicitatea cu lumina naturală\natrage atenția trecătorilor\nsubliniază imaginea premium a brandului\nmontaj ușor pe sticla existentă"
-            },
-            "museumExhibition": {
-              "title": "Muzee și expoziții",
-              "description": "În muzee și la expoziții, ecranele LED transparente sunt folosite pentru afișarea conținutului media peste vitrinele cu exponate — fără a fi nevoie de îndepărtarea structurilor de sticlă.\n\nSoluția permite completarea expoziției cu video și grafică, păstrând accesul vizual la exponatele propriu-zise.",
-              "advantages": "nu blochează vizibilitatea exponatelor\nadaugă un strat multimedia expoziției\npotrivit pentru expoziții temporare și permanente\nface prezentarea materialului mai modernă\nse adaptează ușor la diferite săli"
-            },
-            "stageTransparent": {
-              "title": "Soluții LED transparente pentru scenă",
-              "description": "Ecranele LED transparente pe scenă creează efectul unei grafici și unui video parcă „plutind” peste decor, fără a ascunde artiștii și amenajarea scenică.\n\nSoluția este folosită la show-uri de concert, prezentări de brand și piese de teatru, unde efectul vizual este important fără a pierde adâncimea scenei.",
-              "advantages": "păstrează vizibilitatea scenei și a decorului\ncreează efectul unei imagini plutitoare\nconsolidează impactul vizual al show-ului\npotrivit pentru concerte și prezentări\nconfigurație flexibilă în funcție de designul scenei"
-            },
-            "facadeTransparent": {
-              "title": "Fațade LED transparente",
-              "description": "Fațadele LED transparente se montează pe fațadele vitrate ale clădirilor și afișează conținut publicitar sau de imagine, păstrând fațada vizual transparentă ziua și transformând-o într-un ecran luminos seara.\n\nSoluția este potrivită pentru centre de afaceri și obiective comerciale cu suprafețe vitrate mari.",
-              "advantages": "păstrează lumina naturală în interiorul clădirii\ntransformă fațada vitrată într-o suprafață publicitară\narată impresionant atât ziua, cât și seara\nnu necesită înlocuirea vitrajului existent\nconsolidează imaginea vizuală a clădirii"
-            }
-          }
-        },
-        "flexible": {
-          "title": "Ecrane LED flexibile",
-          "subtitle": "Ecrane de forme neconvenționale — coloane, curbe și construcții atipice, adaptate cerințelor clientului",
-          "description": "Ecranele LED flexibile se asamblează din module care pot fi curbate și montate în forme neconvenționale — coloane rotunde, suprafețe ondulate, obiecte de geometrie liberă.\n\nSoluția este potrivită acolo unde este nevoie nu doar de un ecran, ci de un obiect vizual care devine parte din arhitectură sau din instalație.",
-          "items": {
-            "customShapes": {
-              "title": "Ecrane LED pentru forme neconvenționale",
-              "description": "Ecranele LED de formă neconvențională se asamblează pentru un proiect concret — din module care urmează geometria dorită a obiectului, fie că este un logo, o arcadă sau o instalație complexă.\n\nSoluția este utilizată în proiecte de imagine, showroom-uri și evenimente, unde este important un obiect vizual unic.",
-              "advantages": "forma ecranului adaptată proiectului individual\ncreează un obiect vizual unic\npotrivit pentru instalații de imagine\natrage atenția prin geometria neconvențională\ndezvoltare individuală pentru fiecare proiect"
-            },
-            "roundColumns": {
-              "title": "Coloane LED",
-              "description": "Coloanele LED sunt ecrane rotunde, vizibile pe 360 de grade, care afișează conținut din toate direcțiile și arată bine în spații deschise — holuri, atriumuri, zone comerciale.\n\nSoluția permite amplasarea ecranului acolo unde o construcție plată ar ocupa mai mult spațiu și ar fi vizibilă doar dintr-o singură parte.",
-              "advantages": "vizibilitate a conținutului pe 360 de grade\nformă compactă pentru spații deschise\nobiect vizual impresionant în interior\npotrivit pentru holuri, atriumuri și zone comerciale\ndiametru și înălțime individuale, adaptate proiectului"
-            },
-            "curvedDisplays": {
-              "title": "Ecrane LED curbate",
-              "description": "Ecranele LED curbate urmează curbura unui perete, a unei coloane sau a unei construcții de design, creând o imagine unitară, fără îmbinări vizibile.\n\nSoluția este folosită în interioare premium și proiecte de imagine, unde forma lină, aerodinamică a ecranului este importantă.",
-              "advantages": "urmează curbura elementului arhitectural\nimagine unitară, fără îmbinări vizibile\npotrivit pentru interioare premium\ncreează un accent vizual impresionant\nrază de curbură individuală, adaptată proiectului"
-            }
+        "items": {
+          "ledWalls": {
+            "client": "EVI MALL — Bălți",
+            "title": "Ecran LED interior într-un centru comercial",
+            "description": "Pentru centrul comercial EVI MALL din Bălți, compania EXTERIOR a instalat un ecran LED interior în zona centrală a mall-ului — între scările rulante, într-un loc bine vizibil.\n\nEcranul afișează conținut publicitar, de imagine și informativ: promoții, oferte sezoniere, campanii ale chiriașilor și vizualuri de brand.",
+            "advantages": "vizibil din mai multe puncte din interiorul mall-ului\natrage atenția într-o zonă cu trafic intens\npotrivit pentru publicitatea chiriașilor și campanii sezoniere\nschimbare rapidă a conținutului, fără tipărirea bannerelor\nface interiorul centrului comercial mai modern"
+          },
+          "mobileSolutions": {
+            "client": "Secția Cultură a Consiliului Raional Sîngerei",
+            "title": "Ecran LED mobil pentru scenă și evenimente",
+            "description": "Pentru Secția Cultură a Consiliului Raional Sîngerei, compania EXTERIOR a instalat un ecran LED mobil pentru utilizare pe scenă și în timpul evenimentelor culturale — pentru afișarea videoclipurilor, a conținutului de fundal și a susținerii vizuale a programelor.\n\nO astfel de soluție este convenabilă pentru instituțiile unde este important să adaptezi rapid echipamentul la diferite formate de evenimente.",
+            "advantages": "potrivit pentru concerte și evenimente oficiale\nafișează videoclipuri, generice și conținut tematic\nface scena mai modernă și mai expresivă\nse adaptează ușor la diferite formate de evenimente\nformatul mobil este convenabil în exploatare"
+          },
+          "outdoorStorefront": {
+            "client": "Global Marketing — magazin de cosmetice",
+            "title": "Ecran LED pentru vitrina unui magazin",
+            "description": "Pentru magazinul de cosmetice Global Marketing, compania EXTERIOR a instalat un ecran LED vertical în zona vitrinei fațadei — bine vizibil de pe stradă.\n\nEcranul afișează conținut beauty, spoturi publicitare, promoții și vizualuri de brand. Conținutul poate fi schimbat rapid, fără tipărire și fără costuri suplimentare pentru înlocuirea materialelor.",
+            "advantages": "atrage atenția de pe stradă\npermite schimbarea rapidă a conținutului publicitar\nînlocuiește bannerele statice\nface fațada magazinului mai modernă\najută la prezentarea atractivă a brandurilor și promoțiilor"
+          },
+          "mediaFacades": {
+            "client": "EVI MALL — Bălți",
+            "title": "Ecran LED exterior pe fațada unui centru comercial",
+            "description": "Pentru centrul comercial EVI MALL din Bălți, compania EXTERIOR a instalat ecrane LED exterioare pe fațada clădirii — într-o zonă cu vizibilitate ridicată dinspre parcare și intrare.\n\nEcranele afișează conținut publicitar, de imagine și vizual: promoții, branduri, campanii sezoniere și vizualuri digitale.",
+            "advantages": "bine vizibil din parcare și din zona de acces\natrage atenția încă înainte de intrarea în mall\npotrivit pentru publicitatea chiriașilor și brandurilor\nschimbare rapidă a conținutului, fără tipărirea bannerelor\nconsolidează imaginea vizuală a obiectivului"
           }
         }
       },
