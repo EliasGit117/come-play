@@ -14,6 +14,8 @@ interface IProjectCard {
   title: string;
   subtitle: string;
   img: string;
+  video: string;
+  videoScale?: number;
 }
 
 const SolutionList: FC<IProps> = ({ className, ...props }) => {
@@ -21,7 +23,9 @@ const SolutionList: FC<IProps> = ({ className, ...props }) => {
     slug: project.slug,
     title: tm(`pages.public.solutions.items.${project.key}.title`),
     subtitle: tm(`pages.public.solutions.items.${project.key}.client`),
-    img: project.photo
+    img: project.photo,
+    video: project.video,
+    videoScale: project.videoScale
   }));
 
   return (
@@ -45,23 +49,34 @@ const SolutionList: FC<IProps> = ({ className, ...props }) => {
 };
 
 
-const CategoryCard: FC<IProjectCard> = ({ slug, title, subtitle, img }) => {
+const CategoryCard: FC<IProjectCard> = ({ slug, title, subtitle, img, video, videoScale }) => {
   return (
     <Link
       to="/solutions/$slug"
       params={{ slug }}
-      className="group relative flex h-52 flex-col justify-end overflow-hidden rounded-md border border-border/50"
+      className="group relative flex h-80 flex-col justify-end overflow-hidden rounded-md border border-border/50"
     >
-      <img
-        src={img}
-        alt={title}
-        loading="lazy"
-        className={cn(
-          'absolute inset-0 h-full w-full object-cover brightness-75',
-          'transition duration-400 ease-in-out group-hover:scale-110 group-hover:brightness-50 group-focus:brightness-50'
-        )}
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"/>
+      <div
+        className="absolute inset-0"
+        style={videoScale ? { transform: `scale(${videoScale})` } : undefined}
+      >
+        <video
+          src={video}
+          poster={img}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          disablePictureInPicture
+          disableRemotePlayback
+          className={cn(
+            'h-full w-full object-cover brightness-90 dark:brightness-75',
+            'transition duration-400 ease-in-out group-hover:scale-110'
+          )}
+        />
+      </div>
+      <div className="absolute inset-0 bg-linear-to-t from-black/30 via-black/10 to-transparent"/>
       <div className="relative space-y-1 p-4 text-white max-w-md">
         <h3 className="text-xl font-semibold uppercase">{title}</h3>
       </div>

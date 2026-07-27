@@ -17,7 +17,7 @@ export const VideoBanner = () => {
             fetchPriority="high"
             src={videoPreview}
             alt="placeholder"
-            className="min-h-[512px] h-full w-full max-h-svh object-cover"
+            className="w-full h-svh object-cover"
           />
         }
       >
@@ -27,7 +27,7 @@ export const VideoBanner = () => {
           loop
           playsInline
           webkit-playsinline="true"
-          className="min-h-[512px] h-full w-full max-h-svh object-cover brightness-50"
+          className="w-full h-svh object-cover brightness-50"
         >
           <source src={videoBanner} type="video/mp4"/>
         </video>
@@ -37,7 +37,7 @@ export const VideoBanner = () => {
         <div
           className="container mx-auto py-4 px-8 space-y-3 sm:space-y-4 lg:space-y-5 xl:space-y-6 text-white whitespace-pre-line">
           <p className="text-xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl font-semibold leading-tight">
-            itc LED Display Solution
+            LED Display Solution
           </p>
         </div>
       </div>

@@ -50,23 +50,21 @@ export const HomeBannersCarousel: FC<IProps> = ({ className, ...props }) => {
       plugins={[Autoplay({ delay: 23000 })]}
     >
       <CarouselContent>
-        {(!!data && data.length > 0) ? (
-          data?.map((banner, index) => {
-            const hasData = !!banner.title || banner.text;
+        <VideoBanner/>
 
-            return (
-              <CarouselItem key={index} className="relative pl-0">
-                <BannerImage banner={banner} className="min-h-128"/>
-                {hasData && (<BannerOverlay banner={banner}/>)}
-              </CarouselItem>
-            );
-          })
-        ) : (
-          <VideoBanner/>
-        )}
+        {data?.map((banner, index) => {
+          const hasData = !!banner.title || banner.text;
+
+          return (
+            <CarouselItem key={index} className="relative pl-0">
+              <BannerImage banner={banner} className="min-h-128"/>
+              {hasData && (<BannerOverlay banner={banner}/>)}
+            </CarouselItem>
+          );
+        })}
       </CarouselContent>
 
-      {(!!api && data && data.length > 0) && (
+      {(!!api && count > 1) && (
         <div className="absolute bottom-1 left-0 right-0 flex z-10">
           <div className="flex justify-center gap-2 py-2 mx-auto items-center">
             <Button

@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import UnLazyImageSSR from '@/components/un-lazy-image-ssr';
 import { FC, ReactNode, useEffect } from 'react';
 import { toast } from 'sonner';
+import { m } from '@/paraglide/messages';
 
 
 export interface IImagePickerValue {
@@ -72,7 +73,7 @@ const CoverImagePicker: FC<INewsImageUploadProps> = (props) => {
     if (!errors.length) return;
 
     const errorMsg = errors.join(', ');
-    toast.error('Error', { description: errorMsg });
+    toast.error(m['pages.admin.shared.uploader.error'](), { description: errorMsg });
   }, [errors]);
 
   const removeImage = () => onFilesChange?.(undefined);
@@ -139,14 +140,14 @@ const CoverImagePicker: FC<INewsImageUploadProps> = (props) => {
                     openFileDialog();
                   }}
                   variant="secondary"
-                  aria-label="Replace image"
+                  aria-label={m['pages.admin.shared.uploader.replace']()}
                   className={cn(
                     'pointer-events-none',
                     !disabled && 'group-hover:pointer-events-auto group-focus-within:pointer-events-auto group-focus:pointer-events-auto'
                   )}
                 >
                   <IconUpload/>
-                  <span>Replace</span>
+                  <span>{m['pages.admin.shared.uploader.replace']()}</span>
                 </Button>
               </div>
 
@@ -158,14 +159,14 @@ const CoverImagePicker: FC<INewsImageUploadProps> = (props) => {
                     removeImage();
                   }}
                   variant="destructive"
-                  aria-label="Remove image"
+                  aria-label={m['pages.admin.shared.uploader.remove']()}
                   className={cn(
                     'pointer-events-none',
                     !disabled && 'group-hover:pointer-events-auto group-focus-within:pointer-events-auto group-focus:pointer-events-auto'
                   )}
                 >
                   <IconX/>
-                  <span>Remove</span>
+                  <span>{m['pages.admin.shared.uploader.remove']()}</span>
                 </Button>
               </div>
             </div>
@@ -181,9 +182,10 @@ const CoverImagePicker: FC<INewsImageUploadProps> = (props) => {
           </div>
 
           <div className="space-y-1">
-            <h3 className="text-base font-semibold">IconUpload Image</h3>
-            <p className="text-xs text-muted-foreground">Drag and drop an image here, or click to browse. Max
-              size: {formatBytes(maxSize)}</p>
+            <h3 className="text-base font-semibold">{m['pages.admin.shared.uploader.title']()}</h3>
+            <p className="text-xs text-muted-foreground">
+              {m['pages.admin.shared.uploader.dragAndDrop']({ maxSize: formatBytes(maxSize) })}
+            </p>
           </div>
         </div>
       )}

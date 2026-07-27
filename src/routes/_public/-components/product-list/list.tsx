@@ -42,7 +42,7 @@ const ProductList: FC<IProps> = ({ className, ...props }) => {
                   src={product.image}
                   alt={product.title}
                   loading="lazy"
-                  className="object-cover dark:brightness-75 size-full"
+                  className="object-cover brightness-90 dark:brightness-75 size-full"
                 />
               </Card>
 

@@ -31,7 +31,7 @@ export const Route = createFileRoute('/admin/banners/$id/edit')({
     const data = await context.queryClient.ensureQueryData(orpc.admin.banners.getById.queryOptions({ input: { id: Number(id) } }));
     return {
       banner: data,
-      breadcrumbs: { title: m['pages.admin.banners.breadcrumbs.editWithTitle']({ title: data.titleRo ?? '' }) }
+      breadcrumbs: { title: m['pages.admin.banners.breadcrumbs.editWithTitle']({ title: data.title ?? '' }) }
     };
   },
   head: () => ({ meta: [{ title: m['pages.admin.banners.head.edit']() }] })

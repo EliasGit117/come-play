@@ -632,7 +632,12 @@
         },
         "uploader": {
           "uploading": "Se încarcă...",
-          "removing": "Se elimină..."
+          "removing": "Se elimină...",
+          "title": "Încarcă imagine",
+          "dragAndDrop": "Trage și plasează o imagine aici sau apasă pentru a alege. Mărime maximă: {maxSize}",
+          "replace": "Înlocuiește",
+          "remove": "Șterge",
+          "error": "Eroare"
         },
         "meta": {
           "created": "Creat",
