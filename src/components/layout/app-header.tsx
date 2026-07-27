@@ -87,18 +87,15 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
 
           <div className="flex gap-2 items-center ml-auto">
             <LocaleDropdown buttonVariant="ghost" align="end"/>
-            <ThemeDropdown
-              variant="ghost"
-              className="ml-auto"
-              size="icon-sm"
-              align="end"
-            />
+            <ThemeDropdown size="icon-sm" variant="ghost" className="ml-auto" align="end"/>
+
             <Button variant="ghost" size="icon" className="transition-none" asChild>
               <Link to="/calculator">
                 <IconCalculator/>
                 <span className="sr-only">{m['layout.header.sr.calculator']()}</span>
               </Link>
             </Button>
+
             <Button
               variant="ghost"
               size="icon"

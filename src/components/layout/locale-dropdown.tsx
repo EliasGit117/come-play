@@ -1,5 +1,5 @@
-import { IconLanguage, IconSelector } from '@tabler/icons-react';
-import { ComponentProps, FC, useState } from 'react';
+import { IconLanguage } from '@tabler/icons-react';
+import { ComponentProps, FC } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,7 +22,7 @@ interface IProps extends ComponentProps<typeof DropdownMenuTrigger> {
   align?: 'start' | 'center' | 'end';
 }
 
-const options: { value: Locale; title: string; }[] = [{ value: 'ro', title: 'Română' }, { value: 'ru', title: 'Русский' }];
+const options: { value: Locale; title: string; }[] = [{ value: 'ro', title: 'RO' }, { value: 'ru', title: 'RU' }];
 
 const LocaleDropdown: FC<IProps> = ({ buttonVariant, align, className, ...props }) => {
   const locale = getLocale();
@@ -37,20 +37,13 @@ const LocaleDropdown: FC<IProps> = ({ buttonVariant, align, className, ...props 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant={buttonVariant} size='sm' className={cn('transition-none', className)} {...props}>
-          <span className='uppercase sm:hidden'>{locale}</span>
-
-          <IconLanguage className='hidden sm:block opacity-65'/>
-          <span className='hidden sm:block'>
-            {options.find(item => item.value === locale)?.title}
-          </span>
-          <IconSelector className='hidden sm:block opacity-65'/>
-
+        <Button variant={buttonVariant} size='icon-sm' className={cn('transition-none', className)} {...props}>
+          <span className='uppercase text-xs'>{locale}</span>
           <span className="sr-only">{m['layout.locale.sr_toggle']()}</span>
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="min-w-36" align={align}>
+      <DropdownMenuContent className="w-fit min-w-24" align={align}>
         <DropdownMenuLabel className="flex items-center gap-2">
           <IconLanguage className="size-4"/>
           <span>{m['layout.locale.label']()}</span>
