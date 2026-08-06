@@ -39,22 +39,18 @@ interface IContactForm {
 const SendRequestDialog: FC<{ className?: string }> = ({ className }) => {
   const [open, setOpen] = useState(false);
 
-  const { panelType, sight, wallWidthCm, wallHeightCm, tilesXCount, tilesYCount } =
+  const { panelType, sight, tilesXCount, tilesYCount } =
     usePanelSettingsProvider(s => ({
       panelType: s.panelType,
       sight: s.sight,
-      wallWidthCm: s.wallWidthCm,
-      wallHeightCm: s.wallHeightCm,
       tilesXCount: s.tilesXCount,
       tilesYCount: s.tilesYCount,
     }));
 
   const summary = [
     `${m['pages.public.calculator.settings.section_panel_type']()}: ${panelTypeLabels[panelType]()}`,
-    `${m['pages.public.calculator.settings.sight_distance_label']()}: ${sight.from} - ${sight.to}`,
-    `${m['pages.public.calculator.settings.section_wall']()}: ${wallWidthCm} x ${wallHeightCm} cm`,
-    `${m['pages.public.calculator.settings.section_dimensions']()}: ${tilesXCount} x ${tilesYCount}`,
-    `${m['pages.public.calculator.size_cm']({ value: tilesXCount * TILE_WIDTH_CM })} x ${m['pages.public.calculator.size_cm']({ value: tilesYCount * TILE_HEIGHT_CM })}`
+    `${m['pages.public.calculator.settings.section_screen_size']()}: ${tilesXCount * TILE_WIDTH_CM} x ${tilesYCount * TILE_HEIGHT_CM} cm`,
+    `${m['pages.public.calculator.settings.sight_distance_label']()}: ${sight.from} - ${sight.to}`
   ].join('\n');
 
   const localizedSchema = z.object({

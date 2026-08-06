@@ -26,14 +26,6 @@ const offices = [
     mapsHref: 'https://maps.app.goo.gl/j3J8LAtAE7c8X9pw8',
     longitude: 28.840586,
     latitude: 47.021793
-  },
-  {
-    id: 'balti',
-    phone: '078 608 068',
-    phoneHref: 'tel:+37378608068',
-    mapsHref: 'https://maps.app.goo.gl/SrwW3ftjfoquAXLA8',
-    longitude: 27.94368,
-    latitude: 47.76719
   }
 ] as const;
 
@@ -51,53 +43,51 @@ function RouteComponent() {
             </p>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-2">
+          <div className="grid gap-5">
             {offices.map((office) => (
-              <Card key={office.id} className="flex flex-col gap-4 p-5">
-                <h2 className="text-lg font-semibold">
-                  {office.id === 'chisinau'
-                    ? m['pages.public.contacts.offices.chisinau.title']()
-                    : m['pages.public.contacts.offices.balti.title']()}
-                </h2>
+              <Card key={office.id} className="flex flex-col gap-6 p-5 md:flex-row md:gap-8 md:p-6">
+                <div className="flex flex-col gap-4 md:w-72 md:shrink-0">
+                  <h2 className="text-lg font-semibold">
+                    {m['pages.public.contacts.offices.chisinau.title']()}
+                  </h2>
 
-                <a className="flex items-center gap-3 hover:underline" href="mailto:info@imou.md">
-                  <span className="bg-primary/10 flex size-7 shrink-0 items-center justify-center rounded-md">
-                    <IconMail className="text-primary size-3.5"/>
-                  </span>
-                  <span className="text-card-foreground text-base leading-5 font-medium">
-                    {m['pages.public.contacts.email']()}
-                  </span>
-                </a>
+                  <a className="flex items-center gap-3 hover:underline" href="mailto:info@imou.md">
+                    <span className="bg-primary/10 flex size-7 shrink-0 items-center justify-center rounded-md">
+                      <IconMail className="text-primary size-3.5"/>
+                    </span>
+                    <span className="text-card-foreground text-base leading-5 font-medium">
+                      {m['pages.public.contacts.email']()}
+                    </span>
+                  </a>
 
-                <a className="flex items-center gap-3 hover:underline" href={office.phoneHref}>
-                  <span className="bg-primary/10 flex size-7 shrink-0 items-center justify-center rounded-md">
-                    <IconPhone className="text-primary size-3.5"/>
-                  </span>
-                  <span className="text-card-foreground text-base leading-5 font-medium">{office.phone}</span>
-                </a>
+                  <a className="flex items-center gap-3 hover:underline" href={office.phoneHref}>
+                    <span className="bg-primary/10 flex size-7 shrink-0 items-center justify-center rounded-md">
+                      <IconPhone className="text-primary size-3.5"/>
+                    </span>
+                    <span className="text-card-foreground text-base leading-5 font-medium">{office.phone}</span>
+                  </a>
 
-                <a
-                  className="flex items-center gap-3 hover:underline"
-                  href={office.mapsHref}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <span className="bg-primary/10 flex size-7 shrink-0 items-center justify-center rounded-md">
-                    <IconMapPin className="text-primary size-3.5"/>
-                  </span>
-                  <span className="text-card-foreground flex-1 text-sm leading-5 font-medium">
-                    {office.id === 'chisinau'
-                      ? m['pages.public.contacts.offices.chisinau.address']()
-                      : m['pages.public.contacts.offices.balti.address']()}
-                  </span>
-                </a>
+                  <a
+                    className="flex items-center gap-3 hover:underline"
+                    href={office.mapsHref}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span className="bg-primary/10 flex size-7 shrink-0 items-center justify-center rounded-md">
+                      <IconMapPin className="text-primary size-3.5"/>
+                    </span>
+                    <span className="text-card-foreground flex-1 text-sm leading-5 font-medium">
+                      {m['pages.public.contacts.offices.chisinau.address']()}
+                    </span>
+                  </a>
 
-                <p className="text-muted-foreground text-sm">
-                  {m['pages.public.contacts.working_hours']()}
-                </p>
+                  <p className="text-muted-foreground text-sm">
+                    {m['pages.public.contacts.working_hours']()}
+                  </p>
+                </div>
 
-                <div className="mt-1 overflow-hidden rounded-lg border">
-                  <ContactMap center={[office.longitude, office.latitude]} zoom={14} className="h-80 md:h-96">
+                <div className="min-h-80 flex-1 overflow-hidden rounded-lg border md:min-h-0">
+                  <ContactMap center={[office.longitude, office.latitude]} zoom={14} className="h-full min-h-80">
                     <MapControls showZoom/>
                     <MapMarker longitude={office.longitude} latitude={office.latitude}>
                       <MarkerContent>
@@ -105,14 +95,10 @@ function RouteComponent() {
                       </MarkerContent>
                       <MarkerPopup closeOnClick={false}>
                         <p className="font-medium">
-                          {office.id === 'chisinau'
-                            ? m['pages.public.contacts.offices.chisinau.city']()
-                            : m['pages.public.contacts.offices.balti.city']()}
+                          {m['pages.public.contacts.offices.chisinau.city']()}
                         </p>
                         <p className="text-muted-foreground text-sm">
-                          {office.id === 'chisinau'
-                            ? m['pages.public.contacts.offices.chisinau.address']()
-                            : m['pages.public.contacts.offices.balti.address']()}
+                          {m['pages.public.contacts.offices.chisinau.address']()}
                         </p>
                         <p className="text-muted-foreground text-sm">
                           {m['pages.public.contacts.phone_label']()}: {office.phone}

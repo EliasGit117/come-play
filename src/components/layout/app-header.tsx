@@ -1,4 +1,4 @@
-import { IconCalculator, IconMenu2 } from '@tabler/icons-react';
+import { IconMenu2 } from '@tabler/icons-react';
 import { ComponentProps, FC, useState, useEffect } from 'react';
 import { Link, useMatches } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
@@ -88,13 +88,6 @@ const AppHeader: FC<IAppHeader> = ({ className, ...props }) => {
           <div className="flex gap-2 items-center ml-auto">
             <LocaleDropdown buttonVariant="ghost" align="end"/>
             <ThemeDropdown size="icon-sm" variant="ghost" className="ml-auto" align="end"/>
-
-            <Button variant="ghost" size="icon" className="transition-none" asChild>
-              <Link to="/calculator">
-                <IconCalculator/>
-                <span className="sr-only">{m['layout.header.sr.calculator']()}</span>
-              </Link>
-            </Button>
 
             <Button
               variant="ghost"

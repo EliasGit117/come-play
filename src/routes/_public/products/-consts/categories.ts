@@ -47,8 +47,7 @@ export const PRODUCT_CATEGORIES: CategoryConfig[] = [
     subcategories: [
       { slug: 'storefront-transparent', key: 'storefrontTransparent' },
       { slug: 'facade-transparent', key: 'facadeTransparent' },
-      { slug: 'stage-transparent', key: 'stageTransparent' },
-      { slug: 'museum-exhibition', key: 'museumExhibition' }
+      { slug: 'stage-transparent', key: 'stageTransparent' }
     ]
   },
   {

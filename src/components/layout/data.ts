@@ -52,14 +52,18 @@ export const getHeaderLinks = (user?: TUser | null): TLinkItem[] => [
   },
   {
     type: MenuItemType.Single,
-    item: { label: m['layout.header.contact'](), linkOpt: { to: '/contacts' } }
-  },
-  {
-    type: MenuItemType.Single,
     item: {
       label: m['layout.header.news.title'](),
       linkOpt: { to: '/news' }
     }
+  },
+  {
+    type: MenuItemType.Single,
+    item: { label: m['layout.header.contact'](), linkOpt: { to: '/contacts' } }
+  },
+  {
+    type: MenuItemType.Single,
+    item: { label: m['layout.header.calculator'](), linkOpt: { to: '/calculator' } }
   },
   ...(user?.role === 'admin' ? [{
     type: MenuItemType.Single,

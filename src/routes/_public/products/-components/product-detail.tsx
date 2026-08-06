@@ -12,6 +12,8 @@ interface IProps {
 const SPEC_FIELDS = [
   'pixelPitch',
   'brightness',
+  'refreshRate',
+  'viewingAngle',
   'transparency',
   'protection',
   'format',
