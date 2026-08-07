@@ -29,11 +29,6 @@ const AppFooter: FC<IProps> = ({ className, ...props }) => {
           </p>
 
           <p className="text-xs md:text-sm text-center md:text-start">
-            <b>{m['pages.public.contacts.offices.balti.title']()}:</b> {m['pages.public.contacts.offices.balti.address']()},
-            {' '}<b>{m['layout.footer.phone_label']()}:</b> 078 608 068
-          </p>
-
-          <p className="text-xs md:text-sm text-center md:text-start">
             <b>{m['layout.footer.email_label']()}:</b> {m['pages.public.contacts.email']()},
             {' '}{m['pages.public.contacts.working_hours']()}
           </p>

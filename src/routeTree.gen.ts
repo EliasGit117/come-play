@@ -9,49 +9,39 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as PublicRouteRouteImport } from './routes/_public/route'
-import { Route as AuthIndexRouteImport } from './routes/auth/index'
-import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as PublicContactsRouteImport } from './routes/_public/contacts'
-import { Route as AdminNewsRouteRouteImport } from './routes/admin/news/route'
-import { Route as AdminCustomerRequestsRouteRouteImport } from './routes/admin/customer-requests/route'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminBannersRouteRouteImport } from './routes/admin/banners/route'
-import { Route as AuthSignInIndexRouteImport } from './routes/auth/sign-in/index'
-import { Route as AdminNewsIndexRouteImport } from './routes/admin/news/index'
-import { Route as AdminCustomerRequestsIndexRouteImport } from './routes/admin/customer-requests/index'
-import { Route as AdminBannersIndexRouteImport } from './routes/admin/banners/index'
-import { Route as PublicSolutionsIndexRouteImport } from './routes/_public/solutions/index'
-import { Route as PublicNewsIndexRouteImport } from './routes/_public/news/index'
+import { Route as AdminCustomerRequestsRouteRouteImport } from './routes/admin/customer-requests/route'
+import { Route as AdminNewsRouteRouteImport } from './routes/admin/news/route'
+import { Route as AuthIndexRouteImport } from './routes/auth/index'
 import { Route as PublicCalculatorIndexRouteImport } from './routes/_public/calculator/index'
-import { Route as ApiRpcSplatRouteImport } from './routes/api/rpc.$'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
-import { Route as PublicSolutionsSlugRouteImport } from './routes/_public/solutions/$slug'
+import { Route as PublicNewsIndexRouteImport } from './routes/_public/news/index'
 import { Route as PublicNewsSlugRouteImport } from './routes/_public/news/$slug'
+import { Route as PublicSolutionsIndexRouteImport } from './routes/_public/solutions/index'
+import { Route as PublicSolutionsSlugRouteImport } from './routes/_public/solutions/$slug'
+import { Route as AdminBannersIndexRouteImport } from './routes/admin/banners/index'
+import { Route as AdminCustomerRequestsIndexRouteImport } from './routes/admin/customer-requests/index'
+import { Route as AdminNewsIndexRouteImport } from './routes/admin/news/index'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
+import { Route as ApiRpcSplatRouteImport } from './routes/api/rpc.$'
+import { Route as AuthSignInIndexRouteImport } from './routes/auth/sign-in/index'
 import { Route as PublicProductsCategoryIndexRouteImport } from './routes/_public/products/$category/index'
-import { Route as AdminNewsIdEditRouteImport } from './routes/admin/news/$id/edit'
-import { Route as AdminBannersIdEditRouteImport } from './routes/admin/banners/$id/edit'
 import { Route as PublicProductsCategorySubcategoryRouteImport } from './routes/_public/products/$category/$subcategory'
+import { Route as AdminBannersIdEditRouteImport } from './routes/admin/banners/$id/edit'
+import { Route as AdminNewsIdEditRouteImport } from './routes/admin/news/$id/edit'
 
-const AdminRouteRoute = AdminRouteRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PublicRouteRoute = PublicRouteRouteImport.update({
   id: '/_public',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthIndexRoute = AuthIndexRouteImport.update({
-  id: '/auth/',
-  path: '/auth/',
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
-} as any)
-const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminRouteRoute,
 } as any)
 const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
@@ -63,9 +53,14 @@ const PublicContactsRoute = PublicContactsRouteImport.update({
   path: '/contacts',
   getParentRoute: () => PublicRouteRoute,
 } as any)
-const AdminNewsRouteRoute = AdminNewsRouteRouteImport.update({
-  id: '/news',
-  path: '/news',
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminBannersRouteRoute = AdminBannersRouteRouteImport.update({
+  id: '/banners',
+  path: '/banners',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminCustomerRequestsRouteRoute =
@@ -74,35 +69,19 @@ const AdminCustomerRequestsRouteRoute =
     path: '/customer-requests',
     getParentRoute: () => AdminRouteRoute,
   } as any)
-const AdminBannersRouteRoute = AdminBannersRouteRouteImport.update({
-  id: '/banners',
-  path: '/banners',
+const AdminNewsRouteRoute = AdminNewsRouteRouteImport.update({
+  id: '/news',
+  path: '/news',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const AuthSignInIndexRoute = AuthSignInIndexRouteImport.update({
-  id: '/auth/sign-in/',
-  path: '/auth/sign-in/',
+const AuthIndexRoute = AuthIndexRouteImport.update({
+  id: '/auth/',
+  path: '/auth/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminNewsIndexRoute = AdminNewsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminNewsRouteRoute,
-} as any)
-const AdminCustomerRequestsIndexRoute =
-  AdminCustomerRequestsIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => AdminCustomerRequestsRouteRoute,
-  } as any)
-const AdminBannersIndexRoute = AdminBannersIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminBannersRouteRoute,
-} as any)
-const PublicSolutionsIndexRoute = PublicSolutionsIndexRouteImport.update({
-  id: '/solutions/',
-  path: '/solutions/',
+const PublicCalculatorIndexRoute = PublicCalculatorIndexRouteImport.update({
+  id: '/calculator/',
+  path: '/calculator/',
   getParentRoute: () => PublicRouteRoute,
 } as any)
 const PublicNewsIndexRoute = PublicNewsIndexRouteImport.update({
@@ -110,30 +89,51 @@ const PublicNewsIndexRoute = PublicNewsIndexRouteImport.update({
   path: '/news/',
   getParentRoute: () => PublicRouteRoute,
 } as any)
-const PublicCalculatorIndexRoute = PublicCalculatorIndexRouteImport.update({
-  id: '/calculator/',
-  path: '/calculator/',
+const PublicNewsSlugRoute = PublicNewsSlugRouteImport.update({
+  id: '/news/$slug',
+  path: '/news/$slug',
   getParentRoute: () => PublicRouteRoute,
 } as any)
-const ApiRpcSplatRoute = ApiRpcSplatRouteImport.update({
-  id: '/api/rpc/$',
-  path: '/api/rpc/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
-  getParentRoute: () => rootRouteImport,
+const PublicSolutionsIndexRoute = PublicSolutionsIndexRouteImport.update({
+  id: '/solutions/',
+  path: '/solutions/',
+  getParentRoute: () => PublicRouteRoute,
 } as any)
 const PublicSolutionsSlugRoute = PublicSolutionsSlugRouteImport.update({
   id: '/solutions/$slug',
   path: '/solutions/$slug',
   getParentRoute: () => PublicRouteRoute,
 } as any)
-const PublicNewsSlugRoute = PublicNewsSlugRouteImport.update({
-  id: '/news/$slug',
-  path: '/news/$slug',
-  getParentRoute: () => PublicRouteRoute,
+const AdminBannersIndexRoute = AdminBannersIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminBannersRouteRoute,
+} as any)
+const AdminCustomerRequestsIndexRoute =
+  AdminCustomerRequestsIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AdminCustomerRequestsRouteRoute,
+  } as any)
+const AdminNewsIndexRoute = AdminNewsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminNewsRouteRoute,
+} as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRpcSplatRoute = ApiRpcSplatRouteImport.update({
+  id: '/api/rpc/$',
+  path: '/api/rpc/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthSignInIndexRoute = AuthSignInIndexRouteImport.update({
+  id: '/auth/sign-in/',
+  path: '/auth/sign-in/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const PublicProductsCategoryIndexRoute =
   PublicProductsCategoryIndexRouteImport.update({
@@ -141,22 +141,22 @@ const PublicProductsCategoryIndexRoute =
     path: '/products/$category/',
     getParentRoute: () => PublicRouteRoute,
   } as any)
-const AdminNewsIdEditRoute = AdminNewsIdEditRouteImport.update({
-  id: '/$id/edit',
-  path: '/$id/edit',
-  getParentRoute: () => AdminNewsRouteRoute,
-} as any)
-const AdminBannersIdEditRoute = AdminBannersIdEditRouteImport.update({
-  id: '/$id/edit',
-  path: '/$id/edit',
-  getParentRoute: () => AdminBannersRouteRoute,
-} as any)
 const PublicProductsCategorySubcategoryRoute =
   PublicProductsCategorySubcategoryRouteImport.update({
     id: '/products/$category/$subcategory',
     path: '/products/$category/$subcategory',
     getParentRoute: () => PublicRouteRoute,
   } as any)
+const AdminBannersIdEditRoute = AdminBannersIdEditRouteImport.update({
+  id: '/$id/edit',
+  path: '/$id/edit',
+  getParentRoute: () => AdminBannersRouteRoute,
+} as any)
+const AdminNewsIdEditRoute = AdminNewsIdEditRouteImport.update({
+  id: '/$id/edit',
+  path: '/$id/edit',
+  getParentRoute: () => AdminNewsRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
@@ -317,13 +317,6 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_public': {
       id: '/_public'
       path: ''
@@ -331,19 +324,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/': {
-      id: '/auth/'
-      path: '/auth'
-      fullPath: '/auth/'
-      preLoaderRoute: typeof AuthIndexRouteImport
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/admin/': {
-      id: '/admin/'
-      path: '/'
-      fullPath: '/admin/'
-      preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof AdminRouteRoute
     }
     '/_public/': {
       id: '/_public/'
@@ -359,18 +345,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicContactsRouteImport
       parentRoute: typeof PublicRouteRoute
     }
-    '/admin/news': {
-      id: '/admin/news'
-      path: '/news'
-      fullPath: '/admin/news'
-      preLoaderRoute: typeof AdminNewsRouteRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/customer-requests': {
-      id: '/admin/customer-requests'
-      path: '/customer-requests'
-      fullPath: '/admin/customer-requests'
-      preLoaderRoute: typeof AdminCustomerRequestsRouteRouteImport
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/banners': {
@@ -380,39 +359,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBannersRouteRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/auth/sign-in/': {
-      id: '/auth/sign-in/'
-      path: '/auth/sign-in'
-      fullPath: '/auth/sign-in/'
-      preLoaderRoute: typeof AuthSignInIndexRouteImport
+    '/admin/customer-requests': {
+      id: '/admin/customer-requests'
+      path: '/customer-requests'
+      fullPath: '/admin/customer-requests'
+      preLoaderRoute: typeof AdminCustomerRequestsRouteRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/news': {
+      id: '/admin/news'
+      path: '/news'
+      fullPath: '/admin/news'
+      preLoaderRoute: typeof AdminNewsRouteRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/auth/': {
+      id: '/auth/'
+      path: '/auth'
+      fullPath: '/auth/'
+      preLoaderRoute: typeof AuthIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/news/': {
-      id: '/admin/news/'
-      path: '/'
-      fullPath: '/admin/news/'
-      preLoaderRoute: typeof AdminNewsIndexRouteImport
-      parentRoute: typeof AdminNewsRouteRoute
-    }
-    '/admin/customer-requests/': {
-      id: '/admin/customer-requests/'
-      path: '/'
-      fullPath: '/admin/customer-requests/'
-      preLoaderRoute: typeof AdminCustomerRequestsIndexRouteImport
-      parentRoute: typeof AdminCustomerRequestsRouteRoute
-    }
-    '/admin/banners/': {
-      id: '/admin/banners/'
-      path: '/'
-      fullPath: '/admin/banners/'
-      preLoaderRoute: typeof AdminBannersIndexRouteImport
-      parentRoute: typeof AdminBannersRouteRoute
-    }
-    '/_public/solutions/': {
-      id: '/_public/solutions/'
-      path: '/solutions'
-      fullPath: '/solutions/'
-      preLoaderRoute: typeof PublicSolutionsIndexRouteImport
+    '/_public/calculator/': {
+      id: '/_public/calculator/'
+      path: '/calculator'
+      fullPath: '/calculator/'
+      preLoaderRoute: typeof PublicCalculatorIndexRouteImport
       parentRoute: typeof PublicRouteRoute
     }
     '/_public/news/': {
@@ -422,26 +394,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicNewsIndexRouteImport
       parentRoute: typeof PublicRouteRoute
     }
-    '/_public/calculator/': {
-      id: '/_public/calculator/'
-      path: '/calculator'
-      fullPath: '/calculator/'
-      preLoaderRoute: typeof PublicCalculatorIndexRouteImport
+    '/_public/news/$slug': {
+      id: '/_public/news/$slug'
+      path: '/news/$slug'
+      fullPath: '/news/$slug'
+      preLoaderRoute: typeof PublicNewsSlugRouteImport
       parentRoute: typeof PublicRouteRoute
     }
-    '/api/rpc/$': {
-      id: '/api/rpc/$'
-      path: '/api/rpc/$'
-      fullPath: '/api/rpc/$'
-      preLoaderRoute: typeof ApiRpcSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_public/solutions/': {
+      id: '/_public/solutions/'
+      path: '/solutions'
+      fullPath: '/solutions/'
+      preLoaderRoute: typeof PublicSolutionsIndexRouteImport
+      parentRoute: typeof PublicRouteRoute
     }
     '/_public/solutions/$slug': {
       id: '/_public/solutions/$slug'
@@ -450,12 +415,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicSolutionsSlugRouteImport
       parentRoute: typeof PublicRouteRoute
     }
-    '/_public/news/$slug': {
-      id: '/_public/news/$slug'
-      path: '/news/$slug'
-      fullPath: '/news/$slug'
-      preLoaderRoute: typeof PublicNewsSlugRouteImport
-      parentRoute: typeof PublicRouteRoute
+    '/admin/banners/': {
+      id: '/admin/banners/'
+      path: '/'
+      fullPath: '/admin/banners/'
+      preLoaderRoute: typeof AdminBannersIndexRouteImport
+      parentRoute: typeof AdminBannersRouteRoute
+    }
+    '/admin/customer-requests/': {
+      id: '/admin/customer-requests/'
+      path: '/'
+      fullPath: '/admin/customer-requests/'
+      preLoaderRoute: typeof AdminCustomerRequestsIndexRouteImport
+      parentRoute: typeof AdminCustomerRequestsRouteRoute
+    }
+    '/admin/news/': {
+      id: '/admin/news/'
+      path: '/'
+      fullPath: '/admin/news/'
+      preLoaderRoute: typeof AdminNewsIndexRouteImport
+      parentRoute: typeof AdminNewsRouteRoute
+    }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/rpc/$': {
+      id: '/api/rpc/$'
+      path: '/api/rpc/$'
+      fullPath: '/api/rpc/$'
+      preLoaderRoute: typeof ApiRpcSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/sign-in/': {
+      id: '/auth/sign-in/'
+      path: '/auth/sign-in'
+      fullPath: '/auth/sign-in/'
+      preLoaderRoute: typeof AuthSignInIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_public/products/$category/': {
       id: '/_public/products/$category/'
@@ -464,12 +464,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicProductsCategoryIndexRouteImport
       parentRoute: typeof PublicRouteRoute
     }
-    '/admin/news/$id/edit': {
-      id: '/admin/news/$id/edit'
-      path: '/$id/edit'
-      fullPath: '/admin/news/$id/edit'
-      preLoaderRoute: typeof AdminNewsIdEditRouteImport
-      parentRoute: typeof AdminNewsRouteRoute
+    '/_public/products/$category/$subcategory': {
+      id: '/_public/products/$category/$subcategory'
+      path: '/products/$category/$subcategory'
+      fullPath: '/products/$category/$subcategory'
+      preLoaderRoute: typeof PublicProductsCategorySubcategoryRouteImport
+      parentRoute: typeof PublicRouteRoute
     }
     '/admin/banners/$id/edit': {
       id: '/admin/banners/$id/edit'
@@ -478,12 +478,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBannersIdEditRouteImport
       parentRoute: typeof AdminBannersRouteRoute
     }
-    '/_public/products/$category/$subcategory': {
-      id: '/_public/products/$category/$subcategory'
-      path: '/products/$category/$subcategory'
-      fullPath: '/products/$category/$subcategory'
-      preLoaderRoute: typeof PublicProductsCategorySubcategoryRouteImport
-      parentRoute: typeof PublicRouteRoute
+    '/admin/news/$id/edit': {
+      id: '/admin/news/$id/edit'
+      path: '/$id/edit'
+      fullPath: '/admin/news/$id/edit'
+      preLoaderRoute: typeof AdminNewsIdEditRouteImport
+      parentRoute: typeof AdminNewsRouteRoute
     }
   }
 }
