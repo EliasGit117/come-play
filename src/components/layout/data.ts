@@ -26,27 +26,27 @@ export const getHeaderLinks = (user?: TUser | null): TLinkItem[] => [
       {
         label: m['layout.header.products.indoor.label'](),
         description: m['layout.header.products.indoor.description'](),
-        linkOpt: { to: '/products/$category', params: { category: 'indoor' } }
+        linkOpt: { to: '/solutions/$category', params: { category: 'indoor' } }
       },
       {
         label: m['layout.header.products.outdoor.label'](),
         description: m['layout.header.products.outdoor.description'](),
-        linkOpt: { to: '/products/$category', params: { category: 'outdoor' } }
+        linkOpt: { to: '/solutions/$category', params: { category: 'outdoor' } }
       },
       {
         label: m['layout.header.products.rental.label'](),
         description: m['layout.header.products.rental.description'](),
-        linkOpt: { to: '/products/$category', params: { category: 'rental' } }
+        linkOpt: { to: '/solutions/$category', params: { category: 'rental' } }
       },
       {
         label: m['layout.header.products.transparent.label'](),
         description: m['layout.header.products.transparent.description'](),
-        linkOpt: { to: '/products/$category', params: { category: 'transparent' } }
+        linkOpt: { to: '/solutions/$category', params: { category: 'transparent' } }
       },
       {
         label: m['layout.header.products.soft.label'](),
         description: m['layout.header.products.soft.description'](),
-        linkOpt: { to: '/products/$category', params: { category: 'soft' } }
+        linkOpt: { to: '/solutions/$category', params: { category: 'soft' } }
       }
     ]
   },

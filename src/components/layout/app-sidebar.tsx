@@ -122,7 +122,7 @@ const SidebarLink: FC<ISidebarLinkProps> = (props) => {
       onClick={onClick}
       asChild
     >
-      <Link to={item.linkOpt.to} className="flex flex-col items-start px-0">
+      <Link {...item.linkOpt} className="flex flex-col items-start px-0">
         <span className={labelClass}>{item.label}</span>
         {item.description && (
           <span className={cn(descClass, 'text-muted-foreground whitespace-pre-line')}>

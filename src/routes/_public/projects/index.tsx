@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Card } from '@/components/ui/card';
-import SolutionsBreadcrumb from './-components/solutions-breadcrumb';
+import ProjectsBreadcrumb from './-components/projects-breadcrumb';
 import { SOLUTION_PROJECTS } from './-consts/projects';
 import { tm } from './-lib/get-message';
 import { seo } from '@/utils/seo';
 
-export const Route = createFileRoute('/_public/solutions/')({
+export const Route = createFileRoute('/_public/projects/')({
   component: RouteComponent,
   head: () => ({
     meta: seo({
@@ -21,7 +21,7 @@ function RouteComponent() {
 
   return (
     <main className="container mx-auto px-4 pb-16 pt-6 space-y-8">
-      <SolutionsBreadcrumb/>
+      <ProjectsBreadcrumb/>
 
       <div>
         <h1 className="text-3xl md:text-4xl font-bold">{title}</h1>
@@ -49,7 +49,7 @@ function ProjectCard({ slug, itemKey, photo }: IProjectCardProps) {
   const client = tm(`${baseKey}.client`);
 
   return (
-    <Link to="/solutions/$slug" params={{ slug }} className="group">
+    <Link to="/projects/$slug" params={{ slug }} className="group">
       <Card className="relative h-full p-0 gap-0 overflow-hidden border-border/50 transition-all hover:border-primary/50 aspect-3/2">
         <img
           alt={title}

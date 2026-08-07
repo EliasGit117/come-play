@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { HomeBanners } from './-components/home-banners';
-import { ProductList } from './-components/product-list';
-import { SolutionList } from './-components/solutions';
+import { SolutionList } from './-components/solution-list';
+import { ProjectList } from './-components/projects';
 import { WriteAMessageSection } from './-components/write-a-message';
 import LatestNews from '@/routes/_public/-components/latest-news';
 import { orpc } from '@/lib/orpc';
@@ -26,8 +26,8 @@ function RouteComponent() {
   return (
     <main className='pb-16 space-y-16'>
       <HomeBanners/>
-      <ProductList className={containerClass}/>
       <SolutionList className={containerClass}/>
+      <ProjectList className={containerClass}/>
       <WriteAMessageSection className={containerClass}/>
       <LatestNews className={containerClass}/>
     </main>

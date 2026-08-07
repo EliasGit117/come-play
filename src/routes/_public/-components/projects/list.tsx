@@ -2,8 +2,8 @@ import { ComponentProps, FC } from 'react';
 import { cn } from '@/lib/utils';
 import { Link } from '@tanstack/react-router';
 import { m } from '@/paraglide/messages';
-import { SOLUTION_PROJECTS } from '@/routes/_public/solutions/-consts/projects';
-import { tm } from '@/routes/_public/solutions/-lib/get-message';
+import { SOLUTION_PROJECTS } from '@/routes/_public/projects/-consts/projects';
+import { tm } from '@/routes/_public/projects/-lib/get-message';
 
 
 interface IProps extends ComponentProps<'section'> {
@@ -18,7 +18,7 @@ interface IProjectCard {
   videoScale?: number;
 }
 
-const SolutionList: FC<IProps> = ({ className, ...props }) => {
+const ProjectList: FC<IProps> = ({ className, ...props }) => {
   const projects: IProjectCard[] = SOLUTION_PROJECTS.map((project) => ({
     slug: project.slug,
     title: tm(`pages.public.solutions.items.${project.key}.title`),
@@ -52,7 +52,7 @@ const SolutionList: FC<IProps> = ({ className, ...props }) => {
 const CategoryCard: FC<IProjectCard> = ({ slug, title, subtitle, img, video, videoScale }) => {
   return (
     <Link
-      to="/solutions/$slug"
+      to="/projects/$slug"
       params={{ slug }}
       className="group relative flex h-80 flex-col justify-end overflow-hidden rounded-md border border-border/50"
     >
@@ -84,4 +84,4 @@ const CategoryCard: FC<IProjectCard> = ({ slug, title, subtitle, img, video, vid
   );
 };
 
-export default SolutionList;
+export default ProjectList;

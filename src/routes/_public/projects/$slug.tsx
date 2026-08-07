@@ -1,13 +1,13 @@
 import { createFileRoute, notFound } from '@tanstack/react-router';
 import { NotFoundCard } from '@/components/not-found-card';
 import CaseStudy from './-components/case-study';
-import SolutionsBreadcrumb from './-components/solutions-breadcrumb';
+import ProjectsBreadcrumb from './-components/projects-breadcrumb';
 import { getSolutionProject } from './-consts/projects';
 import { tm } from './-lib/get-message';
 import { seo } from '@/utils/seo';
 import { htmlToExcerpt } from '@/utils/text';
 
-export const Route = createFileRoute('/_public/solutions/$slug')({
+export const Route = createFileRoute('/_public/projects/$slug')({
   component: RouteComponent,
   loader: ({ params: { slug } }) => {
     const project = getSolutionProject(slug);
@@ -38,7 +38,7 @@ function RouteComponent() {
 
   return (
     <main className="container mx-auto px-4 pb-16 pt-6 space-y-8">
-      <SolutionsBreadcrumb current={title}/>
+      <ProjectsBreadcrumb current={title}/>
 
       <CaseStudy baseKey={baseKey} media={project}/>
     </main>

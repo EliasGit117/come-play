@@ -20,7 +20,7 @@ const SubcategoryCard: FC<IProps> = ({ categorySlug, categoryKey, subcategorySlu
 
   return (
     <Link
-      to="/products/$category/$subcategory"
+      to="/solutions/$category/$subcategory"
       params={{ category: categorySlug, subcategory: subcategorySlug }}
       className="group"
     >

@@ -16,7 +16,7 @@ interface IProps {
   current?: string;
 }
 
-const SolutionsBreadcrumb: FC<IProps> = ({ current }) => {
+const ProjectsBreadcrumb: FC<IProps> = ({ current }) => {
   const solutionsLabel = tm('pages.public.solutions.common.solutionsLabel');
 
   return (
@@ -35,7 +35,7 @@ const SolutionsBreadcrumb: FC<IProps> = ({ current }) => {
         <BreadcrumbItem>
           {current ? (
             <BreadcrumbLink asChild>
-              <Link to="/solutions">{solutionsLabel}</Link>
+              <Link to="/projects">{solutionsLabel}</Link>
             </BreadcrumbLink>
           ) : (
             <BreadcrumbPage className="text-muted-foreground">{solutionsLabel}</BreadcrumbPage>
@@ -55,4 +55,4 @@ const SolutionsBreadcrumb: FC<IProps> = ({ current }) => {
   );
 };
 
-export default SolutionsBreadcrumb;
+export default ProjectsBreadcrumb;

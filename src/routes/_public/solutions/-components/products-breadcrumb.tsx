@@ -52,7 +52,7 @@ const ProductsBreadcrumb: FC<IProps> = ({ crumbs }) => {
                   <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink asChild>
-                    <Link to="/products/$category" params={{ category: crumb.categorySlug }}>
+                    <Link to="/solutions/$category" params={{ category: crumb.categorySlug }}>
                       {crumb.label}
                     </Link>
                   </BreadcrumbLink>

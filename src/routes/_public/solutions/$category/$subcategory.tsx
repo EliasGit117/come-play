@@ -7,7 +7,7 @@ import { tm } from '../-lib/get-message';
 import { seo } from '@/utils/seo';
 import { htmlToExcerpt } from '@/utils/text';
 
-export const Route = createFileRoute('/_public/products/$category/$subcategory')({
+export const Route = createFileRoute('/_public/solutions/$category/$subcategory')({
   component: RouteComponent,
   loader: ({ params: { category, subcategory } }) => {
     const result = getSubcategory(category, subcategory);

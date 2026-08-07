@@ -9,7 +9,7 @@ import { tm } from '../-lib/get-message';
 import { seo } from '@/utils/seo';
 import { htmlToExcerpt } from '@/utils/text';
 
-export const Route = createFileRoute('/_public/products/$category/')({
+export const Route = createFileRoute('/_public/solutions/$category/')({
   component: RouteComponent,
   loader: ({ params: { category } }) => {
     const config = getCategory(category);

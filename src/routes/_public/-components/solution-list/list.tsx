@@ -8,7 +8,7 @@ import { m } from '@/paraglide/messages';
 interface IProps extends ComponentProps<'section'> {
 }
 
-const ProductList: FC<IProps> = ({ className, ...props }) => {
+const SolutionList: FC<IProps> = ({ className, ...props }) => {
   const products = [
     { id: 'indoor', category: 'indoor', title: m['pages.public.home.products.indoor'](), image: '/images/products/indoor/category.webp' },
     { id: 'outdoor', category: 'outdoor', title: m['pages.public.home.products.outdoor'](), image: '/images/products/outdoor/category.webp' },
@@ -31,7 +31,7 @@ const ProductList: FC<IProps> = ({ className, ...props }) => {
       <div className={cn('grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6')}>
         {products.map((product) => (
           <article key={product.id}>
-            <Link to="/products/$category" params={{ category: product.category }}>
+            <Link to="/solutions/$category" params={{ category: product.category }}>
               <Card
                 className={cn(
                   'relative max-w-xs p-0! shadow-none h-52 bg-muted/50',
@@ -57,4 +57,4 @@ const ProductList: FC<IProps> = ({ className, ...props }) => {
   );
 };
 
-export default ProductList;
+export default SolutionList;
