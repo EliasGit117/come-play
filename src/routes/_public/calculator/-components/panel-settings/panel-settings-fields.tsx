@@ -14,16 +14,16 @@ const PanelSettingsFields: FC = () => (
       <PanelTypeSelector />
     </PanelSettingsStep>
 
+    <PanelSettingsStep title={m['pages.public.calculator.settings.section_dimensions']()}>
+      <DimensionsInput />
+    </PanelSettingsStep>
+
     <PanelSettingsStep title={m['pages.public.calculator.settings.sight_distance_label']()}>
       <SightDistanceSlider />
     </PanelSettingsStep>
 
     <PanelSettingsStep title={m['pages.public.calculator.settings.section_wall']()}>
       <WallSizeInput />
-    </PanelSettingsStep>
-
-    <PanelSettingsStep title={m['pages.public.calculator.settings.section_dimensions']()}>
-      <DimensionsInput />
     </PanelSettingsStep>
 
     <PanelSettingsStep title={m['pages.public.calculator.settings.section_image']()}>
