@@ -403,36 +403,43 @@
         },
         "transparent": {
           "title": "Afișaje LED transparente",
-          "subtitle": "Publicitate care atrage atenția și păstrează spațiul",
-          "description": "Afișajele LED transparente sunt o soluție pentru suprafețele de sticlă, acolo unde este important să afișezi conținut fără a bloca vizibilitatea și lumina.\n\nAcestea fac vitrina sau fațada vizibilă, păstrând în același timp spațiul deschis și luminos din punct de vedere vizual.\n\nAceste ecrane au un aspect modern și elegant, fiind potrivite nu doar pentru magazine, ci și pentru evenimente, expoziții și muzee.",
+          "subtitle": "Soluții LED moderne care atrag atenția, fără a bloca spațiul",
+          "description": "Afișajele LED transparente permit plasarea de conținut digital luminos pe suprafețe de sticlă, păstrând lumina naturală și vizibilitatea spațiului. Datorită transparenței ridicate, ecranul este practic invizibil atunci când este oprit și se integrează armonios în arhitectura clădirii sau a interiorului.\n\nAceastă soluție este ideală pentru afacerile care doresc să folosească vitrine, fațade de sticlă sau ferestre panoramice ca instrument publicitar eficient, fără a afecta designul spațiului. Afișajele LED transparente combină un aspect modern, o calitate ridicată a imaginii și posibilitatea de a crea prezentări vizuale spectaculoase, fără senzația unei construcții masive.",
           "items": {
             "storefrontTransparent": {
               "title": "Afișaje LED transparente pentru vitrine",
-              "description": "Afișajele LED transparente pentru vitrine fac vitrina mai vizibilă, mai modernă și mai expresivă, fără a bloca vizibilitatea spre interiorul magazinului. Această soluție permite afișarea de reclame, promoții, noutăți și conținut de brand direct pe sticlă, păstrând în același timp sentimentul de spațiu deschis și luminos.\n\nAcest format funcționează deosebit de bine atunci când este importantă atragerea atenției de pe stradă, păstrând în același timp un aspect estetic al vitrinei. Ecranul nu încarcă vizual spațiul, dar îl face mult mai vizibil pentru trecători.",
-              "applications": "vitrine de magazine\nboutique-uri\ncentre comerciale\nsaloane\nshowroom-uri",
+              "description": "Atrageți atenția trecătorilor, păstrând o vitrină deschisă și atractivă.\n\nAfișajele LED transparente pentru vitrine se instalează direct pe vitrinele de sticlă ale magazinelor, boutique-urilor și showroom-urilor, transformându-le într-un spațiu publicitar modern. Acestea permit difuzarea de conținut video luminos, promoții și materiale de brand, fără a bloca vizibilitatea produselor și fără a reduce lumina naturală.\n\nPrincipalul avantaj — folosirea întregii suprafețe a vitrinei pentru publicitate, fără a modifica aspectul acesteia.",
+              "applications": "magazine\nboutique-uri\ncentre comerciale\nshowroom-uri\nfarmacii\nbănci\nsaloane auto",
               "specs": {
-                "pixelPitch": "P2.9 – P7.8",
-                "brightness": "800–3000 nit",
-                "transparency": "până la 70%"
+                "pixelPitch": "P2.5 – P10.4",
+                "brightness": "până la 5500 Nit",
+                "refreshRate": "până la 1920 Hz",
+                "transparency": "până la 70%",
+                "viewingAngle": "140° (oriz.) / 125° (vert.)"
               }
             },
             "facadeTransparent": {
-              "title": "Sisteme LED transparente de fațadă",
-              "description": "Sistemele LED transparente de fațadă sunt destinate fațadelor de sticlă ale clădirilor, acolo unde este importantă combinarea arhitecturii cu funcția publicitară. Acestea fac fațada mai vizibilă și mai modernă, fără a o acoperi cu o structură masivă și opacă.\n\nAceastă soluție este potrivită pentru clădirile care doresc un aspect modern și prestigios. Ecranul devine parte a fațadei și transformă clădirea într-un suport vizual activ, păstrând în același timp lumina și aspectul aerisit al arhitecturii.",
-              "applications": "fațade de sticlă ale clădirilor\ncentre de afaceri\ncomplexe comerciale\nobiective comerciale moderne\nspații urbane",
+              "title": "Afișaje LED transparente pentru fațade",
+              "description": "Folosiți fațada de sticlă ca spațiu digital modern.\n\nAfișajele LED transparente pentru fațade se instalează pe suprafețele de sticlă ale clădirilor. Principalul avantaj — transformarea fațadei de sticlă într-un suport publicitar de amploare, păstrând arhitectura clădirii.",
+              "applications": "centre de afaceri\ncomplexe comerciale\nhoteluri\nclădiri de birouri\nobiective comerciale",
               "specs": {
-                "pixelPitch": "P3.9 – P10",
-                "brightness": "3000–5500 nit",
-                "transparency": "60–80%"
+                "pixelPitch": "P2.5 – P10.4",
+                "brightness": "până la 5500 Nit",
+                "refreshRate": "până la 1920 Hz",
+                "transparency": "până la 70%",
+                "viewingAngle": "140° (oriz.) / 125° (vert.)"
               }
             },
             "stageTransparent": {
               "title": "Soluții LED transparente pentru scenă",
-              "description": "Soluțiile LED transparente pentru scenă sunt folosite atunci când este nevoie de un efect vizual spectaculos, fără senzația unui ecran masiv și opac. Acestea permit crearea unei scenografii ușoare, moderne și expresive, care sprijină percepția unui spectacol, concert sau prezentări.\n\nUn astfel de ecran amplifică impresia generală a spectacolului, adaugă profunzime scenei și face conținutul mai interesant pentru spectatori. Este deosebit de relevant pentru proiectele în care prezentarea vizuală, atmosfera și formatul modern al scenei sunt esențiale.",
-              "applications": "concerte\nspectacole\nprezentări\nproducții scenice\nevenimente\nproiecte event",
+              "description": "Soluții vizuale spectaculoase pentru scene și spectacole.\n\nAfișajele LED transparente sunt folosite pe scară largă pe scene, la expoziții și prezentări. Principalul avantaj — conținut spectaculos, fără senzația unor construcții masive.",
+              "applications": "concerte\nexpoziții\nprezentări\nconferințe\nevenimente corporative\nmuzee",
               "specs": {
-                "pixelPitch": "P3.9 – P7.8",
-                "brightness": "1000–4000 nit"
+                "pixelPitch": "P2.5 – P10.4",
+                "brightness": "până la 5500 Nit",
+                "refreshRate": "până la 1920 Hz",
+                "transparency": "până la 70%",
+                "viewingAngle": "140° (oriz.) / 125° (vert.)"
               }
             }
           }
