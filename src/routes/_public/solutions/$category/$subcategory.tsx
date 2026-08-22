@@ -50,18 +50,25 @@ function RouteComponent() {
       <h1 className="text-3xl md:text-4xl font-bold">{title}</h1>
 
       {category.hasImages && (
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-3 gap-4">
           <img
             src={getSubcategoryImage(category.slug, subcategory.slug, 1)}
             alt={title}
             loading="lazy"
-            className="w-full h-auto rounded-xl border border-border/50 object-contain aspect-3/2 bg-muted/50"
+            className="w-full h-full rounded-xl border border-border/50 object-cover aspect-3/2 bg-muted/50"
           />
           <img
             src={getSubcategoryImage(category.slug, subcategory.slug, 2)}
             alt={title}
             loading="lazy"
-            className="w-full h-auto rounded-xl border border-border/50 object-contain aspect-3/2 bg-muted/50"
+            className="w-full h-full rounded-xl border border-border/50 object-cover aspect-3/2 bg-muted/50"
+          />
+          <img
+            src={getSubcategoryImage(category.slug, subcategory.slug, 3)}
+            alt={title}
+            loading="lazy"
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            className="w-full h-full rounded-xl border border-border/50 object-cover aspect-3/2 bg-muted/50"
           />
         </div>
       )}

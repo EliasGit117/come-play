@@ -93,5 +93,5 @@ export const getSubcategory = (categorySlug: string, subcategorySlug: string) =>
 
 export const getCategoryImage = (categorySlug: string) => `/images/products/${categorySlug}/category.webp`;
 
-export const getSubcategoryImage = (categorySlug: string, subcategorySlug: string, variant: 1 | 2 = 1) =>
+export const getSubcategoryImage = (categorySlug: string, subcategorySlug: string, variant: 1 | 2 | 3 = 1) =>
   `/images/products/${categorySlug}/${subcategorySlug}-${variant}.webp`;
