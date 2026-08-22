@@ -55,12 +55,14 @@ function RouteComponent() {
             src={getSubcategoryImage(category.slug, subcategory.slug, 1)}
             alt={title}
             loading="lazy"
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
             className="w-full h-full rounded-xl border border-border/50 object-cover aspect-3/2 bg-muted/50"
           />
           <img
             src={getSubcategoryImage(category.slug, subcategory.slug, 2)}
             alt={title}
             loading="lazy"
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
             className="w-full h-full rounded-xl border border-border/50 object-cover aspect-3/2 bg-muted/50"
           />
           <img

@@ -63,7 +63,7 @@ export const PRODUCT_CATEGORIES: CategoryConfig[] = [
   {
     slug: 'rental',
     key: 'rental',
-    hasImages: false,
+    hasImages: true,
     hasHeroImage: true,
     subcategories: [
       { slug: 'outdoor-rental', key: 'outdoorRental' },
