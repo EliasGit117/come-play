@@ -32,7 +32,7 @@ const SubcategoryCard: FC<IProps> = ({ categorySlug, categoryKey, subcategorySlu
             loading="lazy"
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/90 to-transparent"/>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 via-40% to-black/10"/>
           <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 p-4 text-white">
             <h3 className="font-semibold">{title}</h3>
             <p className="text-xs text-white/85 line-clamp-3">{excerpt}</p>
