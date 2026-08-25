@@ -63,14 +63,16 @@ export const EditNewsForm: FC<IEditNewsFormProps> = ({ className, disabled }) =>
               <FieldLabel htmlFor="status-select">{m['pages.admin.shared.fields.status']()}</FieldLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger id="status-select" className="w-full justify-start">
-                    {field.value === NewsStatus.hidden ? <IconEyeOff/> : <IconEye/>}
-                    <span className="capitalize">
-                      {field.value === NewsStatus.hidden ? m['pages.admin.shared.status.hidden']() : m['pages.admin.shared.status.published']()}
+                  <SelectTrigger id="status-select" className="w-full justify-between">
+                    <span className="flex items-center gap-1.5">
+                      {field.value === NewsStatus.hidden ? <IconEyeOff/> : <IconEye/>}
+                      <span className="capitalize">
+                        {field.value === NewsStatus.hidden ? m['pages.admin.shared.status.hidden']() : m['pages.admin.shared.status.published']()}
+                      </span>
                     </span>
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
+                <SelectContent position="popper">
                   <SelectItem value={NewsStatus.published}>
                     <IconEye/>
                     <span>{m['pages.admin.shared.status.published']()}</span>

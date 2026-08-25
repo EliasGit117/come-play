@@ -254,7 +254,7 @@ export const newsColumns = (options?: INewsColumnsOptions) => {
                 </Button>
               </DropdownMenuTrigger>
 
-              <DropdownMenuContent className="w-40" align="end">
+              <DropdownMenuContent className="w-fit min-w-56" align="end">
                 <DropdownMenuLabel>
                   {m['pages.admin.shared.actions.actions']()}
                 </DropdownMenuLabel>
