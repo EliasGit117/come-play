@@ -10,7 +10,7 @@ const PanelSettingsAside: FC = () => {
       className={cn(
       'sticky top-16 hidden xl:block',
         'w-86 p-4 max-h-[calc(100dvh-4rem-2rem)]',
-        'overflow-y-scroll'
+        'overflow-y-auto'
       )}
     >
       <div className="flex flex-col gap-2">
