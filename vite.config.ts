@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 import svgr from 'vite-plugin-svgr';
 import { fileURLToPath } from 'node:url';
 import viteReact from '@vitejs/plugin-react';
-import { nitroV2Plugin } from '@tanstack/nitro-v2-vite-plugin'
+import { nitro } from 'nitro/vite'
 import { paraglideVitePlugin } from '@inlang/paraglide-js'
 
 
@@ -27,7 +27,7 @@ export default defineConfig({
       strategy: ['cookie', 'preferredLanguage', 'url', 'baseLocale'],
       cookieName: 'lang',
     }),
-    nitroV2Plugin()
+    nitro()
   ],
   resolve: {
     alias: {
