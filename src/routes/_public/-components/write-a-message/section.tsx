@@ -31,9 +31,9 @@ const WriteAMessageSection: FC<IProps> = ({ className, ...props }) => {
 
         <div className="flex flex-col gap-1 -ml-2.5 mt-4">
           <Button variant="link" className="gap-4 w-fit" asChild>
-            <a href="mailto:some@email.com">
+            <a href="mailto:project@exterior.md">
               <IconMail/>
-              info@imou.md
+              project@exterior.md
             </a>
           </Button>
 

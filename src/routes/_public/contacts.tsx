@@ -51,7 +51,7 @@ function RouteComponent() {
                     {m['pages.public.contacts.offices.chisinau.title']()}
                   </h2>
 
-                  <a className="flex items-center gap-3 hover:underline" href="mailto:info@imou.md">
+                  <a className="flex items-center gap-3 hover:underline" href="mailto:project@exterior.md">
                     <span className="bg-primary/10 flex size-7 shrink-0 items-center justify-center rounded-md">
                       <IconMail className="text-primary size-3.5"/>
                     </span>
