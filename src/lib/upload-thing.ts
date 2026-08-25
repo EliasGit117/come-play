@@ -1,3 +1,4 @@
 import { UTApi } from 'uploadthing/server';
+import { serverEnvConfig } from './config/server-env-config';
 
-export const utapi = new UTApi({ token: import.meta.env.VITE_UPLOADTHING_TOKEN });
+export const utapi = new UTApi({ token: serverEnvConfig.uploadthingToken });
