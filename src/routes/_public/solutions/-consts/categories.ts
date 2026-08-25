@@ -2,6 +2,8 @@ export interface SubcategoryConfig {
   slug: string;
   /** key under pages.public.products.{category}.items.{key} */
   key: string;
+  /** how many {sub}-N.webp images exist in /images/products/{category}/. Defaults to 3. */
+  imageCount?: 1 | 2 | 3;
 }
 
 export interface CategoryConfig {
@@ -57,7 +59,7 @@ export const PRODUCT_CATEGORIES: CategoryConfig[] = [
     subcategories: [
       { slug: 'round-columns', key: 'roundColumns' },
       { slug: 'curved-displays', key: 'curvedDisplays' },
-      { slug: 'custom-shapes', key: 'customShapes' }
+      { slug: 'custom-shapes', key: 'customShapes', imageCount: 2 }
     ]
   },
   {

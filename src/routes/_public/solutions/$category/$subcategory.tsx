@@ -51,27 +51,16 @@ function RouteComponent() {
 
       {category.hasImages && (
         <div className="grid sm:grid-cols-3 gap-4">
-          <img
-            src={getSubcategoryImage(category.slug, subcategory.slug, 1)}
-            alt={title}
-            loading="lazy"
-            onError={(e) => { e.currentTarget.style.display = 'none'; }}
-            className="w-full h-full rounded-xl border border-border/50 object-cover aspect-3/2 bg-muted/50"
-          />
-          <img
-            src={getSubcategoryImage(category.slug, subcategory.slug, 2)}
-            alt={title}
-            loading="lazy"
-            onError={(e) => { e.currentTarget.style.display = 'none'; }}
-            className="w-full h-full rounded-xl border border-border/50 object-cover aspect-3/2 bg-muted/50"
-          />
-          <img
-            src={getSubcategoryImage(category.slug, subcategory.slug, 3)}
-            alt={title}
-            loading="lazy"
-            onError={(e) => { e.currentTarget.style.display = 'none'; }}
-            className="w-full h-full rounded-xl border border-border/50 object-cover aspect-3/2 bg-muted/50"
-          />
+          {Array.from({ length: subcategory.imageCount ?? 3 }, (_, i) => i + 1).map((variant) => (
+            <img
+              key={variant}
+              src={getSubcategoryImage(category.slug, subcategory.slug, variant as 1 | 2 | 3)}
+              alt={title}
+              loading="lazy"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              className="w-full h-full rounded-xl border border-border/50 object-cover aspect-3/2 bg-muted/50"
+            />
+          ))}
         </div>
       )}
 
