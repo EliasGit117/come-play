@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite dev --host",
-    "build": "prisma generate && vite build",
+    "build": "prisma generate && NODE_OPTIONS=--max-old-space-size=4096 vite build",
     "start": "node --env-file-if-exists=.env .output/server/index.mjs",
     "db:push": "prisma db push",
     "seed:admin": "tsx scripts/seed-admin.ts"
